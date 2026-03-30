@@ -68,6 +68,40 @@
 
     /* ── Map ── */
     #map { flex: 1; height: 100%; }
+
+    /* ── Story popup ── */
+    .mapboxgl-popup-content {
+      background: #1a1a1a !important;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      padding: 0;
+      font-family: Georgia, serif;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      min-width: 230px;
+      max-width: 290px;
+      overflow: hidden;
+    }
+    .mapboxgl-popup-close-button { color: #555; font-size: 18px; padding: 6px 10px; background: none; }
+    .mapboxgl-popup-close-button:hover { color: #aaa; background: none; }
+    .mapboxgl-popup-tip { border-top-color: #2e2e2e !important; }
+    .popup-inner { padding: 16px 18px 18px; }
+    .popup-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #e8c87a; margin-bottom: 7px; font-family: Arial, sans-serif; }
+    .popup-title { font-size: 15px; line-height: 1.4; color: #f0ede8; margin-bottom: 10px; }
+    .popup-desc { font-size: 12px; line-height: 1.65; color: #888; margin-bottom: 16px; font-family: Arial, sans-serif; }
+    .popup-link {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+      color: #0f0f0f;
+      background: #e8c87a;
+      padding: 9px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.03em;
+      transition: background 0.15s;
+    }
+    .popup-link:hover { background: #f0d88a; }
   </style>
 </head>
 
@@ -93,7 +127,7 @@
     // ═══════════════════════════════════════════════════════════════
     // YOUR MAPBOX TOKEN
     // ═══════════════════════════════════════════════════════════════
-    mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW45dGkyaWcwY3dnMzFvZHBicncwZDduIn0.tUyw_YY97YD5SjGIyORPpA';
+    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN_HERE';
 
 
     // ═══════════════════════════════════════════════════════════════
@@ -232,10 +266,29 @@
         map.setPaintProperty('story-glow', 'circle-opacity', 0.15);
       });
 
-      // Click → go directly to story
+      // Click → open popup with description and link
+      const popup = new mapboxgl.Popup({
+        closeButton: true,
+        maxWidth: '300px',
+        offset: 14
+      });
+
       map.on('click', 'story-dots', (e) => {
-        const url = e.features[0].properties.url;
-        window.location.href = url;
+        const props = e.features[0].properties;
+        const coords = e.features[0].geometry.coordinates.slice();
+        const story = stories[props.index];
+
+        popup
+          .setLngLat(coords)
+          .setHTML(`
+            <div class="popup-inner">
+              <div class="popup-tag">${story.tag}</div>
+              <div class="popup-title">${story.title}</div>
+              <div class="popup-desc">${story.description}</div>
+              <a class="popup-link" href="${story.url}">Open the full story →</a>
+            </div>
+          `)
+          .addTo(map);
       });
     });
 
@@ -284,4 +337,3 @@
   </script>
 </body>
 </html>
-
