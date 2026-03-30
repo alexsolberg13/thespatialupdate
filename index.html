@@ -24,30 +24,12 @@
       flex-shrink: 0;
       z-index: 10;
     }
-
-    .site-name {
-      font-size: 16px;
-      font-weight: normal;
-      letter-spacing: 0.07em;
-      color: #f0ede8;
-      text-transform: uppercase;
-    }
-
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: #f0ede8; text-transform: uppercase; }
     .site-name span { color: #e8c87a; }
+    .site-tagline { font-size: 11px; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
 
-    .site-tagline {
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    /* ── Body: sidebar + map ── */
-    #body {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
+    /* ── Body ── */
+    #body { display: flex; flex: 1; overflow: hidden; }
 
     /* ── Sidebar ── */
     #sidebar {
@@ -59,35 +41,12 @@
       flex-direction: column;
       overflow: hidden;
     }
-
-    .sidebar-head {
-      padding: 20px 22px 14px;
-      border-bottom: 1px solid #1e1e1e;
-    }
-
-    .sidebar-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #555;
-      margin-bottom: 4px;
-      font-family: Arial, sans-serif;
-    }
-
-    .sidebar-count {
-      font-size: 13px;
-      color: #777;
-      font-family: Arial, sans-serif;
-    }
-
+    .sidebar-head { padding: 20px 22px 14px; border-bottom: 1px solid #1e1e1e; }
+    .sidebar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #555; margin-bottom: 4px; font-family: Arial, sans-serif; }
+    .sidebar-count { font-size: 13px; color: #777; font-family: Arial, sans-serif; }
     .sidebar-count span { color: #e8c87a; font-weight: bold; }
 
-    /* ── Story list ── */
-    #story-list {
-      overflow-y: auto;
-      flex: 1;
-    }
-
+    #story-list { overflow-y: auto; flex: 1; }
     #story-list::-webkit-scrollbar { width: 4px; }
     #story-list::-webkit-scrollbar-track { background: transparent; }
     #story-list::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
@@ -100,80 +59,26 @@
       transition: background 0.15s;
       cursor: pointer;
     }
-
     .story-item:hover { background: #161616; }
-
     .story-item.active { background: #161616; border-left: 2px solid #e8c87a; padding-left: 20px; }
-
-    .item-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #e8c87a;
-      margin-bottom: 5px;
-      font-family: Arial, sans-serif;
-    }
-
-    .item-title {
-      font-size: 14px;
-      color: #e8e6e1;
-      line-height: 1.4;
-      margin-bottom: 5px;
-    }
-
-    .item-desc {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.5;
-      font-family: Arial, sans-serif;
-    }
-
-    .item-marker {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: 6px;
-      vertical-align: middle;
-      margin-bottom: 2px;
-    }
+    .item-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #e8c87a; margin-bottom: 5px; font-family: Arial, sans-serif; }
+    .item-marker { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; margin-bottom: 2px; }
+    .item-title { font-size: 14px; color: #e8e6e1; line-height: 1.4; margin-bottom: 5px; }
+    .item-desc { font-size: 12px; color: #666; line-height: 1.5; font-family: Arial, sans-serif; }
 
     /* ── Map ── */
-    #map {
-      flex: 1;
-      height: 100%;
-    }
-
-    /* ── Hover tooltip on map markers ── */
-    .marker-tooltip {
-      position: absolute;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 5px;
-      padding: 6px 10px;
-      font-size: 12px;
-      color: #e8e6e1;
-      font-family: Arial, sans-serif;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 100;
-      display: none;
-    }
+    #map { flex: 1; height: 100%; }
   </style>
 </head>
 
 <body>
 
-  <!-- ── Header ── -->
   <div id="header">
     <div class="site-name">The Spatial <span>Update</span></div>
     <div class="site-tagline">Map-based current events</div>
   </div>
 
-  <!-- ── Main body ── -->
   <div id="body">
-
-    <!-- Sidebar -->
     <div id="sidebar">
       <div class="sidebar-head">
         <div class="sidebar-label">Stories</div>
@@ -181,29 +86,25 @@
       </div>
       <div id="story-list"></div>
     </div>
-
-    <!-- Map -->
     <div id="map"></div>
-
   </div>
 
   <script>
     // ═══════════════════════════════════════════════════════════════
     // YOUR MAPBOX TOKEN
     // ═══════════════════════════════════════════════════════════════
-    mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW45dGkyaWcwY3dnMzFvZHBicncwZDduIn0.tUyw_YY97YD5SjGIyORPpA';
+    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN_HERE';
 
 
     // ═══════════════════════════════════════════════════════════════
-    // STORIES LIST
-    // This is the only section you edit when adding a new story.
+    // STORIES LIST — the only section you edit to add new stories
     //
-    // coordinates → [longitude, latitude] of the map marker
+    // coordinates → [longitude, latitude]
     // tag         → region · topic label
     // title       → headline
-    // description → one sentence summary shown in the sidebar
+    // description → one sentence for the sidebar
     // url         → path to the story folder
-    // color       → marker color: "gold", "red", "teal", or "blue"
+    // color       → "gold", "red", "teal", or "blue"
     // ═══════════════════════════════════════════════════════════════
     const stories = [
       {
@@ -216,25 +117,25 @@
       },
 
       // ── ADD YOUR NEXT STORY HERE ─────────────────────────────────
-      // Copy the block above, paste below, and update the details.
-      // A marker and sidebar entry will appear automatically.
+      // Copy the block above, paste below, and fill in the details.
       // ─────────────────────────────────────────────────────────────
     ];
 
 
     // ═══════════════════════════════════════════════════════════════
     // MARKER COLORS
+    // Add new entries here if you want more color options.
     // ═══════════════════════════════════════════════════════════════
     const markerColors = {
-      gold: { fill: '#e8c87a', glow: 'rgba(232,200,122,0.22)' },
-      red:  { fill: '#e05a4e', glow: 'rgba(224,90,78,0.22)'   },
-      teal: { fill: '#3ecfb2', glow: 'rgba(62,207,178,0.22)'  },
-      blue: { fill: '#5b9bd5', glow: 'rgba(91,155,213,0.22)'  },
+      gold: '#e8c87a',
+      red:  '#e05a4e',
+      teal: '#3ecfb2',
+      blue: '#5b9bd5',
     };
 
 
     // ═══════════════════════════════════════════════════════════════
-    // MAP
+    // MAP INITIALIZATION
     // ═══════════════════════════════════════════════════════════════
     const map = new mapboxgl.Map({
       container: 'map',
@@ -249,6 +150,7 @@
     map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
+    // Globe atmosphere
     map.on('style.load', () => {
       map.setFog({
         color: 'rgb(10, 10, 18)',
@@ -257,86 +159,129 @@
         'space-color': 'rgb(5, 5, 10)',
         'star-intensity': 0.35
       });
+
+      // ── Convert stories to GeoJSON and add as a map layer ──
+      // This is the key fix: dots drawn by Mapbox stay locked to
+      // the globe at all zoom levels, unlike HTML marker elements.
+
+      const geojson = {
+        type: 'FeatureCollection',
+        features: stories.map((story, i) => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: story.coordinates
+          },
+          properties: {
+            index: i,
+            title: story.title,
+            url: story.url,
+            color: markerColors[story.color] || markerColors.gold
+          }
+        }))
+      };
+
+      map.addSource('stories', {
+        type: 'geojson',
+        data: geojson
+      });
+
+      // Outer glow ring
+      map.addLayer({
+        id: 'story-glow',
+        type: 'circle',
+        source: 'stories',
+        paint: {
+          'circle-radius': 14,
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.15,
+          'circle-stroke-width': 0
+        }
+      });
+
+      // Main dot
+      map.addLayer({
+        id: 'story-dots',
+        type: 'circle',
+        source: 'stories',
+        paint: {
+          'circle-radius': 7,
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.9,
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': 'rgba(255,255,255,0.12)'
+        }
+      });
+
+      // Pointer cursor on hover
+      map.on('mouseenter', 'story-dots', () => {
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Enlarge dot on hover
+        map.setPaintProperty('story-dots', 'circle-radius', 10);
+        map.setPaintProperty('story-glow', 'circle-radius', 18);
+        map.setPaintProperty('story-glow', 'circle-opacity', 0.22);
+      });
+
+      map.on('mouseleave', 'story-dots', () => {
+        map.getCanvas().style.cursor = '';
+
+        // Restore dot size
+        map.setPaintProperty('story-dots', 'circle-radius', 7);
+        map.setPaintProperty('story-glow', 'circle-radius', 14);
+        map.setPaintProperty('story-glow', 'circle-opacity', 0.15);
+      });
+
+      // Click → go directly to story
+      map.on('click', 'story-dots', (e) => {
+        const url = e.features[0].properties.url;
+        window.location.href = url;
+      });
     });
 
 
     // ═══════════════════════════════════════════════════════════════
-    // BUILD SIDEBAR + MARKERS
-    // Nothing below this line needs editing.
+    // BUILD SIDEBAR
     // ═══════════════════════════════════════════════════════════════
     const storyList = document.getElementById('story-list');
-    const storyCount = document.getElementById('story-count');
     const count = stories.length;
-    storyCount.innerHTML = `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
+    document.getElementById('story-count').innerHTML =
+      `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
 
-    stories.forEach((story, i) => {
-      const colors = markerColors[story.color] || markerColors.gold;
+    stories.forEach((story) => {
+      const color = markerColors[story.color] || markerColors.gold;
 
-      // ── Sidebar entry ──
       const item = document.createElement('a');
       item.className = 'story-item';
       item.href = story.url;
       item.innerHTML = `
         <div class="item-tag">
-          <span class="item-marker" style="background:${colors.fill}"></span>
+          <span class="item-marker" style="background:${color}"></span>
           ${story.tag}
         </div>
         <div class="item-title">${story.title}</div>
         <div class="item-desc">${story.description}</div>
       `;
 
-      // Hovering the sidebar entry highlights the marker on the map
+      // Hovering sidebar entry flies the globe to that location
       item.addEventListener('mouseenter', () => {
-        flyToStory(story);
         item.classList.add('active');
+        map.flyTo({
+          center: story.coordinates,
+          zoom: Math.max(map.getZoom(), 4),
+          duration: 900,
+          essential: true
+        });
       });
+
       item.addEventListener('mouseleave', () => {
         item.classList.remove('active');
       });
 
       storyList.appendChild(item);
-
-      // ── Map marker ──
-      const el = document.createElement('div');
-      el.title = story.title;
-      el.style.cssText = `
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: ${colors.fill};
-        border: 2px solid rgba(255,255,255,0.12);
-        box-shadow: 0 0 0 5px ${colors.glow};
-        cursor: pointer;
-        transition: transform 0.15s;
-      `;
-
-      el.addEventListener('mouseenter', () => {
-        el.style.transform = 'scale(1.4)';
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transform = 'scale(1)';
-      });
-
-      // Single click → go straight to the story
-      el.addEventListener('click', () => {
-        window.location.href = story.url;
-      });
-
-      new mapboxgl.Marker({ element: el })
-        .setLngLat(story.coordinates)
-        .addTo(map);
     });
-
-    // Smoothly fly the map to a story's location
-    function flyToStory(story) {
-      map.flyTo({
-        center: story.coordinates,
-        zoom: Math.max(map.getZoom(), 4),
-        duration: 800,
-        essential: true
-      });
-    }
 
   </script>
 </body>
 </html>
+
