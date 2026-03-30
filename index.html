@@ -4,74 +4,339 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Spatial Update</title>
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Georgia, serif;
-      background: #0f0f0f;
-      color: #e8e6e1;
-      padding: 60px 40px;
-      max-width: 800px;
-      margin: 0 auto;
+    body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── Header ── */
+    #header {
+      height: 52px;
+      background: #111;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      flex-shrink: 0;
+      z-index: 10;
     }
-    h1 {
-      font-size: 32px;
+
+    .site-name {
+      font-size: 16px;
       font-weight: normal;
-      margin-bottom: 8px;
+      letter-spacing: 0.07em;
       color: #f0ede8;
+      text-transform: uppercase;
     }
-    .tagline {
-      font-size: 15px;
-      color: #666;
-      margin-bottom: 48px;
+
+    .site-name span { color: #e8c87a; }
+
+    .site-tagline {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-    .story-card {
+
+    /* ── Body: sidebar + map ── */
+    #body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: #111;
+      border-right: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-head {
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid #1e1e1e;
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 4px;
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar-count {
+      font-size: 13px;
+      color: #777;
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar-count span { color: #e8c87a; font-weight: bold; }
+
+    /* ── Story list ── */
+    #story-list {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    #story-list::-webkit-scrollbar { width: 4px; }
+    #story-list::-webkit-scrollbar-track { background: transparent; }
+    #story-list::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+    .story-item {
       display: block;
       text-decoration: none;
-      border: 1px solid #2a2a2a;
-      border-radius: 8px;
-      padding: 24px 28px;
-      margin-bottom: 16px;
-      background: #161616;
-      transition: border-color 0.2s;
+      padding: 16px 22px;
+      border-bottom: 1px solid #1a1a1a;
+      transition: background 0.15s;
+      cursor: pointer;
     }
-    .story-card:hover { border-color: #e8c87a; }
-    .story-tag {
-      font-size: 11px;
+
+    .story-item:hover { background: #161616; }
+
+    .story-item.active { background: #161616; border-left: 2px solid #e8c87a; padding-left: 20px; }
+
+    .item-tag {
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #e8c87a;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
+      font-family: Arial, sans-serif;
     }
-    .story-title {
-      font-size: 20px;
-      color: #f0ede8;
-      margin-bottom: 8px;
-    }
-    .story-desc {
+
+    .item-title {
       font-size: 14px;
-      color: #888;
-      line-height: 1.6;
+      color: #e8e6e1;
+      line-height: 1.4;
+      margin-bottom: 5px;
+    }
+
+    .item-desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+      font-family: Arial, sans-serif;
+    }
+
+    .item-marker {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      margin-bottom: 2px;
+    }
+
+    /* ── Map ── */
+    #map {
+      flex: 1;
+      height: 100%;
+    }
+
+    /* ── Hover tooltip on map markers ── */
+    .marker-tooltip {
+      position: absolute;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #e8e6e1;
+      font-family: Arial, sans-serif;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+      display: none;
     }
   </style>
 </head>
+
 <body>
 
-  <h1>The Spatial Update</h1>
-  <p class="tagline">Map-based current events and regional context.</p>
+  <!-- ── Header ── -->
+  <div id="header">
+    <div class="site-name">The Spatial <span>Update</span></div>
+    <div class="site-tagline">Map-based current events</div>
+  </div>
 
-  <a class="story-card" href="./stories/iran-strikes/index.html">
-    <div class="story-tag">Middle East · Military</div>
-    <div class="story-title">Strikes on Iran: A Timeline of Escalation</div>
-    <div class="story-desc">
-      Mapping the progression of strikes across Iranian territory,
-      with a month-by-month time slider.
+  <!-- ── Main body ── -->
+  <div id="body">
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="sidebar-head">
+        <div class="sidebar-label">Stories</div>
+        <div class="sidebar-count" id="story-count"></div>
+      </div>
+      <div id="story-list"></div>
     </div>
-  </a>
 
-  <!-- Add more story cards here as you build them. Copy the block above,
-       change the href to ./stories/your-story-folder-name/index.html
-       and update the tag, title, and description. -->
+    <!-- Map -->
+    <div id="map"></div>
 
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // YOUR MAPBOX TOKEN
+    // ═══════════════════════════════════════════════════════════════
+    mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW45dGkyaWcwY3dnMzFvZHBicncwZDduIn0.tUyw_YY97YD5SjGIyORPpA';
+
+
+    // ═══════════════════════════════════════════════════════════════
+    // STORIES LIST
+    // This is the only section you edit when adding a new story.
+    //
+    // coordinates → [longitude, latitude] of the map marker
+    // tag         → region · topic label
+    // title       → headline
+    // description → one sentence summary shown in the sidebar
+    // url         → path to the story folder
+    // color       → marker color: "gold", "red", "teal", or "blue"
+    // ═══════════════════════════════════════════════════════════════
+    const stories = [
+      {
+        coordinates: [53.0, 32.5],
+        tag: "Middle East · Military",
+        title: "Strikes on Iran: A Timeline of Escalation",
+        description: "Mapping the progression of strikes across Iranian territory, month by month.",
+        url: "./stories/iran-strikes/",
+        color: "red"
+      },
+
+      // ── ADD YOUR NEXT STORY HERE ─────────────────────────────────
+      // Copy the block above, paste below, and update the details.
+      // A marker and sidebar entry will appear automatically.
+      // ─────────────────────────────────────────────────────────────
+    ];
+
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARKER COLORS
+    // ═══════════════════════════════════════════════════════════════
+    const markerColors = {
+      gold: { fill: '#e8c87a', glow: 'rgba(232,200,122,0.22)' },
+      red:  { fill: '#e05a4e', glow: 'rgba(224,90,78,0.22)'   },
+      teal: { fill: '#3ecfb2', glow: 'rgba(62,207,178,0.22)'  },
+      blue: { fill: '#5b9bd5', glow: 'rgba(91,155,213,0.22)'  },
+    };
+
+
+    // ═══════════════════════════════════════════════════════════════
+    // MAP
+    // ═══════════════════════════════════════════════════════════════
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/dark-v11',
+      center: [20, 25],
+      zoom: 2.2,
+      minZoom: 1.5,
+      projection: 'globe',
+      attributionControl: false
+    });
+
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    map.on('style.load', () => {
+      map.setFog({
+        color: 'rgb(10, 10, 18)',
+        'high-color': 'rgb(20, 20, 40)',
+        'horizon-blend': 0.04,
+        'space-color': 'rgb(5, 5, 10)',
+        'star-intensity': 0.35
+      });
+    });
+
+
+    // ═══════════════════════════════════════════════════════════════
+    // BUILD SIDEBAR + MARKERS
+    // Nothing below this line needs editing.
+    // ═══════════════════════════════════════════════════════════════
+    const storyList = document.getElementById('story-list');
+    const storyCount = document.getElementById('story-count');
+    const count = stories.length;
+    storyCount.innerHTML = `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
+
+    stories.forEach((story, i) => {
+      const colors = markerColors[story.color] || markerColors.gold;
+
+      // ── Sidebar entry ──
+      const item = document.createElement('a');
+      item.className = 'story-item';
+      item.href = story.url;
+      item.innerHTML = `
+        <div class="item-tag">
+          <span class="item-marker" style="background:${colors.fill}"></span>
+          ${story.tag}
+        </div>
+        <div class="item-title">${story.title}</div>
+        <div class="item-desc">${story.description}</div>
+      `;
+
+      // Hovering the sidebar entry highlights the marker on the map
+      item.addEventListener('mouseenter', () => {
+        flyToStory(story);
+        item.classList.add('active');
+      });
+      item.addEventListener('mouseleave', () => {
+        item.classList.remove('active');
+      });
+
+      storyList.appendChild(item);
+
+      // ── Map marker ──
+      const el = document.createElement('div');
+      el.title = story.title;
+      el.style.cssText = `
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: ${colors.fill};
+        border: 2px solid rgba(255,255,255,0.12);
+        box-shadow: 0 0 0 5px ${colors.glow};
+        cursor: pointer;
+        transition: transform 0.15s;
+      `;
+
+      el.addEventListener('mouseenter', () => {
+        el.style.transform = 'scale(1.4)';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'scale(1)';
+      });
+
+      // Single click → go straight to the story
+      el.addEventListener('click', () => {
+        window.location.href = story.url;
+      });
+
+      new mapboxgl.Marker({ element: el })
+        .setLngLat(story.coordinates)
+        .addTo(map);
+    });
+
+    // Smoothly fly the map to a story's location
+    function flyToStory(story) {
+      map.flyTo({
+        center: story.coordinates,
+        zoom: Math.max(map.getZoom(), 4),
+        duration: 800,
+        essential: true
+      });
+    }
+
+  </script>
 </body>
 </html>
