@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [51.3890, 35.6892] },
+      "properties": {
+        "type": "strike",
+        "title": "Tehran — Air Defense Systems",
+        "description": "Air defense infrastructure targeted on the outskirts of the capital. Significant radar installations reported destroyed.",
+        "date": "Jan 15, 2025",
+        "monthcode": 202501,
+        "magnitude": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [59.6168, 36.2944] },
+      "properties": {
+        "type": "strike",
+        "title": "Mashhad — Military Installation",
+        "description": "Strike on a military base near the Turkmenistan border. Infrastructure damage confirmed.",
+        "date": "Mar 4, 2025",
+        "monthcode": 202503,
+        "magnitude": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [48.6842, 31.3183] },
+      "properties": {
+        "type": "strike",
+        "title": "Ahvaz — Fuel Depot",
+        "description": "Petroleum storage facility struck in Khuzestan province. Fire visible for several hours.",
+        "date": "May 22, 2025",
+        "monthcode": 202505,
+        "magnitude": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [56.2808, 27.2038] },
+      "properties": {
+        "type": "strike",
+        "title": "Bandar Abbas — Naval Base",
+        "description": "Port infrastructure and naval assets targeted. Significant strategic impact on Strait of Hormuz operations.",
+        "date": "Jul 9, 2025",
+        "monthcode": 202507,
+        "magnitude": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [44.5729, 33.3406] },
+      "properties": {
+        "type": "strike",
+        "title": "Western Iran — Supply Route",
+        "description": "Road and bridge infrastructure along a key western supply corridor disrupted.",
+        "date": "Sep 14, 2025",
+        "monthcode": 202509,
+        "magnitude": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [52.6800, 29.6100] },
+      "properties": {
+        "type": "strike",
+        "title": "Shiraz — Command Center",
+        "description": "Military command and communications facility hit in Fars province.",
+        "date": "Nov 30, 2025",
+        "monthcode": 202511,
+        "magnitude": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[50.5,35.2],[52.8,35.2],[52.8,36.4],[50.5,36.4],[50.5,35.2]]]
+      },
+      "properties": {
+        "type": "zone",
+        "title": "Tehran exclusion zone",
+        "description": "Air defense suppression zone established following January strikes.",
+        "monthcode": 202502
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[47.5,30.0],[50.5,30.0],[50.5,32.5],[47.5,32.5],[47.5,30.0]]]
+      },
+      "properties": {
+        "type": "zone",
+        "title": "Khuzestan conflict zone",
+        "description": "Southern oil province affected by strike activity from May 2025.",
+        "monthcode": 202505
+      }
+    }
+  ]
+}
