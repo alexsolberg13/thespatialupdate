@@ -12,7 +12,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-    /* ── Header ── */
     #header {
       height: 52px;
       background: #111;
@@ -28,10 +27,8 @@
     .site-name span { color: #e8c87a; }
     .site-tagline { font-size: 11px; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
 
-    /* ── Body ── */
     #body { display: flex; flex: 1; overflow: hidden; }
 
-    /* ── Sidebar ── */
     #sidebar {
       width: 300px;
       flex-shrink: 0;
@@ -66,19 +63,17 @@
     .item-title { font-size: 14px; color: #e8e6e1; line-height: 1.4; margin-bottom: 5px; }
     .item-desc { font-size: 12px; color: #666; line-height: 1.5; font-family: Arial, sans-serif; }
 
-    /* ── Map ── */
     #map { flex: 1; height: 100%; }
 
-    /* ── Story popup ── */
     .mapboxgl-popup-content {
       background: #1a1a1a !important;
       border: 1px solid #2e2e2e;
       border-radius: 8px;
       padding: 0;
       font-family: Georgia, serif;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
-      min-width: 230px;
-      max-width: 290px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      min-width: 220px;
+      max-width: 280px;
       overflow: hidden;
     }
     .mapboxgl-popup-close-button { color: #555; font-size: 18px; padding: 6px 10px; background: none; }
@@ -89,24 +84,16 @@
     .popup-title { font-size: 15px; line-height: 1.4; color: #f0ede8; margin-bottom: 10px; }
     .popup-desc { font-size: 12px; line-height: 1.65; color: #888; margin-bottom: 16px; font-family: Arial, sans-serif; }
     .popup-link {
-      display: block;
-      text-align: center;
-      font-size: 12px;
-      color: #0f0f0f;
-      background: #e8c87a;
-      padding: 9px 14px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-family: Arial, sans-serif;
-      letter-spacing: 0.03em;
-      transition: background 0.15s;
+      display: block; text-align: center; font-size: 12px; color: #0f0f0f;
+      background: #e8c87a; padding: 9px 14px; border-radius: 4px;
+      text-decoration: none; font-family: Arial, sans-serif;
+      letter-spacing: 0.03em; transition: background 0.15s;
     }
     .popup-link:hover { background: #f0d88a; }
   </style>
 </head>
 
 <body>
-
   <div id="header">
     <div class="site-name">The Spatial <span>Update</span></div>
     <div class="site-tagline">Map-based current events</div>
@@ -131,14 +118,7 @@
 
 
     // ═══════════════════════════════════════════════════════════════
-    // STORIES LIST — the only section you edit to add new stories
-    //
-    // coordinates → [longitude, latitude]
-    // tag         → region · topic label
-    // title       → headline
-    // description → one sentence for the sidebar
-    // url         → path to the story folder
-    // color       → "gold", "red", "teal", or "blue"
+    // STORIES LIST — edit this to add new stories
     // ═══════════════════════════════════════════════════════════════
     const stories = [
       {
@@ -149,17 +129,9 @@
         url: "./stories/iran-strikes/",
         color: "red"
       },
-
-      // ── ADD YOUR NEXT STORY HERE ─────────────────────────────────
-      // Copy the block above, paste below, and fill in the details.
-      // ─────────────────────────────────────────────────────────────
+      // Add new stories here
     ];
 
-
-    // ═══════════════════════════════════════════════════════════════
-    // MARKER COLORS
-    // Add new entries here if you want more color options.
-    // ═══════════════════════════════════════════════════════════════
     const markerColors = {
       gold: '#e8c87a',
       red:  '#e05a4e',
@@ -167,15 +139,18 @@
       blue: '#5b9bd5',
     };
 
+    const homeCenter = [20, 25];
+    const homeZoom   = 2.2;
+
 
     // ═══════════════════════════════════════════════════════════════
-    // MAP INITIALIZATION
+    // MAP
     // ═══════════════════════════════════════════════════════════════
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/dark-v11',
-      center: [20, 25],
-      zoom: 2.2,
+      center: homeCenter,
+      zoom: homeZoom,
       minZoom: 1.5,
       projection: 'globe',
       attributionControl: false
@@ -184,8 +159,14 @@
     map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    // Globe atmosphere
+
+    // ═══════════════════════════════════════════════════════════════
+    // EVERYTHING INSIDE style.load — map must be ready before
+    // we add layers, build the sidebar, or call flyTo
+    // ═══════════════════════════════════════════════════════════════
     map.on('style.load', () => {
+
+      // Globe atmosphere
       map.setFog({
         color: 'rgb(10, 10, 18)',
         'high-color': 'rgb(20, 20, 40)',
@@ -194,18 +175,12 @@
         'star-intensity': 0.35
       });
 
-      // ── Convert stories to GeoJSON and add as a map layer ──
-      // This is the key fix: dots drawn by Mapbox stay locked to
-      // the globe at all zoom levels, unlike HTML marker elements.
-
+      // Add stories as a GeoJSON layer so dots lock to the globe
       const geojson = {
         type: 'FeatureCollection',
         features: stories.map((story, i) => ({
           type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: story.coordinates
-          },
+          geometry: { type: 'Point', coordinates: story.coordinates },
           properties: {
             index: i,
             title: story.title,
@@ -215,12 +190,9 @@
         }))
       };
 
-      map.addSource('stories', {
-        type: 'geojson',
-        data: geojson
-      });
+      map.addSource('stories', { type: 'geojson', data: geojson });
 
-      // Outer glow ring
+      // Glow ring
       map.addLayer({
         id: 'story-glow',
         type: 'circle',
@@ -247,114 +219,91 @@
         }
       });
 
-      // Pointer cursor on hover
+      // Dot hover effects
       map.on('mouseenter', 'story-dots', () => {
         map.getCanvas().style.cursor = 'pointer';
-
-        // Enlarge dot on hover
         map.setPaintProperty('story-dots', 'circle-radius', 10);
         map.setPaintProperty('story-glow', 'circle-radius', 18);
         map.setPaintProperty('story-glow', 'circle-opacity', 0.22);
       });
-
       map.on('mouseleave', 'story-dots', () => {
         map.getCanvas().style.cursor = '';
-
-        // Restore dot size
         map.setPaintProperty('story-dots', 'circle-radius', 7);
         map.setPaintProperty('story-glow', 'circle-radius', 14);
         map.setPaintProperty('story-glow', 'circle-opacity', 0.15);
       });
 
-      // Click → open popup with description and link
-      const popup = new mapboxgl.Popup({
-        closeButton: true,
-        maxWidth: '300px',
-        offset: 14
-      });
+      // Click dot → popup
+      const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '300px', offset: 14 });
 
       map.on('click', 'story-dots', (e) => {
-        const props = e.features[0].properties;
+        const story = stories[e.features[0].properties.index];
         const coords = e.features[0].geometry.coordinates.slice();
-        const story = stories[props.index];
-
-        popup
-          .setLngLat(coords)
-          .setHTML(`
-            <div class="popup-inner">
-              <div class="popup-tag">${story.tag}</div>
-              <div class="popup-title">${story.title}</div>
-              <div class="popup-desc">${story.description}</div>
-              <a class="popup-link" href="${story.url}">Open the full story →</a>
-            </div>
-          `)
-          .addTo(map);
-      });
-    });
-
-
-    // ═══════════════════════════════════════════════════════════════
-    // BUILD SIDEBAR
-    // Built here inside style.load so the map is ready when
-    // hover interactions fire.
-    // ═══════════════════════════════════════════════════════════════
-    const storyList = document.getElementById('story-list');
-    const count = stories.length;
-    document.getElementById('story-count').innerHTML =
-      `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
-
-    // Store the initial map center and zoom so we can return to it
-    const homeCenter = [20, 25];
-    const homeZoom = 2.2;
-    let flyBackTimer = null;
-
-    stories.forEach((story) => {
-      const color = markerColors[story.color] || markerColors.gold;
-
-      const item = document.createElement('a');
-      item.className = 'story-item';
-      item.href = story.url;
-      item.innerHTML = `
-        <div class="item-tag">
-          <span class="item-marker" style="background:${color}"></span>
-          ${story.tag}
-        </div>
-        <div class="item-title">${story.title}</div>
-        <div class="item-desc">${story.description}</div>
-      `;
-
-      // Hovering a sidebar entry flies the globe to that story's location
-      item.addEventListener('mouseenter', () => {
-        item.classList.add('active');
-
-        // Cancel any pending return-home animation
-        if (flyBackTimer) clearTimeout(flyBackTimer);
-
-        map.flyTo({
-          center: story.coordinates,
-          zoom: 5,
-          duration: 1200,
-          essential: true
-        });
+        popup.setLngLat(coords).setHTML(`
+          <div class="popup-inner">
+            <div class="popup-tag">${story.tag}</div>
+            <div class="popup-title">${story.title}</div>
+            <div class="popup-desc">${story.description}</div>
+            <a class="popup-link" href="${story.url}">Open the full story →</a>
+          </div>
+        `).addTo(map);
       });
 
-      // Leaving a sidebar entry flies back to the world overview
-      item.addEventListener('mouseleave', () => {
-        item.classList.remove('active');
 
-        // Small delay so quickly moving between items doesn't flicker
-        flyBackTimer = setTimeout(() => {
+      // ── BUILD SIDEBAR ──────────────────────────────────────────
+      // Inside style.load so map.flyTo() works immediately
+      // ──────────────────────────────────────────────────────────
+      const storyList = document.getElementById('story-list');
+      const count = stories.length;
+      document.getElementById('story-count').innerHTML =
+        `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
+
+      let flyBackTimer = null;
+
+      stories.forEach((story) => {
+        const color = markerColors[story.color] || markerColors.gold;
+
+        const item = document.createElement('a');
+        item.className = 'story-item';
+        item.href = story.url;
+        item.innerHTML = `
+          <div class="item-tag">
+            <span class="item-marker" style="background:${color}"></span>
+            ${story.tag}
+          </div>
+          <div class="item-title">${story.title}</div>
+          <div class="item-desc">${story.description}</div>
+        `;
+
+        // Hover → fly to story location
+        item.addEventListener('mouseenter', () => {
+          item.classList.add('active');
+          if (flyBackTimer) clearTimeout(flyBackTimer);
           map.flyTo({
-            center: homeCenter,
-            zoom: homeZoom,
-            duration: 1000,
+            center: story.coordinates,
+            zoom: 5,
+            duration: 1200,
             essential: true
           });
-        }, 300);
+        });
+
+        // Leave → fly back to world overview after short delay
+        item.addEventListener('mouseleave', () => {
+          item.classList.remove('active');
+          flyBackTimer = setTimeout(() => {
+            map.flyTo({
+              center: homeCenter,
+              zoom: homeZoom,
+              duration: 1000,
+              essential: true
+            });
+          }, 300);
+        });
+
+        storyList.appendChild(item);
       });
 
-      storyList.appendChild(item);
-    });
+    }); // end style.load
 
   </script>
 </body>
