@@ -3,598 +3,337 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strikes on Iran — GeoStory</title>
+  <title>The Spatial Update</title>
 
-  <!-- Mapbox GL JS — loaded from CDN, no installation needed -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; }
+    body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-    /* ── Layout: sidebar left, map right ── */
-    .layout {
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .sidebar {
-      width: 380px;
-      flex-shrink: 0;
-      overflow-y: auto;
-      background: #161616;
-      border-right: 1px solid #2a2a2a;
-      padding: 32px 28px;
-      z-index: 10;
-    }
-
-    #map {
-      flex: 1;
-      height: 100vh;
-    }
-
-    /* ── Back link ── */
-    .back-link {
-      display: inline-block;
-      font-size: 12px;
-      color: #666;
-      text-decoration: none;
-      margin-bottom: 24px;
-      letter-spacing: 0.03em;
-    }
-    .back-link:hover { color: #e8c87a; }
-
-    /* ── Sidebar content ── */
-    .story-label {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      font-size: 24px;
-      line-height: 1.3;
-      font-weight: normal;
-      margin-bottom: 16px;
-      color: #f0ede8;
-    }
-
-    .byline {
-      font-size: 12px;
-      color: #555;
-      margin-bottom: 28px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid #2a2a2a;
-    }
-
-    .story-text p {
-      font-size: 15px;
-      line-height: 1.75;
-      color: #c8c5be;
-      margin-bottom: 18px;
-    }
-
-    .story-text a {
-      color: #e8c87a;
-      text-decoration: none;
-    }
-    .story-text a:hover { text-decoration: underline; }
-
-    /* ── Time slider ── */
-    .slider-section {
-      margin: 28px 0;
-      padding: 20px;
-      background: #1e1e1e;
-      border-radius: 8px;
-      border: 1px solid #2a2a2a;
-    }
-
-    .slider-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #888;
-      margin-bottom: 8px;
-    }
-
-    .current-date {
-      font-size: 20px;
-      font-weight: bold;
-      color: #e8c87a;
-      margin-bottom: 14px;
-      font-family: monospace;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: #e8c87a;
-      cursor: pointer;
-    }
-
-    .date-range {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: #555;
-      margin-top: 6px;
-    }
-
-    /* ── Layer toggles ── */
-    .layer-section {
-      margin: 24px 0;
-      padding-bottom: 24px;
-      border-bottom: 1px solid #2a2a2a;
-    }
-
-    .layer-section-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #888;
-      margin-bottom: 12px;
-    }
-
-    .layer-toggle {
+    /* ── Header ── */
+    #header {
+      height: 52px;
+      background: #111;
+      border-bottom: 1px solid #222;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      font-size: 13px;
-      color: #aaa;
-    }
-
-    .layer-toggle input[type="checkbox"] {
-      accent-color: #e8c87a;
-      width: 15px;
-      height: 15px;
-      cursor: pointer;
-    }
-
-    .layer-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
+      justify-content: space-between;
+      padding: 0 28px;
       flex-shrink: 0;
+      z-index: 10;
     }
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: #f0ede8; text-transform: uppercase; }
+    .site-name span { color: #e8c87a; }
+    .site-tagline { font-size: 11px; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
 
-    /* ── Strike count badge ── */
-    .strike-count {
-      font-size: 12px;
-      color: #666;
-      margin-top: 8px;
-    }
-    .strike-count span {
-      color: #e8c87a;
-      font-weight: bold;
-    }
+    /* ── Body ── */
+    #body { display: flex; flex: 1; overflow: hidden; }
 
-    /* ── Popup styling ── */
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: #111;
+      border-right: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-head { padding: 20px 22px 14px; border-bottom: 1px solid #1e1e1e; }
+    .sidebar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #555; margin-bottom: 4px; font-family: Arial, sans-serif; }
+    .sidebar-count { font-size: 13px; color: #777; font-family: Arial, sans-serif; }
+    .sidebar-count span { color: #e8c87a; font-weight: bold; }
+
+    #story-list { overflow-y: auto; flex: 1; }
+    #story-list::-webkit-scrollbar { width: 4px; }
+    #story-list::-webkit-scrollbar-track { background: transparent; }
+    #story-list::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+    .story-item {
+      display: block;
+      text-decoration: none;
+      padding: 16px 22px;
+      border-bottom: 1px solid #1a1a1a;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .story-item:hover { background: #161616; }
+    .story-item.active { background: #161616; border-left: 2px solid #e8c87a; padding-left: 20px; }
+    .item-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #e8c87a; margin-bottom: 5px; font-family: Arial, sans-serif; }
+    .item-marker { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; margin-bottom: 2px; }
+    .item-title { font-size: 14px; color: #e8e6e1; line-height: 1.4; margin-bottom: 5px; }
+    .item-desc { font-size: 12px; color: #666; line-height: 1.5; font-family: Arial, sans-serif; }
+
+    /* ── Map ── */
+    #map { flex: 1; height: 100%; }
+
+    /* ── Story popup ── */
     .mapboxgl-popup-content {
-      background: #1e1e1e !important;
-      color: #e8e6e1;
-      border: 1px solid #333;
-      border-radius: 6px;
-      padding: 14px 16px;
+      background: #1a1a1a !important;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      padding: 0;
       font-family: Georgia, serif;
-      font-size: 13px;
-      max-width: 220px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      min-width: 230px;
+      max-width: 290px;
+      overflow: hidden;
     }
-
-    .mapboxgl-popup-close-button {
-      color: #666;
-      font-size: 16px;
+    .mapboxgl-popup-close-button { color: #555; font-size: 18px; padding: 6px 10px; background: none; }
+    .mapboxgl-popup-close-button:hover { color: #aaa; background: none; }
+    .mapboxgl-popup-tip { border-top-color: #2e2e2e !important; }
+    .popup-inner { padding: 16px 18px 18px; }
+    .popup-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #e8c87a; margin-bottom: 7px; font-family: Arial, sans-serif; }
+    .popup-title { font-size: 15px; line-height: 1.4; color: #f0ede8; margin-bottom: 10px; }
+    .popup-desc { font-size: 12px; line-height: 1.65; color: #888; margin-bottom: 16px; font-family: Arial, sans-serif; }
+    .popup-link {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+      color: #0f0f0f;
+      background: #e8c87a;
+      padding: 9px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.03em;
+      transition: background 0.15s;
     }
-
-    .mapboxgl-popup-tip {
-      border-top-color: #1e1e1e !important;
-    }
-
-    .popup-date { font-size: 11px; color: #888; margin-bottom: 4px; font-family: monospace; }
-    .popup-title { font-size: 14px; font-weight: bold; color: #e8c87a; margin-bottom: 8px; }
-    .popup-desc { font-size: 12px; line-height: 1.6; color: #aaa; }
+    .popup-link:hover { background: #f0d88a; }
   </style>
 </head>
 
 <body>
-<div class="layout">
 
-  <!-- ══════════════════════════════════════════
-       LEFT SIDEBAR
-  ══════════════════════════════════════════ -->
-  <div class="sidebar">
-
-    <a class="back-link" href="../../">← All stories</a>
-
-    <div class="story-label">Middle East · Military</div>
-    <h1>Strikes on Iran: A Timeline of Escalation</h1>
-    <div class="byline">Updated March 2026 &nbsp;·&nbsp; Interactive map</div>
-
-    <div class="story-text">
-      <p>
-        Since early 2025, a series of strikes across Iranian territory have
-        reshaped the regional military balance. Use the slider below to trace
-        how the conflict evolved month by month.
-      </p>
-      <p>
-        Click any point on the map for details about that strike — location,
-        date, and reported impact.
-      </p>
-    </div>
-
-    <!-- TIME SLIDER -->
-    <div class="slider-section">
-      <div class="slider-label">Filter by date — showing up to:</div>
-      <div class="current-date" id="date-display">Dec 2025</div>
-      <input
-        type="range"
-        id="time-slider"
-        min="0"
-        max="11"
-        step="1"
-        value="11"
-      />
-      <div class="date-range">
-        <span>Jan 2025</span>
-        <span>Dec 2025</span>
-      </div>
-      <div class="strike-count" id="strike-count"></div>
-    </div>
-
-    <!-- LAYER TOGGLES -->
-    <div class="layer-section">
-      <div class="layer-section-label">Map layers</div>
-
-      <label class="layer-toggle">
-        <input type="checkbox" id="toggle-strikes" checked />
-        <span class="layer-dot" style="background:#e8c87a"></span>
-        Strike locations
-      </label>
-
-      <label class="layer-toggle">
-        <input type="checkbox" id="toggle-zones" checked />
-        <span class="layer-dot" style="background:#e05a4e; opacity:0.7"></span>
-        Affected zones
-      </label>
-    </div>
-
-    <div class="story-text">
-      <p>
-        For context on the broader regional economy and how these events
-        have affected oil flows, see the
-        <a href="../gulf-oil-flows/">Gulf oil flows map →</a>
-        <!-- This link won't work until you build that second story.
-             You can remove it for now or leave it as a placeholder. -->
-      </p>
-    </div>
-
+  <div id="header">
+    <div class="site-name">The Spatial <span>Update</span></div>
+    <div class="site-tagline">Map-based current events</div>
   </div>
-  <!-- end sidebar -->
 
-  <!-- ══════════════════════════════════════════
-       MAP
-  ══════════════════════════════════════════ -->
-  <div id="map"></div>
+  <div id="body">
+    <div id="sidebar">
+      <div class="sidebar-head">
+        <div class="sidebar-label">Stories</div>
+        <div class="sidebar-count" id="story-count"></div>
+      </div>
+      <div id="story-list"></div>
+    </div>
+    <div id="map"></div>
+  </div>
 
-</div><!-- end layout -->
-
-<script>
-  // ════════════════════════════════════════════════════════════
-  // STEP 1 — PASTE YOUR MAPBOX TOKEN BELOW
-  // Get it from: mapbox.com → your account dashboard → tokens
-  // It starts with "pk."
-  // ════════════════════════════════════════════════════════════
-  mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW45dGkyaWcwY3dnMzFvZHBicncwZDduIn0.tUyw_YY97YD5SjGIyORPpA';
-
-
-  // ════════════════════════════════════════════════════════════
-  // STEP 2 — DATE LABELS FOR THE SLIDER
-  // These match slider positions 0–11 to month names.
-  // monthCodes are used to filter the GeoJSON data.
-  // ════════════════════════════════════════════════════════════
-  const months = [
-    'Jan 2025','Feb 2025','Mar 2025','Apr 2025',
-    'May 2025','Jun 2025','Jul 2025','Aug 2025',
-    'Sep 2025','Oct 2025','Nov 2025','Dec 2025'
-  ];
-
-  const monthCodes = [
-    202501, 202502, 202503, 202504,
-    202505, 202506, 202507, 202508,
-    202509, 202510, 202511, 202512
-  ];
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // YOUR MAPBOX TOKEN
+    // ═══════════════════════════════════════════════════════════════
+    mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW45dGkyaWcwY3dnMzFvZHBicncwZDduIn0.tUyw_YY97YD5SjGIyORPpA';
 
 
-  // ════════════════════════════════════════════════════════════
-  // STEP 3 — INITIALIZE THE MAP
-  // center: [longitude, latitude] — note longitude comes first!
-  // zoom: 5 shows Iran comfortably. Higher = closer in.
-  // ════════════════════════════════════════════════════════════
-  const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v11',
-    // ↑ Replace this with your own Mapbox Studio style URL once you've
-    //   designed your base map. It looks like:
-    //   'mapbox://styles/YOUR-USERNAME/YOUR-STYLE-ID'
-    center: [53.0, 32.5],
-    zoom: 5,
-    projection: 'mercator'
-  });
+    // ═══════════════════════════════════════════════════════════════
+    // STORIES LIST — the only section you edit to add new stories
+    //
+    // coordinates → [longitude, latitude]
+    // tag         → region · topic label
+    // title       → headline
+    // description → one sentence for the sidebar
+    // url         → path to the story folder
+    // color       → "gold", "red", "teal", or "blue"
+    // ═══════════════════════════════════════════════════════════════
+    const stories = [
+      {
+        coordinates: [53.0, 32.5],
+        tag: "Middle East · Military",
+        title: "Strikes on Iran: A Timeline of Escalation",
+        description: "Mapping the progression of strikes across Iranian territory, month by month.",
+        url: "./stories/iran-strikes/",
+        color: "red"
+      },
 
-  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+      // ── ADD YOUR NEXT STORY HERE ─────────────────────────────────
+      // Copy the block above, paste below, and fill in the details.
+      // ─────────────────────────────────────────────────────────────
+    ];
 
 
-  // ════════════════════════════════════════════════════════════
-  // STEP 4 — LOAD DATA AND ADD LAYERS
-  // This runs once the map has finished loading its base style.
-  // ════════════════════════════════════════════════════════════
-  map.on('load', () => {
+    // ═══════════════════════════════════════════════════════════════
+    // MARKER COLORS
+    // Add new entries here if you want more color options.
+    // ═══════════════════════════════════════════════════════════════
+    const markerColors = {
+      gold: '#e8c87a',
+      red:  '#e05a4e',
+      teal: '#3ecfb2',
+      blue: '#5b9bd5',
+    };
 
-    // ════════════════════════════════════════════════════════════
-    // BASE STYLE MODIFICATIONS
-    // These lines reshape how the underlying dark-v11 base map
-    // looks — suppressing noise, highlighting Iran, cleaning up
-    // labels. They run once when the map loads, before any of
-    // your own data layers are added.
-    // ════════════════════════════════════════════════════════════
 
-    // ── 1. Iran country highlight ──────────────────────────────
-    // Adds a subtle warm fill over Iran so it reads as the focus
-    // country. Uses Mapbox's built-in country boundary source,
-    // filtered to ISO code IR (Iran).
-    map.addLayer({
-      id: 'iran-highlight',
-      type: 'fill',
-      source: 'composite',
-      'source-layer': 'country_boundaries',
-      filter: ['==', ['get', 'iso_3166_1'], 'IR'],
-      paint: {
-        'fill-color': '#3a2e1e',
-        'fill-opacity': 0.6
-      }
-    }, 'admin-0-boundary');
-    // The second argument 'admin-0-boundary' inserts this layer
-    // just below the country border line so the border still shows
-    // on top of the highlight.
-
-    // ── 2. Suppress admin-1 boundaries at low zoom ─────────────
-    // Admin-1 = states/provinces. At zoom 5 these clutter every
-    // country equally. This makes them invisible below zoom 6 and
-    // fades them in gently as the user zooms in.
-    ['admin-1-boundary', 'admin-1-boundary-bg'].forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'line-opacity', [
-          'interpolate', ['linear'], ['zoom'],
-          5, 0,     // completely invisible at zoom 5 and below
-          6.5, 0.3, // faintly visible at zoom 6.5
-          8, 0.7    // full opacity once zoomed well in
-        ]);
-      }
+    // ═══════════════════════════════════════════════════════════════
+    // MAP INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/dark-v11',
+      center: [20, 25],
+      zoom: 2.2,
+      minZoom: 1.5,
+      projection: 'globe',
+      attributionControl: false
     });
 
-    // ── 3. Dim neighbor country fills ──────────────────────────
-    // Makes surrounding countries slightly darker/more receded
-    // than Iran, reinforcing the focus without hiding them.
-    if (map.getLayer('country-fills') || map.getLayer('land')) {
-      const fillLayer = map.getLayer('country-fills') ? 'country-fills' : 'land';
-      map.setPaintProperty(fillLayer, 'fill-color', '#111');
-    }
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    // ── 4. Country border — keep Iran's border prominent ───────
-    // Boost the opacity of admin-0 (country) borders slightly
-    // so Iran's outline reads clearly against neighbors.
-    ['admin-0-boundary', 'admin-0-boundary-bg'].forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'line-opacity', [
-          'interpolate', ['linear'], ['zoom'],
-          2, 0.5,
-          5, 0.9
-        ]);
-      }
-    });
+    // Globe atmosphere
+    map.on('style.load', () => {
+      map.setFog({
+        color: 'rgb(10, 10, 18)',
+        'high-color': 'rgb(20, 20, 40)',
+        'horizon-blend': 0.04,
+        'space-color': 'rgb(5, 5, 10)',
+        'star-intensity': 0.35
+      });
 
-    // ── 5. Label hierarchy ──────────────────────────────────────
-    // Country name labels: always visible, full opacity.
-    // City/place labels: only appear when zoomed in past 5.
-    // This stops Tehran, Mashhad etc. from cluttering the overview.
-    [
-      'place-city-label',
-      'place-town-village-hamlet-label',
-      'place-suburb-label'
-    ].forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setLayoutProperty(layerId, 'visibility', 'none');
-        // Re-enable them at zoom 6+ using a zoom expression isn't
-        // possible via setLayoutProperty, so instead we listen for
-        // zoom changes and toggle them:
-      }
-    });
+      // ── Convert stories to GeoJSON and add as a map layer ──
+      // This is the key fix: dots drawn by Mapbox stay locked to
+      // the globe at all zoom levels, unlike HTML marker elements.
 
-    // Show city labels only when zoomed in
-    map.on('zoom', () => {
-      const z = map.getZoom();
-      const cityVisibility = z >= 6 ? 'visible' : 'none';
-      [
-        'place-city-label',
-        'place-town-village-hamlet-label'
-      ].forEach(layerId => {
-        if (map.getLayer(layerId)) {
-          map.setLayoutProperty(layerId, 'visibility', cityVisibility);
+      const geojson = {
+        type: 'FeatureCollection',
+        features: stories.map((story, i) => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: story.coordinates
+          },
+          properties: {
+            index: i,
+            title: story.title,
+            url: story.url,
+            color: markerColors[story.color] || markerColors.gold
+          }
+        }))
+      };
+
+      map.addSource('stories', {
+        type: 'geojson',
+        data: geojson
+      });
+
+      // Outer glow ring
+      map.addLayer({
+        id: 'story-glow',
+        type: 'circle',
+        source: 'stories',
+        paint: {
+          'circle-radius': 14,
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.15,
+          'circle-stroke-width': 0
         }
       });
-    });
 
-    // ════════════════════════════════════════════════════════════
-    // YOUR DATA LAYERS — unchanged from before
-    // ════════════════════════════════════════════════════════════
-
-    // Load your GeoJSON file (sits in the same folder as this HTML file)
-    map.addSource('strikes', {
-      type: 'geojson',
-      data: './data.geojson'
-    });
-
-    // ── Layer 1: Strike points (yellow circles) ──
-    map.addLayer({
-      id: 'strikes-layer',
-      type: 'circle',
-      source: 'strikes',
-      filter: ['==', ['get', 'type'], 'strike'],
-      paint: {
-        // Circle size scales with the "magnitude" property (1–5)
-        'circle-radius': [
-          'interpolate', ['linear'], ['get', 'magnitude'],
-          1, 5,
-          5, 14
-        ],
-        'circle-color': '#e8c87a',
-        'circle-opacity': 0.85,
-        'circle-stroke-width': 1.5,
-        'circle-stroke-color': '#000',
-        'circle-stroke-opacity': 0.4
-      }
-    });
-
-    // ── Layer 2: Affected zone polygons (red fill) ──
-    map.addLayer({
-      id: 'zones-layer',
-      type: 'fill',
-      source: 'strikes',
-      filter: ['==', ['get', 'type'], 'zone'],
-      paint: {
-        'fill-color': '#e05a4e',
-        'fill-opacity': 0.15
-      }
-    });
-
-    // ── Layer 3: Zone outlines ──
-    map.addLayer({
-      id: 'zones-outline',
-      type: 'line',
-      source: 'strikes',
-      filter: ['==', ['get', 'type'], 'zone'],
-      paint: {
-        'line-color': '#e05a4e',
-        'line-width': 1.5,
-        'line-opacity': 0.6,
-        'line-dasharray': [2, 1]
-      }
-    });
-
-    // Apply the initial filter (slider starts at max = show everything)
-    applyTimeFilter(11);
-  });
-
-
-  // ════════════════════════════════════════════════════════════
-  // TIME SLIDER LOGIC
-  // When you drag the slider, this filters the map layers to only
-  // show features with a monthcode <= the selected month.
-  // ════════════════════════════════════════════════════════════
-  const slider = document.getElementById('time-slider');
-  const dateDisplay = document.getElementById('date-display');
-  const strikeCount = document.getElementById('strike-count');
-
-  function applyTimeFilter(val) {
-    const maxCode = monthCodes[val];
-    dateDisplay.textContent = months[val];
-
-    // The filter expression: only show features on or before selected month
-    const timeFilter = ['<=', ['get', 'monthcode'], maxCode];
-
-    if (map.getLayer('strikes-layer')) {
-      map.setFilter('strikes-layer', ['all',
-        ['==', ['get', 'type'], 'strike'],
-        timeFilter
-      ]);
-
-      // Count visible strike features and display the number
-      const features = map.querySourceFeatures('strikes', {
-        filter: ['all', ['==', ['get', 'type'], 'strike'], timeFilter]
+      // Main dot
+      map.addLayer({
+        id: 'story-dots',
+        type: 'circle',
+        source: 'stories',
+        paint: {
+          'circle-radius': 7,
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.9,
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': 'rgba(255,255,255,0.12)'
+        }
       });
-      const count = features.length;
-      strikeCount.innerHTML = count > 0
-        ? `<span>${count}</span> strike${count !== 1 ? 's' : ''} shown`
-        : 'No strikes in this period';
-    }
 
-    if (map.getLayer('zones-layer')) {
-      map.setFilter('zones-layer', ['all',
-        ['==', ['get', 'type'], 'zone'],
-        timeFilter
-      ]);
-    }
-    if (map.getLayer('zones-outline')) {
-      map.setFilter('zones-outline', ['all',
-        ['==', ['get', 'type'], 'zone'],
-        timeFilter
-      ]);
-    }
-  }
+      // Pointer cursor on hover
+      map.on('mouseenter', 'story-dots', () => {
+        map.getCanvas().style.cursor = 'pointer';
 
-  slider.addEventListener('input', (e) => {
-    applyTimeFilter(parseInt(e.target.value));
-  });
+        // Enlarge dot on hover
+        map.setPaintProperty('story-dots', 'circle-radius', 10);
+        map.setPaintProperty('story-glow', 'circle-radius', 18);
+        map.setPaintProperty('story-glow', 'circle-opacity', 0.22);
+      });
 
+      map.on('mouseleave', 'story-dots', () => {
+        map.getCanvas().style.cursor = '';
 
-  // ════════════════════════════════════════════════════════════
-  // LAYER TOGGLE LOGIC
-  // Checkboxes in the sidebar show/hide individual map layers.
-  // ════════════════════════════════════════════════════════════
-  document.getElementById('toggle-strikes').addEventListener('change', (e) => {
-    const v = e.target.checked ? 'visible' : 'none';
-    if (map.getLayer('strikes-layer')) {
-      map.setLayoutProperty('strikes-layer', 'visibility', v);
-    }
-  });
+        // Restore dot size
+        map.setPaintProperty('story-dots', 'circle-radius', 7);
+        map.setPaintProperty('story-glow', 'circle-radius', 14);
+        map.setPaintProperty('story-glow', 'circle-opacity', 0.15);
+      });
 
-  document.getElementById('toggle-zones').addEventListener('change', (e) => {
-    const v = e.target.checked ? 'visible' : 'none';
-    ['zones-layer', 'zones-outline'].forEach(id => {
-      if (map.getLayer(id)) {
-        map.setLayoutProperty(id, 'visibility', v);
-      }
+      // Click → open popup with description and link
+      const popup = new mapboxgl.Popup({
+        closeButton: true,
+        maxWidth: '300px',
+        offset: 14
+      });
+
+      map.on('click', 'story-dots', (e) => {
+        const props = e.features[0].properties;
+        const coords = e.features[0].geometry.coordinates.slice();
+        const story = stories[props.index];
+
+        popup
+          .setLngLat(coords)
+          .setHTML(`
+            <div class="popup-inner">
+              <div class="popup-tag">${story.tag}</div>
+              <div class="popup-title">${story.title}</div>
+              <div class="popup-desc">${story.description}</div>
+              <a class="popup-link" href="${story.url}">Open the full story →</a>
+            </div>
+          `)
+          .addTo(map);
+      });
     });
-  });
 
 
-  // ════════════════════════════════════════════════════════════
-  // CLICK POPUP LOGIC
-  // Clicking a strike point opens a popup with its details.
-  // The details come from the feature's properties in data.geojson.
-  // ════════════════════════════════════════════════════════════
-  const popup = new mapboxgl.Popup({
-    closeButton: true,
-    maxWidth: '260px',
-    offset: 12
-  });
+    // ═══════════════════════════════════════════════════════════════
+    // BUILD SIDEBAR
+    // ═══════════════════════════════════════════════════════════════
+    const storyList = document.getElementById('story-list');
+    const count = stories.length;
+    document.getElementById('story-count').innerHTML =
+      `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
 
-  map.on('click', 'strikes-layer', (e) => {
-    const props = e.features[0].properties;
-    const coords = e.features[0].geometry.coordinates.slice();
+    stories.forEach((story) => {
+      const color = markerColors[story.color] || markerColors.gold;
 
-    popup
-      .setLngLat(coords)
-      .setHTML(`
-        <div class="popup-date">${props.date}</div>
-        <div class="popup-title">${props.title}</div>
-        <div class="popup-desc">${props.description}</div>
-      `)
-      .addTo(map);
-  });
+      const item = document.createElement('a');
+      item.className = 'story-item';
+      item.href = story.url;
+      item.innerHTML = `
+        <div class="item-tag">
+          <span class="item-marker" style="background:${color}"></span>
+          ${story.tag}
+        </div>
+        <div class="item-title">${story.title}</div>
+        <div class="item-desc">${story.description}</div>
+      `;
 
-  // Pointer cursor on hover
-  map.on('mouseenter', 'strikes-layer', () => {
-    map.getCanvas().style.cursor = 'pointer';
-  });
-  map.on('mouseleave', 'strikes-layer', () => {
-    map.getCanvas().style.cursor = '';
-  });
-</script>
+      // Hovering sidebar entry flies the globe to that location
+      item.addEventListener('mouseenter', () => {
+        item.classList.add('active');
+        map.flyTo({
+          center: story.coordinates,
+          zoom: Math.max(map.getZoom(), 4),
+          duration: 900,
+          essential: true
+        });
+      });
+
+      item.addEventListener('mouseleave', () => {
+        item.classList.remove('active');
+      });
+
+      storyList.appendChild(item);
+    });
+
+  </script>
 </body>
 </html>
