@@ -295,11 +295,18 @@
 
     // ═══════════════════════════════════════════════════════════════
     // BUILD SIDEBAR
+    // Built here inside style.load so the map is ready when
+    // hover interactions fire.
     // ═══════════════════════════════════════════════════════════════
     const storyList = document.getElementById('story-list');
     const count = stories.length;
     document.getElementById('story-count').innerHTML =
       `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
+
+    // Store the initial map center and zoom so we can return to it
+    const homeCenter = [20, 25];
+    const homeZoom = 2.2;
+    let flyBackTimer = null;
 
     stories.forEach((story) => {
       const color = markerColors[story.color] || markerColors.gold;
@@ -316,19 +323,34 @@
         <div class="item-desc">${story.description}</div>
       `;
 
-      // Hovering sidebar entry flies the globe to that location
+      // Hovering a sidebar entry flies the globe to that story's location
       item.addEventListener('mouseenter', () => {
         item.classList.add('active');
+
+        // Cancel any pending return-home animation
+        if (flyBackTimer) clearTimeout(flyBackTimer);
+
         map.flyTo({
           center: story.coordinates,
-          zoom: Math.max(map.getZoom(), 4),
-          duration: 900,
+          zoom: 5,
+          duration: 1200,
           essential: true
         });
       });
 
+      // Leaving a sidebar entry flies back to the world overview
       item.addEventListener('mouseleave', () => {
         item.classList.remove('active');
+
+        // Small delay so quickly moving between items doesn't flicker
+        flyBackTimer = setTimeout(() => {
+          map.flyTo({
+            center: homeCenter,
+            zoom: homeZoom,
+            duration: 1000,
+            essential: true
+          });
+        }, 300);
       });
 
       storyList.appendChild(item);
