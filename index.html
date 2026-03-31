@@ -250,60 +250,62 @@
       });
 
 
-      // ── BUILD SIDEBAR ──────────────────────────────────────────
-      // Inside style.load so map.flyTo() works immediately
-      // ──────────────────────────────────────────────────────────
-      const storyList = document.getElementById('story-list');
-      const count = stories.length;
-      document.getElementById('story-count').innerHTML =
-        `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
+    }); // end style.load
 
-      let flyBackTimer = null;
 
-      stories.forEach((story) => {
-        const color = markerColors[story.color] || markerColors.gold;
+    // ── BUILD SIDEBAR ────────────────────────────────────────────
+    // Outside style.load — runs as soon as the page HTML is ready.
+    // The map object already exists at this point so flyTo works
+    // fine inside the event listeners, even though the style may
+    // still be loading. By the time a user hovers, it's long done.
+    // ─────────────────────────────────────────────────────────────
+    const storyList = document.getElementById('story-list');
+    const count = stories.length;
+    document.getElementById('story-count').innerHTML =
+      `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
 
-        const item = document.createElement('a');
-        item.className = 'story-item';
-        item.href = story.url;
-        item.innerHTML = `
-          <div class="item-tag">
-            <span class="item-marker" style="background:${color}"></span>
-            ${story.tag}
-          </div>
-          <div class="item-title">${story.title}</div>
-          <div class="item-desc">${story.description}</div>
-        `;
+    let flyBackTimer = null;
 
-        // Hover → fly to story location
-        item.addEventListener('mouseenter', () => {
-          item.classList.add('active');
-          if (flyBackTimer) clearTimeout(flyBackTimer);
-          map.flyTo({
-            center: story.coordinates,
-            zoom: 5,
-            duration: 1200,
-            essential: true
-          });
+    stories.forEach((story) => {
+      const color = markerColors[story.color] || markerColors.gold;
+
+      const item = document.createElement('a');
+      item.className = 'story-item';
+      item.href = story.url;
+      item.innerHTML = `
+        <div class="item-tag">
+          <span class="item-marker" style="background:${color}"></span>
+          ${story.tag}
+        </div>
+        <div class="item-title">${story.title}</div>
+        <div class="item-desc">${story.description}</div>
+      `;
+
+      item.addEventListener('mouseenter', () => {
+        item.classList.add('active');
+        if (flyBackTimer) clearTimeout(flyBackTimer);
+        map.flyTo({
+          center: story.coordinates,
+          zoom: 5,
+          duration: 1200,
+          essential: true
         });
-
-        // Leave → fly back to world overview after short delay
-        item.addEventListener('mouseleave', () => {
-          item.classList.remove('active');
-          flyBackTimer = setTimeout(() => {
-            map.flyTo({
-              center: homeCenter,
-              zoom: homeZoom,
-              duration: 1000,
-              essential: true
-            });
-          }, 300);
-        });
-
-        storyList.appendChild(item);
       });
 
-    }); // end style.load
+      item.addEventListener('mouseleave', () => {
+        item.classList.remove('active');
+        flyBackTimer = setTimeout(() => {
+          map.flyTo({
+            center: homeCenter,
+            zoom: homeZoom,
+            duration: 1000,
+            essential: true
+          });
+        }, 300);
+      });
+
+      storyList.appendChild(item);
+    });
 
   </script>
 </body>
