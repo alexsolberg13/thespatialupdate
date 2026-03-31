@@ -220,17 +220,35 @@
       });
 
       // Dot hover effects
-      map.on('mouseenter', 'story-dots', () => {
+      map.on('mouseenter', 'story-dots', (e) => {
         map.getCanvas().style.cursor = 'pointer';
         map.setPaintProperty('story-dots', 'circle-radius', 10);
         map.setPaintProperty('story-glow', 'circle-radius', 18);
         map.setPaintProperty('story-glow', 'circle-opacity', 0.22);
+
+        // Fly to the hovered dot — same behaviour as sidebar hover
+        const coords = e.features[0].geometry.coordinates.slice();
+        map.flyTo({
+          center: coords,
+          zoom: 5,
+          duration: 1200,
+          essential: true
+        });
       });
+
       map.on('mouseleave', 'story-dots', () => {
         map.getCanvas().style.cursor = '';
         map.setPaintProperty('story-dots', 'circle-radius', 7);
         map.setPaintProperty('story-glow', 'circle-radius', 14);
         map.setPaintProperty('story-glow', 'circle-opacity', 0.15);
+
+        // Fly back to world overview
+        map.flyTo({
+          center: homeCenter,
+          zoom: homeZoom,
+          duration: 1000,
+          essential: true
+        });
       });
 
       // Click dot → popup
