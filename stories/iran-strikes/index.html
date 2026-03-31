@@ -335,6 +335,116 @@
   // ════════════════════════════════════════════════════════════
   map.on('load', () => {
 
+    // ════════════════════════════════════════════════════════════
+    // BASE STYLE MODIFICATIONS
+    // These lines reshape how the underlying dark-v11 base map
+    // looks — suppressing noise, highlighting Iran, cleaning up
+    // labels. They run once when the map loads, before any of
+    // your own data layers are added.
+    // ════════════════════════════════════════════════════════════
+
+    // ── 1. Iran country highlight ──────────────────────────────
+    // Adds a subtle warm fill over Iran so it reads as the focus
+    // country. Uses Mapbox's built-in country boundary source,
+    // filtered to ISO code IR (Iran).
+    // Find the first admin boundary layer to insert the highlight below it.
+    // We try several possible names since they vary between style versions.
+    const adminBoundaryLayer = [
+      'admin-0-boundary',
+      'admin-0-boundary-bg',
+      'boundary_country',
+      'country-boundary'
+    ].find(id => map.getLayer(id));
+
+    try {
+      map.addLayer({
+        id: 'iran-highlight',
+        type: 'fill',
+        source: 'composite',
+        'source-layer': 'country_boundaries',
+        filter: ['==', ['get', 'iso_3166_1'], 'IR'],
+        paint: {
+          'fill-color': '#3a2e1e',
+          'fill-opacity': 0.6
+        }
+      }, adminBoundaryLayer || undefined);
+      // If adminBoundaryLayer is undefined, the highlight goes on top —
+      // still visible, just above borders rather than below them.
+    } catch (e) {
+      console.warn('Iran highlight layer skipped:', e.message);
+    }
+
+    // ── 2. Suppress admin-1 boundaries at low zoom ─────────────
+    // Admin-1 = states/provinces. At zoom 5 these clutter every
+    // country equally. This makes them invisible below zoom 6 and
+    // fades them in gently as the user zooms in.
+    ['admin-1-boundary', 'admin-1-boundary-bg'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'line-opacity', [
+          'interpolate', ['linear'], ['zoom'],
+          5, 0,     // completely invisible at zoom 5 and below
+          6.5, 0.3, // faintly visible at zoom 6.5
+          8, 0.7    // full opacity once zoomed well in
+        ]);
+      }
+    });
+
+    // ── 3. Dim neighbor country fills ──────────────────────────
+    // Makes surrounding countries slightly darker/more receded
+    // than Iran, reinforcing the focus without hiding them.
+    if (map.getLayer('country-fills') || map.getLayer('land')) {
+      const fillLayer = map.getLayer('country-fills') ? 'country-fills' : 'land';
+      map.setPaintProperty(fillLayer, 'fill-color', '#111');
+    }
+
+    // ── 4. Country border — keep Iran's border prominent ───────
+    // Boost the opacity of admin-0 (country) borders slightly
+    // so Iran's outline reads clearly against neighbors.
+    ['admin-0-boundary', 'admin-0-boundary-bg'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'line-opacity', [
+          'interpolate', ['linear'], ['zoom'],
+          2, 0.5,
+          5, 0.9
+        ]);
+      }
+    });
+
+    // ── 5. Label hierarchy ──────────────────────────────────────
+    // Country name labels: always visible, full opacity.
+    // City/place labels: only appear when zoomed in past 5.
+    // This stops Tehran, Mashhad etc. from cluttering the overview.
+    [
+      'place-city-label',
+      'place-town-village-hamlet-label',
+      'place-suburb-label'
+    ].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setLayoutProperty(layerId, 'visibility', 'none');
+        // Re-enable them at zoom 6+ using a zoom expression isn't
+        // possible via setLayoutProperty, so instead we listen for
+        // zoom changes and toggle them:
+      }
+    });
+
+    // Show city labels only when zoomed in
+    map.on('zoom', () => {
+      const z = map.getZoom();
+      const cityVisibility = z >= 6 ? 'visible' : 'none';
+      [
+        'place-city-label',
+        'place-town-village-hamlet-label'
+      ].forEach(layerId => {
+        if (map.getLayer(layerId)) {
+          map.setLayoutProperty(layerId, 'visibility', cityVisibility);
+        }
+      });
+    });
+
+    // ════════════════════════════════════════════════════════════
+    // YOUR DATA LAYERS — unchanged from before
+    // ════════════════════════════════════════════════════════════
+
     // Load your GeoJSON file (sits in the same folder as this HTML file)
     map.addSource('strikes', {
       type: 'geojson',
