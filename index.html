@@ -12,69 +12,114 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
+    /* ── Header ── */
     #header {
-      height: 52px;
-      background: #111;
-      border-bottom: 1px solid #222;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
-      flex-shrink: 0;
-      z-index: 10;
+      height: 52px; background: #111; border-bottom: 1px solid #222;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; flex-shrink: 0; z-index: 10;
     }
     .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: #f0ede8; text-transform: uppercase; }
     .site-name span { color: #e8c87a; }
     .site-tagline { font-size: 11px; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
 
+    /* ── Body ── */
     #body { display: flex; flex: 1; overflow: hidden; }
 
+    /* ── Sidebar ── */
     #sidebar {
-      width: 300px;
-      flex-shrink: 0;
-      background: #111;
-      border-right: 1px solid #222;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      width: 300px; flex-shrink: 0; background: #111;
+      border-right: 1px solid #222; display: flex;
+      flex-direction: column; overflow: hidden;
     }
-    .sidebar-head { padding: 20px 22px 14px; border-bottom: 1px solid #1e1e1e; }
-    .sidebar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #555; margin-bottom: 4px; font-family: Arial, sans-serif; }
-    .sidebar-count { font-size: 13px; color: #777; font-family: Arial, sans-serif; }
-    .sidebar-count span { color: #e8c87a; font-weight: bold; }
 
+    /* Search */
+    .search-wrap { padding: 14px 16px; border-bottom: 1px solid #1e1e1e; }
+    #search {
+      width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a;
+      border-radius: 5px; padding: 7px 10px; font-size: 12px;
+      color: #ccc; font-family: Arial, sans-serif; outline: none;
+    }
+    #search::placeholder { color: #444; }
+    #search:focus { border-color: #3a3a3a; }
+
+    /* Story count */
+    .sidebar-meta {
+      padding: 10px 16px 8px; display: flex;
+      align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .sidebar-count { font-size: 11px; color: #555; font-family: Arial, sans-serif; }
+    .sidebar-count span { color: #e8c87a; }
+    .no-results { padding: 20px 16px; font-size: 13px; color: #444; font-family: Arial, sans-serif; display: none; }
+
+    /* Scrollable list */
     #story-list { overflow-y: auto; flex: 1; }
-    #story-list::-webkit-scrollbar { width: 4px; }
-    #story-list::-webkit-scrollbar-track { background: transparent; }
+    #story-list::-webkit-scrollbar { width: 3px; }
     #story-list::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
 
-    .story-item {
-      display: block;
-      text-decoration: none;
-      padding: 16px 22px;
-      border-bottom: 1px solid #1a1a1a;
-      transition: background 0.15s;
-      cursor: pointer;
-    }
-    .story-item:hover { background: #161616; }
-    .story-item.active { background: #161616; border-left: 2px solid #e8c87a; padding-left: 20px; }
-    .item-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #e8c87a; margin-bottom: 5px; font-family: Arial, sans-serif; }
-    .item-marker { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; margin-bottom: 2px; }
-    .item-title { font-size: 14px; color: #e8e6e1; line-height: 1.4; margin-bottom: 5px; }
-    .item-desc { font-size: 12px; color: #666; line-height: 1.5; font-family: Arial, sans-serif; }
+    /* Region group */
+    .region-group { border-bottom: 1px solid #1a1a1a; }
 
+    .region-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 16px; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+    }
+    .region-header:hover { background: #161616; }
+
+    .region-left { display: flex; align-items: center; gap: 8px; }
+    .region-name { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.08em; font-family: Arial, sans-serif; }
+    .region-count { font-size: 10px; color: #444; font-family: Arial, sans-serif; }
+
+    .region-chevron {
+      width: 0; height: 0; flex-shrink: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #444;
+      transition: transform 0.2s;
+    }
+    .region-chevron.open { transform: rotate(180deg); }
+
+    .region-stories { display: none; }
+    .region-stories.open { display: block; }
+
+    /* Story item */
+    .story-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 16px 10px 24px;
+      text-decoration: none; border-bottom: 1px solid #161616;
+      transition: background 0.15s; cursor: pointer;
+    }
+    .story-item:last-child { border-bottom: none; }
+    .story-item:hover { background: #161616; }
+    .story-item.active { background: #161616; border-left: 2px solid #e8c87a; padding-left: 22px; }
+
+    .item-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+
+    .item-body { flex: 1; min-width: 0; }
+    .item-title { font-size: 13px; color: #d8d5ce; line-height: 1.4; margin-bottom: 3px; }
+    .item-meta { display: flex; align-items: center; gap: 5px; }
+    .item-tag { font-size: 10px; color: #666; font-family: Arial, sans-serif; }
+    .item-type {
+      font-size: 9px; font-family: Arial, sans-serif; font-weight: 500;
+      padding: 1px 5px; border-radius: 2px; text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .type-news    { background: #2a1a08; color: #e8c87a; }
+    .type-economy { background: #0a1e2e; color: #5b9bd5; }
+    .type-geography { background: #0a201a; color: #3ecfb2; }
+    .type-demographics { background: #1e0e14; color: #e05a4e; }
+    .type-military  { background: #1e1010; color: #e05a4e; }
+
+    /* Map */
     #map { flex: 1; height: 100%; }
 
+    /* Popup */
     .mapboxgl-popup-content {
-      background: #1a1a1a !important;
-      border: 1px solid #2e2e2e;
-      border-radius: 8px;
-      padding: 0;
-      font-family: Georgia, serif;
+      background: #1a1a1a !important; border: 1px solid #2e2e2e;
+      border-radius: 8px; padding: 0; font-family: Georgia, serif;
       box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-      min-width: 220px;
-      max-width: 280px;
-      overflow: hidden;
+      min-width: 220px; max-width: 280px; overflow: hidden;
     }
     .mapboxgl-popup-close-button { color: #555; font-size: 18px; padding: 6px 10px; background: none; }
     .mapboxgl-popup-close-button:hover { color: #aaa; background: none; }
@@ -86,8 +131,8 @@
     .popup-link {
       display: block; text-align: center; font-size: 12px; color: #0f0f0f;
       background: #e8c87a; padding: 9px 14px; border-radius: 4px;
-      text-decoration: none; font-family: Arial, sans-serif;
-      letter-spacing: 0.03em; transition: background 0.15s;
+      text-decoration: none; font-family: Arial, sans-serif; letter-spacing: 0.03em;
+      transition: background 0.15s;
     }
     .popup-link:hover { background: #f0d88a; }
   </style>
@@ -101,10 +146,13 @@
 
   <div id="body">
     <div id="sidebar">
-      <div class="sidebar-head">
-        <div class="sidebar-label">Stories</div>
+      <div class="search-wrap">
+        <input type="text" id="search" placeholder="Search stories..." autocomplete="off" />
+      </div>
+      <div class="sidebar-meta">
         <div class="sidebar-count" id="story-count"></div>
       </div>
+      <div class="no-results" id="no-results">No stories match your search.</div>
       <div id="story-list"></div>
     </div>
     <div id="map"></div>
@@ -118,20 +166,48 @@
 
 
     // ═══════════════════════════════════════════════════════════════
-    // STORIES LIST — edit this to add new stories
+    // STORIES LIST
+    //
+    // Each story now has a "region" and "type" property.
+    //
+    // region → groups stories in the sidebar (e.g. "Middle East")
+    // type   → "news" | "economy" | "geography" | "demographics" | "military"
+    //           controls the badge colour
+    //
+    // To add a new story: copy a block, fill in the details.
+    // To add a new region: just use a new region name — it appears
+    // in the sidebar automatically, alphabetically sorted.
     // ═══════════════════════════════════════════════════════════════
     const stories = [
       {
+        region: "Middle East",
         coordinates: [53.0, 32.5],
-        tag: "Middle East · Military",
+        tag: "Iran · Military",
+        type: "military",
         title: "Strikes on Iran: A Timeline of Escalation",
         description: "Mapping the progression of strikes across Iranian territory, month by month.",
         url: "./stories/iran-strikes/",
         color: "red"
       },
-      // Add new stories here
+
+      // ── ADD YOUR NEXT STORY HERE ─────────────────────────────
+      // {
+      //   region: "Middle East",
+      //   coordinates: [50.5, 26.0],
+      //   tag: "Gulf · Economics",
+      //   type: "economy",
+      //   title: "Gulf Oil Flows Since the War",
+      //   description: "How Iranian conflict has reshuffled oil shipping routes.",
+      //   url: "./stories/gulf-oil-flows/",
+      //   color: "gold"
+      // },
+      // ─────────────────────────────────────────────────────────
     ];
 
+
+    // ═══════════════════════════════════════════════════════════════
+    // MARKER COLORS
+    // ═══════════════════════════════════════════════════════════════
     const markerColors = {
       gold: '#e8c87a',
       red:  '#e05a4e',
@@ -159,74 +235,43 @@
     map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-
-    // ═══════════════════════════════════════════════════════════════
-    // EVERYTHING INSIDE style.load — map must be ready before
-    // we add layers, build the sidebar, or call flyTo
-    // ═══════════════════════════════════════════════════════════════
     map.on('style.load', () => {
-
-      // Globe atmosphere
       map.setFog({
-        color: 'rgb(10, 10, 18)',
-        'high-color': 'rgb(20, 20, 40)',
-        'horizon-blend': 0.04,
-        'space-color': 'rgb(5, 5, 10)',
-        'star-intensity': 0.35
+        color: 'rgb(10, 10, 18)', 'high-color': 'rgb(20, 20, 40)',
+        'horizon-blend': 0.04, 'space-color': 'rgb(5, 5, 10)', 'star-intensity': 0.35
       });
 
-      // Add stories as a GeoJSON layer so dots lock to the globe
       const geojson = {
         type: 'FeatureCollection',
-        features: stories.map((story, i) => ({
+        features: stories.map((s, i) => ({
           type: 'Feature',
-          geometry: { type: 'Point', coordinates: story.coordinates },
-          properties: {
-            index: i,
-            title: story.title,
-            url: story.url,
-            color: markerColors[story.color] || markerColors.gold
-          }
+          geometry: { type: 'Point', coordinates: s.coordinates },
+          properties: { index: i, color: markerColors[s.color] || markerColors.gold }
         }))
       };
 
       map.addSource('stories', { type: 'geojson', data: geojson });
 
-      // Glow ring
       map.addLayer({
-        id: 'story-glow',
-        type: 'circle',
-        source: 'stories',
-        paint: {
-          'circle-radius': 14,
-          'circle-color': ['get', 'color'],
-          'circle-opacity': 0.15,
-          'circle-stroke-width': 0
-        }
+        id: 'story-glow', type: 'circle', source: 'stories',
+        paint: { 'circle-radius': 14, 'circle-color': ['get', 'color'], 'circle-opacity': 0.15, 'circle-stroke-width': 0 }
       });
 
-      // Main dot
       map.addLayer({
-        id: 'story-dots',
-        type: 'circle',
-        source: 'stories',
+        id: 'story-dots', type: 'circle', source: 'stories',
         paint: {
-          'circle-radius': 7,
-          'circle-color': ['get', 'color'],
-          'circle-opacity': 0.9,
-          'circle-stroke-width': 1.5,
+          'circle-radius': 7, 'circle-color': ['get', 'color'],
+          'circle-opacity': 0.9, 'circle-stroke-width': 1.5,
           'circle-stroke-color': 'rgba(255,255,255,0.12)'
         }
       });
 
-      // Dot hover — enlarge dot only, no camera movement
       map.on('mouseenter', 'story-dots', () => {
         map.getCanvas().style.cursor = 'pointer';
         map.setPaintProperty('story-dots', 'circle-radius', 10);
         map.setPaintProperty('story-glow', 'circle-radius', 18);
         map.setPaintProperty('story-glow', 'circle-opacity', 0.22);
       });
-
       map.on('mouseleave', 'story-dots', () => {
         map.getCanvas().style.cursor = '';
         map.setPaintProperty('story-dots', 'circle-radius', 7);
@@ -234,22 +279,12 @@
         map.setPaintProperty('story-glow', 'circle-opacity', 0.15);
       });
 
-      // Click dot → popup
       const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '300px', offset: 14 });
 
       map.on('click', 'story-dots', (e) => {
         const story = stories[e.features[0].properties.index];
         const coords = e.features[0].geometry.coordinates.slice();
-
-        // Fly to the marker first, then open the popup once the
-        // animation finishes so it appears centred on screen
-        map.flyTo({
-          center: coords,
-          zoom: 5,
-          duration: 1000,
-          essential: true
-        });
-
+        map.flyTo({ center: coords, zoom: 5, duration: 1000, essential: true });
         map.once('moveend', () => {
           popup.setLngLat(coords).setHTML(`
             <div class="popup-inner">
@@ -261,63 +296,122 @@
           `).addTo(map);
         });
       });
+    });
 
 
-    }); // end style.load
+    // ═══════════════════════════════════════════════════════════════
+    // BUILD SIDEBAR
+    // Groups stories by region, builds collapsible sections,
+    // wires up search filtering.
+    // ═══════════════════════════════════════════════════════════════
+    const storyList   = document.getElementById('story-list');
+    const storyCount  = document.getElementById('story-count');
+    const searchInput = document.getElementById('search');
+    const noResults   = document.getElementById('no-results');
 
+    // Group stories by region
+    const regions = {};
+    stories.forEach((story, i) => {
+      if (!regions[story.region]) regions[story.region] = [];
+      regions[story.region].push({ ...story, index: i });
+    });
 
-    // ── BUILD SIDEBAR ────────────────────────────────────────────
-    // Outside style.load — runs as soon as the page HTML is ready.
-    // The map object already exists at this point so flyTo works
-    // fine inside the event listeners, even though the style may
-    // still be loading. By the time a user hovers, it's long done.
-    // ─────────────────────────────────────────────────────────────
-    const storyList = document.getElementById('story-list');
-    const count = stories.length;
-    document.getElementById('story-count').innerHTML =
-      `<span>${count}</span> stor${count !== 1 ? 'ies' : 'y'} on the map`;
+    // Sort regions alphabetically
+    const sortedRegions = Object.keys(regions).sort();
 
     let flyBackTimer = null;
 
-    stories.forEach((story) => {
-      const color = markerColors[story.color] || markerColors.gold;
+    function buildSidebar(filter = '') {
+      storyList.innerHTML = '';
+      const q = filter.toLowerCase().trim();
+      let totalVisible = 0;
 
-      const item = document.createElement('a');
-      item.className = 'story-item';
-      item.href = story.url;
-      item.innerHTML = `
-        <div class="item-tag">
-          <span class="item-marker" style="background:${color}"></span>
-          ${story.tag}
-        </div>
-        <div class="item-title">${story.title}</div>
-        <div class="item-desc">${story.description}</div>
-      `;
+      sortedRegions.forEach(regionName => {
+        const regionStories = regions[regionName].filter(s =>
+          !q ||
+          s.title.toLowerCase().includes(q) ||
+          s.tag.toLowerCase().includes(q) ||
+          s.type.toLowerCase().includes(q) ||
+          s.region.toLowerCase().includes(q)
+        );
 
-      item.addEventListener('mouseenter', () => {
-        item.classList.add('active');
-        if (flyBackTimer) clearTimeout(flyBackTimer);
-        map.flyTo({
-          center: story.coordinates,
-          zoom: 5,
-          duration: 1200,
-          essential: true
-        });
-      });
+        if (regionStories.length === 0) return;
+        totalVisible += regionStories.length;
 
-      item.addEventListener('mouseleave', () => {
-        item.classList.remove('active');
-        flyBackTimer = setTimeout(() => {
-          map.flyTo({
-            center: homeCenter,
-            zoom: homeZoom,
-            duration: 1000,
-            essential: true
+        const group = document.createElement('div');
+        group.className = 'region-group';
+
+        // Region header
+        const header = document.createElement('div');
+        header.className = 'region-header';
+        header.innerHTML = `
+          <div class="region-left">
+            <span class="region-name">${regionName}</span>
+            <span class="region-count">${regionStories.length}</span>
+          </div>
+          <div class="region-chevron open"></div>
+        `;
+
+        // Stories container
+        const storiesEl = document.createElement('div');
+        storiesEl.className = 'region-stories open';
+
+        regionStories.forEach(story => {
+          const color = markerColors[story.color] || markerColors.gold;
+          const item = document.createElement('a');
+          item.className = 'story-item';
+          item.href = story.url;
+          item.innerHTML = `
+            <div class="item-dot" style="background:${color}"></div>
+            <div class="item-body">
+              <div class="item-title">${story.title}</div>
+              <div class="item-meta">
+                <span class="item-tag">${story.tag}</span>
+                <span class="item-type type-${story.type}">${story.type}</span>
+              </div>
+            </div>
+          `;
+
+          item.addEventListener('mouseenter', () => {
+            item.classList.add('active');
+            if (flyBackTimer) clearTimeout(flyBackTimer);
+            map.flyTo({ center: story.coordinates, zoom: 5, duration: 1200, essential: true });
           });
-        }, 300);
+
+          item.addEventListener('mouseleave', () => {
+            item.classList.remove('active');
+            flyBackTimer = setTimeout(() => {
+              map.flyTo({ center: homeCenter, zoom: homeZoom, duration: 1000, essential: true });
+            }, 300);
+          });
+
+          storiesEl.appendChild(item);
+        });
+
+        // Toggle region open/closed on header click
+        header.addEventListener('click', () => {
+          const chevron = header.querySelector('.region-chevron');
+          const isOpen = storiesEl.classList.contains('open');
+          storiesEl.classList.toggle('open', !isOpen);
+          chevron.classList.toggle('open', !isOpen);
+        });
+
+        group.appendChild(header);
+        group.appendChild(storiesEl);
+        storyList.appendChild(group);
       });
 
-      storyList.appendChild(item);
+      // Update count and no-results message
+      storyCount.innerHTML = `<span>${totalVisible}</span> stor${totalVisible !== 1 ? 'ies' : 'y'}${q ? ' found' : ' on the map'}`;
+      noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+    }
+
+    // Initial build
+    buildSidebar();
+
+    // Search — rebuild on every keystroke
+    searchInput.addEventListener('input', (e) => {
+      buildSidebar(e.target.value);
     });
 
   </script>
