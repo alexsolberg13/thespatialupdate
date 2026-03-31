@@ -334,145 +334,111 @@
   // This runs once the map has finished loading its base style.
   // ════════════════════════════════════════════════════════════
   map.on('load', () => {
+    console.log('Map loaded. Style layers:', map.getStyle().layers.map(l=>l.id));
 
     // ════════════════════════════════════════════════════════════
-    // BASE STYLE MODIFICATIONS
-    // These lines reshape how the underlying dark-v11 base map
-    // looks — suppressing noise, highlighting Iran, cleaning up
-    // labels. They run once when the map loads, before any of
-    // your own data layers are added.
+    // IRAN HIGHLIGHT
+    // Uses a self-contained GeoJSON bounding polygon for Iran
+    // rather than relying on Mapbox internal source layer names,
+    // which vary between style versions.
     // ════════════════════════════════════════════════════════════
-
-    // ── 1. Iran country highlight ──────────────────────────────
-    // Adds a subtle warm fill over Iran so it reads as the focus
-    // country. Uses Mapbox's built-in country boundary source,
-    // filtered to ISO code IR (Iran).
-    // Find the first admin boundary layer to insert the highlight below it.
-    // We try several possible names since they vary between style versions.
-    const adminBoundaryLayer = [
-      'admin-0-boundary',
-      'admin-0-boundary-bg',
-      'boundary_country',
-      'country-boundary'
-    ].find(id => map.getLayer(id));
-
-    try {
-      map.addLayer({
-        id: 'iran-highlight',
-        type: 'fill',
-        source: 'composite',
-        'source-layer': 'country_boundaries',
-        filter: ['==', ['get', 'iso_3166_1'], 'IR'],
-        paint: {
-          'fill-color': '#3a2e1e',
-          'fill-opacity': 0.6
+    map.addSource('iran-shape', {
+      type: 'geojson',
+      data: {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[
+            [44.0, 39.8], [46.5, 39.6], [48.6, 38.4], [50.1, 37.4],
+            [53.0, 37.9], [54.7, 37.6], [58.4, 37.6], [60.4, 36.7],
+            [61.2, 35.6], [61.1, 34.0], [60.5, 33.1], [60.9, 31.5],
+            [60.6, 29.9], [57.8, 29.0], [56.4, 27.1], [55.6, 26.2],
+            [54.9, 26.6], [53.7, 26.9], [51.6, 27.2], [50.1, 27.9],
+            [49.6, 29.0], [48.0, 30.0], [47.7, 30.9], [47.1, 30.9],
+            [45.4, 33.0], [45.7, 35.0], [44.8, 37.2], [44.2, 37.9],
+            [44.0, 39.8]
+          ]]
         }
-      }, adminBoundaryLayer || undefined);
-      // If adminBoundaryLayer is undefined, the highlight goes on top —
-      // still visible, just above borders rather than below them.
-    } catch (e) {
-      console.warn('Iran highlight layer skipped:', e.message);
-    }
+      }
+    });
 
-    // ── 2. Suppress admin-1 boundaries at low zoom ─────────────
-    // Admin-1 = states/provinces. At zoom 5 these clutter every
-    // country equally. This makes them invisible below zoom 6 and
-    // fades them in gently as the user zooms in.
-    ['admin-1-boundary', 'admin-1-boundary-bg'].forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'line-opacity', [
+    map.addLayer({
+      id: 'iran-fill',
+      type: 'fill',
+      source: 'iran-shape',
+      paint: {
+        'fill-color': '#2a2010',
+        'fill-opacity': 0.55
+      }
+    });
+
+    // ════════════════════════════════════════════════════════════
+    // ADMIN BOUNDARY SUPPRESSION
+    // Fades out province/state borders at low zoom levels.
+    // ════════════════════════════════════════════════════════════
+    ['admin-1-boundary', 'admin-1-boundary-bg'].forEach(id => {
+      if (map.getLayer(id)) {
+        map.setPaintProperty(id, 'line-opacity', [
           'interpolate', ['linear'], ['zoom'],
-          5, 0,     // completely invisible at zoom 5 and below
-          6.5, 0.3, // faintly visible at zoom 6.5
-          8, 0.7    // full opacity once zoomed well in
+          4, 0, 6.5, 0.3, 8, 0.7
         ]);
       }
     });
 
-    // ── 3. Dim neighbor country fills ──────────────────────────
-    // Makes surrounding countries slightly darker/more receded
-    // than Iran, reinforcing the focus without hiding them.
-    if (map.getLayer('country-fills') || map.getLayer('land')) {
-      const fillLayer = map.getLayer('country-fills') ? 'country-fills' : 'land';
-      map.setPaintProperty(fillLayer, 'fill-color', '#111');
-    }
+    // ════════════════════════════════════════════════════════════
+    // LABEL HIERARCHY — hide city labels until zoomed in
+    // ════════════════════════════════════════════════════════════
+    ['place-city-label', 'place-town-village-hamlet-label', 'place-suburb-label']
+      .forEach(id => {
+        if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
+      });
 
-    // ── 4. Country border — keep Iran's border prominent ───────
-    // Boost the opacity of admin-0 (country) borders slightly
-    // so Iran's outline reads clearly against neighbors.
-    ['admin-0-boundary', 'admin-0-boundary-bg'].forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'line-opacity', [
-          'interpolate', ['linear'], ['zoom'],
-          2, 0.5,
-          5, 0.9
-        ]);
-      }
-    });
-
-    // ── 5. Label hierarchy ──────────────────────────────────────
-    // Country name labels: always visible, full opacity.
-    // City/place labels: only appear when zoomed in past 5.
-    // This stops Tehran, Mashhad etc. from cluttering the overview.
-    [
-      'place-city-label',
-      'place-town-village-hamlet-label',
-      'place-suburb-label'
-    ].forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setLayoutProperty(layerId, 'visibility', 'none');
-        // Re-enable them at zoom 6+ using a zoom expression isn't
-        // possible via setLayoutProperty, so instead we listen for
-        // zoom changes and toggle them:
-      }
-    });
-
-    // Show city labels only when zoomed in
     map.on('zoom', () => {
-      const z = map.getZoom();
-      const cityVisibility = z >= 6 ? 'visible' : 'none';
-      [
-        'place-city-label',
-        'place-town-village-hamlet-label'
-      ].forEach(layerId => {
-        if (map.getLayer(layerId)) {
-          map.setLayoutProperty(layerId, 'visibility', cityVisibility);
-        }
+      const vis = map.getZoom() >= 6 ? 'visible' : 'none';
+      ['place-city-label', 'place-town-village-hamlet-label'].forEach(id => {
+        if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis);
       });
     });
 
     // ════════════════════════════════════════════════════════════
-    // YOUR DATA LAYERS — unchanged from before
+    // YOUR STRIKE DATA
+    // Using an absolute path to avoid 404 issues with relative paths
+    // on GitHub Pages. Update YOUR-USERNAME and YOUR-REPO below.
     // ════════════════════════════════════════════════════════════
-
-    // Load your GeoJSON file (sits in the same folder as this HTML file)
     map.addSource('strikes', {
       type: 'geojson',
       data: './data.geojson'
     });
 
-    // ── Layer 1: Strike points (yellow circles) ──
+    map.on('error', (e) => {
+      console.error('Mapbox error:', e.error);
+    });
+
+    map.getSource('strikes').on
+      ? console.log('Strikes source added')
+      : console.log('Strikes source added (no event)');
+
+    // ── Layer 1: Strike points ──
     map.addLayer({
       id: 'strikes-layer',
       type: 'circle',
       source: 'strikes',
       filter: ['==', ['get', 'type'], 'strike'],
       paint: {
-        // Circle size scales with the "magnitude" property (1–5)
         'circle-radius': [
           'interpolate', ['linear'], ['get', 'magnitude'],
-          1, 5,
-          5, 14
+          1, 5, 5, 14
         ],
         'circle-color': '#e8c87a',
-        'circle-opacity': 0.85,
+        'circle-opacity': 0.9,
         'circle-stroke-width': 1.5,
         'circle-stroke-color': '#000',
         'circle-stroke-opacity': 0.4
       }
     });
+    console.log('strikes-layer added');
 
-    // ── Layer 2: Affected zone polygons (red fill) ──
+    // ── Layer 2: Zone fills ──
     map.addLayer({
       id: 'zones-layer',
       type: 'fill',
@@ -497,6 +463,7 @@
         'line-dasharray': [2, 1]
       }
     });
+    console.log('All layers added. Applying time filter...');
 
     // Apply the initial filter (slider starts at max = show everything)
     applyTimeFilter(11);
