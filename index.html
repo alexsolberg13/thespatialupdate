@@ -240,14 +240,26 @@
       map.on('click', 'story-dots', (e) => {
         const story = stories[e.features[0].properties.index];
         const coords = e.features[0].geometry.coordinates.slice();
-        popup.setLngLat(coords).setHTML(`
-          <div class="popup-inner">
-            <div class="popup-tag">${story.tag}</div>
-            <div class="popup-title">${story.title}</div>
-            <div class="popup-desc">${story.description}</div>
-            <a class="popup-link" href="${story.url}">Open the full story →</a>
-          </div>
-        `).addTo(map);
+
+        // Fly to the marker first, then open the popup once the
+        // animation finishes so it appears centred on screen
+        map.flyTo({
+          center: coords,
+          zoom: 5,
+          duration: 1000,
+          essential: true
+        });
+
+        map.once('moveend', () => {
+          popup.setLngLat(coords).setHTML(`
+            <div class="popup-inner">
+              <div class="popup-tag">${story.tag}</div>
+              <div class="popup-title">${story.title}</div>
+              <div class="popup-desc">${story.description}</div>
+              <a class="popup-link" href="${story.url}">Open the full story →</a>
+            </div>
+          `).addTo(map);
+        });
       });
 
 
