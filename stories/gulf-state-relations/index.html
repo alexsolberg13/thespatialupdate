@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gulf State Relations — The Spatial Update</title>
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; }
+    .layout { display: flex; height: 100vh; overflow: hidden; }
+
+    .sidebar {
+      width: 380px; flex-shrink: 0; overflow-y: auto;
+      background: #161616; border-right: 1px solid #2a2a2a;
+      padding: 28px 26px; z-index: 10;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #2a2a2a; }
+
+    .back-link { display: inline-block; font-size: 12px; color: #555; text-decoration: none; margin-bottom: 20px; font-family: Arial, sans-serif; }
+    .back-link:hover { color: #e8c87a; }
+    .story-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; margin-bottom: 10px; font-family: Arial, sans-serif; }
+    h1 { font-size: 22px; line-height: 1.35; font-weight: normal; margin-bottom: 12px; color: #f0ede8; }
+    .byline { font-size: 11px; color: #444; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #222; font-family: Arial, sans-serif; }
+    .story-text p { font-size: 14px; line-height: 1.8; color: #b8b5ae; margin-bottom: 16px; }
+    .story-text a { color: #e8c87a; text-decoration: none; }
+    .story-text a:hover { text-decoration: underline; }
+
+    /* Legend */
+    .legend { margin: 20px 0; padding: 16px; background: #1e1e1e; border-radius: 6px; border: 1px solid #2a2a2a; }
+    .legend-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 12px; font-family: Arial, sans-serif; }
+    .legend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; color: #999; font-family: Arial, sans-serif; }
+    .legend-row:last-child { margin-bottom: 0; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .legend-square { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+    /* Layer toggles */
+    .layer-section { margin: 20px 0; padding: 16px; background: #1e1e1e; border-radius: 6px; border: 1px solid #2a2a2a; }
+    .layer-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 12px; font-family: Arial, sans-serif; }
+    .layer-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; cursor: pointer; font-size: 12px; color: #999; font-family: Arial, sans-serif; }
+    .layer-toggle:last-child { margin-bottom: 0; }
+    .layer-toggle input[type="checkbox"] { accent-color: #e8c87a; width: 14px; height: 14px; cursor: pointer; }
+
+    /* Related */
+    .related { margin-top: 28px; padding-top: 22px; border-top: 1px solid #222; }
+    .related-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #555; margin-bottom: 12px; font-family: Arial, sans-serif; }
+    .related-link { display: block; text-decoration: none; padding: 10px 14px; background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 5px; margin-bottom: 8px; transition: border-color 0.15s; }
+    .related-link:hover { border-color: #e8c87a; }
+    .related-tag { font-size: 10px; color: #e8c87a; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; font-family: Arial, sans-serif; }
+    .related-title { font-size: 13px; color: #ccc; }
+
+    #map { flex: 1; height: 100vh; }
+
+    /* Popup */
+    .mapboxgl-popup-content {
+      background: #1a1a1a !important; border: 1px solid #2e2e2e;
+      border-radius: 7px; padding: 0; font-family: Georgia, serif;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      min-width: 220px; max-width: 290px; overflow: hidden;
+    }
+    .mapboxgl-popup-close-button { color: #555; font-size: 16px; padding: 5px 8px; background: none; }
+    .mapboxgl-popup-close-button:hover { color: #aaa; background: none; }
+    .mapboxgl-popup-tip { border-top-color: #2e2e2e !important; }
+    .popup-inner { padding: 14px 16px 16px; }
+    .popup-stance { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; font-family: Arial, sans-serif; font-weight: bold; }
+    .popup-title { font-size: 15px; color: #f0ede8; margin-bottom: 8px; line-height: 1.3; }
+    .popup-stats { display: flex; gap: 10px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #252525; }
+    .popup-stat { font-size: 10px; color: #666; font-family: Arial, sans-serif; }
+    .popup-stat span { display: block; color: #aaa; font-weight: bold; margin-bottom: 1px; }
+    .popup-desc { font-size: 12px; line-height: 1.65; color: #888; }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <div class="sidebar">
+    <a class="back-link" href="../../">← All stories</a>
+
+    <div class="story-label">Middle East · Geopolitics</div>
+    <h1>Gulf State Relations: The Regional Power Balance</h1>
+    <div class="byline">Reference map &nbsp;·&nbsp; Updated March 2026</div>
+
+    <div class="story-text">
+      <p>
+        The Middle East's geopolitical landscape is defined by a fundamental
+        tension between Iran and a coalition of Arab Gulf states, with the
+        United States as the dominant external power and a network of proxies
+        extending the conflict across the wider region.
+      </p>
+      <p>
+        Click any country or base marker for a full profile. Toggle layers
+        to focus on specific dimensions of the regional picture.
+      </p>
+    </div>
+
+    <div class="legend">
+      <div class="legend-title">Country stance toward Iran</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#e05a4e"></div>Opposed — active adversary</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#888"></div>Neutral / hedging</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#3ecfb2"></div>Mediator</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#e8c87a"></div>Aligned with Iran</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#cc4400"></div>Iran</div>
+      <div class="legend-row"><div class="legend-square" style="background:#5b9bd5; opacity:0.7"></div>US military base</div>
+    </div>
+
+    <div class="layer-section">
+      <div class="layer-section-label">Map layers</div>
+      <label class="layer-toggle">
+        <input type="checkbox" id="toggle-states" checked />
+        Country stance markers
+      </label>
+      <label class="layer-toggle">
+        <input type="checkbox" id="toggle-proxies" checked />
+        Proxy actors
+      </label>
+      <label class="layer-toggle">
+        <input type="checkbox" id="toggle-bases" checked />
+        US military bases
+      </label>
+    </div>
+
+    <div class="story-text">
+      <p>
+        Iran's strategy relies on what it calls the <em>Axis of Resistance</em>
+        — a network of allied militias and political movements spread across
+        the region that allows Iran to project power without direct military
+        engagement. Each node in this network is a separate pressure point
+        that Iran can activate or restrain depending on the diplomatic situation.
+      </p>
+      <p>
+        The Gulf states' response has been to deepen security ties with the
+        United States while pursuing parallel diplomatic normalisation with
+        Israel — a realignment that would have been unthinkable a decade ago.
+      </p>
+    </div>
+
+    <div class="related">
+      <div class="related-label">Related maps</div>
+      <a class="related-link" href="../iran-strikes/">
+        <div class="related-tag">Middle East · Military</div>
+        <div class="related-title">Strikes on Iran: A Timeline of Escalation</div>
+      </a>
+      <a class="related-link" href="../strait-of-hormuz/">
+        <div class="related-tag">Middle East · Economics</div>
+        <div class="related-title">The Strait of Hormuz: Oil's Most Critical Passage</div>
+      </a>
+    </div>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<script>
+  mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN_HERE';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [46.0, 28.0],
+    zoom: 4.2,
+    projection: 'mercator'
+  });
+
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  // Color by stance
+  const stanceColors = {
+    opposed:  '#e05a4e',
+    neutral:  '#888888',
+    mediator: '#3ecfb2',
+    aligned:  '#e8c87a',
+    iran:     '#cc4400'
+  };
+
+  map.on('load', () => {
+
+    map.addSource('relations', {
+      type: 'geojson',
+      data: './data.geojson'
+    });
+
+    // ── State markers — glow ──
+    map.addLayer({
+      id: 'states-glow',
+      type: 'circle',
+      source: 'relations',
+      filter: ['==', ['get', 'type'], 'state'],
+      paint: {
+        'circle-radius': 18,
+        'circle-opacity': 0.12,
+        'circle-color': [
+          'match', ['get', 'stance'],
+          'opposed',  stanceColors.opposed,
+          'neutral',  stanceColors.neutral,
+          'mediator', stanceColors.mediator,
+          'aligned',  stanceColors.aligned,
+          'iran',     stanceColors.iran,
+          '#888'
+        ]
+      }
+    });
+
+    // ── State markers — dot ──
+    map.addLayer({
+      id: 'states-layer',
+      type: 'circle',
+      source: 'relations',
+      filter: ['==', ['get', 'type'], 'state'],
+      paint: {
+        'circle-radius': 9,
+        'circle-opacity': 0.9,
+        'circle-stroke-width': 1.5,
+        'circle-stroke-color': 'rgba(255,255,255,0.12)',
+        'circle-color': [
+          'match', ['get', 'stance'],
+          'opposed',  stanceColors.opposed,
+          'neutral',  stanceColors.neutral,
+          'mediator', stanceColors.mediator,
+          'aligned',  stanceColors.aligned,
+          'iran',     stanceColors.iran,
+          '#888'
+        ]
+      }
+    });
+
+    // ── Proxy markers — smaller diamonds rendered as circles ──
+    map.addLayer({
+      id: 'proxies-glow',
+      type: 'circle',
+      source: 'relations',
+      filter: ['==', ['get', 'type'], 'proxy'],
+      paint: {
+        'circle-radius': 13,
+        'circle-color': stanceColors.aligned,
+        'circle-opacity': 0.1
+      }
+    });
+    map.addLayer({
+      id: 'proxies-layer',
+      type: 'circle',
+      source: 'relations',
+      filter: ['==', ['get', 'type'], 'proxy'],
+      paint: {
+        'circle-radius': 6,
+        'circle-color': stanceColors.aligned,
+        'circle-opacity': 0.75,
+        'circle-stroke-width': 1.5,
+        'circle-stroke-color': stanceColors.aligned,
+        'circle-stroke-opacity': 0.4
+      }
+    });
+
+    // ── US bases — square-ish markers ──
+    map.addLayer({
+      id: 'bases-glow',
+      type: 'circle',
+      source: 'relations',
+      filter: ['==', ['get', 'type'], 'usbase'],
+      paint: {
+        'circle-radius': 12,
+        'circle-color': '#5b9bd5',
+        'circle-opacity': 0.15
+      }
+    });
+    map.addLayer({
+      id: 'bases-layer',
+      type: 'circle',
+      source: 'relations',
+      filter: ['==', ['get', 'type'], 'usbase'],
+      paint: {
+        'circle-radius': 5,
+        'circle-color': '#5b9bd5',
+        'circle-opacity': 0.9,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#5b9bd5',
+        'circle-stroke-opacity': 0.5
+      }
+    });
+
+
+    // ── POPUPS ────────────────────────────────────────────────
+    const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '310px', offset: 14 });
+
+    function stanceLabel(stance) {
+      const labels = {
+        opposed: 'Opposed to Iran', neutral: 'Neutral / hedging',
+        mediator: 'Mediator', aligned: 'Iranian-aligned', iran: 'Iran'
+      };
+      return labels[stance] || stance;
+    }
+
+    function showPopup(e) {
+      const props = e.features[0].properties;
+      const coords = e.features[0].geometry.coordinates.slice();
+      const color = stanceColors[props.stance] || '#5b9bd5';
+
+      const stanceHtml = props.stance
+        ? `<div class="popup-stance" style="color:${color}">${stanceLabel(props.stance)}</div>`
+        : `<div class="popup-stance" style="color:#5b9bd5">US military base</div>`;
+
+      const statsHtml = props.gdp ? `
+        <div class="popup-stats">
+          <div class="popup-stat"><span>GDP</span>${props.gdp}</div>
+          <div class="popup-stat"><span>Military</span>${props.military}</div>
+        </div>` : '';
+
+      popup.setLngLat(coords).setHTML(`
+        <div class="popup-inner">
+          ${stanceHtml}
+          <div class="popup-title">${props.title}</div>
+          ${statsHtml}
+          <div class="popup-desc">${props.description}</div>
+        </div>
+      `).addTo(map);
+    }
+
+    const clickable = ['states-layer', 'proxies-layer', 'bases-layer'];
+    clickable.forEach(layer => {
+      map.on('click', layer, showPopup);
+      map.on('mouseenter', layer, () => { map.getCanvas().style.cursor = 'pointer'; });
+      map.on('mouseleave', layer, () => { map.getCanvas().style.cursor = ''; });
+    });
+
+
+    // ── LAYER TOGGLES ─────────────────────────────────────────
+    document.getElementById('toggle-states').addEventListener('change', (e) => {
+      const v = e.target.checked ? 'visible' : 'none';
+      ['states-layer', 'states-glow'].forEach(id => map.setLayoutProperty(id, 'visibility', v));
+    });
+    document.getElementById('toggle-proxies').addEventListener('change', (e) => {
+      const v = e.target.checked ? 'visible' : 'none';
+      ['proxies-layer', 'proxies-glow'].forEach(id => map.setLayoutProperty(id, 'visibility', v));
+    });
+    document.getElementById('toggle-bases').addEventListener('change', (e) => {
+      const v = e.target.checked ? 'visible' : 'none';
+      ['bases-layer', 'bases-glow'].forEach(id => map.setLayoutProperty(id, 'visibility', v));
+    });
+
+  });
+</script>
+</body>
+</html>
