@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strikes on Iran — The Spatial Update</title>
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #0f0f0f; color: #e8e6e1; }
+    .layout { display: flex; height: 100vh; overflow: hidden; }
+
+    .sidebar {
+      width: 380px; flex-shrink: 0; overflow-y: auto;
+      background: #161616; border-right: 1px solid #2a2a2a; padding: 28px 26px;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #2a2a2a; }
+
+    .back-link { display: inline-block; font-size: 12px; color: #555; text-decoration: none; margin-bottom: 20px; font-family: Arial, sans-serif; }
+    .back-link:hover { color: #e8c87a; }
+    .story-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; margin-bottom: 10px; font-family: Arial, sans-serif; }
+    h1 { font-size: 22px; line-height: 1.35; font-weight: normal; margin-bottom: 12px; color: #f0ede8; }
+    .byline { font-size: 11px; color: #444; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #222; font-family: Arial, sans-serif; }
+    .story-text p { font-size: 14px; line-height: 1.8; color: #b8b5ae; margin-bottom: 14px; }
+    .story-text a { color: #e8c87a; text-decoration: none; }
+    .story-text a:hover { text-decoration: underline; }
+
+    /* Phase tabs */
+    .phase-tabs { display: flex; gap: 6px; margin: 20px 0 0; }
+    .phase-tab {
+      flex: 1; padding: 8px 10px; text-align: center; font-size: 11px;
+      font-family: Arial, sans-serif; border-radius: 5px; cursor: pointer;
+      border: 1px solid #2a2a2a; color: #666; background: #1a1a1a;
+      transition: all 0.15s;
+    }
+    .phase-tab.active { border-color: #e8c87a; color: #e8c87a; background: #1e1a10; }
+    .phase-name { font-weight: bold; display: block; margin-bottom: 2px; }
+    .phase-date { font-size: 10px; color: #555; }
+    .phase-tab.active .phase-date { color: #9a8545; }
+
+    /* Time slider */
+    .slider-section {
+      margin: 16px 0; padding: 16px; background: #1e1e1e;
+      border-radius: 6px; border: 1px solid #2a2a2a;
+    }
+    .slider-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 8px; font-family: Arial, sans-serif; }
+    .current-date { font-size: 18px; font-weight: bold; color: #e8c87a; margin-bottom: 12px; font-family: monospace; }
+    input[type="range"] { width: 100%; accent-color: #e8c87a; cursor: pointer; }
+    .date-range { display: flex; justify-content: space-between; font-size: 10px; color: #444; margin-top: 5px; font-family: Arial, sans-serif; }
+    .event-count { font-size: 11px; color: #555; margin-top: 8px; font-family: Arial, sans-serif; }
+    .event-count span { color: #e8c87a; font-weight: bold; }
+
+    /* Legend */
+    .legend { margin: 16px 0; padding: 14px; background: #1e1e1e; border-radius: 6px; border: 1px solid #2a2a2a; }
+    .legend-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 10px; font-family: Arial, sans-serif; }
+    .legend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; font-size: 12px; color: #999; font-family: Arial, sans-serif; }
+    .legend-row:last-child { margin-bottom: 0; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Layer toggles */
+    .layer-section { margin: 16px 0; padding: 14px; background: #1e1e1e; border-radius: 6px; border: 1px solid #2a2a2a; }
+    .layer-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 10px; font-family: Arial, sans-serif; }
+    .layer-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; font-size: 12px; color: #999; font-family: Arial, sans-serif; }
+    .layer-toggle:last-child { margin-bottom: 0; }
+    .layer-toggle input[type="checkbox"] { accent-color: #e8c87a; width: 14px; height: 14px; cursor: pointer; }
+
+    /* Source note */
+    .source-note { margin: 16px 0; padding: 10px 14px; background: #1a1a1a; border-radius: 4px; border-left: 2px solid #333; font-size: 11px; color: #555; line-height: 1.6; font-family: Arial, sans-serif; }
+
+    /* Related */
+    .related { margin-top: 22px; padding-top: 20px; border-top: 1px solid #222; }
+    .related-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #555; margin-bottom: 10px; font-family: Arial, sans-serif; }
+    .related-link { display: block; text-decoration: none; padding: 10px 14px; background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 5px; margin-bottom: 8px; transition: border-color 0.15s; }
+    .related-link:hover { border-color: #e8c87a; }
+    .related-tag { font-size: 10px; color: #e8c87a; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; font-family: Arial, sans-serif; }
+    .related-title { font-size: 13px; color: #ccc; }
+
+    #map { flex: 1; height: 100vh; }
+
+    /* Popups */
+    .mapboxgl-popup-content {
+      background: #1a1a1a !important; border: 1px solid #2e2e2e; border-radius: 7px;
+      padding: 0; font-family: Georgia, serif; box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      min-width: 220px; max-width: 300px; overflow: hidden;
+    }
+    .mapboxgl-popup-close-button { color: #555; font-size: 16px; padding: 5px 8px; background: none; }
+    .mapboxgl-popup-close-button:hover { color: #aaa; background: none; }
+    .mapboxgl-popup-tip { border-top-color: #2e2e2e !important; }
+    .popup-inner { padding: 14px 16px 16px; }
+    .popup-actor { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-family: Arial, sans-serif; font-weight: bold; }
+    .popup-title { font-size: 14px; color: #f0ede8; margin-bottom: 6px; line-height: 1.3; }
+    .popup-date { font-size: 11px; color: #666; margin-bottom: 8px; font-family: Arial, sans-serif; padding-bottom: 8px; border-bottom: 1px solid #252525; }
+    .popup-desc { font-size: 12px; line-height: 1.65; color: #888; margin-bottom: 8px; }
+    .popup-source { font-size: 10px; color: #444; font-family: Arial, sans-serif; }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <div class="sidebar">
+    <a class="back-link" href="../../">← All stories</a>
+    <div class="story-label">Middle East · Military</div>
+    <h1>Strikes on Iran: From the Twelve-Day War to the 2026 Conflict</h1>
+    <div class="byline">Updated March 2026 &nbsp;·&nbsp; Data: Wikipedia, Britannica, JINSA, IAEA, Al Jazeera</div>
+
+    <div class="story-text">
+      <p>
+        What began as a precise Israeli nuclear strike campaign in June 2025
+        has escalated into a wider regional war. This map traces every documented
+        major strike — who launched it, what was targeted, and when.
+      </p>
+    </div>
+
+    <!-- Phase selector -->
+    <div class="phase-tabs">
+      <div class="phase-tab active" id="tab-twelve" onclick="setPhase('twelve_day')">
+        <span class="phase-name">Twelve-Day War</span>
+        <span class="phase-date">Jun 13–24, 2025</span>
+      </div>
+      <div class="phase-tab" id="tab-2026" onclick="setPhase('war_2026')">
+        <span class="phase-name">2026 War</span>
+        <span class="phase-date">Feb 28–present</span>
+      </div>
+      <div class="phase-tab" id="tab-all" onclick="setPhase('all')">
+        <span class="phase-name">All events</span>
+        <span class="phase-date">2025–2026</span>
+      </div>
+    </div>
+
+    <!-- Time slider -->
+    <div class="slider-section">
+      <div class="slider-label">Showing events up to:</div>
+      <div class="current-date" id="date-display">Jun 24, 2025</div>
+      <input type="range" id="time-slider" min="0" max="9" step="1" value="9" />
+      <div class="date-range">
+        <span id="slider-min">Jun 13</span>
+        <span id="slider-max">Jun 24</span>
+      </div>
+      <div class="event-count" id="event-count"></div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-title">Strike type</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#5b9bd5"></div>US strike on Iran</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#e8c87a"></div>Israeli strike on Iran</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#e05a4e"></div>Iranian retaliatory strike</div>
+    </div>
+
+    <!-- Layer toggles -->
+    <div class="layer-section">
+      <div class="layer-section-label">Show / hide</div>
+      <label class="layer-toggle"><input type="checkbox" id="toggle-us" checked />US strikes</label>
+      <label class="layer-toggle"><input type="checkbox" id="toggle-israel" checked />Israeli strikes</label>
+      <label class="layer-toggle"><input type="checkbox" id="toggle-iran" checked />Iranian retaliatory strikes</label>
+    </div>
+
+    <div class="source-note">
+      Data sourced from Wikipedia, Britannica, JINSA, IAEA statements, Al Jazeera,
+      Critical Threats, and House of Commons Library research briefings.
+      The 2026 conflict is ongoing — this map will be updated as events are verified.
+      Strike locations represent confirmed or widely-reported targets; exact coordinates
+      for some sites are approximate.
+    </div>
+
+    <div class="related">
+      <div class="related-label">Related maps</div>
+      <a class="related-link" href="../strait-of-hormuz/">
+        <div class="related-tag">Middle East · Economics</div>
+        <div class="related-title">The Strait of Hormuz: Oil's Most Critical Passage</div>
+      </a>
+      <a class="related-link" href="../gulf-state-relations/">
+        <div class="related-tag">Middle East · Geopolitics</div>
+        <div class="related-title">Gulf State Relations: The Regional Power Balance</div>
+      </a>
+    </div>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<script>
+  mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN_HERE';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [52.0, 32.0],
+    zoom: 5,
+    projection: 'mercator'
+  });
+
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  // ── Colors ──────────────────────────────────────────────────
+  const actorColors = {
+    strike_us:     '#5b9bd5',
+    strike_israel: '#e8c87a',
+    strike_iran:   '#e05a4e'
+  };
+
+  // ── Time steps per phase ────────────────────────────────────
+  const phases = {
+    twelve_day: {
+      steps: [
+        { label: 'Jun 13, 2025', code: 2025061300 },
+        { label: 'Jun 14, 2025', code: 2025061400 },
+        { label: 'Jun 15, 2025', code: 2025061500 },
+        { label: 'Jun 16, 2025', code: 2025061600 },
+        { label: 'Jun 17, 2025', code: 2025061700 },
+        { label: 'Jun 19, 2025', code: 2025061900 },
+        { label: 'Jun 21, 2025', code: 2025062100 },
+        { label: 'Jun 22, 2025', code: 2025062200 },
+        { label: 'Jun 23, 2025', code: 2025062300 },
+        { label: 'Jun 24, 2025', code: 2025062400 }
+      ],
+      phaseCode: 'twelve_day',
+      center: [51.5, 32.5],
+      zoom: 5
+    },
+    war_2026: {
+      steps: [
+        { label: 'Feb 28, 2026', code: 2026022800 },
+        { label: 'Mar 5, 2026',  code: 2026030500 },
+        { label: 'Mar 10, 2026', code: 2026031000 },
+        { label: 'Mar 15, 2026', code: 2026031500 },
+        { label: 'Mar 20, 2026', code: 2026032000 },
+        { label: 'Mar 25, 2026', code: 2026032500 },
+        { label: 'Mar 31, 2026', code: 2026033100 }
+      ],
+      phaseCode: 'war_2026',
+      center: [50.0, 30.0],
+      zoom: 4.5
+    },
+    all: {
+      steps: [
+        { label: 'Jun 2025',  code: 2025062400 },
+        { label: 'Mar 2026',  code: 2026033100 }
+      ],
+      phaseCode: 'all',
+      center: [50.0, 30.0],
+      zoom: 4.5
+    }
+  };
+
+  let currentPhase = 'twelve_day';
+  let currentStepIndex = 9;
+
+  // Assign day codes to features for filtering
+  const dayCodeMap = {
+    'Natanz Nuclear Facility': 2025061300,
+    'Fordow Fuel Enrichment Plant': 2025062200,
+    'Isfahan Nuclear Technology Center': 2025061300,
+    'Tehran — Air Defenses & IRGC Targets': 2025061300,
+    'Tabriz Air Base (TAB-2)': 2025061300,
+    'Hamadan Air Base (Shahid Nojeh)': 2025061300,
+    'Kermanshah — Missile Bases': 2025061300,
+    'Parchin Military Complex': 2025061300,
+    'Arak Heavy Water Reactor': 2025061300,
+    'Mashhad — Air Base Strike': 2025061500,
+    'Bushehr — Missile Launch Sites': 2025062000,
+    'Ahvaz — IRGC Missile Base': 2025062100,
+    'Shiraz — IRGC Missile Sites': 2025062100,
+    'Iran → Israel: Ballistic Missile Barrages': 2025061300,
+    'Iran → Al Udeid Air Base, Qatar': 2025062300,
+    'Tehran — Khamenei Assassination & Leadership Strikes': 2026022800,
+    'Natanz — Revisited (2026)': 2026022800,
+    'Iran → Gulf States (2026 Retaliation)': 2026030500,
+    'Iran → Naval Support Activity Bahrain': 2026030500,
+    'Iran → Iraq (US Bases)': 2026030500
+  };
+
+  map.on('load', () => {
+
+    map.addSource('strikes', {
+      type: 'geojson',
+      data: './data.geojson'
+    });
+
+    // ── Glow layers ──
+    ['strike_us', 'strike_israel', 'strike_iran'].forEach(t => {
+      map.addLayer({
+        id: `${t}-glow`,
+        type: 'circle',
+        source: 'strikes',
+        filter: ['==', ['get', 'type'], t],
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['get', 'magnitude'], 1, 10, 5, 22],
+          'circle-color': actorColors[t],
+          'circle-opacity': 0.12
+        }
+      });
+
+      map.addLayer({
+        id: `${t}-layer`,
+        type: 'circle',
+        source: 'strikes',
+        filter: ['==', ['get', 'type'], t],
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['get', 'magnitude'], 1, 5, 5, 12],
+          'circle-color': actorColors[t],
+          'circle-opacity': 0.9,
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': 'rgba(255,255,255,0.12)'
+        }
+      });
+    });
+
+    const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '320px', offset: 14 });
+
+    ['strike_us-layer', 'strike_israel-layer', 'strike_iran-layer'].forEach(id => {
+      map.on('click', id, (e) => {
+        const p = e.features[0].properties;
+        const color = actorColors[p.type] || '#888';
+        popup.setLngLat(e.features[0].geometry.coordinates.slice()).setHTML(`
+          <div class="popup-inner">
+            <div class="popup-actor" style="color:${color}">${p.actor} strike</div>
+            <div class="popup-title">${p.title}</div>
+            <div class="popup-date">${p.date}</div>
+            <div class="popup-desc">${p.description}</div>
+            <div class="popup-source">Source: ${p.source}</div>
+          </div>
+        `).addTo(map);
+      });
+      map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+      map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
+    });
+
+    applyFilters();
+  });
+
+  // ── Phase switching ──────────────────────────────────────────
+  function setPhase(phase) {
+    currentPhase = phase;
+    currentStepIndex = phases[phase].steps.length - 1;
+
+    document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(phase === 'twelve_day' ? 'tab-twelve' : phase === 'war_2026' ? 'tab-2026' : 'tab-all').classList.add('active');
+
+    const slider = document.getElementById('time-slider');
+    slider.max = phases[phase].steps.length - 1;
+    slider.value = currentStepIndex;
+
+    document.getElementById('slider-min').textContent = phases[phase].steps[0].label;
+    document.getElementById('slider-max').textContent = phases[phase].steps[phases[phase].steps.length - 1].label;
+
+    map.flyTo({ center: phases[phase].center, zoom: phases[phase].zoom, duration: 1000 });
+    applyFilters();
+  }
+
+  // ── Filter logic ─────────────────────────────────────────────
+  function applyFilters() {
+    const phase = phases[currentPhase];
+    const step = phase.steps[currentStepIndex];
+
+    document.getElementById('date-display').textContent = step.label;
+
+    const visibilities = {
+      strike_us:     document.getElementById('toggle-us').checked,
+      strike_israel: document.getElementById('toggle-israel').checked,
+      strike_iran:   document.getElementById('toggle-iran').checked
+    };
+
+    let visibleCount = 0;
+
+    ['strike_us', 'strike_israel', 'strike_iran'].forEach(t => {
+      const layerVis = visibilities[t] ? 'visible' : 'none';
+
+      if (!map.getLayer(`${t}-layer`)) return;
+
+      if (currentPhase === 'all') {
+        map.setFilter(`${t}-layer`, ['==', ['get', 'type'], t]);
+        map.setFilter(`${t}-glow`, ['==', ['get', 'type'], t]);
+      } else {
+        map.setFilter(`${t}-layer`, ['all',
+          ['==', ['get', 'type'], t],
+          ['==', ['get', 'phase'], phase.phaseCode]
+        ]);
+        map.setFilter(`${t}-glow`, ['all',
+          ['==', ['get', 'type'], t],
+          ['==', ['get', 'phase'], phase.phaseCode]
+        ]);
+      }
+
+      map.setLayoutProperty(`${t}-layer`, 'visibility', layerVis);
+      map.setLayoutProperty(`${t}-glow`, 'visibility', layerVis);
+
+      if (visibilities[t]) {
+        const features = map.querySourceFeatures('strikes', {
+          filter: currentPhase === 'all'
+            ? ['==', ['get', 'type'], t]
+            : ['all', ['==', ['get', 'type'], t], ['==', ['get', 'phase'], phase.phaseCode]]
+        });
+        visibleCount += features.length;
+      }
+    });
+
+    document.getElementById('event-count').innerHTML =
+      `<span>${visibleCount > 0 ? visibleCount : '—'}</span> event${visibleCount !== 1 ? 's' : ''} visible`;
+  }
+
+  // ── Slider input ─────────────────────────────────────────────
+  document.getElementById('time-slider').addEventListener('input', (e) => {
+    currentStepIndex = parseInt(e.target.value);
+    applyFilters();
+  });
+
+  // ── Layer toggles ────────────────────────────────────────────
+  ['toggle-us', 'toggle-israel', 'toggle-iran'].forEach(id => {
+    document.getElementById(id).addEventListener('change', applyFilters);
+  });
+
+  // Init
+  setPhase('twelve_day');
+</script>
+</body>
+</html>
