@@ -69,7 +69,13 @@
       transition: border-color 0.15s, color 0.15s; line-height: 1.5;
     }
     #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-  </style>
+
+    @media (max-width: 768px) {
+      #site-header { padding: 0 16px; }
+      .site-tagline { display: none; }
+      .site-name { font-size: 14px; }
+    }
+</style>
 </head>
 <body>
 
@@ -152,6 +158,12 @@
   .type-military { background: #fde8e6; color: #c0352a; }
 
   #map { flex: 1; height: 100%; }
+
+  @media (max-width: 768px) {
+    #body { flex-direction: column; }
+    #sidebar { width: 100%; height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
+    #map { height: 50vh; flex: none; }
+  }
 
   .mapboxgl-popup-content {
     background: var(--surface) !important; border: 1px solid var(--border);

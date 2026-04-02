@@ -69,7 +69,13 @@
       transition: border-color 0.15s, color 0.15s; line-height: 1.5;
     }
     #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-  </style>
+
+    @media (max-width: 768px) {
+      #site-header { padding: 0 16px; }
+      .site-tagline { display: none; }
+      .site-name { font-size: 14px; }
+    }
+</style>
 </head>
 <body>
 

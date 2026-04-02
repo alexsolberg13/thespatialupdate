@@ -9,7 +9,7 @@ module.exports = function(eleventyConfig) {
   return {
     dir: {
       input: "src",       // Eleventy reads from this folder
-      output: "_site",    // Eleventy writes finished HTML here
+      output: "docs",     // Eleventy writes finished HTML here
       includes: "_includes", // templates live here
       data: "_data"          // shared data files live here
     },

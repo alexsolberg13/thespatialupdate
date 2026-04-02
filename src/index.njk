@@ -73,6 +73,12 @@ mapbox: true
 
   #map { flex: 1; height: 100%; }
 
+  @media (max-width: 768px) {
+    #body { flex-direction: column; }
+    #sidebar { width: 100%; height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
+    #map { height: 50vh; flex: none; }
+  }
+
   .mapboxgl-popup-content {
     background: var(--surface) !important; border: 1px solid var(--border);
     border-radius: 8px; padding: 0; font-family: Georgia, serif;
