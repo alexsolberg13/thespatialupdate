@@ -1,0 +1,45 @@
+<div class="phase-tabs">
+  <div class="phase-tab active" id="tab-twelve" onclick="setPhase('twelve_day')">
+    <span class="phase-name">Twelve-Day War</span>
+    <span class="phase-date">Jun 13–24, 2025</span>
+  </div>
+  <div class="phase-tab" id="tab-2026" onclick="setPhase('war_2026')">
+    <span class="phase-name">2026 War</span>
+    <span class="phase-date">Feb 28–present</span>
+  </div>
+  <div class="phase-tab" id="tab-all" onclick="setPhase('all')">
+    <span class="phase-name">All events</span>
+    <span class="phase-date">2025–2026</span>
+  </div>
+</div>
+
+<div class="section-block" style="margin-top:16px;">
+  <div class="section-label">Showing events up to:</div>
+  <div class="current-date" id="date-display">Jun 24, 2025</div>
+  <input type="range" id="time-slider" min="0" max="9" step="1" value="9" />
+  <div class="date-range">
+    <span id="slider-min">Jun 13</span>
+    <span id="slider-max">Jun 24</span>
+  </div>
+  <div class="event-count" id="event-count"></div>
+</div>
+
+<div class="section-block">
+  <div class="section-label">Strike type</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#5b9bd5"></div>US strike on Iran</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e8c87a"></div>Israeli strike on Iran</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e05a4e"></div>Iranian retaliatory strike</div>
+</div>
+
+<div class="section-block">
+  <div class="section-label">Show / hide</div>
+  <label class="layer-toggle"><input type="checkbox" id="toggle-us" checked />US strikes</label>
+  <label class="layer-toggle"><input type="checkbox" id="toggle-israel" checked />Israeli strikes</label>
+  <label class="layer-toggle"><input type="checkbox" id="toggle-iran" checked />Iranian retaliatory strikes</label>
+</div>
+
+<div class="source-note">
+  Data sourced from Wikipedia, Britannica, JINSA, IAEA, Al Jazeera,
+  Critical Threats, and House of Commons Library. The 2026 conflict
+  is ongoing — updated as events are verified.
+</div>

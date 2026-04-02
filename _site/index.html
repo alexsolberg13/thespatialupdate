@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Spatial Update — The Spatial Update</title>
+
+  <script>
+    if (localStorage.getItem('theme') !== 'light')
+      document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+
+  
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  
+
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --surface-alt: #fafaf7;
+      --surface-raised: #eeecea;
+      --border: #e0ddd8;
+      --border-light: #eeebe5;
+      --text-primary: #1a1816;
+      --text-body: #3a3835;
+      --text-secondary: #888;
+      --text-muted: #aaa;
+      --accent: #8a6b20;
+      --accent-bg: #fdf8ec;
+      --scrollbar: #d0cdc7;
+    }
+
+    [data-theme="dark"] {
+      --bg: #141210;
+      --surface: #1e1b18;
+      --surface-alt: #1a1815;
+      --surface-raised: #272421;
+      --border: #363230;
+      --border-light: #2c2926;
+      --text-primary: #e4e0da;
+      --text-body: #b4b0aa;
+      --text-secondary: #7a7875;
+      --text-muted: #5a5855;
+      --accent: #c8a84e;
+      --accent-bg: #221a08;
+      --scrollbar: #363230;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: var(--bg); color: var(--text-primary); }
+
+    #site-header {
+      height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; flex-shrink: 0; z-index: 10;
+    }
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; }
+    .site-name span { color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .site-tagline { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .back-link { font-size: 12px; color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif; }
+    .back-link:hover { color: var(--accent); }
+
+    #theme-toggle {
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 3px 9px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
+      transition: border-color 0.15s, color 0.15s; line-height: 1.5;
+    }
+    #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div id="site-header">
+    <div class="site-name">The Spatial <span>Update</span></div>
+    <div class="header-right">
+      <button id="theme-toggle" aria-label="Toggle theme">☽</button>
+      
+        <div class="site-tagline">Map-based current events</div>
+      
+    </div>
+  </div>
+
+  
+<style>
+  #body { display: flex; height: calc(100vh - 52px); overflow: hidden; }
+
+  #sidebar {
+    width: 300px; flex-shrink: 0; background: var(--surface);
+    border-right: 1px solid var(--border); display: flex;
+    flex-direction: column; overflow: hidden;
+  }
+
+  .search-wrap { padding: 14px 16px; border-bottom: 1px solid var(--border-light); }
+  #search {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 5px; padding: 7px 10px; font-size: 12px;
+    color: var(--text-primary); font-family: Arial, sans-serif; outline: none;
+  }
+  #search::placeholder { color: var(--text-muted); }
+  #search:focus { border-color: var(--text-secondary); }
+
+  .sidebar-meta { padding: 10px 16px 8px; border-bottom: 1px solid var(--border-light); }
+  .sidebar-count { font-size: 11px; color: var(--text-secondary); font-family: Arial, sans-serif; }
+  .sidebar-count span { color: var(--accent); }
+
+  #story-list { overflow-y: auto; flex: 1; }
+  #story-list::-webkit-scrollbar { width: 3px; }
+  #story-list::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+
+  .region-group { border-bottom: 1px solid var(--border-light); }
+  .region-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 16px; cursor: pointer; user-select: none;
+    transition: background 0.15s;
+  }
+  .region-header:hover { background: var(--bg); }
+  .region-left { display: flex; align-items: center; gap: 8px; }
+  .region-name { font-size: 11px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-family: Arial, sans-serif; }
+  .region-count { font-size: 10px; color: var(--text-muted); font-family: Arial, sans-serif; }
+  .region-chevron {
+    width: 0; height: 0; flex-shrink: 0;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 5px solid var(--text-muted); transition: transform 0.2s;
+  }
+  .region-chevron.open { transform: rotate(180deg); }
+  .region-stories { display: none; }
+  .region-stories.open { display: block; }
+
+  .story-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 16px 10px 24px; text-decoration: none;
+    border-bottom: 1px solid var(--border-light); transition: background 0.15s;
+  }
+  .story-item:hover { background: var(--bg); }
+  .story-item.active { background: var(--bg); border-left: 2px solid var(--accent); padding-left: 22px; }
+  .item-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .item-body { flex: 1; min-width: 0; }
+  .item-title { font-size: 13px; color: var(--text-primary); line-height: 1.4; margin-bottom: 3px; }
+  .item-meta { display: flex; align-items: center; gap: 5px; }
+  .item-tag { font-size: 10px; color: var(--text-secondary); font-family: Arial, sans-serif; }
+  .item-type {
+    font-size: 9px; font-family: Arial, sans-serif; font-weight: 500;
+    padding: 1px 5px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .type-news     { background: #fdf2d6; color: #8a6b20; }
+  .type-economy  { background: #dceaf6; color: #2a6aad; }
+  .type-geography { background: #d0f3ee; color: #1a8a75; }
+  .type-demographics { background: #fde8e6; color: #c0352a; }
+  .type-military { background: #fde8e6; color: #c0352a; }
+
+  #map { flex: 1; height: 100%; }
+
+  .mapboxgl-popup-content {
+    background: var(--surface) !important; border: 1px solid var(--border);
+    border-radius: 8px; padding: 0; font-family: Georgia, serif;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    min-width: 220px; max-width: 280px; overflow: hidden;
+  }
+  .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 18px; padding: 6px 10px; background: none; }
+  .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }
+  .mapboxgl-popup-tip { border-top-color: var(--border) !important; }
+  .popup-inner { padding: 16px 18px 18px; }
+  .popup-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 7px; font-family: Arial, sans-serif; }
+  .popup-title { font-size: 15px; line-height: 1.4; color: var(--text-primary); margin-bottom: 10px; }
+  .popup-desc { font-size: 12px; line-height: 1.65; color: var(--text-body); margin-bottom: 16px; font-family: Arial, sans-serif; }
+  .popup-link {
+    display: block; text-align: center; font-size: 12px; color: #1a1816;
+    background: #e8c87a; padding: 9px 14px; border-radius: 4px;
+    text-decoration: none; font-family: Arial, sans-serif;
+    letter-spacing: 0.03em; transition: background 0.15s;
+  }
+  .popup-link:hover { background: #f0d88a; }
+</style>
+
+<div id="body">
+  <div id="sidebar">
+    <div class="search-wrap">
+      <input type="text" id="search" placeholder="Search stories..." autocomplete="off" />
+    </div>
+    <div class="sidebar-meta">
+      <div class="sidebar-count" id="story-count"></div>
+    </div>
+    <div id="story-list"></div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW5nem8zN3EwZmJuMnJweGZ3Nml2eTg0In0.tsLdE7ypzv9OYSvln-x5Sw';
+
+  const stories = [{"region":"Middle East","coordinates":[53,32.5],"tag":"Iran · Military","type":"military","title":"Strikes on Iran: From the Twelve-Day War to the 2026 Conflict","description":"Mapping every documented major strike — who launched it, what was targeted, and when.","url":"/stories/iran-strikes/","color":"red"},{"region":"Middle East","coordinates":[56.4,26.6],"tag":"Gulf · Economics","type":"economy","title":"The Strait of Hormuz: Oil's Most Critical Passage","description":"21 million barrels of oil transit this 3km-wide chokepoint every day.","url":"/stories/strait-of-hormuz/","color":"gold"},{"region":"Middle East","coordinates":[46,28],"tag":"Gulf · Geopolitics","type":"news","title":"Gulf State Relations: The Regional Power Balance","description":"How Iran, the Gulf states, and their proxies are aligned — and where US military power sits.","url":"/stories/gulf-state-relations/","color":"teal"},{"region":"Americas","coordinates":[-66.88,10.49],"tag":"Venezuela · Military","type":"military","title":"Operation Absolute Resolve: How the US Captured Nicolás Maduro","description":"From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.","url":"/stories/venezuela/","color":"red"}];
+
+  const markerColors = {
+    gold: '#e8c87a',
+    red:  '#e05a4e',
+    teal: '#3ecfb2',
+    blue: '#5b9bd5'
+  };
+
+  const homeCenter = [20, 25];
+  const homeZoom   = 2.2;
+
+  const isDarkMode = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+  const fogLight = {
+    color: 'rgb(220, 235, 248)', 'high-color': 'rgb(160, 200, 240)',
+    'horizon-blend': 0.04, 'space-color': 'rgb(80, 120, 180)', 'star-intensity': 0
+  };
+  const fogDark = {
+    color: 'rgb(20, 25, 40)', 'high-color': 'rgb(40, 60, 100)',
+    'horizon-blend': 0.04, 'space-color': 'rgb(5, 8, 20)', 'star-intensity': 0.6
+  };
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: isDarkMode() ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
+    center: homeCenter,
+    zoom: homeZoom,
+    minZoom: 1.5,
+    projection: 'globe',
+    attributionControl: false
+  });
+
+  map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  map.on('style.load', () => {
+    map.setFog(isDarkMode() ? fogDark : fogLight);
+
+    const geojson = {
+      type: 'FeatureCollection',
+      features: stories.map((s, i) => ({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: s.coordinates },
+        properties: { index: i, color: markerColors[s.color] || markerColors.gold }
+      }))
+    };
+
+    map.addSource('stories', { type: 'geojson', data: geojson, generateId: true });
+
+    map.addLayer({
+      id: 'story-glow', type: 'circle', source: 'stories',
+      paint: {
+        'circle-radius': ['case', ['boolean', ['feature-state', 'hover'], false], 18, 14],
+        'circle-color': ['get', 'color'],
+        'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.22, 0.15]
+      }
+    });
+
+    map.addLayer({
+      id: 'story-dots', type: 'circle', source: 'stories',
+      paint: {
+        'circle-radius': ['case', ['boolean', ['feature-state', 'hover'], false], 10, 7],
+        'circle-color': ['get', 'color'],
+        'circle-opacity': 0.9, 'circle-stroke-width': 1.5,
+        'circle-stroke-color': 'rgba(255,255,255,0.12)'
+      }
+    });
+
+    let hoveredId = null;
+    map.on('mouseenter', 'story-dots', (e) => {
+      map.getCanvas().style.cursor = 'pointer';
+      if (hoveredId !== null) map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: false });
+      hoveredId = e.features[0].id;
+      map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: true });
+    });
+    map.on('mouseleave', 'story-dots', () => {
+      map.getCanvas().style.cursor = '';
+      if (hoveredId !== null) map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: false });
+      hoveredId = null;
+    });
+
+    const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '300px', offset: 14 });
+
+    map.on('click', 'story-dots', (e) => {
+      const story = stories[e.features[0].properties.index];
+      const coords = e.features[0].geometry.coordinates.slice();
+      map.flyTo({ center: coords, zoom: 5, duration: 1000, essential: true });
+      map.once('moveend', () => {
+        popup.setLngLat(coords).setHTML(`
+          <div class="popup-inner">
+            <div class="popup-tag">${story.tag}</div>
+            <div class="popup-title">${story.title}</div>
+            <div class="popup-desc">${story.description}</div>
+            <a class="popup-link" href="${story.url}">Open the full story →</a>
+          </div>
+        `).addTo(map);
+      });
+    });
+  });
+
+  document.addEventListener('themechange', (e) => {
+    map.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+  });
+
+  // ── Sidebar ──────────────────────────────────────────────────
+  const regions = {};
+  stories.forEach((s, i) => {
+    if (!regions[s.region]) regions[s.region] = [];
+    regions[s.region].push({ ...s, index: i });
+  });
+  const sortedRegions = Object.keys(regions).sort();
+
+  const storyList  = document.getElementById('story-list');
+  const storyCount = document.getElementById('story-count');
+  const searchInput = document.getElementById('search');
+  let flyBackTimer = null;
+
+  function buildSidebar(filter = '') {
+    storyList.innerHTML = '';
+    const q = filter.toLowerCase().trim();
+    let total = 0;
+
+    sortedRegions.forEach(regionName => {
+      const regionStories = regions[regionName].filter(s =>
+        !q || s.title.toLowerCase().includes(q) ||
+        s.tag.toLowerCase().includes(q) ||
+        s.type.toLowerCase().includes(q) ||
+        s.region.toLowerCase().includes(q)
+      );
+      if (!regionStories.length) return;
+      total += regionStories.length;
+
+      const group = document.createElement('div');
+      group.className = 'region-group';
+
+      const header = document.createElement('div');
+      header.className = 'region-header';
+      header.innerHTML = `
+        <div class="region-left">
+          <span class="region-name">${regionName}</span>
+          <span class="region-count">${regionStories.length}</span>
+        </div>
+        <div class="region-chevron open"></div>
+      `;
+
+      const storiesEl = document.createElement('div');
+      storiesEl.className = 'region-stories open';
+
+      regionStories.forEach(story => {
+        const color = markerColors[story.color] || markerColors.gold;
+        const item = document.createElement('a');
+        item.className = 'story-item';
+        item.href = story.url;
+        item.innerHTML = `
+          <div class="item-dot" style="background:${color}"></div>
+          <div class="item-body">
+            <div class="item-title">${story.title}</div>
+            <div class="item-meta">
+              <span class="item-tag">${story.tag}</span>
+              <span class="item-type type-${story.type}">${story.type}</span>
+            </div>
+          </div>
+        `;
+
+        item.addEventListener('mouseenter', () => {
+          item.classList.add('active');
+          if (flyBackTimer) clearTimeout(flyBackTimer);
+          map.flyTo({ center: story.coordinates, zoom: 5, duration: 1200, essential: true });
+        });
+        item.addEventListener('mouseleave', () => {
+          item.classList.remove('active');
+          flyBackTimer = setTimeout(() => {
+            map.flyTo({ center: homeCenter, zoom: homeZoom, duration: 1000, essential: true });
+          }, 300);
+        });
+
+        storiesEl.appendChild(item);
+      });
+
+      header.addEventListener('click', () => {
+        const isOpen = storiesEl.classList.contains('open');
+        storiesEl.classList.toggle('open', !isOpen);
+        header.querySelector('.region-chevron').classList.toggle('open', !isOpen);
+      });
+
+      group.appendChild(header);
+      group.appendChild(storiesEl);
+      storyList.appendChild(group);
+    });
+
+    storyCount.innerHTML = `<span>${total}</span> stor${total !== 1 ? 'ies' : 'y'} on the map`;
+  }
+
+  buildSidebar();
+  searchInput.addEventListener('input', e => buildSidebar(e.target.value));
+</script>
+
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+      toggle.textContent = isDark() ? '☀' : '☽';
+
+      toggle.addEventListener('click', () => {
+        const dark = !isDark();
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '☀' : '☽';
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }} — The Spatial Update</title>
+
+  <script>
+    if (localStorage.getItem('theme') !== 'light')
+      document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+
+  {% if mapbox %}
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  {% endif %}
+
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --surface-alt: #fafaf7;
+      --surface-raised: #eeecea;
+      --border: #e0ddd8;
+      --border-light: #eeebe5;
+      --text-primary: #1a1816;
+      --text-body: #3a3835;
+      --text-secondary: #888;
+      --text-muted: #aaa;
+      --accent: #8a6b20;
+      --accent-bg: #fdf8ec;
+      --scrollbar: #d0cdc7;
+    }
+
+    [data-theme="dark"] {
+      --bg: #141210;
+      --surface: #1e1b18;
+      --surface-alt: #1a1815;
+      --surface-raised: #272421;
+      --border: #363230;
+      --border-light: #2c2926;
+      --text-primary: #e4e0da;
+      --text-body: #b4b0aa;
+      --text-secondary: #7a7875;
+      --text-muted: #5a5855;
+      --accent: #c8a84e;
+      --accent-bg: #221a08;
+      --scrollbar: #363230;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: var(--bg); color: var(--text-primary); }
+
+    #site-header {
+      height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; flex-shrink: 0; z-index: 10;
+    }
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; }
+    .site-name span { color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .site-tagline { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .back-link { font-size: 12px; color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif; }
+    .back-link:hover { color: var(--accent); }
+
+    #theme-toggle {
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 3px 9px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
+      transition: border-color 0.15s, color 0.15s; line-height: 1.5;
+    }
+    #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div id="site-header">
+    <div class="site-name">The Spatial <span>Update</span></div>
+    <div class="header-right">
+      <button id="theme-toggle" aria-label="Toggle theme">☽</button>
+      {% if backLink %}
+        <a class="back-link" href="/">← All stories</a>
+      {% else %}
+        <div class="site-tagline">Map-based current events</div>
+      {% endif %}
+    </div>
+  </div>
+
+  {{ content | safe }}
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+      toggle.textContent = isDark() ? '☀' : '☽';
+
+      toggle.addEventListener('click', () => {
+        const dark = !isDark();
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '☀' : '☽';
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
+      });
+    })();
+  </script>
+
+</body>
+</html>

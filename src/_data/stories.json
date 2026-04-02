@@ -1,0 +1,42 @@
+[
+  {
+    "region": "Middle East",
+    "coordinates": [53.0, 32.5],
+    "tag": "Iran · Military",
+    "type": "military",
+    "title": "Strikes on Iran: From the Twelve-Day War to the 2026 Conflict",
+    "description": "Mapping every documented major strike — who launched it, what was targeted, and when.",
+    "url": "/stories/iran-strikes/",
+    "color": "red"
+  },
+  {
+    "region": "Middle East",
+    "coordinates": [56.4, 26.6],
+    "tag": "Gulf · Economics",
+    "type": "economy",
+    "title": "The Strait of Hormuz: Oil's Most Critical Passage",
+    "description": "21 million barrels of oil transit this 3km-wide chokepoint every day.",
+    "url": "/stories/strait-of-hormuz/",
+    "color": "gold"
+  },
+  {
+    "region": "Middle East",
+    "coordinates": [46.0, 28.0],
+    "tag": "Gulf · Geopolitics",
+    "type": "news",
+    "title": "Gulf State Relations: The Regional Power Balance",
+    "description": "How Iran, the Gulf states, and their proxies are aligned — and where US military power sits.",
+    "url": "/stories/gulf-state-relations/",
+    "color": "teal"
+  },
+  {
+  "region": "Americas",
+  "coordinates": [-66.88, 10.49],
+  "tag": "Venezuela · Military",
+  "type": "military",
+  "title": "Operation Absolute Resolve: How the US Captured Nicolás Maduro",
+  "description": "From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.",
+  "url": "/stories/venezuela/",
+  "color": "red"
+  } 
+]
