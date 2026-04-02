@@ -1,0 +1,190 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [56.4, 26.6] },
+      "properties": {
+        "type": "chokepoint",
+        "title": "Strait of Hormuz",
+        "description": "The world's most critical oil chokepoint. At its narrowest, the shipping lane is just 3.2km wide. Roughly 21 million barrels of oil pass through daily — about 20% of global supply.",
+        "stat": "21M bbl/day"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [50.6, 26.2] },
+      "properties": {
+        "type": "port",
+        "title": "Ras Tanura, Saudi Arabia",
+        "description": "The world's largest offshore oil loading facility. Operated by Saudi Aramco, it handles the bulk of Saudi crude exports — up to 6 million barrels per day.",
+        "stat": "~6M bbl/day"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [54.4, 24.5] },
+      "properties": {
+        "type": "port",
+        "title": "Ruwais, UAE",
+        "description": "Major UAE refining and export hub in Abu Dhabi. Connects to the Abu Dhabi Crude Oil Pipeline which bypasses the Strait entirely.",
+        "stat": "UAE export hub"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [56.9, 24.5] },
+      "properties": {
+        "type": "port",
+        "title": "Fujairah, UAE",
+        "description": "The critical bypass terminal. Located outside the Strait on the Gulf of Oman, it receives oil via pipeline from Abu Dhabi and can export without passing through Hormuz. Strategic importance has grown since 2019.",
+        "stat": "Bypass terminal"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [48.7, 29.8] },
+      "properties": {
+        "type": "port",
+        "title": "Mina Al-Ahmadi, Kuwait",
+        "description": "Kuwait's main oil export terminal, one of the largest in the world. All Kuwaiti exports must pass through the Strait of Hormuz with no bypass option.",
+        "stat": "No bypass route"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [50.2, 28.9] },
+      "properties": {
+        "type": "port",
+        "title": "Kharg Island, Iran",
+        "description": "Iran's primary oil export terminal, handling over 90% of Iranian crude exports. Located in the northern Gulf, all exports must transit the Strait. Heavily targeted in the 1980s Iran-Iraq war.",
+        "stat": "90% of Iranian exports"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [51.5, 25.3] },
+      "properties": {
+        "type": "port",
+        "title": "Ras Laffan, Qatar",
+        "description": "The world's largest LNG export facility. Qatar is the world's top LNG exporter — while crude oil flows are critical, Qatar's gas exports through Hormuz represent a separate strategic dimension.",
+        "stat": "World's largest LNG"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [58.5, 23.6] },
+      "properties": {
+        "type": "port",
+        "title": "Muscat, Oman",
+        "description": "Oman's capital and main port. Oman straddles both sides of the Strait and maintains diplomatic relations with Iran — it has historically served as a backchannel in US-Iran negotiations.",
+        "stat": "Diplomatic buffer state"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [50.6, 26.2], [53.5, 26.0], [56.2, 26.3], [57.8, 24.5], [62.0, 22.0], [68.0, 20.0]
+        ]
+      },
+      "properties": {
+        "type": "route",
+        "title": "Eastbound tanker route",
+        "description": "Primary route for crude oil heading to Asian markets — China, Japan, South Korea, and India collectively take over 75% of Gulf exports.",
+        "destination": "Asia"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [50.6, 26.2], [53.5, 26.5], [56.0, 26.8], [51.0, 12.0], [43.0, 8.0], [38.0, 12.0]
+        ]
+      },
+      "properties": {
+        "type": "route",
+        "title": "Westbound route — Red Sea",
+        "description": "Route for oil heading to Europe and the US East Coast via the Red Sea and Suez Canal.",
+        "destination": "Europe / US"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [54.0, 23.5], [55.5, 23.2], [56.9, 24.5]
+        ]
+      },
+      "properties": {
+        "type": "pipeline",
+        "title": "Abu Dhabi Crude Oil Pipeline (ADCOP)",
+        "description": "The UAE's strategic bypass. This 380km pipeline carries up to 1.5 million barrels per day from Abu Dhabi fields to Fujairah on the Gulf of Oman, completely bypassing the Strait of Hormuz.",
+        "capacity": "1.5M bbl/day"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [50.1, 27.2], [49.5, 24.0], [45.5, 20.5], [43.5, 17.0]
+        ]
+      },
+      "properties": {
+        "type": "pipeline",
+        "title": "Petroline — East-West Pipeline, Saudi Arabia",
+        "description": "Saudi Arabia's 1,200km bypass pipeline running from the Eastern Province to Yanbu on the Red Sea. Capacity of 5 million barrels per day — Saudi Arabia's insurance policy if Hormuz is closed.",
+        "capacity": "5M bbl/day"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [55.5, 27.5], [57.5, 27.5], [57.5, 25.8],
+          [56.0, 25.5], [55.0, 26.2], [55.5, 27.5]
+        ]]
+      },
+      "properties": {
+        "type": "zone",
+        "title": "Strait of Hormuz — shipping lanes",
+        "description": "The navigable shipping corridor. Two-mile-wide inbound and outbound lanes separated by a two-mile median. Iranian territorial waters cover parts of both lanes."
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [54.5, 27.2], [56.5, 27.2], [57.0, 26.0],
+          [55.5, 25.6], [54.0, 26.2], [54.5, 27.2]
+        ]]
+      },
+      "properties": {
+        "type": "iranzone",
+        "title": "Iranian territorial waters",
+        "description": "Iran's territorial waters extend into the Strait, giving it legal and physical leverage over shipping. Iran has previously seized tankers and threatened closure during periods of maximum pressure."
+      }
+    }
+
+  ]
+}
