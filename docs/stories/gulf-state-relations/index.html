@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gulf State Relations: The Regional Power Balance — The Spatial Update</title>
+
+  <script>
+    if (localStorage.getItem('theme') !== 'light')
+      document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+
+  
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  
+
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --surface-alt: #fafaf7;
+      --surface-raised: #eeecea;
+      --border: #e0ddd8;
+      --border-light: #eeebe5;
+      --text-primary: #1a1816;
+      --text-body: #3a3835;
+      --text-secondary: #888;
+      --text-muted: #aaa;
+      --accent: #8a6b20;
+      --accent-bg: #fdf8ec;
+      --scrollbar: #d0cdc7;
+    }
+
+    [data-theme="dark"] {
+      --bg: #141210;
+      --surface: #1e1b18;
+      --surface-alt: #1a1815;
+      --surface-raised: #272421;
+      --border: #363230;
+      --border-light: #2c2926;
+      --text-primary: #e4e0da;
+      --text-body: #b4b0aa;
+      --text-secondary: #7a7875;
+      --text-muted: #5a5855;
+      --accent: #c8a84e;
+      --accent-bg: #221a08;
+      --scrollbar: #363230;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: var(--bg); color: var(--text-primary); }
+
+    #site-header {
+      height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; flex-shrink: 0; z-index: 10;
+    }
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; }
+    .site-name span { color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .site-tagline { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .back-link { font-size: 12px; color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif; }
+    .back-link:hover { color: var(--accent); }
+
+    #theme-toggle {
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 3px 9px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
+      transition: border-color 0.15s, color 0.15s; line-height: 1.5;
+    }
+    #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div id="site-header">
+    <div class="site-name">The Spatial <span>Update</span></div>
+    <div class="header-right">
+      <button id="theme-toggle" aria-label="Toggle theme">☽</button>
+      
+        <a class="back-link" href="/">← All stories</a>
+      
+    </div>
+  </div>
+
+  
+<style>
+  .layout { display: flex; height: calc(100vh - 52px); overflow: hidden; }
+
+  .sidebar {
+    width: 380px; flex-shrink: 0; overflow-y: auto;
+    background: var(--surface-alt); border-right: 1px solid var(--border); padding: 28px 26px;
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--scrollbar); }
+
+  .story-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; font-family: Arial, sans-serif; }
+  h1 { font-size: 22px; line-height: 1.35; font-weight: normal; margin-bottom: 12px; color: var(--text-primary); }
+  .byline { font-size: 11px; color: var(--text-muted); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-family: Arial, sans-serif; }
+  .story-body { font-size: 14px; line-height: 1.8; color: var(--text-body); }
+  .story-body p { margin-bottom: 14px; }
+  .story-body a { color: var(--accent); text-decoration: none; }
+  .story-body a:hover { text-decoration: underline; }
+
+  /* ── Controls shared styles ── */
+  .section-block { margin: 20px 0; padding: 14px 16px; background: var(--surface-raised); border-radius: 6px; border: 1px solid var(--border); }
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; font-family: Arial, sans-serif; }
+
+  /* ── Phase tabs ── */
+  .phase-tabs { display: flex; gap: 6px; margin: 20px 0 0; }
+  .phase-tab { flex: 1; padding: 8px 10px; text-align: center; font-size: 11px; font-family: Arial, sans-serif; border-radius: 5px; cursor: pointer; border: 1px solid var(--border); color: var(--text-secondary); background: var(--bg); transition: all 0.15s; }
+  .phase-tab.active { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+  .phase-name { font-weight: bold; display: block; margin-bottom: 2px; }
+  .phase-date { font-size: 10px; color: var(--text-muted); }
+  .phase-tab.active .phase-date { color: var(--accent); }
+
+  /* ── Time slider ── */
+  .current-date { font-size: 18px; font-weight: bold; color: var(--accent); margin-bottom: 12px; font-family: monospace; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .date-range { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 5px; font-family: Arial, sans-serif; }
+  .event-count { font-size: 11px; color: var(--text-secondary); margin-top: 8px; font-family: Arial, sans-serif; }
+  .event-count span { color: var(--accent); font-weight: bold; }
+
+  /* ── Layer toggles ── */
+  .layer-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; font-size: 12px; color: var(--text-body); font-family: Arial, sans-serif; }
+  .layer-toggle:last-child { margin-bottom: 0; }
+  .layer-toggle input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+  .layer-swatch { width: 20px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ── Legend ── */
+  .legend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; font-size: 12px; color: var(--text-body); font-family: Arial, sans-serif; }
+  .legend-row:last-child { margin-bottom: 0; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Stat cards ── */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 20px 0; }
+  .stat-card { background: var(--surface-raised); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+  .stat-value { font-size: 18px; font-weight: bold; color: var(--accent); font-family: Arial, sans-serif; margin-bottom: 3px; }
+  .stat-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; font-family: Arial, sans-serif; line-height: 1.4; }
+
+  /* ── Source note ── */
+  .source-note { margin: 16px 0; padding: 10px 14px; background: var(--surface-raised); border-radius: 4px; border-left: 2px solid var(--border); font-size: 11px; color: var(--text-secondary); line-height: 1.6; font-family: Arial, sans-serif; }
+
+  /* ── Related ── */
+  .related { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .related-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; font-family: Arial, sans-serif; }
+  .related-link { display: block; text-decoration: none; padding: 10px 14px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 5px; margin-bottom: 8px; transition: border-color 0.15s; }
+  .related-link:hover { border-color: var(--accent); }
+  .related-tag { font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; font-family: Arial, sans-serif; }
+  .related-title { font-size: 13px; color: var(--text-primary); }
+
+  /* ── Map ── */
+  #map { flex: 1; height: 100%; }
+
+  /* ── Popups ── */
+  .mapboxgl-popup-content {
+    background: var(--surface) !important; border: 1px solid var(--border);
+    border-radius: 7px; padding: 0; font-family: Georgia, serif;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    min-width: 220px; max-width: 300px; overflow: hidden;
+  }
+  .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 16px; padding: 5px 8px; background: none; }
+  .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }
+  .mapboxgl-popup-tip { border-top-color: var(--border) !important; }
+  .popup-inner { padding: 14px 16px 16px; }
+  .popup-title { font-size: 14px; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; }
+  .popup-date { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; font-family: Arial, sans-serif; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .popup-desc { font-size: 12px; line-height: 1.65; color: var(--text-body); }
+</style>
+
+<div class="layout">
+  <div class="sidebar">
+
+    <div class="story-label">Middle East · news</div>
+    <h1>Gulf State Relations: The Regional Power Balance</h1>
+    <div class="byline">Reference map · Updated March 2026</div>
+
+    
+    <div class="section-block">
+  <div class="section-label">Country stance toward Iran</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e05a4e"></div>Opposed — active adversary</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#888"></div>Neutral / hedging</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#3ecfb2"></div>Mediator</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e8c87a"></div>Aligned with Iran</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#cc4400"></div>Iran</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#5b9bd5; border-radius:2px;"></div>US military base</div>
+</div>
+
+<div class="section-block">
+  <div class="section-label">Show / hide</div>
+  <label class="layer-toggle"><input type="checkbox" id="toggle-states" checked />Country stance markers</label>
+  <label class="layer-toggle"><input type="checkbox" id="toggle-proxies" checked />Proxy actors</label>
+  <label class="layer-toggle"><input type="checkbox" id="toggle-bases" checked />US military bases</label>
+</div>
+
+
+    <div class="story-body">
+      <p>The Middle East's geopolitical landscape is defined by a fundamental
+tension between Iran and a coalition of Arab Gulf states, with the
+United States as the dominant external power and a network of proxies
+extending the conflict across the wider region.</p>
+<p>Click any country or base marker for a full profile. Toggle layers to
+isolate specific dimensions of the regional picture.</p>
+
+    </div>
+
+    
+    <div class="related">
+      <div class="related-label">Related maps</div>
+      
+      <a class="related-link" href="/stories/iran-strikes/">
+        <div class="related-tag">Middle East · Military</div>
+        <div class="related-title">Strikes on Iran: From the Twelve-Day War to the 2026 Conflict</div>
+      </a>
+      
+      <a class="related-link" href="/stories/strait-of-hormuz/">
+        <div class="related-tag">Middle East · Economics</div>
+        <div class="related-title">The Strait of Hormuz: Oil&#39;s Most Critical Passage</div>
+      </a>
+      
+    </div>
+    
+
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW5nem8zN3EwZmJuMnJweGZ3Nml2eTg0In0.tsLdE7ypzv9OYSvln-x5Sw';
+
+  const isDarkMode = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: isDarkMode() ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
+    center: [46,28],
+    zoom: 4.2,
+    projection: 'mercator'
+  });
+
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  map.on('style.load', () => {
+    map.addSource('story-data', {
+      type: 'geojson',
+      data: './data.geojson'
+    });
+
+    const stanceColors = {
+  opposed:'#e05a4e', neutral:'#888888',
+  mediator:'#3ecfb2', aligned:'#e8c87a', iran:'#cc4400'
+};
+const colorExpr = ['match',['get','stance'],
+  'opposed',stanceColors.opposed,'neutral',stanceColors.neutral,
+  'mediator',stanceColors.mediator,'aligned',stanceColors.aligned,
+  'iran',stanceColors.iran,'#888'
+];
+
+map.addLayer({ id:'states-glow', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'state'],
+  paint:{'circle-radius':18,'circle-opacity':0.12,'circle-color':colorExpr}
+});
+map.addLayer({ id:'states-layer', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'state'],
+  paint:{'circle-radius':9,'circle-opacity':0.9,
+    'circle-stroke-width':1.5,'circle-stroke-color':'rgba(255,255,255,0.12)',
+    'circle-color':colorExpr}
+});
+map.addLayer({ id:'proxies-glow', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'proxy'],
+  paint:{'circle-radius':13,'circle-color':stanceColors.aligned,'circle-opacity':0.1}
+});
+map.addLayer({ id:'proxies-layer', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'proxy'],
+  paint:{'circle-radius':6,'circle-color':stanceColors.aligned,'circle-opacity':0.75,
+    'circle-stroke-width':1.5,'circle-stroke-color':stanceColors.aligned,'circle-stroke-opacity':0.4}
+});
+map.addLayer({ id:'bases-glow', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'usbase'],
+  paint:{'circle-radius':12,'circle-color':'#5b9bd5','circle-opacity':0.15}
+});
+map.addLayer({ id:'bases-layer', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'usbase'],
+  paint:{'circle-radius':5,'circle-color':'#5b9bd5','circle-opacity':0.9,
+    'circle-stroke-width':2,'circle-stroke-color':'#5b9bd5','circle-stroke-opacity':0.5}
+});
+
+const popup = new mapboxgl.Popup({ closeButton:true, maxWidth:'310px', offset:14 });
+const stanceLabels = {
+  opposed:'Opposed to Iran', neutral:'Neutral / hedging',
+  mediator:'Mediator', aligned:'Iranian-aligned', iran:'Iran'
+};
+
+['states-layer','proxies-layer','bases-layer'].forEach(id => {
+  map.on('click', id, (e) => {
+    const p = e.features[0].properties;
+    const color = stanceColors[p.stance] || '#5b9bd5';
+    const stanceHtml = p.stance
+      ? `<div style="font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:${color};margin-bottom:5px;font-family:Arial,sans-serif;font-weight:bold;">${stanceLabels[p.stance]||p.stance}</div>`
+      : `<div style="font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:#5b9bd5;margin-bottom:5px;font-family:Arial,sans-serif;font-weight:bold;">US military base</div>`;
+    const statsHtml = p.gdp
+      ? `<div style="display:flex;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #e0ddd8;">
+          <div style="font-size:10px;color:#666;font-family:Arial,sans-serif;"><span style="display:block;color:#333;font-weight:bold;margin-bottom:1px;">GDP</span>${p.gdp}</div>
+          <div style="font-size:10px;color:#666;font-family:Arial,sans-serif;"><span style="display:block;color:#333;font-weight:bold;margin-bottom:1px;">Military</span>${p.military}</div>
+        </div>` : '';
+    popup.setLngLat(e.features[0].geometry.coordinates.slice()).setHTML(`
+      <div class="popup-inner">
+        ${stanceHtml}
+        <div class="popup-title">${p.title}</div>
+        ${statsHtml}
+        <div class="popup-desc">${p.description}</div>
+      </div>
+    `).addTo(map);
+  });
+  map.on('mouseenter', id, () => { map.getCanvas().style.cursor='pointer'; });
+  map.on('mouseleave', id, () => { map.getCanvas().style.cursor=''; });
+});
+
+  });
+
+  document.getElementById('toggle-states').addEventListener('change', (e) => {
+  const v = e.target.checked ? 'visible' : 'none';
+  ['states-layer','states-glow'].forEach(id => map.setLayoutProperty(id,'visibility',v));
+});
+document.getElementById('toggle-proxies').addEventListener('change', (e) => {
+  const v = e.target.checked ? 'visible' : 'none';
+  ['proxies-layer','proxies-glow'].forEach(id => map.setLayoutProperty(id,'visibility',v));
+});
+document.getElementById('toggle-bases').addEventListener('change', (e) => {
+  const v = e.target.checked ? 'visible' : 'none';
+  ['bases-layer','bases-glow'].forEach(id => map.setLayoutProperty(id,'visibility',v));
+});
+
+
+  document.addEventListener('themechange', (e) => {
+    map.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+  });
+</script>
+
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+      toggle.textContent = isDark() ? '☀' : '☽';
+
+      toggle.addEventListener('click', () => {
+        const dark = !isDark();
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '☀' : '☽';
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
+      });
+    })();
+  </script>
+
+</body>
+</html>

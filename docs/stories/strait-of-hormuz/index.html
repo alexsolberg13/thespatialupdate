@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Strait of Hormuz: Oil&#39;s Most Critical Passage — The Spatial Update</title>
+
+  <script>
+    if (localStorage.getItem('theme') !== 'light')
+      document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+
+  
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  
+
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --surface-alt: #fafaf7;
+      --surface-raised: #eeecea;
+      --border: #e0ddd8;
+      --border-light: #eeebe5;
+      --text-primary: #1a1816;
+      --text-body: #3a3835;
+      --text-secondary: #888;
+      --text-muted: #aaa;
+      --accent: #8a6b20;
+      --accent-bg: #fdf8ec;
+      --scrollbar: #d0cdc7;
+    }
+
+    [data-theme="dark"] {
+      --bg: #141210;
+      --surface: #1e1b18;
+      --surface-alt: #1a1815;
+      --surface-raised: #272421;
+      --border: #363230;
+      --border-light: #2c2926;
+      --text-primary: #e4e0da;
+      --text-body: #b4b0aa;
+      --text-secondary: #7a7875;
+      --text-muted: #5a5855;
+      --accent: #c8a84e;
+      --accent-bg: #221a08;
+      --scrollbar: #363230;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: var(--bg); color: var(--text-primary); }
+
+    #site-header {
+      height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; flex-shrink: 0; z-index: 10;
+    }
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; }
+    .site-name span { color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .site-tagline { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .back-link { font-size: 12px; color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif; }
+    .back-link:hover { color: var(--accent); }
+
+    #theme-toggle {
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 3px 9px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
+      transition: border-color 0.15s, color 0.15s; line-height: 1.5;
+    }
+    #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div id="site-header">
+    <div class="site-name">The Spatial <span>Update</span></div>
+    <div class="header-right">
+      <button id="theme-toggle" aria-label="Toggle theme">☽</button>
+      
+        <a class="back-link" href="/">← All stories</a>
+      
+    </div>
+  </div>
+
+  
+<style>
+  .layout { display: flex; height: calc(100vh - 52px); overflow: hidden; }
+
+  .sidebar {
+    width: 380px; flex-shrink: 0; overflow-y: auto;
+    background: var(--surface-alt); border-right: 1px solid var(--border); padding: 28px 26px;
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--scrollbar); }
+
+  .story-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; font-family: Arial, sans-serif; }
+  h1 { font-size: 22px; line-height: 1.35; font-weight: normal; margin-bottom: 12px; color: var(--text-primary); }
+  .byline { font-size: 11px; color: var(--text-muted); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); font-family: Arial, sans-serif; }
+  .story-body { font-size: 14px; line-height: 1.8; color: var(--text-body); }
+  .story-body p { margin-bottom: 14px; }
+  .story-body a { color: var(--accent); text-decoration: none; }
+  .story-body a:hover { text-decoration: underline; }
+
+  /* ── Controls shared styles ── */
+  .section-block { margin: 20px 0; padding: 14px 16px; background: var(--surface-raised); border-radius: 6px; border: 1px solid var(--border); }
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; font-family: Arial, sans-serif; }
+
+  /* ── Phase tabs ── */
+  .phase-tabs { display: flex; gap: 6px; margin: 20px 0 0; }
+  .phase-tab { flex: 1; padding: 8px 10px; text-align: center; font-size: 11px; font-family: Arial, sans-serif; border-radius: 5px; cursor: pointer; border: 1px solid var(--border); color: var(--text-secondary); background: var(--bg); transition: all 0.15s; }
+  .phase-tab.active { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+  .phase-name { font-weight: bold; display: block; margin-bottom: 2px; }
+  .phase-date { font-size: 10px; color: var(--text-muted); }
+  .phase-tab.active .phase-date { color: var(--accent); }
+
+  /* ── Time slider ── */
+  .current-date { font-size: 18px; font-weight: bold; color: var(--accent); margin-bottom: 12px; font-family: monospace; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .date-range { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 5px; font-family: Arial, sans-serif; }
+  .event-count { font-size: 11px; color: var(--text-secondary); margin-top: 8px; font-family: Arial, sans-serif; }
+  .event-count span { color: var(--accent); font-weight: bold; }
+
+  /* ── Layer toggles ── */
+  .layer-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; font-size: 12px; color: var(--text-body); font-family: Arial, sans-serif; }
+  .layer-toggle:last-child { margin-bottom: 0; }
+  .layer-toggle input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+  .layer-swatch { width: 20px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ── Legend ── */
+  .legend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; font-size: 12px; color: var(--text-body); font-family: Arial, sans-serif; }
+  .legend-row:last-child { margin-bottom: 0; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Stat cards ── */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 20px 0; }
+  .stat-card { background: var(--surface-raised); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+  .stat-value { font-size: 18px; font-weight: bold; color: var(--accent); font-family: Arial, sans-serif; margin-bottom: 3px; }
+  .stat-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; font-family: Arial, sans-serif; line-height: 1.4; }
+
+  /* ── Source note ── */
+  .source-note { margin: 16px 0; padding: 10px 14px; background: var(--surface-raised); border-radius: 4px; border-left: 2px solid var(--border); font-size: 11px; color: var(--text-secondary); line-height: 1.6; font-family: Arial, sans-serif; }
+
+  /* ── Related ── */
+  .related { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .related-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; font-family: Arial, sans-serif; }
+  .related-link { display: block; text-decoration: none; padding: 10px 14px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: 5px; margin-bottom: 8px; transition: border-color 0.15s; }
+  .related-link:hover { border-color: var(--accent); }
+  .related-tag { font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; font-family: Arial, sans-serif; }
+  .related-title { font-size: 13px; color: var(--text-primary); }
+
+  /* ── Map ── */
+  #map { flex: 1; height: 100%; }
+
+  /* ── Popups ── */
+  .mapboxgl-popup-content {
+    background: var(--surface) !important; border: 1px solid var(--border);
+    border-radius: 7px; padding: 0; font-family: Georgia, serif;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    min-width: 220px; max-width: 300px; overflow: hidden;
+  }
+  .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 16px; padding: 5px 8px; background: none; }
+  .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }
+  .mapboxgl-popup-tip { border-top-color: var(--border) !important; }
+  .popup-inner { padding: 14px 16px 16px; }
+  .popup-title { font-size: 14px; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; }
+  .popup-date { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; font-family: Arial, sans-serif; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .popup-desc { font-size: 12px; line-height: 1.65; color: var(--text-body); }
+</style>
+
+<div class="layout">
+  <div class="sidebar">
+
+    <div class="story-label">Middle East · economy</div>
+    <h1>The Strait of Hormuz: Oil&#39;s Most Critical Passage</h1>
+    <div class="byline">Reference map · Updated March 2026</div>
+
+    
+    <div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-value">21M</div>
+    <div class="stat-label">barrels per day through the Strait</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">~20%</div>
+    <div class="stat-label">of global oil supply</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">3.2km</div>
+    <div class="stat-label">narrowest shipping lane width</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">75%</div>
+    <div class="stat-label">of exports heading to Asia</div>
+  </div>
+</div>
+
+<div class="section-block">
+  <div class="section-label">Map layers</div>
+  <label class="layer-toggle">
+    <input type="checkbox" id="toggle-routes" checked />
+    <div class="layer-swatch" style="background:#5b9bd5"></div>
+    Tanker routes
+  </label>
+  <label class="layer-toggle">
+    <input type="checkbox" id="toggle-pipelines" checked />
+    <div class="layer-swatch" style="background:#e8c87a"></div>
+    Bypass pipelines
+  </label>
+  <label class="layer-toggle">
+    <input type="checkbox" id="toggle-ports" checked />
+    <div class="layer-swatch" style="background:#3ecfb2; height:8px; width:8px; border-radius:50%; margin-right:2px;"></div>
+    Export terminals
+  </label>
+  <label class="layer-toggle">
+    <input type="checkbox" id="toggle-zones" checked />
+    <div class="layer-swatch" style="background:#e05a4e; opacity:0.6"></div>
+    Territorial zones
+  </label>
+</div>
+
+
+    <div class="story-body">
+      <p>Every day, roughly 21 million barrels of oil — about one fifth of global
+supply — pass through a corridor barely 3 kilometres wide at its narrowest
+point. The Strait of Hormuz is the single most important chokepoint in
+the world's energy system.</p>
+<p>Iran's coastline runs along the entire northern shore. Any conflict
+involving Iran immediately raises the question of whether traffic
+through the Strait might be disrupted.</p>
+<p>Click any marker or route for details. Toggle layers to focus on specific
+dimensions of the picture. The dashed gold lines show bypass pipelines
+built specifically so Gulf states can export without passing through the Strait.</p>
+
+    </div>
+
+    
+    <div class="related">
+      <div class="related-label">Related maps</div>
+      
+      <a class="related-link" href="/stories/iran-strikes/">
+        <div class="related-tag">Middle East · Military</div>
+        <div class="related-title">Strikes on Iran: From the Twelve-Day War to the 2026 Conflict</div>
+      </a>
+      
+      <a class="related-link" href="/stories/gulf-state-relations/">
+        <div class="related-tag">Middle East · Geopolitics</div>
+        <div class="related-title">Gulf State Relations: The Regional Power Balance</div>
+      </a>
+      
+    </div>
+    
+
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW5nem8zN3EwZmJuMnJweGZ3Nml2eTg0In0.tsLdE7ypzv9OYSvln-x5Sw';
+
+  const isDarkMode = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: isDarkMode() ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
+    center: [54,26],
+    zoom: 5.5,
+    projection: 'mercator'
+  });
+
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  map.on('style.load', () => {
+    map.addSource('story-data', {
+      type: 'geojson',
+      data: './data.geojson'
+    });
+
+    map.addLayer({ id:'zone-fill', type:'fill', source:'story-data',
+  filter:['==',['get','type'],'zone'],
+  paint:{'fill-color':'#5b9bd5','fill-opacity':0.08}
+});
+map.addLayer({ id:'iranzone-fill', type:'fill', source:'story-data',
+  filter:['==',['get','type'],'iranzone'],
+  paint:{'fill-color':'#e05a4e','fill-opacity':0.1}
+});
+map.addLayer({ id:'iranzone-outline', type:'line', source:'story-data',
+  filter:['==',['get','type'],'iranzone'],
+  paint:{'line-color':'#e05a4e','line-width':1,'line-opacity':0.5,'line-dasharray':[2,2]}
+});
+map.addLayer({ id:'routes-layer', type:'line', source:'story-data',
+  filter:['==',['get','type'],'route'],
+  paint:{'line-color':'#5b9bd5','line-width':2,'line-opacity':0.7,'line-dasharray':[4,2]}
+});
+map.addLayer({ id:'pipelines-layer', type:'line', source:'story-data',
+  filter:['==',['get','type'],'pipeline'],
+  paint:{'line-color':'#e8c87a','line-width':2.5,'line-opacity':0.8,'line-dasharray':[3,2]}
+});
+map.addLayer({ id:'ports-glow', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'port'],
+  paint:{'circle-radius':12,'circle-color':'#3ecfb2','circle-opacity':0.12}
+});
+map.addLayer({ id:'ports-layer', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'port'],
+  paint:{'circle-radius':6,'circle-color':'#3ecfb2','circle-opacity':0.9,
+    'circle-stroke-width':1.5,'circle-stroke-color':'rgba(255,255,255,0.1)'}
+});
+map.addLayer({ id:'chokepoint-glow', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'chokepoint'],
+  paint:{'circle-radius':18,'circle-color':'#e8c87a','circle-opacity':0.15}
+});
+map.addLayer({ id:'chokepoint-layer', type:'circle', source:'story-data',
+  filter:['==',['get','type'],'chokepoint'],
+  paint:{'circle-radius':9,'circle-color':'#e8c87a','circle-opacity':1,
+    'circle-stroke-width':2,'circle-stroke-color':'rgba(255,255,255,0.2)'}
+});
+
+const popup = new mapboxgl.Popup({ closeButton:true, maxWidth:'280px', offset:12 });
+
+function showPopup(e) {
+  const p = e.features[0].properties;
+  const coords = e.features[0].geometry.type === 'Point'
+    ? e.features[0].geometry.coordinates.slice() : e.lngLat;
+  const stat = p.stat
+    ? `<div style="font-size:11px;color:#8a6b20;font-family:Arial,sans-serif;font-weight:bold;padding:0 0 8px;border-bottom:1px solid #e0ddd8;margin-bottom:8px;">${p.stat}</div>`
+    : '';
+  popup.setLngLat(coords).setHTML(`
+    <div class="popup-inner">
+      <div class="popup-title">${p.title}</div>
+      ${stat}
+      <div class="popup-desc">${p.description}</div>
+    </div>
+  `).addTo(map);
+}
+
+['chokepoint-layer','ports-layer','routes-layer','pipelines-layer'].forEach(id => {
+  map.on('click', id, showPopup);
+  map.on('mouseenter', id, () => { map.getCanvas().style.cursor='pointer'; });
+  map.on('mouseleave', id, () => { map.getCanvas().style.cursor=''; });
+});
+
+  });
+
+  document.getElementById('toggle-routes').addEventListener('change', (e) => {
+  map.setLayoutProperty('routes-layer','visibility', e.target.checked ? 'visible' : 'none');
+});
+document.getElementById('toggle-pipelines').addEventListener('change', (e) => {
+  map.setLayoutProperty('pipelines-layer','visibility', e.target.checked ? 'visible' : 'none');
+});
+document.getElementById('toggle-ports').addEventListener('change', (e) => {
+  const v = e.target.checked ? 'visible' : 'none';
+  ['ports-layer','ports-glow'].forEach(id => map.setLayoutProperty(id,'visibility',v));
+});
+document.getElementById('toggle-zones').addEventListener('change', (e) => {
+  const v = e.target.checked ? 'visible' : 'none';
+  ['zone-fill','iranzone-fill','iranzone-outline'].forEach(id => map.setLayoutProperty(id,'visibility',v));
+});
+
+
+  document.addEventListener('themechange', (e) => {
+    map.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+  });
+</script>
+
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+
+      toggle.textContent = isDark() ? '☀' : '☽';
+
+      toggle.addEventListener('click', () => {
+        const dark = !isDark();
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '☀' : '☽';
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
+      });
+    })();
+  </script>
+
+</body>
+</html>
