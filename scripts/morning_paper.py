@@ -50,19 +50,19 @@ HOME_LAT, HOME_LON = 47.567, -122.633
 HOME_TZ = "America/Los_Angeles"
 
 FEED_TIMEOUT = 10          # seconds per feed before giving up
-MAX_SYNOPSIS_CHARS = 220   # trim RSS summaries to this length
-MAX_RELATED = 3            # related-story links per story
+MAX_SYNOPSIS_CHARS = 800   # give us the full feed description
+MAX_RELATED = 4            # related-story links per story
 FRESH_HOURS = 36           # ignore feed items older than this
 
-# How many stories per section (totals ~17 before sports/extras)
+# How many stories per section
 SECTIONS = [
     # (section key, display name, stories to show)
-    ("world",   "World",                 4),
-    ("us",      "U.S. National",         3),
-    ("pnw",     "Pacific Northwest",     3),
-    ("science", "Science & Environment", 3),
-    ("tech",    "Tech & Business",       2),
-    ("fun",     "The Lighter Side",      2),
+    ("world",   "World",                 12),
+    ("us",      "U.S. National",         10),
+    ("pnw",     "Pacific Northwest",     10),
+    ("science", "Science & Environment", 10),
+    ("tech",    "Tech & Business",       10),
+    ("fun",     "The Lighter Side",      8),
 ]
 
 # RSS feeds per section. Add/remove freely — one URL per line.
@@ -115,7 +115,7 @@ TEAMS = [
     ("football",   "college-football",         ["Oregon State"]),
     ("basketball", "mens-college-basketball",  ["Oregon State"]),
 ]
-SPORTS_STORY_COUNT = 3
+SPORTS_STORY_COUNT = 8
 TEAM_STORY_KEYWORDS = ["Mariners", "Seahawks", "Kraken", "Sounders",
                         "Trail Blazers", "Blazers", "Oregon State", "Beavers",
                         "Willamette"]
@@ -408,83 +408,164 @@ def render_html(ctx):
     now = ctx["now"]
     day = now.astimezone(timezone.utc).strftime("%A, %B %d, %Y")
 
-    # masthead strip
-    strip = []
+    # ---- masthead strip ----
+    strip_items = []
     w = ctx.get("weather")
     if w:
-        strip.append(f'<div><b>{w["now_f"]}\u00b0F</b>{esc(w["desc"])} \u00b7 '
-                     f'H {w["hi_f"]}\u00b0 / L {w["lo_f"]}\u00b0 \u00b7 rain {w["precip_pct"]}%</div>')
+        icons = {"clear": "☀️", "mostly clear": "🌤️",
+                 "partly cloudy": "⛅", "overcast": "☁️",
+                 "fog": "🌫️", "drizzle": "🌦️",
+                 "light rain": "🌧️", "rain": "🌧️",
+                 "heavy rain": "🌧️", "snow": "❄️",
+                 "light snow": "❄️", "heavy snow": "❄️",
+                 "showers": "🌦️", "thunderstorms": "⛈️"}
+        icon = icons.get(w["desc"], "🌡️")
+        strip_items.append(
+            f'<div class="strip-item">'
+            f'<span class="strip-icon">{icon}</span>'
+            f'<span class="strip-main">{w["now_f"]}°F</span>'
+            f'<span class="strip-sub">{esc(w["desc"])} · H{w["hi_f"]}° L{w["lo_f"]}° · {w["precip_pct"]}% rain</span>'
+            f'</div>')
     for mkt in ctx.get("markets", []):
-        arrow = "\u25b2" if mkt["pct"] >= 0 else "\u25bc"
+        arrow = "▲" if mkt["pct"] >= 0 else "▼"
         color = "#4ade80" if mkt["pct"] >= 0 else "#f87171"
-        strip.append(f'<div><b style="color:{color}">{arrow} {abs(mkt["pct"])}%</b>{esc(mkt["name"])}</div>')
+        strip_items.append(
+            f'<div class="strip-item">'
+            f'<span class="strip-main" style="color:{color}">{arrow} {abs(mkt["pct"])}%</span>'
+            f'<span class="strip-sub">{esc(mkt["name"])}</span>'
+            f'</div>')
+    strip_block = f'<div class="strip">{"".join(strip_items)}</div>' if strip_items else ""
+
     otd = ctx.get("on_this_day")
-    strip_html_block = ""
-    if strip:
-        strip_html_block = f'<div class="strip">{"".join(strip)}</div>'
     otd_block = ""
     if otd:
-        otd_block = (f'<div class="otd"><span class="otd-label">ON THIS DAY \u00b7 {otd["year"]}</span> '
+        otd_block = (f'<div class="otd">'
+                     f'<span class="otd-label">On This Day · {otd["year"]}</span>'
                      f'{esc(otd["text"])}</div>')
 
-    # scores widget
+    # ---- scores widget ----
     scores_block = ""
     if ctx.get("scores"):
         rows = "".join(
-            f'<div class="scorerow"><span class="lg">{esc(s["league"])}</span>'
+            f'<div class="scorerow">'
+            f'<span class="lg">{esc(s["league"])}</span>'
             f'<span class="match">{esc(s["matchup"])}</span>'
-            f'<span class="pts">{esc(s["away_score"])}\u2013{esc(s["home_score"])}</span>'
-            f'<span class="st">{esc(s["detail"] or s["state"])}</span></div>'
+            f'<span class="pts">{esc(s["away_score"])}–{esc(s["home_score"])}</span>'
+            f'<span class="st">{esc(s["detail"] or s["state"])}</span>'
+            f'</div>'
             for s in ctx["scores"])
-        scores_block = f'<div class="scores"><h3>Scoreboard</h3>{rows}</div>'
+        scores_block = f'<div class="scores"><div class="scores-label">Scoreboard</div>{rows}</div>'
 
-    # news sections
-    section_blocks = []
-    for key, display, _n in SECTIONS + [("sports_stories", "Sports Desk", SPORTS_STORY_COUNT)]:
-        stories = ctx["sections"].get(key) or []
-        if key == "sports_stories" and not stories and not scores_block:
-            continue
-        cards = []
-        for s in stories:
-            rel = ""
-            if s.get("related"):
-                links = " \u00b7 ".join(
-                    f'<a href="{esc(r["link"])}" target="_blank" rel="noopener">{esc(r["source"])}</a>'
-                    for r in s["related"])
-                rel = f'<div class="related">Also covered by: {links}</div>'
-            when = ""
-            if s.get("published"):
-                mins = int((now - s["published"]).total_seconds() // 60)
-                when = f"{mins // 60}h ago" if mins >= 60 else f"{mins}m ago"
-            cards.append(f"""
-      <article class="story">
-        <a class="stitle" href="{esc(s["link"])}" target="_blank" rel="noopener">{esc(s["title"])}</a>
-        <div class="smeta">{esc(s["source"])}{" \u00b7 " + when if when else ""}</div>
-        {f'<p class="ssum">{esc(s["summary"])}</p>' if s["summary"] else ""}
-        {rel}
-      </article>""")
-        inner = "".join(cards)
-        if key == "sports_stories":
-            inner = scores_block + inner
-        if not inner:
-            continue
-        section_blocks.append(f'<section><h2 class="sec">{esc(display)}</h2>{inner}</section>')
+    # ---- build tab list + panels ----
+    all_sections = list(SECTIONS) + [("sports_stories", "Sports Desk", SPORTS_STORY_COUNT),
+                                      ("radar", "Geo Radar", GEO_RADAR_COUNT)]
+    tab_buttons, panels = [], []
 
-    # geo radar
-    radar_block = ""
-    if ctx.get("radar"):
-        rows = []
-        for c in ctx["radar"]:
-            accent = "#4ade80" if c["category"] == "cooperation" else "#f87171"
-            text = c.get("headline") or c["synopsis"]
-            rows.append(
-                f'<div class="radar-row" style="border-left-color:{accent}">'
-                f'<b>{esc(c["place"])}</b> \u2014 {esc(text)}'
-                f'{f" <a href=\"{esc(c['source_urls'][0])}\" target=\"_blank\" rel=\"noopener\">source</a>" if c.get("source_urls") else ""}'
-                f'</div>')
-        radar_block = (f'<section><h2 class="sec">Geo Radar</h2>'
-                       f'<p class="radar-sub">Precise-location world events from GDELT, last {GEO_RADAR_HOURS}h</p>'
-                       f'{"".join(rows)}</section>')
+    for idx, (key, display, _n) in enumerate(all_sections):
+        if key == "radar":
+            radar = ctx.get("radar") or []
+            if not radar:
+                continue
+            cards = []
+            for c in radar:
+                accent = "#4ade80" if c["category"] == "cooperation" else "#f87171"
+                text = c.get("headline") or c["synopsis"]
+                src_link = (f'<a href="{esc(c["source_urls"][0])}" target="_blank" rel="noopener">source</a>'
+                            if c.get("source_urls") else "")
+                cards.append(
+                    f'<div class="radar-row" style="border-left-color:{accent}">'
+                    f'<b>{esc(c["place"])}</b> — {esc(text)} {src_link}</div>')
+            inner = (f'<p class="radar-sub">Precise-location events from GDELT · last {GEO_RADAR_HOURS}h</p>'
+                     + "".join(cards))
+        else:
+            stories = ctx["sections"].get(key) or []
+            if key == "sports_stories" and not stories and not scores_block:
+                continue
+            story_cards = []
+            for s in stories:
+                rel = ""
+                if s.get("related"):
+                    links = " · ".join(
+                        f'<a href="{esc(r["link"])}" target="_blank" rel="noopener">{esc(r["source"])}</a>'
+                        for r in s["related"])
+                    rel = f'<div class="related">Also covered by: {links}</div>'
+                when = ""
+                if s.get("published"):
+                    mins = int((now - s["published"]).total_seconds() // 60)
+                    when = f"{mins // 60}h ago" if mins >= 60 else f"{mins}m ago"
+                story_cards.append(
+                    f'<article class="story">'
+                    f'<a class="stitle" href="{esc(s["link"])}" target="_blank" rel="noopener">'
+                    f'{esc(s["title"])}</a>'
+                    f'<div class="smeta">{esc(s["source"])}'
+                    f'{"  · " + when if when else ""}</div>'
+                    f'{f'<p class="ssum">{esc(s["summary"])}</p>' if s.get("summary") else ""}'
+                    f'{rel}</article>')
+            inner = ("" if key != "sports_stories" else scores_block) + "".join(story_cards)
+            if not inner:
+                continue
+
+        active = " active" if idx == 0 else ""
+        tab_id = f"tab-{key}"
+        tab_buttons.append(
+            f'<button class="tab-btn{active}" data-panel="{tab_id}" '
+            f'onclick="switchTab(this)">{esc(display)}</button>')
+        panels.append(
+            f'<div class="panel{active}" id="{tab_id}">'
+            f'<div class="columns">{inner}</div></div>')
+
+    tabs_block = (f'<div class="tab-bar">{"".join(tab_buttons)}</div>' + "".join(panels))
+
+    css = """
+  :root { color-scheme: dark; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background:#0d1117; color:#e6edf3; font:16px/1.6 Georgia,'Times New Roman',serif; padding-bottom:60px; }
+  header { text-align:center; padding:18px 16px 12px; border-bottom:3px double #30363d; }
+  header h1 { font-size:30px; letter-spacing:2px; font-variant:small-caps; }
+  header .edition { color:#8b949e; font-size:12px; font-style:italic; margin-top:3px; letter-spacing:1px; }
+  .strip { display:flex; justify-content:center; border-bottom:1px solid #30363d; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .strip-item { display:flex; flex-direction:column; align-items:center; padding:8px 16px; border-right:1px solid #21262d; flex:none; }
+  .strip-item:last-child { border-right:none; }
+  .strip-icon { font-size:18px; line-height:1; }
+  .strip-main { font:bold 17px system-ui,sans-serif; color:#e6edf3; }
+  .strip-sub { font:11px system-ui,sans-serif; color:#6e7681; white-space:nowrap; }
+  .otd { font:13px/1.5 system-ui,sans-serif; color:#8b949e; text-align:center; padding:8px 20px; border-bottom:1px solid #30363d; }
+  .otd-label { color:#d29922; font-size:10px; letter-spacing:2px; text-transform:uppercase; display:block; margin-bottom:2px; }
+  .tab-bar { display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch; border-bottom:2px solid #30363d; background:#0d1117; position:sticky; top:0; z-index:10; scrollbar-width:none; }
+  .tab-bar::-webkit-scrollbar { display:none; }
+  .tab-btn { flex:none; background:none; border:none; border-bottom:3px solid transparent; color:#8b949e; font:13px system-ui,sans-serif; padding:10px 16px 8px; cursor:pointer; white-space:nowrap; transition:color .15s,border-color .15s; margin-bottom:-2px; }
+  .tab-btn:hover { color:#e6edf3; }
+  .tab-btn.active { color:#d29922; border-bottom-color:#d29922; font-weight:600; }
+  .panel { display:none; padding:16px 16px 0; }
+  .panel.active { display:block; }
+  @media (min-width:700px) {
+    body { max-width:1100px; margin:0 auto; }
+    .columns { column-count:2; column-gap:28px; column-rule:1px solid #21262d; }
+    .story { break-inside:avoid; }
+    .scores { break-inside:avoid; }
+    .radar-row { break-inside:avoid; }
+  }
+  .story { padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid #21262d; }
+  .story:last-child { border-bottom:none; }
+  .stitle { font-size:18px; line-height:1.3; color:#e6edf3; text-decoration:none; font-weight:bold; display:block; margin-bottom:3px; }
+  .stitle:hover { color:#58a6ff; }
+  .smeta { font:11px system-ui,sans-serif; color:#6e7681; margin-bottom:6px; }
+  .ssum { font:14px/1.6 system-ui,sans-serif; color:#8b949e; margin-bottom:6px; }
+  .related { font:12px system-ui,sans-serif; color:#6e7681; }
+  .related a { color:#58a6ff; text-decoration:none; }
+  .scores { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:12px 14px; margin-bottom:18px; }
+  .scores-label { font:11px system-ui,sans-serif; letter-spacing:2px; text-transform:uppercase; color:#8b949e; margin-bottom:8px; }
+  .scorerow { display:flex; gap:10px; align-items:baseline; font:13px system-ui,sans-serif; padding:5px 0; border-bottom:1px dotted #21262d; }
+  .scorerow:last-child { border-bottom:none; }
+  .lg { color:#d29922; font-size:10px; letter-spacing:1px; width:38px; flex:none; }
+  .match { flex:1; }
+  .pts { font-weight:bold; }
+  .st { color:#6e7681; font-size:11px; }
+  .radar-sub { font:11px system-ui,sans-serif; color:#6e7681; margin-bottom:10px; letter-spacing:1px; text-transform:uppercase; }
+  .radar-row { font:13px/1.5 system-ui,sans-serif; color:#8b949e; border-left:3px solid; padding:6px 10px; margin-bottom:10px; background:#161b22; border-radius:0 6px 6px 0; }
+  .radar-row b { color:#e6edf3; }
+  .radar-row a { color:#58a6ff; text-decoration:none; }
+  footer { text-align:center; color:#484f58; font:11px system-ui,sans-serif; margin-top:30px; border-top:1px solid #30363d; padding:14px 16px 0; }"""
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -492,61 +573,30 @@ def render_html(ctx):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>{esc(PAPER_NAME)} \u2014 {esc(EDITION_NAME)}</title>
-<style>
-  :root {{ color-scheme: dark; }}
-  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  body {{ background:#0d1117; color:#e6edf3; font:16px/1.55 Georgia,'Times New Roman',serif;
-         max-width:640px; margin:0 auto; padding:20px 16px 60px; }}
-  header {{ text-align:center; border-bottom:3px double #30363d; padding-bottom:14px; }}
-  header h1 {{ font-size:27px; letter-spacing:1px; font-variant:small-caps; }}
-  header .sub {{ color:#8b949e; font-size:13px; font-style:italic; margin-top:4px; }}
-  .strip {{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap;
-            padding:10px 0 4px; font:13px system-ui,sans-serif; color:#8b949e; }}
-  .strip b {{ color:#e6edf3; display:block; text-align:center; font-size:16px; }}
-  .otd {{ font:13px/1.5 system-ui,sans-serif; color:#8b949e; text-align:center;
-          padding:8px 10px 12px; border-bottom:1px solid #30363d; margin-bottom:8px; }}
-  .otd-label {{ color:#d29922; letter-spacing:1px; font-size:11px; }}
-  .sec {{ font-variant:small-caps; letter-spacing:2px; font-size:15px; color:#d29922;
-          border-bottom:1px solid #30363d; padding:18px 0 6px; margin-bottom:10px; }}
-  .story {{ margin-bottom:16px; }}
-  .stitle {{ font-size:17px; line-height:1.35; color:#e6edf3; text-decoration:none; font-weight:bold; }}
-  .stitle:hover {{ color:#58a6ff; }}
-  .smeta {{ font:11px system-ui,sans-serif; color:#6e7681; margin:3px 0 4px; }}
-  .ssum {{ font:14px/1.5 system-ui,sans-serif; color:#8b949e; }}
-  .related {{ font:12px system-ui,sans-serif; color:#6e7681; margin-top:4px; }}
-  .related a {{ color:#58a6ff; text-decoration:none; }}
-  .scores {{ background:#161b22; border:1px solid #30363d; border-radius:8px;
-             padding:12px 14px; margin-bottom:14px; }}
-  .scores h3 {{ font:12px system-ui,sans-serif; letter-spacing:2px; color:#8b949e; margin-bottom:8px; }}
-  .scorerow {{ display:flex; gap:10px; align-items:baseline; font:13px system-ui,sans-serif;
-               padding:4px 0; border-bottom:1px dotted #21262d; }}
-  .scorerow:last-child {{ border-bottom:none; }}
-  .lg {{ color:#d29922; font-size:10px; letter-spacing:1px; width:34px; flex:none; }}
-  .match {{ flex:1; }}
-  .pts {{ font-weight:bold; }}
-  .st {{ color:#6e7681; font-size:11px; }}
-  .radar-row {{ font:13px/1.5 system-ui,sans-serif; color:#8b949e; border-left:3px solid;
-                padding:6px 10px; margin-bottom:8px; background:#161b22; border-radius:0 6px 6px 0; }}
-  .radar-row b {{ color:#e6edf3; }}
-  .radar-row a {{ color:#58a6ff; text-decoration:none; }}
-  .radar-sub {{ font:11px system-ui,sans-serif; color:#6e7681; margin-bottom:8px; }}
-  footer {{ text-align:center; color:#484f58; font:11px system-ui,sans-serif;
-            margin-top:30px; border-top:1px solid #30363d; padding-top:14px; }}
-</style>
+<title>{esc(PAPER_NAME)} — {esc(EDITION_NAME)}</title>
+<style>{css}</style>
 </head>
 <body>
 <header>
   <h1>{esc(PAPER_NAME)}</h1>
-  <div class="sub">{esc(EDITION_NAME)} \u00b7 {day}</div>
+  <div class="edition">{esc(EDITION_NAME)} · {day}</div>
 </header>
-{strip_html_block}
+{strip_block}
 {otd_block}
-{"".join(section_blocks)}
-{radar_block}
-<footer>Printed {now.strftime("%Y-%m-%d %H:%M UTC")} \u00b7 sources linked above \u00b7 have a good morning</footer>
+{tabs_block}
+<footer>Printed {now.strftime("%Y-%m-%d %H:%M UTC")} · sources linked above · have a good morning</footer>
+<script>
+function switchTab(btn) {{
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.panel).classList.add('active');
+  btn.scrollIntoView({{block:'nearest',inline:'center',behavior:'smooth'}});
+}}
+</script>
 </body>
 </html>"""
+
 
 # ---------------------------------------------------------------------------
 # Main
