@@ -45,8 +45,13 @@ import requests
 PAPER_NAME = "The Spatial Update"
 EDITION_NAME = "Morning Edition"
 
-# Home location for weather (Bremerton, WA)
-HOME_LAT, HOME_LON = 47.567, -122.633
+# ---------------------------------------------------------------------------
+# Weather locations — shown side by side in the masthead strip
+# ---------------------------------------------------------------------------
+WEATHER_LOCATIONS = [
+    {"name": "Port Orchard", "lat": 47.540, "lon": -122.633},
+    {"name": "Lebanon, OR",  "lat": 44.536, "lon": -122.907},
+]
 HOME_TZ = "America/Los_Angeles"
 
 FEED_TIMEOUT = 10          # seconds per feed before giving up
@@ -54,40 +59,73 @@ MAX_SYNOPSIS_CHARS = 800   # give us the full feed description
 MAX_RELATED = 4            # related-story links per story
 FRESH_HOURS = 36           # ignore feed items older than this
 
-# How many stories per section
+# ---------------------------------------------------------------------------
+# Sections — order here is the order of tabs in the paper
+# ---------------------------------------------------------------------------
 SECTIONS = [
     # (section key, display name, stories to show)
-    ("world",   "World",                 12),
-    ("us",      "U.S. National",         10),
-    ("pnw",     "Pacific Northwest",     10),
-    ("science", "Science & Environment", 10),
-    ("tech",    "Tech & Business",       10),
-    ("fun",     "The Lighter Side",      8),
+    ("world",    "World",                  12),
+    ("us",       "U.S. National",          10),
+    ("pnw",      "Pacific Northwest",      12),  # expanded: Kitsap + Oregon
+    ("science",  "Science & Environment",  10),
+    ("tech",     "Tech & Business",        10),
+    ("fun",      "The Lighter Side",        8),
 ]
 
-# RSS feeds per section. Add/remove freely — one URL per line.
-# If a feed dies someday, it just gets skipped; the paper still prints.
+# ---------------------------------------------------------------------------
+# RSS feeds per section
+# ---------------------------------------------------------------------------
 FEEDS = {
     "world": [
+        # General world
         "http://feeds.bbci.co.uk/news/world/rss.xml",
         "https://www.theguardian.com/world/rss",
         "https://www.aljazeera.com/xml/rss/all.xml",
         "https://feeds.npr.org/1004/rss.xml",
+        # Pacific Rim focus
+        "https://www.scmp.com/rss/91/feed",           # South China Morning Post
+        "https://japannews.net/feed/",                 # Japan News
+        "https://koreajoongangdaily.joins.com/rss",    # Korea JoongAng Daily
+        # Maritime & shipping
+        "https://www.maritime-executive.com/rss.xml",
+        "https://splash247.com/feed/",
+        # Military & defense
+        "https://www.defensenews.com/arc/outboundfeeds/rss/",
+        "https://www.thedrive.com/the-war-zone/rss",
+        # History & archaeology
+        "https://www.historytoday.com/feed",
+        "https://archaeologynewsnetwork.blogspot.com/feeds/posts/default",
     ],
     "us": [
         "https://feeds.npr.org/1003/rss.xml",
         "https://rss.nytimes.com/services/xml/rss/nyt/US.xml",
+        "https://feeds.washingtonpost.com/rss/national",
+        "https://www.military.com/rss-feeds/content",  # US military/veterans
     ],
     "pnw": [
+        # Kitsap / Port Orchard
+        "https://www.kitsapsun.com/rss/",
+        "https://www.kitsapgov.com/Pages/RSS.aspx",
+        # Seattle
         "https://www.seattletimes.com/feed/",
+        "https://www.kuow.org/feeds/all.rss",
+        # Oregon statewide
         "https://www.oregonlive.com/arc/outboundfeeds/rss/?outputType=xml",
         "https://www.opb.org/feeds/all/",
-        "https://www.kuow.org/feeds/all.rss",
+        # Mid-Willamette Valley / Lebanon / Linn County
+        "https://democratherald.com/search/?f=rss&t=article&c=news&l=50&s=start_time&sd=desc",
+        "https://albanydemocratherald.com/feed/",
+        "https://www.gazettetimes.com/search/?f=rss&t=article&c=news",
+        # PNW indigenous & tribal
+        "https://nativenewsonline.net/feed",
     ],
     "science": [
         "https://www.sciencedaily.com/rss/top/science.xml",
         "https://www.theguardian.com/environment/rss",
         "https://www.nasa.gov/feed/",
+        "https://www.climate.gov/feeds/news-features.rss",  # NOAA climate
+        "https://earthobservatory.nasa.gov/feeds/earth-observatory.rss",
+        "https://oceanservice.noaa.gov/news/rss/latestnews.rss",  # NOAA ocean
     ],
     "tech": [
         "https://feeds.arstechnica.com/arstechnica/index",
@@ -98,34 +136,53 @@ FEEDS = {
         "https://www.atlasobscura.com/feeds/latest",
         "https://www.smithsonianmag.com/rss/latest_articles/",
         "https://www.goodnewsnetwork.org/feed/",
+        "https://www.mentalfloss.com/rss.xml",
     ],
     "sports_stories": [
         "https://www.seattletimes.com/sports/feed/",
         "https://www.espn.com/espn/rss/news",
+        "https://www.oregonlive.com/beavers/index.rss",
     ],
 }
 
-# Sports teams: (ESPN sport path, league path, name keywords to match)
+# ---------------------------------------------------------------------------
+# Content filtering
+# Soft-deprioritize: stories matching these keywords get pushed to the bottom
+# of their section rather than removed entirely.
+# ---------------------------------------------------------------------------
+DEPRIORITIZE_KEYWORDS = {
+    # Celebrity / entertainment gossip
+    "kardashian", "jenner", "taylor swift", "beyonce", "celebrity", "oscars",
+    "grammy", "emmys", "box office", "reality tv", "bachelor", "influencer",
+    "tiktok star", "red carpet",
+    # Lifestyle / wellness fluff
+    "weight loss", "diet tips", "skincare", "self-care", "wellness routine",
+    "relationship advice", "dating app", "horoscope",
+}
+
+# ---------------------------------------------------------------------------
+# Sports teams
+# ---------------------------------------------------------------------------
 TEAMS = [
-    ("baseball",   "mlb",                      ["Mariners"]),
-    ("football",   "nfl",                      ["Seahawks"]),
-    ("hockey",     "nhl",                      ["Kraken"]),
-    ("soccer",     "usa.1",                    ["Sounders"]),
-    ("basketball", "nba",                      ["Trail Blazers", "Blazers"]),
-    ("football",   "college-football",         ["Oregon State"]),
-    ("basketball", "mens-college-basketball",  ["Oregon State"]),
+    ("baseball",   "mlb",                     ["Mariners"]),
+    ("football",   "nfl",                     ["Seahawks"]),
+    ("hockey",     "nhl",                     ["Kraken"]),
+    ("soccer",     "usa.1",                   ["Sounders"]),
+    ("basketball", "nba",                     ["Trail Blazers", "Blazers"]),
+    ("football",   "college-football",        ["Oregon State"]),
+    ("basketball", "mens-college-basketball", ["Oregon State"]),
 ]
 SPORTS_STORY_COUNT = 8
 TEAM_STORY_KEYWORDS = ["Mariners", "Seahawks", "Kraken", "Sounders",
                         "Trail Blazers", "Blazers", "Oregon State", "Beavers",
                         "Willamette"]
 
-# Markets snapshot symbols on stooq.com (^spx = S&P 500, ^dji = Dow, ^ndq = Nasdaq)
+# Markets snapshot symbols on stooq.com
 MARKET_SYMBOLS = [("^spx", "S&P 500"), ("^dji", "Dow"), ("^ndq", "Nasdaq")]
 
-# GDELT geo radar (small taste of the original leads pipeline)
+# GDELT geo radar
 INCLUDE_GEO_RADAR = True
-GEO_RADAR_HOURS = 6      # short window keeps it fast
+GEO_RADAR_HOURS = 6
 GEO_RADAR_COUNT = 3
 
 STOPWORDS = set("""a an and are as at be but by for from has have in is it its
@@ -176,30 +233,35 @@ WMO_CODES = {
 
 
 def get_weather(session):
-    data = get_json(
-        "https://api.open-meteo.com/v1/forecast", session,
-        params={
-            "latitude": HOME_LAT, "longitude": HOME_LON,
-            "current_weather": "true",
-            "daily": "temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode",
-            "temperature_unit": "fahrenheit",
-            "timezone": HOME_TZ, "forecast_days": 1,
-        })
-    if not data:
-        return None
-    try:
-        cur = data["current_weather"]
-        daily = data["daily"]
-        code = int(daily["weathercode"][0])
-        return {
-            "now_f": round(cur["temperature"]),
-            "hi_f": round(daily["temperature_2m_max"][0]),
-            "lo_f": round(daily["temperature_2m_min"][0]),
-            "precip_pct": int(daily["precipitation_probability_max"][0] or 0),
-            "desc": WMO_CODES.get(code, "mixed"),
-        }
-    except (KeyError, IndexError, TypeError, ValueError):
-        return None
+    """Fetch weather for all WEATHER_LOCATIONS. Returns a list of dicts."""
+    results = []
+    for loc in WEATHER_LOCATIONS:
+        data = get_json(
+            "https://api.open-meteo.com/v1/forecast", session,
+            params={
+                "latitude": loc["lat"], "longitude": loc["lon"],
+                "current_weather": "true",
+                "daily": "temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode",
+                "temperature_unit": "fahrenheit",
+                "timezone": HOME_TZ, "forecast_days": 1,
+            })
+        if not data:
+            continue
+        try:
+            cur = data["current_weather"]
+            daily = data["daily"]
+            code = int(daily["weathercode"][0])
+            results.append({
+                "name": loc["name"],
+                "now_f": round(cur["temperature"]),
+                "hi_f": round(daily["temperature_2m_max"][0]),
+                "lo_f": round(daily["temperature_2m_min"][0]),
+                "precip_pct": int(daily["precipitation_probability_max"][0] or 0),
+                "desc": WMO_CODES.get(code, "mixed"),
+            })
+        except (KeyError, IndexError, TypeError, ValueError):
+            continue
+    return results
 
 
 def get_markets(session):
@@ -365,13 +427,27 @@ def attach_related(chosen, pool):
         story["related"] = related
 
 
+def _is_deprioritized(story):
+    """Return True if this story matches any soft-filter keyword."""
+    text = (story.get("title", "") + " " + story.get("summary", "")).lower()
+    return any(kw in text for kw in DEPRIORITIZE_KEYWORDS)
+
+
 def pick_diverse(stories, n):
-    """Take top-N by recency but avoid two stories about the same thing."""
-    out = []
+    """Take top-N by recency, avoiding near-duplicates.
+    Deprioritized stories are pushed to the end but kept available as fill."""
+    preferred, deprio = [], []
     for s in stories:
-        if any(len(s["tokens"] & o["tokens"]) >= 3 for o in out):
-            continue
-        out.append(s)
+        (deprio if _is_deprioritized(s) else preferred).append(s)
+
+    out = []
+    for pool in (preferred, deprio):
+        for s in pool:
+            if len(out) >= n:
+                break
+            if any(len(s["tokens"] & o["tokens"]) >= 3 for o in out):
+                continue
+            out.append(s)
         if len(out) >= n:
             break
     return out
@@ -410,18 +486,18 @@ def render_html(ctx):
 
     # ---- masthead strip ----
     strip_items = []
-    w = ctx.get("weather")
-    if w:
-        icons = {"clear": "☀️", "mostly clear": "🌤️",
-                 "partly cloudy": "⛅", "overcast": "☁️",
-                 "fog": "🌫️", "drizzle": "🌦️",
-                 "light rain": "🌧️", "rain": "🌧️",
-                 "heavy rain": "🌧️", "snow": "❄️",
-                 "light snow": "❄️", "heavy snow": "❄️",
-                 "showers": "🌦️", "thunderstorms": "⛈️"}
-        icon = icons.get(w["desc"], "🌡️")
+    WEATHER_ICONS = {"clear": "☀️", "mostly clear": "🌤️",
+                     "partly cloudy": "⛅", "overcast": "☁️",
+                     "fog": "🌫️", "drizzle": "🌦️",
+                     "light rain": "🌧️", "rain": "🌧️",
+                     "heavy rain": "🌧️", "snow": "❄️",
+                     "light snow": "❄️", "heavy snow": "❄️",
+                     "showers": "🌦️", "thunderstorms": "⛈️"}
+    for w in (ctx.get("weather") or []):
+        icon = WEATHER_ICONS.get(w["desc"], "🌡️")
         strip_items.append(
             f'<div class="strip-item">'
+            f'<span class="strip-loc">{esc(w.get("name",""))}</span>'
             f'<span class="strip-icon">{icon}</span>'
             f'<span class="strip-main">{w["now_f"]}°F</span>'
             f'<span class="strip-sub">{esc(w["desc"])} · H{w["hi_f"]}° L{w["lo_f"]}° · {w["precip_pct"]}% rain</span>'
@@ -526,6 +602,8 @@ def render_html(ctx):
   .strip { display:flex; justify-content:center; border-bottom:1px solid #30363d; overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .strip-item { display:flex; flex-direction:column; align-items:center; padding:8px 16px; border-right:1px solid #21262d; flex:none; }
   .strip-item:last-child { border-right:none; }
+  .strip-loc { font:10px system-ui,sans-serif; color:#d29922; letter-spacing:1px;
+               text-transform:uppercase; margin-bottom:1px; }
   .strip-icon { font-size:18px; line-height:1; }
   .strip-main { font:bold 17px system-ui,sans-serif; color:#e6edf3; }
   .strip-sub { font:11px system-ui,sans-serif; color:#6e7681; white-space:nowrap; }
@@ -657,10 +735,12 @@ def main():
     for key, display, _n in SECTIONS:
         for s in sections.get(key, [])[:1]:
             top.append({"section": display, "title": s["title"], "source": s["source"]})
+    w0 = weather[0] if weather else None
     summary = {
         "type": "morning_paper",
         "date": now.strftime("%Y-%m-%d"),
-        "weather": weather,
+        "weather": w0,        # notification gets first location (Port Orchard)
+        "weather_all": weather,
         "story_count": sum(len(v) for v in sections.values()),
         "score_count": len(scores),
         "top": top,
