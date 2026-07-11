@@ -27,18 +27,18 @@
       "desc": "overcast"
     }
   ],
-  "story_count": 62,
-  "score_count": 2,
+  "story_count": 74,
+  "score_count": 8,
   "top": [
-    {
-      "section": "World",
-      "title": "Argentina vs Switzerland LIVE: FIFA World Cup 2026 quarterfinal",
-      "source": "aljazeera.com"
-    },
     {
       "section": "U.S. National",
       "title": "Trump\u2019s Posts on Singing Somali Schoolchildren Stir Anger in Minnesota",
       "source": "nytimes.com"
+    },
+    {
+      "section": "World",
+      "title": "Trump\u2019s crypto windfall showcases his ability to turn loyalty into power",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
@@ -46,14 +46,14 @@
       "source": "oregonlive.com"
     },
     {
-      "section": "Science & Environment",
-      "title": "Fastest spider in the world? This huge, hairy-legged Australian arachnid may be the quickest on the planet",
-      "source": "theguardian.com"
-    },
-    {
       "section": "Tech & Business",
       "title": "After years of teasing, the viral Nopia synth is \u2018basically finished\u2019",
       "source": "theverge.com"
+    },
+    {
+      "section": "Science & Environment",
+      "title": "Fastest spider in the world? This huge, hairy-legged Australian arachnid may be the quickest on the planet",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
