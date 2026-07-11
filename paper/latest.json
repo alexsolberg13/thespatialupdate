@@ -2,28 +2,28 @@
   "type": "morning_paper",
   "date": "2026-07-11",
   "weather": {
-    "now_f": 72,
-    "hi_f": 72,
+    "now_f": 73,
+    "hi_f": 75,
     "lo_f": 56,
-    "precip_pct": 2,
-    "desc": "drizzle"
+    "precip_pct": 3,
+    "desc": "overcast"
   },
-  "story_count": 17,
+  "story_count": 60,
   "score_count": 2,
   "top": [
     {
       "section": "World",
-      "title": "What\u2019s behind Pakistan\u2019s mass deportation of Afghans?",
-      "source": "aljazeera.com"
+      "title": "Palestinian aid worker who organized World Cup screenings killed in Israeli strike",
+      "source": "npr.org"
     },
     {
       "section": "U.S. National",
-      "title": "At Vigil, Sons of Man Killed by ICE in Houston Call for Accountability",
+      "title": "Trump\u2019s Posts on Singing Somali Schoolchildren Stir Anger in Minnesota",
       "source": "nytimes.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Roller-skating organization unites Portland community through culture",
+      "title": "World Cup soccer star dead at 25 days after playing in tournament: \u2018A gifted player\u2019",
       "source": "oregonlive.com"
     },
     {
@@ -33,7 +33,7 @@
     },
     {
       "section": "Tech & Business",
-      "title": "Oregon\u2019s Attorney General withdraws effort to delay Paramount and Warner Bros. merger",
+      "title": "After years of teasing, the viral Nopia synth is \u2018basically finished\u2019",
       "source": "theverge.com"
     },
     {
