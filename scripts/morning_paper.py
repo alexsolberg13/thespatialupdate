@@ -64,11 +64,11 @@ FRESH_HOURS = 36           # ignore feed items older than this
 # ---------------------------------------------------------------------------
 SECTIONS = [
     # (section key, display name, stories to show)
-    ("world",    "World",                  12),
     ("us",       "U.S. National",          10),
-    ("pnw",      "Pacific Northwest",      12),  # expanded: Kitsap + Oregon
-    ("science",  "Science & Environment",  10),
+    ("world",    "World",                  12),
+    ("pnw",      "Pacific Northwest",      12),
     ("tech",     "Tech & Business",        10),
+    ("science",  "Science & Environment",  10),
     ("fun",      "The Lighter Side",        8),
 ]
 
@@ -83,9 +83,9 @@ FEEDS = {
         "https://www.aljazeera.com/xml/rss/all.xml",
         "https://feeds.npr.org/1004/rss.xml",
         # Pacific Rim focus
-        "https://www.scmp.com/rss/91/feed",           # South China Morning Post
-        "https://japannews.net/feed/",                 # Japan News
-        "https://koreajoongangdaily.joins.com/rss",    # Korea JoongAng Daily
+        "https://www.scmp.com/rss/91/feed",
+        "https://japannews.net/feed/",
+        "https://koreajoongangdaily.joins.com/rss",
         # Maritime & shipping
         "https://www.maritime-executive.com/rss.xml",
         "https://splash247.com/feed/",
@@ -100,32 +100,27 @@ FEEDS = {
         "https://feeds.npr.org/1003/rss.xml",
         "https://rss.nytimes.com/services/xml/rss/nyt/US.xml",
         "https://feeds.washingtonpost.com/rss/national",
-        "https://www.military.com/rss-feeds/content",  # US military/veterans
+        "https://www.military.com/rss-feeds/content",
     ],
     "pnw": [
-        # Kitsap / Port Orchard
         "https://www.kitsapsun.com/rss/",
         "https://www.kitsapgov.com/Pages/RSS.aspx",
-        # Seattle
         "https://www.seattletimes.com/feed/",
         "https://www.kuow.org/feeds/all.rss",
-        # Oregon statewide
         "https://www.oregonlive.com/arc/outboundfeeds/rss/?outputType=xml",
         "https://www.opb.org/feeds/all/",
-        # Mid-Willamette Valley / Lebanon / Linn County
         "https://democratherald.com/search/?f=rss&t=article&c=news&l=50&s=start_time&sd=desc",
         "https://albanydemocratherald.com/feed/",
         "https://www.gazettetimes.com/search/?f=rss&t=article&c=news",
-        # PNW indigenous & tribal
         "https://nativenewsonline.net/feed",
     ],
     "science": [
         "https://www.sciencedaily.com/rss/top/science.xml",
         "https://www.theguardian.com/environment/rss",
         "https://www.nasa.gov/feed/",
-        "https://www.climate.gov/feeds/news-features.rss",  # NOAA climate
+        "https://www.climate.gov/feeds/news-features.rss",
         "https://earthobservatory.nasa.gov/feeds/earth-observatory.rss",
-        "https://oceanservice.noaa.gov/news/rss/latestnews.rss",  # NOAA ocean
+        "https://oceanservice.noaa.gov/news/rss/latestnews.rss",
     ],
     "tech": [
         "https://feeds.arstechnica.com/arstechnica/index",
@@ -139,29 +134,34 @@ FEEDS = {
         "https://www.mentalfloss.com/rss.xml",
     ],
     "sports_stories": [
+        # Your teams first
         "https://www.seattletimes.com/sports/feed/",
-        "https://www.espn.com/espn/rss/news",
         "https://www.oregonlive.com/beavers/index.rss",
+        # US major sports broad coverage
+        "https://www.espn.com/espn/rss/news",
+        "https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml",
+        # Running
+        "https://www.runnersworld.com/feeds/all",
+        "https://running.competitor.com/feed",
+        # International soccer
+        "https://www.bbc.co.uk/sport/football/rss.xml",
+        "https://www.theguardian.com/football/rss",
     ],
 }
 
 # ---------------------------------------------------------------------------
 # Content filtering
-# Soft-deprioritize: stories matching these keywords get pushed to the bottom
-# of their section rather than removed entirely.
 # ---------------------------------------------------------------------------
 DEPRIORITIZE_KEYWORDS = {
-    # Celebrity / entertainment gossip
     "kardashian", "jenner", "taylor swift", "beyonce", "celebrity", "oscars",
     "grammy", "emmys", "box office", "reality tv", "bachelor", "influencer",
     "tiktok star", "red carpet",
-    # Lifestyle / wellness fluff
     "weight loss", "diet tips", "skincare", "self-care", "wellness routine",
     "relationship advice", "dating app", "horoscope",
 }
 
 # ---------------------------------------------------------------------------
-# Sports teams
+# Sports — teams for scoreboard + story priority
 # ---------------------------------------------------------------------------
 TEAMS = [
     ("baseball",   "mlb",                     ["Mariners"]),
@@ -171,11 +171,30 @@ TEAMS = [
     ("basketball", "nba",                     ["Trail Blazers", "Blazers"]),
     ("football",   "college-football",        ["Oregon State"]),
     ("basketball", "mens-college-basketball", ["Oregon State"]),
+    # Major US sports for broader scoreboard context
+    ("baseball",   "mlb",                     ["Yankees", "Dodgers", "Cubs"]),
+    ("basketball", "nba",                     ["Lakers", "Celtics", "Warriors"]),
+    ("soccer",     "eng.1",                   ["Arsenal", "Chelsea", "Liverpool",
+                                               "Manchester City", "Manchester United",
+                                               "Tottenham"]),
+    ("soccer",     "esp.1",                   ["Real Madrid", "Barcelona"]),
+    ("soccer",     "ger.1",                   ["Bayern"]),
 ]
-SPORTS_STORY_COUNT = 8
-TEAM_STORY_KEYWORDS = ["Mariners", "Seahawks", "Kraken", "Sounders",
+SPORTS_STORY_COUNT = 12   # stories in the sports panel (after ticker)
+
+# Keywords to PRIORITIZE in sports stories (your teams + running + soccer)
+TEAM_STORY_PRIORITY = ["Mariners", "Seahawks", "Kraken", "Sounders",
                         "Trail Blazers", "Blazers", "Oregon State", "Beavers",
-                        "Willamette"]
+                        "Willamette", "marathon", "running", "ultramarathon",
+                        "Premier League", "Champions League", "La Liga",
+                        "MLS Cup", "FIFA", "UEFA"]
+
+# Keywords that mark a story as general sports (shown after priority stories)
+TEAM_STORY_KEYWORDS = TEAM_STORY_PRIORITY + [
+    "MLB", "NFL", "NBA", "NHL", "college football", "college basketball",
+    "World Cup", "soccer", "football", "basketball", "baseball", "hockey",
+    "Olympic", "Tour de France", "Wimbledon", "Grand Slam",
+]
 
 # Markets snapshot symbols on stooq.com
 MARKET_SYMBOLS = [("^spx", "S&P 500"), ("^dji", "Dow"), ("^ndq", "Nasdaq")]
@@ -519,18 +538,54 @@ def render_html(ctx):
                      f'<span class="otd-label">On This Day · {otd["year"]}</span>'
                      f'{esc(otd["text"])}</div>')
 
-    # ---- scores widget ----
-    scores_block = ""
+    # ---- scores ticker (for sports panel) ----
+    ticker_block = ""
     if ctx.get("scores"):
-        rows = "".join(
-            f'<div class="scorerow">'
-            f'<span class="lg">{esc(s["league"])}</span>'
-            f'<span class="match">{esc(s["matchup"])}</span>'
-            f'<span class="pts">{esc(s["away_score"])}–{esc(s["home_score"])}</span>'
-            f'<span class="st">{esc(s["detail"] or s["state"])}</span>'
-            f'</div>'
-            for s in ctx["scores"])
-        scores_block = f'<div class="scores"><div class="scores-label">Scoreboard</div>{rows}</div>'
+        # split: your priority teams vs rest
+        priority_set = {k.lower() for k in TEAM_STORY_PRIORITY}
+        my_games, other_games = [], []
+        for s in ctx["scores"]:
+            teams_lower = s["matchup"].lower()
+            is_mine = any(k.lower() in teams_lower for k in
+                         ["mariners","seahawks","kraken","sounders","blazers",
+                          "trail blazers","oregon state","beavers","sounders"])
+            (my_games if is_mine else other_games).append(s)
+
+        def score_chip(s):
+            away_w = s.get("away_score","") and s.get("home_score","") and \
+                     int(s.get("away_score",0) or 0) > int(s.get("home_score",0) or 0)
+            home_w = s.get("home_score","") and s.get("away_score","") and \
+                     int(s.get("home_score",0) or 0) > int(s.get("away_score",0) or 0)
+            def bold_if(name, win):
+                return f"<b>{esc(name)}</b>" if win else esc(name)
+            parts = s["matchup"].split(" @ ")
+            if len(parts) == 2:
+                away_name, home_name = parts
+                matchup_html = (f'{bold_if(away_name, away_w)} '
+                                f'<span class="ticker-score">'
+                                f'{esc(s.get("away_score",""))}–{esc(s.get("home_score",""))}'
+                                f'</span> '
+                                f'{bold_if(home_name, home_w)}')
+            else:
+                matchup_html = esc(s["matchup"])
+            detail = esc(s.get("detail") or s.get("state",""))
+            league = esc(s.get("league",""))
+            return (f'<div class="chip">'
+                    f'<span class="chip-lg">{league}</span>'
+                    f'<span class="chip-match">{matchup_html}</span>'
+                    f'<span class="chip-st">{detail}</span>'
+                    f'</div>')
+
+        my_chips    = "".join(score_chip(s) for s in my_games)
+        other_chips = "".join(score_chip(s) for s in other_games)
+
+        sections_html = ""
+        if my_chips:
+            sections_html += f'<div class="ticker-section-label">Your Teams</div>{my_chips}'
+        if other_chips:
+            sections_html += f'<div class="ticker-section-label">Around the League</div>{other_chips}'
+
+        ticker_block = f'<div class="ticker">{sections_html}</div>'
 
     # ---- build tab list + panels ----
     all_sections = list(SECTIONS) + [("sports_stories", "Sports Desk", SPORTS_STORY_COUNT),
@@ -555,7 +610,7 @@ def render_html(ctx):
                      + "".join(cards))
         else:
             stories = ctx["sections"].get(key) or []
-            if key == "sports_stories" and not stories and not scores_block:
+            if key == "sports_stories" and not stories and not ticker_block:
                 continue
             story_cards = []
             for s in stories:
@@ -577,7 +632,7 @@ def render_html(ctx):
                     f'{"  · " + when if when else ""}</div>'
                     f'{f'<p class="ssum">{esc(s["summary"])}</p>' if s.get("summary") else ""}'
                     f'{rel}</article>')
-            inner = ("" if key != "sports_stories" else scores_block) + "".join(story_cards)
+            inner = (ticker_block if key == "sports_stories" else "") + "".join(story_cards)
             if not inner:
                 continue
 
@@ -643,6 +698,16 @@ def render_html(ctx):
   .radar-row { font:13px/1.5 system-ui,sans-serif; color:#8b949e; border-left:3px solid; padding:6px 10px; margin-bottom:10px; background:#161b22; border-radius:0 6px 6px 0; }
   .radar-row b { color:#e6edf3; }
   .radar-row a { color:#58a6ff; text-decoration:none; }
+  .ticker { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 14px 6px; margin-bottom:18px; }
+  .ticker-section-label { font:10px system-ui,sans-serif; letter-spacing:2px; text-transform:uppercase; color:#d29922; margin:8px 0 6px; }
+  .ticker-section-label:first-child { margin-top:0; }
+  .chip { display:flex; align-items:baseline; gap:8px; font:13px system-ui,sans-serif; padding:5px 0; border-bottom:1px dotted #21262d; flex-wrap:wrap; }
+  .chip:last-child { border-bottom:none; }
+  .chip-lg { color:#d29922; font-size:10px; letter-spacing:1px; text-transform:uppercase; width:38px; flex:none; }
+  .chip-match { flex:1; min-width:0; }
+  .chip-match b { color:#e6edf3; }
+  .ticker-score { color:#6e7681; font-size:12px; }
+  .chip-st { color:#6e7681; font-size:11px; flex:none; }
   footer { text-align:center; color:#484f58; font:11px system-ui,sans-serif; margin-top:30px; border-top:1px solid #30363d; padding:14px 16px 0; }"""
 
     return f"""<!DOCTYPE html>
@@ -708,13 +773,19 @@ def main():
         sections[key] = pick_diverse(pool, n)
         print(f"  {display}: {len(sections[key])} of {len(pool)} items")
 
-    # sports stories: filter general sports feeds down to your teams
+    # sports stories: priority (your teams + running + soccer) first,
+    # then fill with general major sports up to SPORTS_STORY_COUNT
     sports_pool = gather_section(FEEDS["sports_stories"], session, now)
-    team_stories = [s for s in sports_pool
-                    if any(k.lower() in s["title"].lower() for k in TEAM_STORY_KEYWORDS)]
-    sections["sports_stories"] = pick_diverse(team_stories, SPORTS_STORY_COUNT)
+    priority = [s for s in sports_pool
+                if any(k.lower() in s["title"].lower() for k in TEAM_STORY_PRIORITY)]
+    general  = [s for s in sports_pool
+                if s not in priority and
+                   any(k.lower() in s["title"].lower() for k in TEAM_STORY_KEYWORDS)]
+    combined = priority + general
+    sections["sports_stories"] = pick_diverse(combined, SPORTS_STORY_COUNT)
     all_pool.extend(sports_pool)
-    print(f"  Sports Desk: {len(sections['sports_stories'])} team stories")
+    print(f"  Sports Desk: {len(sections['sports_stories'])} stories "
+          f"({len(priority)} priority / {len(general)} general)")
 
     for key in sections:
         attach_related(sections[key], all_pool)
