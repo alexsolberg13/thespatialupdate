@@ -68,6 +68,9 @@ def main():
     ap.add_argument("--topic", required=True, help="your secret ntfy topic name")
     ap.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY"),
                      help="owner/repo for a 'tap to open' link (auto-set in GitHub Actions)")
+    ap.add_argument("--click-url", default=None,
+                     help="override the tap-to-open link entirely (e.g. your site's "
+                          "/leads/latest.html page). Takes precedence over --repo.")
     ap.add_argument("--server", default="https://ntfy.sh", help="ntfy server (self-host override)")
     args = ap.parse_args()
 
@@ -78,6 +81,8 @@ def main():
 
     candidates = json.loads(path.read_text(encoding="utf-8"))
     title, body, click = build_notification(candidates, repo=args.repo)
+    if args.click_url:
+        click = args.click_url
 
     print(f"Sending push: {title}")
     send_ntfy(args.topic, title, body, click=click, server=args.server)

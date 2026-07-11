@@ -1,6 +1,6 @@
-# Drop this in .github/workflows/ to get a daily digest committed to a
-# `leads/` folder in your repo (kept separate from your _site build), AND
-# a push notification sent to your phone via the free ntfy.sh app.
+# Drop this in .github/workflows/ — daily digest committed to `leads/`,
+# the pretty HTML page published to your live site via docs/leads/,
+# and a push notification sent to your phone that opens that page.
 name: Daily story leads
 
 on:
@@ -20,14 +20,22 @@ jobs:
           python-version: "3.12"
       - run: pip install requests
       - run: python scripts/gdelt_leads.py --hours 24 --outdir leads
-      - name: Commit digest
+      - name: Publish morning paper page to the live site
+        run: |
+          mkdir -p docs/leads
+          cp leads/latest.html docs/leads/latest.html
+      - name: Commit digest and page
         run: |
           git config user.name "leads-bot"
           git config user.email "actions@github.com"
-          git add leads/
+          git add leads/ docs/leads/
           git diff --cached --quiet || git commit -m "Daily story leads $(date -u +%F)"
           git push
       - name: Push notification to phone
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python scripts/mobile_notify.py --file leads/latest.json --topic "$NTFY_TOPIC"
+        run: >
+          python scripts/mobile_notify.py
+          --file leads/latest.json
+          --topic "$NTFY_TOPIC"
+          --click-url "https://thespatialupdate.com/leads/latest.html"

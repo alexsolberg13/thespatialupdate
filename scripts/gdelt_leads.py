@@ -431,6 +431,108 @@ def to_digest(candidates, hours, now):
     return "\n".join(lines)
 
 
+def _esc(s):
+    """HTML-escape untrusted text. Headlines come from external webpages,
+    so everything user-visible must be escaped before going into HTML."""
+    return html.escape(str(s or ""), quote=True)
+
+
+def to_html(candidates, hours, now):
+    """Self-contained mobile-friendly 'morning paper' page. Dark theme to
+    match the site, no external assets, renders offline."""
+    n = len(candidates)
+    n_coop = sum(1 for c in candidates if c["category"] == "cooperation")
+    n_conf = n - n_coop
+    day = now.strftime("%A, %B %d, %Y")
+
+    cards = []
+    for i, c in enumerate(candidates, 1):
+        d = f'{c["date"][:4]}-{c["date"][4:6]}-{c["date"][6:]}'
+        is_coop = c["category"] == "cooperation"
+        accent = "#4ade80" if is_coop else "#f87171"
+        badge = "COOPERATION" if is_coop else "CONFLICT"
+        headline = _esc(c.get("headline")) if c.get("headline") else None
+        title_html = f'<div class="headline">\u201c{headline}\u201d</div>' if headline else ""
+        sources = "".join(
+            f'<a class="src" href="{_esc(u)}" target="_blank" rel="noopener">'
+            f'{_esc(u.split("/")[2] if "://" in u else u)}</a>'
+            for u in c["source_urls"][:4]
+        )
+        actors = _esc(", ".join(c["actors"][:4])) if c["actors"] else ""
+        cards.append(f"""
+    <article class="card" style="border-left-color:{accent}">
+      <div class="meta-row">
+        <span class="badge" style="color:{accent};border-color:{accent}">{badge}</span>
+        <span class="date">{d}</span>
+      </div>
+      <h2>{_esc(c["label"])} \u2014 {_esc(c["place"])}</h2>
+      {title_html}
+      <p class="synopsis">{_esc(c["synopsis"])}</p>
+      {f'<p class="actors">{actors}</p>' if actors else ''}
+      <div class="stats">
+        <span>{c["total_mentions"]} mentions</span>
+        <span>{c["total_sources"]} sources</span>
+        <span>({c["lat"]:.2f}, {c["lon"]:.2f})</span>
+      </div>
+      <div class="sources">{sources}</div>
+    </article>""")
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The Spatial Update \u2014 Morning Leads</title>
+<style>
+  :root {{ color-scheme: dark; }}
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ background:#0d1117; color:#e6edf3; font:16px/1.55 Georgia,'Times New Roman',serif;
+         max-width:640px; margin:0 auto; padding:20px 16px 60px; }}
+  header {{ text-align:center; border-bottom:3px double #30363d; padding-bottom:16px; margin-bottom:8px; }}
+  header h1 {{ font-size:26px; letter-spacing:1px; font-variant:small-caps; }}
+  header .sub {{ color:#8b949e; font-size:13px; font-style:italic; margin-top:4px; }}
+  .summary {{ display:flex; justify-content:center; gap:18px; padding:12px 0;
+              border-bottom:1px solid #30363d; margin-bottom:20px;
+              font:13px system-ui,sans-serif; color:#8b949e; }}
+  .summary b {{ color:#e6edf3; font-size:17px; display:block; text-align:center; }}
+  .card {{ background:#161b22; border:1px solid #30363d; border-left:4px solid;
+           border-radius:8px; padding:16px; margin-bottom:14px; }}
+  .meta-row {{ display:flex; justify-content:space-between; align-items:center;
+               font:11px system-ui,sans-serif; margin-bottom:8px; }}
+  .badge {{ border:1px solid; border-radius:10px; padding:1px 8px; letter-spacing:1px; }}
+  .date {{ color:#8b949e; }}
+  h2 {{ font-size:18px; line-height:1.3; margin-bottom:6px; }}
+  .headline {{ font-style:italic; color:#c9d1d9; font-size:15px; margin-bottom:8px; }}
+  .synopsis {{ font:14px/1.5 system-ui,sans-serif; color:#8b949e; margin-bottom:8px; }}
+  .actors {{ font:12px system-ui,sans-serif; color:#6e7681; margin-bottom:8px; }}
+  .stats {{ display:flex; gap:14px; font:12px system-ui,sans-serif; color:#6e7681;
+            margin-bottom:10px; flex-wrap:wrap; }}
+  .sources {{ display:flex; gap:8px; flex-wrap:wrap; }}
+  .src {{ font:12px system-ui,sans-serif; color:#58a6ff; text-decoration:none;
+          background:#0d1117; border:1px solid #30363d; border-radius:6px; padding:3px 10px; }}
+  .empty {{ text-align:center; color:#8b949e; padding:40px 0; font-style:italic; }}
+  footer {{ text-align:center; color:#484f58; font:11px system-ui,sans-serif;
+            margin-top:30px; border-top:1px solid #30363d; padding-top:14px; }}
+</style>
+</head>
+<body>
+<header>
+  <h1>The Spatial Update</h1>
+  <div class="sub">Morning Leads \u00b7 {day}</div>
+</header>
+<div class="summary">
+  <div><b>{n}</b>leads</div>
+  <div><b>{n_conf}</b>conflict</div>
+  <div><b>{n_coop}</b>cooperation</div>
+  <div><b>{hours}h</b>window</div>
+</div>
+{"".join(cards) if cards else '<p class="empty">No leads cleared the threshold today.</p>'}
+<footer>Generated {now.strftime("%Y-%m-%d %H:%M UTC")} \u00b7 GDELT event data \u00b7 leads are unverified \u2014 confirm before publishing</footer>
+</body>
+</html>"""
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -486,16 +588,19 @@ def main():
     json_text = json.dumps(candidates, indent=2)
     geojson_text = json.dumps(to_geojson(candidates), indent=2)
     digest_text = to_digest(candidates, args.hours, now)
+    html_text = to_html(candidates, args.hours, now)
 
     (outdir / f"candidates-{stamp}.json").write_text(json_text, encoding="utf-8")
     (outdir / f"candidates-{stamp}.geojson").write_text(geojson_text, encoding="utf-8")
     (outdir / f"digest-{stamp}.md").write_text(digest_text, encoding="utf-8")
+    (outdir / f"digest-{stamp}.html").write_text(html_text, encoding="utf-8")
 
     # "latest" copies always overwrite, for quickly checking the newest run
     # without hunting for today's timestamp.
     (outdir / "latest.json").write_text(json_text, encoding="utf-8")
     (outdir / "latest.geojson").write_text(geojson_text, encoding="utf-8")
     (outdir / "latest.md").write_text(digest_text, encoding="utf-8")
+    (outdir / "latest.html").write_text(html_text, encoding="utf-8")
 
     print(f"Wrote digest-{stamp}.md (+ json/geojson) and latest.* to {outdir.resolve()}")
 
