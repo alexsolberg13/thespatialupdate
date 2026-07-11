@@ -1,0 +1,45 @@
+{
+  "type": "morning_paper",
+  "date": "2026-07-11",
+  "weather": {
+    "now_f": 72,
+    "hi_f": 72,
+    "lo_f": 56,
+    "precip_pct": 2,
+    "desc": "drizzle"
+  },
+  "story_count": 17,
+  "score_count": 2,
+  "top": [
+    {
+      "section": "World",
+      "title": "What\u2019s behind Pakistan\u2019s mass deportation of Afghans?",
+      "source": "aljazeera.com"
+    },
+    {
+      "section": "U.S. National",
+      "title": "At Vigil, Sons of Man Killed by ICE in Houston Call for Accountability",
+      "source": "nytimes.com"
+    },
+    {
+      "section": "Pacific Northwest",
+      "title": "Roller-skating organization unites Portland community through culture",
+      "source": "oregonlive.com"
+    },
+    {
+      "section": "Science & Environment",
+      "title": "Fastest spider in the world? This huge, hairy-legged Australian arachnid may be the quickest on the planet",
+      "source": "theguardian.com"
+    },
+    {
+      "section": "Tech & Business",
+      "title": "Oregon\u2019s Attorney General withdraws effort to delay Paramount and Warner Bros. merger",
+      "source": "theverge.com"
+    },
+    {
+      "section": "The Lighter Side",
+      "title": "\u2018Game-Changing\u2019 Saliva Test Can Diagnose Endometriosis in Days Rather Than Years",
+      "source": "goodnewsnetwork.org"
+    }
+  ]
+}
