@@ -1,15 +1,15 @@
-# Drop this in .github/workflows/ — daily digest committed to `leads/`,
-# the pretty HTML page published to your live site via docs/leads/,
-# and a push notification sent to your phone that opens that page.
-name: Daily story leads
+# .github/workflows/daily-leads.yml
+# Prints your personal morning paper, publishes it to the live site,
+# and sends a push notification that opens it.
+name: Morning paper
 
 on:
   schedule:
-    - cron: "0 13 * * *"   # 13:00 UTC = 6am Pacific — adjust to your timezone
-  workflow_dispatch: {}     # allows manual runs from the Actions tab
+    - cron: "0 13 * * *"   # 13:00 UTC = 6am Pacific
+  workflow_dispatch: {}     # manual runs from the Actions tab
 
 jobs:
-  leads:
+  paper:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,24 +18,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests
-      - run: python scripts/gdelt_leads.py --hours 24 --outdir leads
-      - name: Publish morning paper page to the live site
+      - run: pip install requests feedparser
+      - name: Print the paper
+        run: python morning_paper.py --outdir ../paper
+        working-directory: scripts
+      - name: Publish to the live site
         run: |
-          mkdir -p docs/leads
-          cp leads/latest.html docs/leads/latest.html
-      - name: Commit digest and page
+          mkdir -p docs/paper
+          cp paper/latest.html docs/paper/latest.html
+      - name: Commit
         run: |
-          git config user.name "leads-bot"
+          git config user.name "paper-bot"
           git config user.email "actions@github.com"
-          git add leads/ docs/leads/
-          git diff --cached --quiet || git commit -m "Daily story leads $(date -u +%F)"
+          git add paper/ docs/paper/
+          git diff --cached --quiet || git commit -m "Morning edition $(date -u +%F)"
           git push
       - name: Push notification to phone
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: >
           python scripts/mobile_notify.py
-          --file leads/latest.json
+          --file paper/latest.json
           --topic "$NTFY_TOPIC"
-          --click-url "https://thespatialupdate.com/leads/latest.html"
+          --click-url "https://thespatialupdate.com/paper/latest.html"

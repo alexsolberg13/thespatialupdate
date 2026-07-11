@@ -27,7 +27,12 @@ MAX_LINE_CHARS = 180
 
 def build_notification(candidates, repo=None):
     """Pure formatting logic, no network — kept separate so it's testable
-    without actually sending anything."""
+    without actually sending anything.
+
+    Accepts either the old gdelt_leads list format, or the morning_paper
+    summary dict ({"type": "morning_paper", ...})."""
+    if isinstance(candidates, dict) and candidates.get("type") == "morning_paper":
+        return _build_paper_notification(candidates)
     n = len(candidates)
     n_coop = sum(1 for c in candidates if c.get("category") == "cooperation")
     n_conf = n - n_coop
@@ -51,6 +56,22 @@ def build_notification(candidates, repo=None):
 
     click = f"https://github.com/{repo}/blob/main/leads/latest.md" if repo else None
     return title, body, click
+
+
+def _build_paper_notification(summary):
+    w = summary.get("weather")
+    weather_bit = f" \u00b7 {w['now_f']}\u00b0F {w['desc']}" if w else ""
+    title = f"\u2615 Morning Edition \u2014 {summary.get('story_count', 0)} stories{weather_bit}"
+    lines = []
+    for item in summary.get("top", [])[:MAX_LEADS_IN_PUSH]:
+        line = f"[{item.get('section','')}] {item.get('title','')}"
+        if len(line) > MAX_LINE_CHARS:
+            line = line[: MAX_LINE_CHARS - 1] + "\u2026"
+        lines.append(line)
+    if summary.get("score_count"):
+        lines.append(f"\U0001F3C6 {summary['score_count']} game(s) on the scoreboard")
+    body = "\n".join(lines) if lines else "Your paper is ready."
+    return title, body, None
 
 
 def send_ntfy(topic, title, body, click=None, server="https://ntfy.sh"):
