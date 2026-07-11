@@ -2,19 +2,38 @@
   "type": "morning_paper",
   "date": "2026-07-11",
   "weather": {
+    "name": "Port Orchard",
     "now_f": 73,
-    "hi_f": 75,
+    "hi_f": 74,
     "lo_f": 56,
-    "precip_pct": 3,
+    "precip_pct": 2,
     "desc": "overcast"
   },
-  "story_count": 60,
+  "weather_all": [
+    {
+      "name": "Port Orchard",
+      "now_f": 73,
+      "hi_f": 74,
+      "lo_f": 56,
+      "precip_pct": 2,
+      "desc": "overcast"
+    },
+    {
+      "name": "Lebanon, OR",
+      "now_f": 74,
+      "hi_f": 76,
+      "lo_f": 55,
+      "precip_pct": 0,
+      "desc": "overcast"
+    }
+  ],
+  "story_count": 62,
   "score_count": 2,
   "top": [
     {
       "section": "World",
-      "title": "Palestinian aid worker who organized World Cup screenings killed in Israeli strike",
-      "source": "npr.org"
+      "title": "Argentina vs Switzerland LIVE: FIFA World Cup 2026 quarterfinal",
+      "source": "aljazeera.com"
     },
     {
       "section": "U.S. National",
@@ -23,7 +42,7 @@
     },
     {
       "section": "Pacific Northwest",
-      "title": "World Cup soccer star dead at 25 days after playing in tournament: \u2018A gifted player\u2019",
+      "title": "Milwaukie hosts community cleanup for Kellogg Creek restoration",
       "source": "oregonlive.com"
     },
     {
@@ -38,8 +57,8 @@
     },
     {
       "section": "The Lighter Side",
-      "title": "\u2018Game-Changing\u2019 Saliva Test Can Diagnose Endometriosis in Days Rather Than Years",
-      "source": "goodnewsnetwork.org"
+      "title": "Quiz: Can You Rank All 7 Continents from Largest to Smallest?",
+      "source": "mentalfloss.com"
     }
   ]
 }
