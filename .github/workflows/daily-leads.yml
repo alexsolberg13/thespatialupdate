@@ -1,0 +1,33 @@
+# Drop this in .github/workflows/ to get a daily digest committed to a
+# `leads/` folder in your repo (kept separate from your _site build), AND
+# a push notification sent to your phone via the free ntfy.sh app.
+name: Daily story leads
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 13:00 UTC = 6am Pacific — adjust to your timezone
+  workflow_dispatch: {}     # allows manual runs from the Actions tab
+
+jobs:
+  leads:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python scripts/gdelt_leads.py --hours 24 --outdir leads
+      - name: Commit digest
+        run: |
+          git config user.name "leads-bot"
+          git config user.email "actions@github.com"
+          git add leads/
+          git diff --cached --quiet || git commit -m "Daily story leads $(date -u +%F)"
+          git push
+      - name: Push notification to phone
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python scripts/mobile_notify.py --file leads/latest.json --topic "$NTFY_TOPIC"

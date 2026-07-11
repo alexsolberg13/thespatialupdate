@@ -1,0 +1,605 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 3.225,
+        "mentions": 387,
+        "actors": "AMERICAN, AUSTRALIA, BAHRAIN, DIPLOMAT, IRAN, IRANIAN, ISLAMIC, ISRAEL",
+        "headline": "US gives Iran deadline to declare Strait of Hormuz fully open",
+        "synopsis": "AMERICAN and AUSTRALIA \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 116 source(s) across 387 mentions.",
+        "sources": [
+          "http://www.bignewsnetwork.com/news/279180179/us-gives-iran-deadline-to-declare-strait-of-hormuz-fully-open-axios",
+          "https://www.aol.co.uk/articles/europe-considering-proposals-allow-navigational-040039000.html",
+          "https://www.juancole.com/2026/07/stick-needs-carrots.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Consultation \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 3.123,
+        "mentions": 373,
+        "actors": "BAHRAIN, IRAN, IRANIAN, ISLAMIC, NATO, OMAN, OMANI, PAKISTAN",
+        "headline": "US demands Iran publicly guarantees Strait of Hormuz is open and safe for ships",
+        "synopsis": "BAHRAIN and IRAN \u2014 consultation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 73 source(s) across 373 mentions.",
+        "sources": [
+          "https://www.london-now.co.uk/news/national/26271913.us-demands-iran-publicly-guarantees-strait-hormuz-open-safe-ships/",
+          "https://www.standard.co.uk/news/politics/iran-donald-trump-ayatollah-ali-khamenei-tehran-strait-of-hormuz-b1289570.html",
+          "https://www.sbs.com.au/news/article/united-states-agrees-to-more-talks-with-iran-but-insists-truce-is-over/sj6iq8tzr"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.116667,
+          51.5
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 London, London, City of, United Kingdom",
+        "date": "20260711",
+        "score": 3.145,
+        "mentions": 327,
+        "actors": "AUSTRALIA, BELGIUM, CANADA, EUROPE, EXTREMIST, FRANCE, LAWMAKER, LONDON",
+        "headline": null,
+        "synopsis": "AUSTRALIA and BELGIUM \u2014 fighting / clashes (in conflict) reported near London, London, City of, United Kingdom, covered by 107 source(s) across 327 mentions.",
+        "sources": [
+          "https://www.wvgazettemail.com/ap/international/police-in-the-uk-arrest-a-suspect-in-the-killing-of-former-parliament-member-ann/article_2f30f227-0d8b-5435-a3fd-405a1ac63d52.html",
+          "https://pjmedia.com/david-manney/2026/07/10/the-few-flew-but-an-entire-nation-fought-beside-them-n4954893",
+          "https://www.dawn.com/news/2014521/former-minister-murdered-in-uk-suspect-arrested"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.05,
+          38.8893
+        ]
+      },
+      "properties": {
+        "title": "Appeal \u2014 Lincoln Memorial, District of Columbia, United States",
+        "date": "20260711",
+        "score": 3.05,
+        "mentions": 335,
+        "actors": "ADMINISTRATION, AIR FORCE, AMERICAN, BARACK OBAMA, CHILE, CHINA, COLOMBIA, COMPANIES",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AIR FORCE \u2014 appeal (engaging in cooperation) reported near Lincoln Memorial, District of Columbia, United States, covered by 62 source(s) across 335 mentions.",
+        "sources": [
+          "https://wvoc.iheart.com/content/2026-07-10-white-house-steps-up-security-with-door-upgrades-fencing-plans/",
+          "https://www.finanznachrichten.de/nachrichten-2026-07/69000599-mmj-international-holdings-marijuana-rescheduling-worth-a-billion-dollars-in-forgiven-taxes-to-mso-s-plus-more-than-two-billion-annual-tax-savings-200.htm",
+          "https://www.journalgazette.net/news/national-politics/donald-trump-ousts-election-commission-members-in-latest-push-to-reshape-us-voting-process/article_75eb17b1-59ba-528a-8bac-6abfaf07df51.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.516667,
+          51.2667
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Maidstone, Kent, United Kingdom",
+        "date": "20260711",
+        "score": 2.921,
+        "mentions": 290,
+        "actors": "BRITAIN, IRELAND, MEDIA, MINIST, POLICE, PRISON, UNITED KINGDOM",
+        "headline": "Man in custody after arrest on suspicion of murdering Ann Widdecombe",
+        "synopsis": "BRITAIN and IRELAND \u2014 fighting / clashes (in conflict) reported near Maidstone, Kent, United Kingdom, covered by 42 source(s) across 290 mentions.",
+        "sources": [
+          "https://www.bromsgroveadvertiser.co.uk/news/national/26271917.man-custody-arrest-suspicion-murdering-ann-widdecombe/",
+          "https://www.cravenherald.co.uk/news/national/26271774.man-arrested-suspicion-murder-former-mp-minister-ann-widdecombe/",
+          "https://www.chroniclelive.co.uk/news/uk-news/man-arrested-suspicion-murdering-ann-34274718"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.05,
+          38.8893
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Lincoln Memorial, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.957,
+        "mentions": 246,
+        "actors": "A US, ADMINISTRATION, AMERICAN, AUSTRALIA, CHIEF OF STAFF, CHINA, CHINESE, COLLEGE",
+        "headline": "Crews are draining the Lincoln Memorial Reflecting Pool again as part of Trump\u2019s troubled revamp",
+        "synopsis": "A US and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near Lincoln Memorial, District of Columbia, United States, covered by 71 source(s) across 246 mentions.",
+        "sources": [
+          "https://www.orlandosentinel.com/2026/07/10/trump-reflecting-pool-drained-again/",
+          "https://sputnikglobe.com/20260711/only-those-prepared-for-war-can-negotiate-with-the-us--irans-parliament-speaker-warns-1124433612.html",
+          "https://www.erienewsnow.com/news/washington-dc/trump-will-not-sign-bipartisan-housing-bill-legislation-still-expected-to-become-law-friday-at/article_d307e95f-ec4e-5390-888f-02b7a19ef288.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.3633,
+          29.7633
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Houston, Texas, United States",
+        "date": "20260711",
+        "score": 2.892,
+        "mentions": 245,
+        "actors": "ADMINISTRATION, ALBERT, ATTORNEY, AUTHORITIES, CITIZEN, COLLEGE, COMMUNITY, CRIMINAL",
+        "headline": "Immigrants who were detained during fatal shooting in Houston dispute ICE's account",
+        "synopsis": "ADMINISTRATION and ALBERT \u2014 fighting / clashes (in conflict) reported near Houston, Texas, United States, covered by 51 source(s) across 245 mentions.",
+        "sources": [
+          "https://www.kccu.org/u-s/2026-07-10/immigrants-who-were-detained-during-fatal-shooting-in-houston-dispute-ices-account",
+          "https://www.wuft.org/2026-07-10/houston-neighbors-started-seeing-more-ice-agents-around-then-came-a-fatal-shooting",
+          "https://www.bostonherald.com/2026/07/10/immigration-enforcement-body-cameras/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Intent to cooperate \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 2.907,
+        "mentions": 229,
+        "actors": "IRAN, IRANIAN, ISLAMIC, ISRAELI, NEWS AGENCY, OMAN, OMANI, PRESIDENT",
+        "headline": "Trump agrees to talks with Iran after latest strikes but says ceasefire \u2018over\u2019",
+        "synopsis": "IRAN and IRANIAN \u2014 intent to cooperate (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 63 source(s) across 229 mentions.",
+        "sources": [
+          "https://www.standard.co.uk/news/politics/iran-donald-trump-ayatollah-ali-khamenei-tehran-strait-of-hormuz-b1289570.html",
+          "https://www.richmondandtwickenhamtimes.co.uk/news/national/26271314.trump-agrees-talks-iran-latest-strikes-says-ceasefire-over/",
+          "https://www.northerndailyleader.com.au/story/9308681/us-insists-iran-commit-to-stopping-shipping-attacks/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Assault \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 2.801,
+        "mentions": 195,
+        "actors": "GOVERNMENT, HAMAS, INTELLIGENCE, IRAN, IRANIAN, ISLAMIC, ISRAEL, MEDIA",
+        "headline": "Trump says he has \"left instructions\" to bomb Iran if Tehran succeeds plan to assassinate him",
+        "synopsis": "GOVERNMENT and HAMAS \u2014 assault (in conflict) reported near Tehran, Tehran, Iran, covered by 50 source(s) across 195 mentions.",
+        "sources": [
+          "http://www.arabherald.com/news/279179904/trump-says-he-has-left-instructions-to-bomb-iran-if-tehran-succeeds-plan-to-assassinate-him",
+          "https://timesofindia.indiatimes.com/world/middle-east/did-israel-push-us-to-attack-iran-by-sharing-trump-assassination-intel-what-was-tehran-planning/articleshow/132323997.cms",
+          "https://www.rnz.co.nz/news/world/700821/israel-believes-iran-is-planning-to-assassinate-trump-report"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Intent to cooperate \u2014 White House, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.906,
+        "mentions": 211,
+        "actors": "ACTOR, ADMINISTRATION, AMERICAN, AUTHORITIES, BRAZIL, BRAZILIAN, BUSINESS, CHILE",
+        "headline": "Bill Clinton: The 42nd President of the United States",
+        "synopsis": "ACTOR and ADMINISTRATION \u2014 intent to cooperate (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 74 source(s) across 211 mentions.",
+        "sources": [
+          "https://www.kotatv.com/2026/07/11/bill-clinton-42nd-president-united-states/",
+          "https://newsbusters.org/blogs/nb/kyle-drennen/2016/03/17/nbc-actually-grills-wh-chief-staff-obamas-supreme-hypocrisy",
+          "https://www.billboard.com/music/country/big-rich-john-rich-usda-special-envoy-president-trump-1236292185/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 White House, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.753,
+        "mentions": 172,
+        "actors": "AMERICAN, AUSTIN, BRAZILIAN, COMMUNITY, COMPANY, COUNSEL, CUBA, FIREFIGHTER",
+        "headline": null,
+        "synopsis": "AMERICAN and AUSTIN \u2014 fighting / clashes (in conflict) reported near White House, District of Columbia, United States, covered by 50 source(s) across 172 mentions.",
+        "sources": [
+          "https://www.mississippivalleypublishing.com/daily_gate/daily_gate/democratic-socialists-not-named-graham-platner-are-thriving/article_9ef0d873-063d-4ef3-9714-86f3d996d3a9.html",
+          "https://www.spokesman.com/stories/2026/jul/10/divisions-emerge-as-wa-looks-to-retool-wolf-shooti/",
+          "https://www.insidenova.com/headlines/four-more-suspects-arrested-in-robbery-deadly-shooting-at-bull-run-mobile-home-park/article_bd8da73e-66d3-43b3-b5b3-361ee6b8b894.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Yield/concede \u2014 White House, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.875,
+        "mentions": 232,
+        "actors": "ACTOR, AMERICAN, BISHOP, BUSINESS, INTERIOR SECRETARY, IRAN, ISRAELI, NATO",
+        "headline": null,
+        "synopsis": "ACTOR and AMERICAN \u2014 yield/concede (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 52 source(s) across 232 mentions.",
+        "sources": [
+          "https://www.wandtv.com/news/national/crews-are-draining-the-lincoln-memorial-reflecting-pool-again-as-part-of-trumps-troubled-revamp/article_f43cbd9e-b38b-5d57-8d44-82bd202491da.html",
+          "https://newsbusters.org/blogs/nb/kyle-drennen/2016/03/17/nbc-actually-grills-wh-chief-staff-obamas-supreme-hypocrisy",
+          "https://www.thenews.com.pk/latest/1408745-iran-vows-full-scale-defence-if-us-abandons-mou"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Rejection \u2014 White House, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.69,
+        "mentions": 165,
+        "actors": "ADMINISTRATION, AMERICAN, CHAMBER, CHILE, CHINA, CONGRESS, GOVERNMENT, GULF ARAB STATE",
+        "headline": "Trump won\u2019t sign housing bill in protest over SAVE Act, but it may still become law",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 rejection (in conflict) reported near White House, District of Columbia, United States, covered by 39 source(s) across 165 mentions.",
+        "sources": [
+          "http://sedaliademocrat.com/stories/trump-wont-sign-housing-bill-in-protest-over-save-act-but-it-may-still-become-law,53389",
+          "https://www.centralmaine.com/2026/07/10/susan-collins-earmarks-do-not-compensate-for-her-fealty-to-trump-opinion/",
+          "https://www.npr.org/transcripts/nx-s1-5885027"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Yield/concede \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 2.74,
+        "mentions": 186,
+        "actors": "HAMAS, IRAN, IRANIAN, MILITARY, NATO, PRESIDENT, QATAR, TEHRAN",
+        "headline": "US demands Iran publicly guarantees Strait of Hormuz is open and safe for ships",
+        "synopsis": "HAMAS and IRAN \u2014 yield/concede (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 40 source(s) across 186 mentions.",
+        "sources": [
+          "https://www.london-now.co.uk/news/national/26271913.us-demands-iran-publicly-guarantees-strait-hormuz-open-safe-ships/",
+          "https://www.northerndailyleader.com.au/story/9308681/us-insists-iran-commit-to-stopping-shipping-attacks/",
+          "https://www.spotlightnepal.com/2026/07/11/us-and-iran-exchange-threats-after-renewed-attacks/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.516667,
+          51.2667
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Maidstone, Kent, United Kingdom",
+        "date": "20260711",
+        "score": 2.544,
+        "mentions": 146,
+        "actors": "ABBOT, JOHN MAJOR, MINIST, POLICE, POLICE FORCE, UNITED KINGDOM",
+        "headline": "Man in custody after arrest on suspicion of murdering Ann Widdecombe",
+        "synopsis": "ABBOT and JOHN MAJOR \u2014 coercion / seizure (in conflict) reported near Maidstone, Kent, United Kingdom, covered by 23 source(s) across 146 mentions.",
+        "sources": [
+          "https://www.bromsgroveadvertiser.co.uk/news/national/26271917.man-custody-arrest-suspicion-murdering-ann-widdecombe/",
+          "https://www.sloughobserver.co.uk/news/national/26271957.police-investigating-ann-widdecombes-death-release-man-custody/",
+          "https://www.hollywoodreporter.com/news/general-news/ann-widdecombe-killed-uk-man-arrested-1236644191/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 2.638,
+        "mentions": 146,
+        "actors": "A US, DUBAI, IRAN, IRANIAN, ISLAMIC, ISRAEL, MINISTRY, NATO",
+        "headline": "US sanctions key Iranian \"financier\" after Tehran resumes attacks in Strait of Hormuz",
+        "synopsis": "A US and DUBAI \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 38 source(s) across 146 mentions.",
+        "sources": [
+          "http://www.greekherald.com/news/279180068/us-sanctions-key-iranian-financier-after-tehran-resumes-attacks-in-strait-of-hormuz",
+          "https://www.aol.co.uk/articles/europe-considering-proposals-allow-navigational-040039000.html",
+          "https://www.presstv.ir/Detail/2026/07/10/771998/Iran-UN-envoy-warns-country-won"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Threat \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 2.514,
+        "mentions": 125,
+        "actors": "IRAN, IRANIAN, ISRAEL, ISRAELI, MAGAZINE, MEDIA, MILITARY, MOSCOW",
+        "headline": "US gives Iran deadline to declare Strait of Hormuz fully open",
+        "synopsis": "IRAN and IRANIAN \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 27 source(s) across 125 mentions.",
+        "sources": [
+          "http://www.bignewsnetwork.com/news/279180179/us-gives-iran-deadline-to-declare-strait-of-hormuz-fully-open-axios",
+          "https://www.spotlightnepal.com/2026/07/11/us-and-iran-exchange-threats-after-renewed-attacks/",
+          "https://www.thenews.com.pk/latest/1408756-trump-declares-us-iran-ceasefire-over-agrees-to-keep"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.53333,
+          9.08333
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Abuja, Abuja Federal Capital Territory, Nigeria",
+        "date": "20260711",
+        "score": 2.522,
+        "mentions": 138,
+        "actors": "ABUJA, AEROSPACE, ARMED FORCES, COLLEGE, COMPANY, CONGRESS, GOVERNMENT, HIGH COURT",
+        "headline": "Tertiary Education: Lawmakers, Education Ministry Collaborate For Reforms",
+        "synopsis": "ABUJA and AEROSPACE \u2014 diplomatic cooperation (engaging in cooperation) reported near Abuja, Abuja Federal Capital Territory, Nigeria, covered by 23 source(s) across 138 mentions.",
+        "sources": [
+          "http://silverbirdtv.com/tertiary-education-lawmakers-education-ministry-collaborate-for-reforms/",
+          "https://blueprint.ng/ngo-partners-frsc-gifts-exceptional-students-in-lecture-series-on-morals-road-saftey/",
+          "https://www.thisdaylive.com/2026/07/11/justify-publics-confidence-in-court-cjn-tasks-judges-2/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Assault \u2014 Washington, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.463,
+        "mentions": 104,
+        "actors": "INTELLIGENCE, IRAN, IRANIAN, ISLAMIC, ISRAEL, MEDIA, MILITARY, POLICE",
+        "headline": "Bomb Them Like Never Before: Trump's Instructions To Hit Iran If Assassinated",
+        "synopsis": "INTELLIGENCE and IRAN \u2014 assault (in conflict) reported near Washington, District of Columbia, United States, covered by 30 source(s) across 104 mentions.",
+        "sources": [
+          "https://www.oneindia.com/international/bomb-them-like-never-before-trumps-instructions-to-hit-iran-if-assassinated-8143237.html",
+          "https://www.wgal.com/article/report-assassination-plot-plane-swap-trump/71899719",
+          "https://www.4029tv.com/article/report-assassination-plot-plane-swap-trump/71899719"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.116667,
+          51.5
+        ]
+      },
+      "properties": {
+        "title": "Appeal \u2014 London, London, City of, United Kingdom",
+        "date": "20260711",
+        "score": 2.508,
+        "mentions": 133,
+        "actors": "COMPANIES, DOCTOR, DRUG DEALER, EUROPE, FRANCE, GOVERNMENT, IRANIAN, IRELAND",
+        "headline": "Europe considering proposals to allow navigational fees in strait of Hormuz",
+        "synopsis": "COMPANIES and DOCTOR \u2014 appeal (engaging in cooperation) reported near London, London, City of, United Kingdom, covered by 23 source(s) across 133 mentions.",
+        "sources": [
+          "https://www.aol.co.uk/articles/europe-considering-proposals-allow-navigational-040039000.html",
+          "https://www.aol.co.uk/articles/children-were-calling-mummies-uk-060041000.html",
+          "http://www.walkermn.com/around_the_web/health/air-pollution-may-explain-regional-gaps-in-sperm-quality/article_de5ab59a-8826-50b0-b4aa-e9eef5c628cd.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.0833,
+          -26.2
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Johannesburg, Gauteng, South Africa",
+        "date": "20260711",
+        "score": 2.457,
+        "mentions": 104,
+        "actors": "AFRICA, BRITAIN, BRITISH, INTELLIGENCE, INTERPOL, JOHANNESBURG, NATIONAL POLICE, SOUTH AFRICAN",
+        "headline": "Man wanted over death of wife and daughters in Britain arrested in South Africa",
+        "synopsis": "AFRICA and BRITAIN \u2014 coercion / seizure (in conflict) reported near Johannesburg, Gauteng, South Africa, covered by 29 source(s) across 104 mentions.",
+        "sources": [
+          "https://www.bromsgroveadvertiser.co.uk/news/national/26271853.man-wanted-death-wife-daughters-britain-arrested-south-africa/",
+          "https://www.jacarandafm.com/news/news/uk-murder-suspect-arrested-in-johannesburg/",
+          "https://www.aol.co.uk/articles/man-charged-bedfordshire-murder-wife-222517000.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.1667,
+          33.7
+        ]
+      },
+      "properties": {
+        "title": "Consultation \u2014 Islamabad, Islamabad, Pakistan",
+        "date": "20260711",
+        "score": 2.499,
+        "mentions": 116,
+        "actors": "IRAN, ISLAMABAD, PAKISTAN, QATAR, SWITZERLAND, THE US",
+        "headline": "Pakistan PM Shehbaz Sharif holds talks with Iran, Qatar leaders to revive stalled US-Iran negotiations",
+        "synopsis": "IRAN and ISLAMABAD \u2014 consultation (engaging in cooperation) reported near Islamabad, Islamabad, Pakistan, covered by 29 source(s) across 116 mentions.",
+        "sources": [
+          "https://economictimes.indiatimes.com/news/international/world-news/pakistan-pm-shehbaz-sharif-holds-talks-with-iran-qatar-leaders-to-revive-stalled-us-iran-negotiations/articleshow/132325274.cms",
+          "https://www.presstv.ir/Detail/2026/07/10/771998/Iran-UN-envoy-warns-country-won",
+          "https://www.thehindu.com/news/international/pakistan-pm-sharif-holds-talks-with-iran-qatar-leaders-to-revive-stalled-us-iran-negotiations/article71209502.ece"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Rejection \u2014 Tehran, Tehran, Iran",
+        "date": "20260711",
+        "score": 2.405,
+        "mentions": 94,
+        "actors": "ADMINISTRATION, GULF ARAB STATE, IRAN, IRANIAN, ISLAMABAD, ISRAEL, ISRAELI, MILITARY",
+        "headline": "US insists Iran commit to stopping shipping attacks",
+        "synopsis": "ADMINISTRATION and GULF ARAB STATE \u2014 rejection (in conflict) reported near Tehran, Tehran, Iran, covered by 27 source(s) across 94 mentions.",
+        "sources": [
+          "https://www.northerndailyleader.com.au/story/9308681/us-insists-iran-commit-to-stopping-shipping-attacks/",
+          "https://www.moneycontrol.com/world/iran-s-private-confession-to-trump-team-after-hormuz-attacks-we-screwed-up-made-a-mistake-article-13971397.html",
+          "https://pakobserver.net/iran-calls-on-un-to-hold-us-accountable-as-washington-imposes-fresh-sanctions/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Material cooperation \u2014 White House, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.472,
+        "mentions": 114,
+        "actors": "ADMINISTRATION, AMERICAN, BISHOP, CHINA, CHINESE, CORPORATION, CRIMINAL, ECONOMIST",
+        "headline": "Bipartisan housing bill becomes law despite Trump\u2019s refusal to sign it",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 material cooperation (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 26 source(s) across 114 mentions.",
+        "sources": [
+          "https://www.aol.co.uk/articles/bipartisan-housing-bill-become-law-152939000.html",
+          "https://www.catholicworldreport.com/2026/07/10/u-s-catholic-bishops-to-lawmakers-snap-policy-is-our-greatest-concern-in-farm-bill/",
+          "https://www.spokesman.com/stories/2026/jul/10/trump-denies-this-congress-what-could-be-its-last-/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Washington, District of Columbia, United States",
+        "date": "20260711",
+        "score": 2.386,
+        "mentions": 93,
+        "actors": "A US, AUSTIN, CONGRESS, DEFENSE MINIST, ELECTION COMMISSION, FRENCH, GOVERNMENT, IRAN",
+        "headline": "Americas pledge to double down on crime at Peru summit",
+        "synopsis": "A US and AUSTIN \u2014 coercion / seizure (in conflict) reported near Washington, District of Columbia, United States, covered by 25 source(s) across 93 mentions.",
+        "sources": [
+          "https://www.freemalaysiatoday.com/category/world/2026/07/11/americas-pledge-to-double-down-on-crime-at-peru-summit",
+          "https://kfgo.com/2026/07/10/doj-charges-white-supremacist-after-threats-to-us-lawmaker-muslims-and-transgender-people/",
+          "https://www.insidenova.com/headlines/four-more-suspects-arrested-in-robbery-deadly-shooting-at-bull-run-mobile-home-park/article_bd8da73e-66d3-43b3-b5b3-361ee6b8b894.html"
+        ]
+      }
+    }
+  ]
+}
