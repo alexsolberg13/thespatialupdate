@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-12",
+  "date": "2026-07-13",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 57,
-    "hi_f": 71,
-    "lo_f": 55,
-    "precip_pct": 3,
-    "desc": "overcast"
+    "now_f": 60,
+    "hi_f": 77,
+    "lo_f": 51,
+    "precip_pct": 0,
+    "desc": "clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 57,
-      "hi_f": 71,
-      "lo_f": 55,
-      "precip_pct": 3,
-      "desc": "overcast"
+      "now_f": 60,
+      "hi_f": 77,
+      "lo_f": 51,
+      "precip_pct": 0,
+      "desc": "clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 52,
-      "hi_f": 78,
-      "lo_f": 49,
+      "now_f": 60,
+      "hi_f": 85,
+      "lo_f": 51,
       "precip_pct": 0,
-      "desc": "overcast"
+      "desc": "clear"
     }
   ],
-  "story_count": 70,
-  "score_count": 8,
+  "story_count": 69,
+  "score_count": 4,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Tim Scott and Other South Carolina Leaders Mourn Lindsey Graham",
+      "title": "Trump Backs Lindsey Graham\u2019s Sister to Finish His Senate Term in South Carolina",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "US senator and close Trump ally Lindsey Graham dies after 'brief and sudden illness'",
-      "source": "bbc.co.uk"
+      "title": "1 killed in ICE-involved shooting in US",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "FactCheck.org Debunks Military Pay Claims in Alaska Senate Race, Backs Peltola\u2019s Record",
-      "source": "nativenewsonline.net"
+      "title": "Former Los Angeles Dodgers catcher dies at 85",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Sen. Lindsey Graham, influential lawmaker and Trump ally, dies at 71 after a brief illness",
+      "title": "Trump recommends Lindsey Graham's sister serve as interim senator for South Carolina",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Flash flooding in Missouri leaves one person dead as 200 campers are rescued",
+      "title": "Dolphin deaths in South Australia spike after algal bloom decimates food sources",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "7 Songs Michael Jackson Couldn't Stop Listening To",
-      "source": "mentalfloss.com"
+      "title": "Friedrich Ebert Memorial in Heidelberg, Germany",
+      "source": "atlasobscura.com"
     }
   ]
 }
