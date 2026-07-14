@@ -1,5 +1,6 @@
 {
   "mapboxToken": "pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW5nem8zN3EwZmJuMnJweGZ3Nml2eTg0In0.tsLdE7ypzv9OYSvln-x5Sw",
   "name": "The Spatial Update",
-  "tagline": "Map-based current events"
+  "tagline": "Map-based current events",
+  "url": "https://thespatialupdate.com"
 }

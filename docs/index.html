@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Spatial Update — The Spatial Update</title>
 
+  <meta name="description" content="Map-based current events" />
+  <link rel="canonical" href="https://thespatialupdate.com/" />
+
+  <meta property="og:site_name" content="The Spatial Update" />
+  <meta property="og:title" content="The Spatial Update" />
+  <meta property="og:description" content="Map-based current events" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thespatialupdate.com/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Spatial Update" />
+  <meta name="twitter:description" content="Map-based current events" />
+
   <script>
     if (localStorage.getItem('theme') !== 'light')
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -63,6 +76,14 @@
     .back-link { font-size: 12px; color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif; }
     .back-link:hover { color: var(--accent); }
 
+    .site-nav { display: flex; align-items: center; gap: 16px; }
+    .site-nav a {
+      font-size: 11px; color: var(--text-secondary); text-decoration: none;
+      font-family: Arial, sans-serif; letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .site-nav a:hover { color: var(--accent); }
+
     #theme-toggle {
       background: none; border: 1px solid var(--border); border-radius: 4px;
       padding: 3px 9px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
@@ -75,6 +96,10 @@
       .site-tagline { display: none; }
       .site-name { font-size: 14px; }
     }
+
+    @media (max-width: 480px) {
+      .site-nav { display: none; }
+    }
 </style>
 </head>
 <body>
@@ -82,6 +107,11 @@
   <div id="site-header">
     <div class="site-name">The Spatial <span>Update</span></div>
     <div class="header-right">
+      <nav class="site-nav">
+        <a href="/stories/">Stories</a>
+        <a href="/paper/">Paper</a>
+        <a href="/about/">About</a>
+      </nav>
       <button id="theme-toggle" aria-label="Toggle theme">☽</button>
       
         <div class="site-tagline">Map-based current events</div>
@@ -115,6 +145,22 @@
   #story-list { overflow-y: auto; flex: 1; }
   #story-list::-webkit-scrollbar { width: 3px; }
   #story-list::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+
+  .radar-toggle-wrap { padding: 10px 16px; border-top: 1px solid var(--border-light); flex-shrink: 0; }
+  .radar-toggle {
+    display: flex; align-items: center; gap: 7px; cursor: pointer; user-select: none;
+    font-family: Arial, sans-serif; font-size: 11px; color: var(--text-secondary);
+  }
+  .radar-toggle input[type="checkbox"] {
+    width: 12px; height: 12px; margin: 0; flex-shrink: 0;
+    accent-color: var(--accent); cursor: pointer;
+  }
+  .radar-toggle-hint {
+    font-size: 9px; color: var(--text-muted); margin-left: auto;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .radar-toggle.is-unavailable { opacity: 0.5; cursor: default; }
+  .radar-toggle.is-unavailable input[type="checkbox"] { cursor: not-allowed; }
 
   .region-group { border-bottom: 1px solid var(--border-light); }
   .region-header {
@@ -185,6 +231,8 @@
     letter-spacing: 0.03em; transition: background 0.15s;
   }
   .popup-link:hover { background: #f0d88a; }
+  .radar-meta { display: block; font-size: 11px; color: var(--text-secondary); font-family: Arial, sans-serif; margin-top: 4px; }
+  .radar-disclaimer { display: block; font-size: 9px; color: var(--text-muted); font-family: Arial, sans-serif; margin-top: 8px; letter-spacing: 0.02em; }
 </style>
 
 <div id="body">
@@ -196,6 +244,13 @@
       <div class="sidebar-count" id="story-count"></div>
     </div>
     <div id="story-list"></div>
+    <div class="radar-toggle-wrap">
+      <label class="radar-toggle" id="radar-toggle-label" title="Automated GDELT signals — unverified">
+        <input type="checkbox" id="radar-toggle-input" />
+        <span>Geo Radar — live event signals · last 24h</span>
+        <span class="radar-toggle-hint" id="radar-toggle-hint"></span>
+      </label>
+    </div>
   </div>
   <div id="map"></div>
 </div>
@@ -238,6 +293,141 @@
 
   map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+  // ── Geo Radar (optional live GDELT signals, /leads/candidates.geojson) ──
+  let radarData = null;
+  let radarEnabled = false;
+
+  function escRadar(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  }
+
+  // The geojson the GDELT pipeline writes doesn't currently include a
+  // "category" property — infer conflict vs. cooperation defensively from
+  // the synopsis text (which always says "in conflict" or "engaging in
+  // cooperation"), falling back to a neutral color if neither is found.
+  function deriveRadarCategory(p) {
+    if (!p) return null;
+    const raw = (p.category || '').toString().toLowerCase();
+    if (raw === 'conflict' || raw === 'cooperation') return raw;
+    const text = `${p.synopsis || ''} ${p.title || ''}`.toLowerCase();
+    if (text.includes('engaging in cooperation')) return 'cooperation';
+    if (text.includes('in conflict')) return 'conflict';
+    return null;
+  }
+
+  function buildRadarPopupHTML(p) {
+    p = p || {};
+    const tag = p._category === 'conflict' ? 'Conflict signal'
+      : p._category === 'cooperation' ? 'Cooperation signal'
+      : 'Geo Radar signal';
+    const title = p.headline || p.title || 'Unlabeled event';
+    const lines = [];
+    if (p.synopsis) lines.push(escRadar(p.synopsis));
+    if (p.actors) lines.push(`<span class="radar-meta">${escRadar(p.actors)}</span>`);
+
+    const stats = [];
+    if (typeof p.mentions === 'number') stats.push(`${p.mentions} mentions`);
+    const sources = Array.isArray(p.sources) ? p.sources.filter(Boolean) : [];
+    if (sources.length) stats.push(`${sources.length} source${sources.length === 1 ? '' : 's'}`);
+    if (typeof p.date === 'string' && p.date.length >= 8) {
+      stats.push(`${p.date.slice(0, 4)}-${p.date.slice(4, 6)}-${p.date.slice(6, 8)}`);
+    }
+    if (stats.length) lines.push(`<span class="radar-meta">${stats.join(' · ')}</span>`);
+    lines.push('<span class="radar-disclaimer">Automated GDELT signals — unverified</span>');
+
+    const link = sources[0]
+      ? `<a class="popup-link" href="${escRadar(sources[0])}" target="_blank" rel="noopener">View source →</a>`
+      : '';
+
+    return `
+      <div class="popup-inner">
+        <div class="popup-tag">${escRadar(tag)}</div>
+        <div class="popup-title">${escRadar(title)}</div>
+        <div class="popup-desc">${lines.join('<br>')}</div>
+        ${link}
+      </div>
+    `;
+  }
+
+  function ensureRadarLayer() {
+    if (!radarData) return;
+    if (map.getSource('geo-radar')) {
+      map.getSource('geo-radar').setData(radarData);
+    } else {
+      map.addSource('geo-radar', { type: 'geojson', data: radarData });
+    }
+    if (!map.getLayer('geo-radar-dots')) {
+      map.addLayer({
+        id: 'geo-radar-dots', type: 'circle', source: 'geo-radar',
+        layout: { visibility: radarEnabled ? 'visible' : 'none' },
+        paint: {
+          'circle-color': ['coalesce', ['get', '_color'], markerColors.gold],
+          'circle-radius': [
+            'interpolate', ['linear'], ['coalesce', ['get', 'mentions'], 0],
+            0, 4, 25, 5, 100, 7, 500, 9, 2000, 12
+          ],
+          'circle-opacity': 0.8,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': 'rgba(255,255,255,0.2)'
+        }
+      });
+    }
+  }
+
+  map.on('mouseenter', 'geo-radar-dots', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', 'geo-radar-dots', () => { map.getCanvas().style.cursor = ''; });
+
+  const radarPopup = new mapboxgl.Popup({ closeButton: true, maxWidth: '300px', offset: 10 });
+  map.on('click', 'geo-radar-dots', (e) => {
+    const f = e.features[0];
+    radarPopup.setLngLat(f.geometry.coordinates.slice()).setHTML(buildRadarPopupHTML(f.properties)).addTo(map);
+  });
+
+  const radarInput = document.getElementById('radar-toggle-input');
+  const radarLabel = document.getElementById('radar-toggle-label');
+  const radarHint  = document.getElementById('radar-toggle-hint');
+
+  // Probe for the feed once, as soon as the page loads (it's a small daily
+  // file). This lets the toggle disable itself proactively if the GDELT
+  // pipeline hasn't produced a file yet, rather than only failing after the
+  // visitor tries to turn it on. The source/layer itself is still only
+  // added to the map lazily, the first time the toggle is switched on.
+  const radarFetch = fetch('/leads/candidates.geojson')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => {
+      (data && data.features || []).forEach(f => {
+        const p = f.properties = f.properties || {};
+        const cat = deriveRadarCategory(p);
+        p._category = cat;
+        p._color = cat === 'conflict' ? markerColors.red : cat === 'cooperation' ? markerColors.teal : markerColors.gold;
+      });
+      radarData = data;
+      return data;
+    })
+    .catch(err => {
+      console.warn('Geo Radar: candidates.geojson unavailable —', err && err.message ? err.message : err);
+      radarInput.checked = false;
+      radarInput.disabled = true;
+      radarLabel.classList.add('is-unavailable');
+      if (radarHint) radarHint.textContent = 'unavailable';
+      throw err;
+    });
+
+  radarInput.addEventListener('change', () => {
+    if (!radarInput.checked) {
+      radarEnabled = false;
+      if (map.getLayer('geo-radar-dots')) map.setLayoutProperty('geo-radar-dots', 'visibility', 'none');
+      return;
+    }
+    radarEnabled = true;
+    radarFetch.then(() => {
+      if (!radarEnabled) return; // toggled off again before the fetch resolved
+      ensureRadarLayer();
+      if (map.getLayer('geo-radar-dots')) map.setLayoutProperty('geo-radar-dots', 'visibility', 'visible');
+    }).catch(() => { radarEnabled = false; });
+  });
 
   map.on('style.load', () => {
     map.setFog(isDarkMode() ? fogDark : fogLight);
@@ -302,6 +492,10 @@
         `).addTo(map);
       });
     });
+
+    // Theme/style switches (see themechange listener below) wipe custom
+    // sources & layers, so re-add Geo Radar if it was already toggled on.
+    if (radarData) ensureRadarLayer();
   });
 
   document.addEventListener('themechange', (e) => {

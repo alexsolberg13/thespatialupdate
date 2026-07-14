@@ -1,6 +1,9 @@
 # .github/workflows/daily-leads.yml
-# Prints your personal morning paper, publishes it to the live site,
-# and sends a push notification that opens it.
+# Prints your personal morning paper, scans GDELT for interesting map
+# leads, publishes both to the live site, and sends a push notification
+# that opens the paper. If anything in this workflow breaks, it also
+# pushes a phone alert so you find out same-day instead of noticing the
+# site went stale a week later.
 name: Morning paper
 
 on:
@@ -22,15 +25,42 @@ jobs:
       - name: Print the paper
         run: python morning_paper.py --outdir ../paper
         working-directory: scripts
+
+      # Scans the news wire (GDELT) for newsworthy, map-able leads.
+      # This step is allowed to fail without taking down the whole
+      # workflow — a bad leads run shouldn't stop today's paper from
+      # publishing.
+      - name: Find today's map leads
+        id: leads
+        continue-on-error: true
+        run: python gdelt_leads.py --outdir ../leads
+        working-directory: scripts
+
       - name: Publish to the live site
         run: |
           mkdir -p docs/paper
           cp paper/latest.html docs/paper/latest.html
+          cp "paper/edition-$(date -u +%F).html" docs/paper/ 2>/dev/null || true
+
+          # Leads files are best-effort: only copy them if the leads step
+          # above actually produced something, so a leads hiccup never
+          # breaks the paper publish.
+          mkdir -p docs/leads
+          if [ -f leads/latest.html ]; then
+            cp leads/latest.html docs/leads/latest.html
+          fi
+          if [ -f leads/latest.geojson ]; then
+            cp leads/latest.geojson docs/leads/candidates.geojson
+          fi
+
+      - name: Rebuild the paper archive page
+        run: python scripts/build_paper_index.py
+
       - name: Commit
         run: |
           git config user.name "paper-bot"
           git config user.email "actions@github.com"
-          git add paper/ docs/paper/
+          git add paper/ docs/paper/ leads/ docs/leads/
           git diff --cached --quiet || git commit -m "Morning edition $(date -u +%F)"
           git push
       - name: Push notification to phone
@@ -41,3 +71,14 @@ jobs:
           --file paper/latest.json
           --topic "$NTFY_TOPIC"
           --click-url "https://thespatialupdate.com/paper/latest.html"
+
+      # If any step above failed, this always runs last and pings your
+      # phone so you know to go check the Actions tab.
+      - name: Alert me if something broke
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: >
+          curl -s -H "Title: Spatial Update workflow FAILED"
+          -d "The daily site workflow hit an error. Check github.com/$GITHUB_REPOSITORY/actions"
+          https://ntfy.sh/$NTFY_TOPIC

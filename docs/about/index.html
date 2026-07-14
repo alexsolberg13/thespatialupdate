@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title }} — The Spatial Update</title>
+  <title>About — The Spatial Update</title>
 
-  <meta name="description" content="{{ description or site.tagline }}" />
-  <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+  <meta name="description" content="What The Spatial Update is, how it works, and who makes it." />
+  <link rel="canonical" href="https://thespatialupdate.com/about/" />
 
-  <meta property="og:site_name" content="{{ site.name }}" />
-  <meta property="og:title" content="{{ title }}" />
-  <meta property="og:description" content="{{ description or site.tagline }}" />
-  <meta property="og:type" content="{% if type %}article{% else %}website{% endif %}" />
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+  <meta property="og:site_name" content="The Spatial Update" />
+  <meta property="og:title" content="About" />
+  <meta property="og:description" content="What The Spatial Update is, how it works, and who makes it." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thespatialupdate.com/about/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="{{ title }}" />
-  <meta name="twitter:description" content="{{ description or site.tagline }}" />
+  <meta name="twitter:title" content="About" />
+  <meta name="twitter:description" content="What The Spatial Update is, how it works, and who makes it." />
 
   <script>
     if (localStorage.getItem('theme') !== 'light')
       document.documentElement.setAttribute('data-theme', 'dark');
   </script>
 
-  {% if mapbox %}
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
-  {% endif %}
+  
 
   <style>
     :root {
@@ -113,15 +110,57 @@
         <a href="/about/">About</a>
       </nav>
       <button id="theme-toggle" aria-label="Toggle theme">☽</button>
-      {% if backLink %}
-        <a class="back-link" href="/">← All stories</a>
-      {% else %}
+      
         <div class="site-tagline">Map-based current events</div>
-      {% endif %}
+      
     </div>
   </div>
 
-  {{ content | safe }}
+  
+<style>
+  .about-wrap {
+    max-width: 640px; margin: 0 auto; padding: 56px 24px 80px;
+  }
+  .about-wrap h1 {
+    font-size: 26px; font-weight: normal; color: var(--text-primary); margin-bottom: 22px;
+  }
+  .about-wrap p {
+    font-size: 15px; line-height: 1.85; color: var(--text-body); margin-bottom: 18px;
+  }
+  .about-wrap a { color: var(--accent); text-decoration: none; }
+  .about-wrap a:hover { text-decoration: underline; }
+</style>
+
+<div class="about-wrap">
+  <h1>About The Spatial Update</h1>
+
+  <p>
+    The Spatial Update is a map-based news site. Every story here is georeferenced —
+    tied to real coordinates on a live, explorable map — instead of being locked
+    inside a wall of text. Strikes, shipping lanes, borders, migration routes,
+    economic chokepoints: if it happened somewhere, you can find it on the map
+    and see exactly where.
+  </p>
+
+  <p>
+    Each story combines a written narrative with layered map data — timelines,
+    markers, and geographic context you can click through at your own pace.
+    The goal is simple: help readers understand where events are actually
+    happening, not just that they happened.
+  </p>
+
+  <p>
+    Alongside the map, we publish a daily <a href="/paper/latest.html">Morning Edition</a>
+    — a quick, text-first roundup of the day's most significant developments,
+    for readers who want the news without opening the map.
+  </p>
+
+  <p>
+    The Spatial Update is independently produced. There is no newsroom behind
+    it — just one person mapping the news.
+  </p>
+</div>
+
 
   <script>
     (function () {

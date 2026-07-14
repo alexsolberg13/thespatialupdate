@@ -3,30 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title }} — The Spatial Update</title>
+  <title>Stories — The Spatial Update</title>
 
-  <meta name="description" content="{{ description or site.tagline }}" />
-  <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+  <meta name="description" content="Every story on The Spatial Update, grouped by region." />
+  <link rel="canonical" href="https://thespatialupdate.com/stories/" />
 
-  <meta property="og:site_name" content="{{ site.name }}" />
-  <meta property="og:title" content="{{ title }}" />
-  <meta property="og:description" content="{{ description or site.tagline }}" />
-  <meta property="og:type" content="{% if type %}article{% else %}website{% endif %}" />
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+  <meta property="og:site_name" content="The Spatial Update" />
+  <meta property="og:title" content="Stories" />
+  <meta property="og:description" content="Every story on The Spatial Update, grouped by region." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thespatialupdate.com/stories/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="{{ title }}" />
-  <meta name="twitter:description" content="{{ description or site.tagline }}" />
+  <meta name="twitter:title" content="Stories" />
+  <meta name="twitter:description" content="Every story on The Spatial Update, grouped by region." />
 
   <script>
     if (localStorage.getItem('theme') !== 'light')
       document.documentElement.setAttribute('data-theme', 'dark');
   </script>
 
-  {% if mapbox %}
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
-  {% endif %}
+  
 
   <style>
     :root {
@@ -113,15 +110,86 @@
         <a href="/about/">About</a>
       </nav>
       <button id="theme-toggle" aria-label="Toggle theme">☽</button>
-      {% if backLink %}
-        <a class="back-link" href="/">← All stories</a>
-      {% else %}
+      
         <div class="site-tagline">Map-based current events</div>
-      {% endif %}
+      
     </div>
   </div>
 
-  {{ content | safe }}
+  
+<style>
+  .stories-wrap { max-width: 920px; margin: 0 auto; padding: 48px 24px 80px; }
+  .stories-wrap h1 { font-size: 26px; font-weight: normal; color: var(--text-primary); margin-bottom: 8px; }
+  .stories-intro { font-size: 13px; color: var(--text-secondary); font-family: Arial, sans-serif; margin-bottom: 36px; }
+
+  .region-block { margin-bottom: 40px; }
+  .region-title {
+    font-size: 12px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase;
+    letter-spacing: 0.08em; font-family: Arial, sans-serif; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+
+  .story-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .story-card {
+    display: block; text-decoration: none; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px;
+    transition: border-color 0.15s;
+  }
+  .story-card:hover { border-color: var(--accent); }
+  .card-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; font-family: Arial, sans-serif; }
+  .card-title { font-size: 15px; line-height: 1.4; color: var(--text-primary); margin-bottom: 8px; }
+  .card-desc { font-size: 12px; line-height: 1.6; color: var(--text-body); font-family: Arial, sans-serif; }
+
+  @media (max-width: 480px) {
+    .story-cards { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="stories-wrap">
+  <h1>Stories</h1>
+  <div class="stories-intro">4 stories, mapped.</div>
+
+  
+  <div class="region-block">
+    <div class="region-title">Americas</div>
+    <div class="story-cards">
+      
+        <a class="story-card" href="/stories/venezuela/">
+          <div class="card-tag">Venezuela · Military</div>
+          <div class="card-title">Operation Absolute Resolve: How the US Captured Nicolás Maduro</div>
+          <div class="card-desc">From the first boat strike in September 2025 to Delta Force storming Maduro&#39;s compound in Caracas — every key event mapped.</div>
+        </a>
+      
+    </div>
+  </div>
+  
+  <div class="region-block">
+    <div class="region-title">Middle East</div>
+    <div class="story-cards">
+      
+        <a class="story-card" href="/stories/iran-strikes/">
+          <div class="card-tag">Iran · Military</div>
+          <div class="card-title">Strikes on Iran: From the Twelve-Day War to the 2026 Conflict</div>
+          <div class="card-desc">Mapping every documented major strike — who launched it, what was targeted, and when.</div>
+        </a>
+      
+        <a class="story-card" href="/stories/strait-of-hormuz/">
+          <div class="card-tag">Gulf · Economics</div>
+          <div class="card-title">The Strait of Hormuz: Oil&#39;s Most Critical Passage</div>
+          <div class="card-desc">21 million barrels of oil transit this 3km-wide chokepoint every day.</div>
+        </a>
+      
+        <a class="story-card" href="/stories/gulf-state-relations/">
+          <div class="card-tag">Gulf · Geopolitics</div>
+          <div class="card-title">Gulf State Relations: The Regional Power Balance</div>
+          <div class="card-desc">How Iran, the Gulf states, and their proxies are aligned — and where US military power sits.</div>
+        </a>
+      
+    </div>
+  </div>
+  
+</div>
+
 
   <script>
     (function () {

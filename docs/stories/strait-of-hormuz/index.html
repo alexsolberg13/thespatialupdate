@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Strait of Hormuz: Oil&#39;s Most Critical Passage — The Spatial Update</title>
 
+  <meta name="description" content="Map-based current events" />
+  <link rel="canonical" href="https://thespatialupdate.com/stories/strait-of-hormuz/" />
+
+  <meta property="og:site_name" content="The Spatial Update" />
+  <meta property="og:title" content="The Strait of Hormuz: Oil&#39;s Most Critical Passage" />
+  <meta property="og:description" content="Map-based current events" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thespatialupdate.com/stories/strait-of-hormuz/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Strait of Hormuz: Oil&#39;s Most Critical Passage" />
+  <meta name="twitter:description" content="Map-based current events" />
+
   <script>
     if (localStorage.getItem('theme') !== 'light')
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -63,6 +76,14 @@
     .back-link { font-size: 12px; color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif; }
     .back-link:hover { color: var(--accent); }
 
+    .site-nav { display: flex; align-items: center; gap: 16px; }
+    .site-nav a {
+      font-size: 11px; color: var(--text-secondary); text-decoration: none;
+      font-family: Arial, sans-serif; letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .site-nav a:hover { color: var(--accent); }
+
     #theme-toggle {
       background: none; border: 1px solid var(--border); border-radius: 4px;
       padding: 3px 9px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
@@ -75,6 +96,10 @@
       .site-tagline { display: none; }
       .site-name { font-size: 14px; }
     }
+
+    @media (max-width: 480px) {
+      .site-nav { display: none; }
+    }
 </style>
 </head>
 <body>
@@ -82,6 +107,11 @@
   <div id="site-header">
     <div class="site-name">The Spatial <span>Update</span></div>
     <div class="header-right">
+      <nav class="site-nav">
+        <a href="/stories/">Stories</a>
+        <a href="/paper/">Paper</a>
+        <a href="/about/">About</a>
+      </nav>
       <button id="theme-toggle" aria-label="Toggle theme">☽</button>
       
         <a class="back-link" href="/">← All stories</a>

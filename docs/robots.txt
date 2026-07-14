@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /leads/
+
+Sitemap: https://thespatialupdate.com/sitemap.xml
