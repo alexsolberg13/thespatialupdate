@@ -63,18 +63,5 @@
     "description": "From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.",
     "url": "/stories/venezuela/",
     "color": "red"
-  },
-  {
-    "region": "Europe",
-    "coordinates": [
-      4.488773,
-      47.66093
-    ],
-    "tag": "Europe · Economy",
-    "type": "economy",
-    "title": "The Test Story",
-    "description": "This is a test story",
-    "url": "/stories/the-test-story/",
-    "color": "gold"
   }
 ]
