@@ -1,7 +1,10 @@
 [
   {
     "region": "Middle East",
-    "coordinates": [53.0, 32.5],
+    "coordinates": [
+      53.0,
+      32.5
+    ],
     "tag": "Iran · Military",
     "type": "military",
     "title": "Strikes on Iran: From the Twelve-Day War to the 2026 Conflict",
@@ -11,7 +14,10 @@
   },
   {
     "region": "Middle East",
-    "coordinates": [56.4, 26.6],
+    "coordinates": [
+      56.4,
+      26.6
+    ],
     "tag": "Gulf · Economics",
     "type": "economy",
     "title": "The Strait of Hormuz: Oil's Most Critical Passage",
@@ -21,7 +27,10 @@
   },
   {
     "region": "Middle East",
-    "coordinates": [46.0, 28.0],
+    "coordinates": [
+      46.0,
+      28.0
+    ],
     "tag": "Gulf · Geopolitics",
     "type": "news",
     "title": "Gulf State Relations: The Regional Power Balance",
@@ -30,13 +39,29 @@
     "color": "teal"
   },
   {
-  "region": "Americas",
-  "coordinates": [-66.88, 10.49],
-  "tag": "Venezuela · Military",
-  "type": "military",
-  "title": "Operation Absolute Resolve: How the US Captured Nicolás Maduro",
-  "description": "From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.",
-  "url": "/stories/venezuela/",
-  "color": "red"
-  } 
+    "region": "Americas",
+    "coordinates": [
+      -66.88,
+      10.49
+    ],
+    "tag": "Venezuela · Military",
+    "type": "military",
+    "title": "Operation Absolute Resolve: How the US Captured Nicolás Maduro",
+    "description": "From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.",
+    "url": "/stories/venezuela/",
+    "color": "red"
+  },
+  {
+    "region": "Europe",
+    "coordinates": [
+      4.488773,
+      47.66093
+    ],
+    "tag": "Europe · Economy",
+    "type": "economy",
+    "title": "The Test Story",
+    "description": "This is a test story",
+    "url": "/stories/the-test-story/",
+    "color": "gold"
+  }
 ]
