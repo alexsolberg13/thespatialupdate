@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-11",
+  "date": "2026-07-14",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 73,
-    "hi_f": 74,
-    "lo_f": 56,
-    "precip_pct": 2,
+    "now_f": 59,
+    "hi_f": 83,
+    "lo_f": 51,
+    "precip_pct": 0,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 73,
-      "hi_f": 74,
-      "lo_f": 56,
-      "precip_pct": 2,
+      "now_f": 59,
+      "hi_f": 83,
+      "lo_f": 51,
+      "precip_pct": 0,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 74,
-      "hi_f": 76,
+      "now_f": 61,
+      "hi_f": 87,
       "lo_f": 55,
-      "precip_pct": 0,
+      "precip_pct": 1,
       "desc": "overcast"
     }
   ],
-  "story_count": 62,
-  "score_count": 2,
+  "story_count": 74,
+  "score_count": 0,
   "top": [
     {
-      "section": "World",
-      "title": "Argentina vs Switzerland LIVE: FIFA World Cup 2026 quarterfinal",
-      "source": "aljazeera.com"
-    },
-    {
       "section": "U.S. National",
-      "title": "Trump\u2019s Posts on Singing Somali Schoolchildren Stir Anger in Minnesota",
+      "title": "Here\u2019s the latest.",
       "source": "nytimes.com"
     },
     {
-      "section": "Pacific Northwest",
-      "title": "Milwaukie hosts community cleanup for Kellogg Creek restoration",
-      "source": "oregonlive.com"
+      "section": "World",
+      "title": "Indonesia\u2019s free meals scheme cut leaves kitchen operators in limbo",
+      "source": "scmp.com"
     },
     {
-      "section": "Science & Environment",
-      "title": "Fastest spider in the world? This huge, hairy-legged Australian arachnid may be the quickest on the planet",
-      "source": "theguardian.com"
+      "section": "Pacific Northwest",
+      "title": "US attacks Iran and Tehran retaliates across the Middle East, threatening a return to all-out war",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "After years of teasing, the viral Nopia synth is \u2018basically finished\u2019",
-      "source": "theverge.com"
+      "title": "Warsh promises inflation will be a 'thing of the past,' cites 'mistake' of prior policy",
+      "source": "cnbc.com"
+    },
+    {
+      "section": "Science & Environment",
+      "title": "Church of England votes against plan to rewild 30% of its land by 2030",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Quiz: Can You Rank All 7 Continents from Largest to Smallest?",
-      "source": "mentalfloss.com"
+      "title": "Meet the Earliest Known 'Right-Handed' Animal, a Worm-Like Creature That Lived About 550 Million Years Ago",
+      "source": "smithsonianmag.com"
     }
   ]
 }
