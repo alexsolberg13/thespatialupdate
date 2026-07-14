@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-13",
+  "date": "2026-07-14",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 60,
-    "hi_f": 77,
+    "now_f": 59,
+    "hi_f": 83,
     "lo_f": 51,
     "precip_pct": 0,
-    "desc": "clear"
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 60,
-      "hi_f": 77,
+      "now_f": 59,
+      "hi_f": 83,
       "lo_f": 51,
       "precip_pct": 0,
-      "desc": "clear"
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 60,
-      "hi_f": 85,
-      "lo_f": 51,
-      "precip_pct": 0,
-      "desc": "clear"
+      "now_f": 61,
+      "hi_f": 87,
+      "lo_f": 55,
+      "precip_pct": 1,
+      "desc": "overcast"
     }
   ],
-  "story_count": 69,
-  "score_count": 4,
+  "story_count": 74,
+  "score_count": 0,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Trump Backs Lindsey Graham\u2019s Sister to Finish His Senate Term in South Carolina",
+      "title": "Here\u2019s the latest.",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "1 killed in ICE-involved shooting in US",
+      "title": "Indonesia\u2019s free meals scheme cut leaves kitchen operators in limbo",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Former Los Angeles Dodgers catcher dies at 85",
-      "source": "oregonlive.com"
+      "title": "US attacks Iran and Tehran retaliates across the Middle East, threatening a return to all-out war",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "Trump recommends Lindsey Graham's sister serve as interim senator for South Carolina",
+      "title": "Warsh promises inflation will be a 'thing of the past,' cites 'mistake' of prior policy",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Dolphin deaths in South Australia spike after algal bloom decimates food sources",
+      "title": "Church of England votes against plan to rewild 30% of its land by 2030",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Friedrich Ebert Memorial in Heidelberg, Germany",
-      "source": "atlasobscura.com"
+      "title": "Meet the Earliest Known 'Right-Handed' Animal, a Worm-Like Creature That Lived About 550 Million Years Ago",
+      "source": "smithsonianmag.com"
     }
   ]
 }
