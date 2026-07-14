@@ -1,0 +1,180 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [43.35, 12.6] },
+      "properties": {
+        "type": "chokepoint",
+        "title": "Bab-el-Mandeb Strait",
+        "description": "The 'Gate of Grief'. Just 26km wide between Yemen and Djibouti, it is the southern gateway to the Red Sea and the Suez route. Around 4 million barrels of oil a day passed through before the crisis, alongside the bulk of Asia-Europe container traffic.",
+        "stat": "~26km wide"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [32.35, 30.6] },
+      "properties": {
+        "type": "chokepoint",
+        "title": "Suez Canal",
+        "description": "The 193km artificial waterway linking the Red Sea to the Mediterranean. In normal times it carries roughly 12% of global trade. Transit revenues for Egypt collapsed as traffic diverted around Africa.",
+        "stat": "~12% of world trade"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [42.95, 14.8] },
+      "properties": {
+        "type": "port",
+        "title": "Hodeidah, Yemen",
+        "description": "The main port under Houthi control on Yemen's Red Sea coast. It sits at the centre of the attack zone and has itself been struck repeatedly in retaliatory strikes on Houthi infrastructure.",
+        "stat": "Houthi-held port"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [45.03, 12.79] },
+      "properties": {
+        "type": "port",
+        "title": "Aden, Yemen",
+        "description": "Yemen's largest port and the seat of the internationally recognised government. It sits just east of the strait on the Gulf of Aden, at the mouth of the contested waters.",
+        "stat": "Gulf of Aden gateway"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [43.14, 11.6] },
+      "properties": {
+        "type": "port",
+        "title": "Djibouti (Doraleh)",
+        "description": "The strategic port opposite Bab-el-Mandeb, hosting US, French, Chinese, and other foreign military bases. It anchors the international naval presence that escorts and monitors shipping through the strait.",
+        "stat": "Multinational naval hub"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [39.17, 21.5] },
+      "properties": {
+        "type": "port",
+        "title": "Jeddah, Saudi Arabia",
+        "description": "Saudi Arabia's main Red Sea port and a key transshipment hub. Shippers that still transit the Red Sea often use Jeddah as a turning point, running only the northern half of the sea.",
+        "stat": "Red Sea transshipment"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [37.22, 19.62] },
+      "properties": {
+        "type": "port",
+        "title": "Port Sudan",
+        "description": "Sudan's principal port on the Red Sea. With the country gripped by civil war, it has become a lifeline for aid and imports — and increasingly exposed to the wider instability of the corridor.",
+        "stat": "Sudan's lifeline port"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [34.95, 29.55] },
+      "properties": {
+        "type": "port",
+        "title": "Eilat, Israel",
+        "description": "Israel's only Red Sea port, at the head of the Gulf of Aqaba. An early Houthi target, its commercial traffic collapsed by roughly 85% as vessels stopped attempting the southern Red Sea, pushing the port to the brink.",
+        "stat": "~85% traffic drop"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [56.0, 12.5], [51.0, 13.0], [46.0, 12.6], [43.35, 12.6],
+          [40.5, 16.0], [37.5, 20.5], [35.0, 26.0], [33.5, 28.5],
+          [32.35, 30.0], [32.55, 31.3], [30.0, 33.0]
+        ]
+      },
+      "properties": {
+        "type": "route",
+        "title": "Suez route (via Bab-el-Mandeb)",
+        "description": "The direct Asia-Europe sea lane: through the Gulf of Aden, the Bab-el-Mandeb strait, up the length of the Red Sea, and through the Suez Canal into the Mediterranean. This is the route most container lines are now avoiding.",
+        "destination": "Asia ↔ Europe (direct)"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [56.0, 12.5], [51.0, 10.0], [45.0, 3.0], [42.0, -6.0],
+          [40.5, -16.0], [34.0, -26.0], [24.0, -34.0], [18.4, -34.6],
+          [12.0, -30.0], [10.0, -18.0], [6.0, -4.0], [-2.0, 8.0],
+          [-11.0, 20.0], [-14.0, 30.0], [-9.0, 36.0]
+        ]
+      },
+      "properties": {
+        "type": "diversion",
+        "title": "Cape of Good Hope diversion",
+        "description": "The detour ships now take instead: south down the East African coast, around the southern tip of Africa, and up to Europe. It adds roughly 10 days and thousands of kilometres per voyage, raising fuel costs, emissions, and freight rates worldwide.",
+        "destination": "Asia ↔ Europe (around Africa)"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [38.8, 18.0], [43.2, 13.6], [52.0, 13.8], [52.0, 11.0],
+          [43.5, 11.2], [38.3, 16.5], [38.8, 18.0]
+        ]]
+      },
+      "properties": {
+        "type": "threatzone",
+        "title": "High-risk attack zone",
+        "description": "The southern Red Sea, Bab-el-Mandeb, and Gulf of Aden — the waters within range of Houthi anti-ship missiles, drones, and boats. War-risk insurance premiums here spiked and many operators declared the area off-limits."
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [42.8, 15.0] },
+      "properties": {
+        "type": "attack",
+        "title": "Galaxy Leader seizure",
+        "description": "In November 2023, Houthi forces used a helicopter to seize the car carrier Galaxy Leader and its crew in the southern Red Sea — the opening move of the campaign and a signal that the group could board vessels at sea.",
+        "stat": "Nov 2023 · first seizure"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [43.3, 12.8] },
+      "properties": {
+        "type": "attack",
+        "title": "Rubymar sinking",
+        "description": "Struck by missiles in February 2024, the bulk carrier Rubymar drifted and sank weeks later near Bab-el-Mandeb — the first ship lost in the campaign, leaving a fertiliser cargo and an oil slick in the strait.",
+        "stat": "2024 · first vessel sunk"
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [42.5, 15.4] },
+      "properties": {
+        "type": "attack",
+        "title": "2025 resumption",
+        "description": "After a lull, attacks flared again in mid-2025 with the sinking of two bulk carriers off the Yemeni coast, killing several crew and confirming that even declared ceasefires left the corridor unsafe for shipping.",
+        "stat": "Jul 2025 · two ships sunk"
+      }
+    }
+
+  ]
+}

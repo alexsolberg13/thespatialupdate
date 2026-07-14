@@ -39,6 +39,19 @@
     "color": "teal"
   },
   {
+    "region": "Middle East",
+    "coordinates": [
+      43.35,
+      12.6
+    ],
+    "tag": "Red Sea · Shipping",
+    "type": "economy",
+    "title": "The Red Sea Crisis: Trade Reroutes Around a War Zone",
+    "description": "Houthi attacks near the Bab-el-Mandeb strait pushed global shipping onto a 10-day detour around Africa.",
+    "url": "/stories/red-sea-shipping/",
+    "color": "gold"
+  },
+  {
     "region": "Americas",
     "coordinates": [
       -66.88,
