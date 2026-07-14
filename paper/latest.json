@@ -3,61 +3,61 @@
   "date": "2026-07-14",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 59,
+    "now_f": 82,
     "hi_f": 83,
     "lo_f": 51,
     "precip_pct": 0,
-    "desc": "overcast"
+    "desc": "clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 59,
+      "now_f": 82,
       "hi_f": 83,
       "lo_f": 51,
       "precip_pct": 0,
-      "desc": "overcast"
+      "desc": "clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 61,
-      "hi_f": 87,
+      "now_f": 83,
+      "hi_f": 85,
       "lo_f": 55,
-      "precip_pct": 1,
+      "precip_pct": 0,
       "desc": "overcast"
     }
   ],
-  "story_count": 74,
+  "story_count": 71,
   "score_count": 0,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Here\u2019s the latest.",
-      "source": "nytimes.com"
+      "title": "Spain sparkles to shock France 2-0 and advance to the World Cup final",
+      "source": "npr.org"
     },
     {
       "section": "World",
-      "title": "Indonesia\u2019s free meals scheme cut leaves kitchen operators in limbo",
+      "title": "\u2018Gus\u2019 the T. rex fetches record US$50.1 million at US auction",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "US attacks Iran and Tehran retaliates across the Middle East, threatening a return to all-out war",
-      "source": "opb.org"
+      "title": "Why Tho? I sent a mean text to the wrong person and now I\u2019m mortified",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Warsh promises inflation will be a 'thing of the past,' cites 'mistake' of prior policy",
+      "title": "Cybersecurity stocks rally on AI spending change comments from IBM's Krishna",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Church of England votes against plan to rewild 30% of its land by 2030",
-      "source": "theguardian.com"
+      "title": "NASA Invites Media to Serbia Artemis Accords Signing Ceremony",
+      "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "Meet the Earliest Known 'Right-Handed' Animal, a Worm-Like Creature That Lived About 550 Million Years Ago",
+      "title": "An English King's Bones Were Moved Over Centuries and Eventually Lost. One Researcher Claims He Discovered Their Location\u2014Under a Parking Lot",
       "source": "smithsonianmag.com"
     }
   ]
