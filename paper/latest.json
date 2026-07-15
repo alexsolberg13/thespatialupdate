@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-14",
+  "date": "2026-07-15",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 82,
+    "now_f": 59,
     "hi_f": 83,
-    "lo_f": 51,
-    "precip_pct": 0,
-    "desc": "clear"
+    "lo_f": 55,
+    "precip_pct": 3,
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 82,
+      "now_f": 59,
       "hi_f": 83,
-      "lo_f": 51,
-      "precip_pct": 0,
-      "desc": "clear"
+      "lo_f": 55,
+      "precip_pct": 3,
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 83,
+      "now_f": 59,
       "hi_f": 85,
-      "lo_f": 55,
-      "precip_pct": 0,
+      "lo_f": 56,
+      "precip_pct": 2,
       "desc": "overcast"
     }
   ],
-  "story_count": 71,
+  "story_count": 74,
   "score_count": 0,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Spain sparkles to shock France 2-0 and advance to the World Cup final",
-      "source": "npr.org"
+      "title": "Should Epstein\u2019s Friends Be Punished? An Elite Harvard Club Is Torn.",
+      "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "\u2018Gus\u2019 the T. rex fetches record US$50.1 million at US auction",
-      "source": "scmp.com"
+      "title": "US launches new round of strikes against Iran",
+      "source": "defensenews.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Why Tho? I sent a mean text to the wrong person and now I\u2019m mortified",
-      "source": "oregonlive.com"
+      "title": "Old rivals, new battle: Argentina and England clash in World Cup Semifinal",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "Cybersecurity stocks rally on AI spending change comments from IBM's Krishna",
+      "title": "Watch Fed Chairman Kevin Warsh testify live before Senate banking committee",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "NASA Invites Media to Serbia Artemis Accords Signing Ceremony",
-      "source": "nasa.gov"
+      "title": "\u2018I\u2019ve never worked with so many conservatives\u2019: the Texans fighting the Big Bend border wall",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "An English King's Bones Were Moved Over Centuries and Eventually Lost. One Researcher Claims He Discovered Their Location\u2014Under a Parking Lot",
-      "source": "smithsonianmag.com"
+      "title": "Was the Trojan Horse Real? What Historians Actually Think",
+      "source": "mentalfloss.com"
     }
   ]
 }
