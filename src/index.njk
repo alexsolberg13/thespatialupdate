@@ -89,10 +89,50 @@ mapbox: true
 
   #map { flex: 1; height: 100%; }
 
+  #mobile-handle { display: none; }
+
   @media (max-width: 768px) {
     #body { flex-direction: column; }
-    #sidebar { width: 100%; height: 50vh; height: 50dvh; border-right: none; border-bottom: 1px solid var(--border); }
-    #map { height: 50vh; height: 50dvh; flex: none; }
+
+    #sidebar {
+      width: 100%; border-right: none; border-bottom: 1px solid var(--border);
+      max-height: 46px; flex-shrink: 0; overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+    #sidebar.expanded { max-height: 46dvh; overflow-y: auto; }
+
+    #mobile-handle {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; height: 46px; flex-shrink: 0; cursor: pointer;
+      position: sticky; top: 0; background: var(--surface); z-index: 2;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .mobile-handle-left { display: flex; align-items: center; gap: 8px; }
+    .mobile-handle-chevron {
+      font-size: 10px; color: var(--text-muted); display: inline-block;
+      transition: transform 0.2s;
+    }
+    #sidebar.expanded .mobile-handle-chevron { transform: rotate(180deg); }
+    .mobile-handle-label {
+      font-size: 11px; font-weight: 500; color: var(--text-primary);
+      font-family: Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .mobile-handle-count { font-size: 11px; color: var(--text-secondary); font-family: Arial, sans-serif; }
+    #mobile-search-toggle {
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 3px 9px; font-size: 13px; color: var(--text-secondary); cursor: pointer;
+      line-height: 1.5;
+    }
+    #mobile-search-toggle.active { border-color: var(--accent); color: var(--accent); }
+
+    #sidebar:not(.expanded) .search-wrap,
+    #sidebar:not(.expanded) .sidebar-meta,
+    #sidebar:not(.expanded) #story-list,
+    #sidebar:not(.expanded) .radar-toggle-wrap { display: none; }
+
+    #story-list { flex: none; }
+
+    #map { flex: 1; height: auto; }
   }
 
   .mapboxgl-popup-content {
@@ -121,6 +161,14 @@ mapbox: true
 
 <div id="body">
   <div id="sidebar">
+    <div id="mobile-handle">
+      <div class="mobile-handle-left">
+        <span class="mobile-handle-chevron">▾</span>
+        <span class="mobile-handle-label">Stories</span>
+        <span class="mobile-handle-count" id="mobile-handle-count"></span>
+      </div>
+      <button id="mobile-search-toggle" type="button" aria-label="Toggle search">🔍</button>
+    </div>
     <div class="search-wrap">
       <input type="text" id="search" placeholder="Search stories..." autocomplete="off" />
     </div>
@@ -397,6 +445,7 @@ mapbox: true
   const storyList  = document.getElementById('story-list');
   const storyCount = document.getElementById('story-count');
   const searchInput = document.getElementById('search');
+  const mobileHandleCount = document.getElementById('mobile-handle-count');
   let flyBackTimer = null;
 
   function buildSidebar(filter = '') {
@@ -473,8 +522,35 @@ mapbox: true
     });
 
     storyCount.innerHTML = `<span>${total}</span> stor${total !== 1 ? 'ies' : 'y'} on the map`;
+    mobileHandleCount.textContent = total;
   }
 
   buildSidebar();
   searchInput.addEventListener('input', e => buildSidebar(e.target.value));
+
+  // ── Mobile collapsible drawer ────────────────────────────────
+  const sidebarEl = document.getElementById('sidebar');
+  const mobileHandle = document.getElementById('mobile-handle');
+  const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+
+  function setSidebarExpanded(expanded) {
+    sidebarEl.classList.toggle('expanded', expanded);
+    mobileSearchToggle.classList.toggle('active', expanded);
+  }
+
+  mobileHandle.addEventListener('click', (e) => {
+    if (e.target.closest('#mobile-search-toggle')) return;
+    setSidebarExpanded(!sidebarEl.classList.contains('expanded'));
+  });
+
+  mobileSearchToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasExpanded = sidebarEl.classList.contains('expanded');
+    setSidebarExpanded(!wasExpanded);
+    if (!wasExpanded) requestAnimationFrame(() => searchInput.focus());
+  });
+
+  sidebarEl.addEventListener('transitionend', (e) => {
+    if (e.propertyName === 'max-height') map.resize();
+  });
 </script>
