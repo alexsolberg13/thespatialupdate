@@ -5,7 +5,7 @@ mapbox: true
 ---
 
 <style>
-  #body { display: flex; height: calc(100vh - 52px); overflow: hidden; }
+  #body { display: flex; height: calc(100vh - 52px); height: calc(100dvh - 52px); overflow: hidden; }
 
   #sidebar {
     width: 300px; flex-shrink: 0; background: var(--surface);
@@ -91,15 +91,15 @@ mapbox: true
 
   @media (max-width: 768px) {
     #body { flex-direction: column; }
-    #sidebar { width: 100%; height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
-    #map { height: 50vh; flex: none; }
+    #sidebar { width: 100%; height: 50vh; height: 50dvh; border-right: none; border-bottom: 1px solid var(--border); }
+    #map { height: 50vh; height: 50dvh; flex: none; }
   }
 
   .mapboxgl-popup-content {
     background: var(--surface) !important; border: 1px solid var(--border);
     border-radius: 8px; padding: 0; font-family: Georgia, serif;
     box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    min-width: 220px; max-width: 280px; overflow: hidden;
+    width: 280px; max-width: calc(100vw - 32px); overflow: hidden;
   }
   .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 18px; padding: 6px 10px; background: none; }
   .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }

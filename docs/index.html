@@ -67,7 +67,7 @@
     #site-header {
       height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 28px; flex-shrink: 0; z-index: 10;
+      padding: 0 28px; flex-shrink: 0; z-index: 10; position: relative;
     }
     .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; }
     .site-name span { color: var(--accent); }
@@ -91,6 +91,28 @@
     }
     #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
+    #nav-toggle {
+      display: none; background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 3px 10px; cursor: pointer; font-size: 15px; color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    #nav-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    #mobile-nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      flex-direction: column; z-index: 20;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    #mobile-nav.open { display: flex; }
+    #mobile-nav a {
+      padding: 15px 20px; font-size: 13px; text-decoration: none;
+      color: var(--text-secondary); border-bottom: 1px solid var(--border-light);
+      font-family: Arial, sans-serif; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    #mobile-nav a:last-child { border-bottom: none; }
+    #mobile-nav a:hover { color: var(--accent); background: var(--bg); }
+
     @media (max-width: 768px) {
       #site-header { padding: 0 16px; }
       .site-tagline { display: none; }
@@ -99,6 +121,7 @@
 
     @media (max-width: 480px) {
       .site-nav { display: none; }
+      #nav-toggle { display: inline-block; }
     }
 </style>
 </head>
@@ -116,12 +139,18 @@
       
         <div class="site-tagline">Map-based current events</div>
       
+      <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
+    <nav id="mobile-nav">
+      <a href="/stories/">Stories</a>
+      <a href="/paper/">Paper</a>
+      <a href="/about/">About</a>
+    </nav>
   </div>
 
   
 <style>
-  #body { display: flex; height: calc(100vh - 52px); overflow: hidden; }
+  #body { display: flex; height: calc(100vh - 52px); height: calc(100dvh - 52px); overflow: hidden; }
 
   #sidebar {
     width: 300px; flex-shrink: 0; background: var(--surface);
@@ -207,15 +236,15 @@
 
   @media (max-width: 768px) {
     #body { flex-direction: column; }
-    #sidebar { width: 100%; height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
-    #map { height: 50vh; flex: none; }
+    #sidebar { width: 100%; height: 50vh; height: 50dvh; border-right: none; border-bottom: 1px solid var(--border); }
+    #map { height: 50vh; height: 50dvh; flex: none; }
   }
 
   .mapboxgl-popup-content {
     background: var(--surface) !important; border: 1px solid var(--border);
     border-radius: 8px; padding: 0; font-family: Georgia, serif;
     box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    min-width: 220px; max-width: 280px; overflow: hidden;
+    width: 280px; max-width: calc(100vw - 32px); overflow: hidden;
   }
   .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 18px; padding: 6px 10px; background: none; }
   .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }
@@ -609,6 +638,30 @@
         localStorage.setItem('theme', dark ? 'dark' : 'light');
         toggle.textContent = dark ? '☀' : '☽';
         document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
+      });
+    })();
+
+    (function () {
+      const navToggle = document.getElementById('nav-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+
+      navToggle.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobileNav.classList.contains('open')) return;
+        if (mobileNav.contains(e.target) || navToggle.contains(e.target)) return;
+        mobileNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
       });
     })();
   </script>

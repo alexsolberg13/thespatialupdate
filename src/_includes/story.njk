@@ -5,7 +5,7 @@ backLink: true
 ---
 
 <style>
-  .layout { display: flex; height: calc(100vh - 52px); overflow: hidden; }
+  .layout { display: flex; height: calc(100vh - 52px); height: calc(100dvh - 52px); overflow: hidden; }
 
   .sidebar {
     width: 380px; flex-shrink: 0; overflow-y: auto;
@@ -71,8 +71,14 @@ backLink: true
 
   @media (max-width: 768px) {
     .layout { flex-direction: column; }
-    .sidebar { width: 100%; max-height: 55vh; border-right: none; border-bottom: 1px solid var(--border); }
-    #map { height: 45vh; flex: none; }
+    .sidebar { width: 100%; max-height: 55vh; max-height: 55dvh; border-right: none; border-bottom: 1px solid var(--border); }
+    #map { height: 45vh; height: 45dvh; flex: none; }
+  }
+
+  @media (max-width: 480px) {
+    .phase-tabs { flex-wrap: wrap; }
+    .phase-tab { flex: 1 1 calc(50% - 6px); }
+    .stat-grid { grid-template-columns: 1fr; }
   }
 
   /* ── Map ── */
@@ -83,7 +89,7 @@ backLink: true
     background: var(--surface) !important; border: 1px solid var(--border);
     border-radius: 7px; padding: 0; font-family: Georgia, serif;
     box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    min-width: 220px; max-width: 300px; overflow: hidden;
+    width: 300px; max-width: calc(100vw - 32px); overflow: hidden;
   }
   .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 16px; padding: 5px 8px; background: none; }
   .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }
