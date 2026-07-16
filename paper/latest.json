@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-15",
+  "date": "2026-07-16",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 59,
-    "hi_f": 83,
-    "lo_f": 55,
-    "precip_pct": 3,
-    "desc": "overcast"
+    "now_f": 61,
+    "hi_f": 70,
+    "lo_f": 58,
+    "precip_pct": 37,
+    "desc": "light rain"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 59,
-      "hi_f": 83,
-      "lo_f": 55,
-      "precip_pct": 3,
-      "desc": "overcast"
+      "now_f": 61,
+      "hi_f": 70,
+      "lo_f": 58,
+      "precip_pct": 37,
+      "desc": "light rain"
     },
     {
       "name": "Lebanon, OR",
       "now_f": 59,
-      "hi_f": 85,
-      "lo_f": 56,
-      "precip_pct": 2,
+      "hi_f": 73,
+      "lo_f": 55,
+      "precip_pct": 20,
       "desc": "overcast"
     }
   ],
-  "story_count": 74,
-  "score_count": 0,
+  "story_count": 71,
+  "score_count": 1,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Should Epstein\u2019s Friends Be Punished? An Elite Harvard Club Is Torn.",
+      "title": "Here\u2019s the latest.",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "US launches new round of strikes against Iran",
-      "source": "defensenews.com"
+      "title": "World Cup: Why is there a third-place playoff between France and England?",
+      "source": "aljazeera.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Old rivals, new battle: Argentina and England clash in World Cup Semifinal",
+      "title": "US expands strikes into northern Iran and disables ship trying to run blockade",
       "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "Watch Fed Chairman Kevin Warsh testify live before Senate banking committee",
+      "title": "Truth Social launches service to give Wall Street traders an edge with real-time service",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "\u2018I\u2019ve never worked with so many conservatives\u2019: the Texans fighting the Big Bend border wall",
+      "title": "Private schools offer 41% more tree shade than state schools in England",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Was the Trojan Horse Real? What Historians Actually Think",
+      "title": "4 Forgotten Frontier Towns Most People Have Never Heard Of",
       "source": "mentalfloss.com"
     }
   ]
