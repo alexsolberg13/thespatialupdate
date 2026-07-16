@@ -62,6 +62,11 @@ STORIES_JSON = REPO_ROOT / "src" / "_data" / "stories.json"
 
 TYPE_CHOICES = ["news", "economy", "geography", "demographics", "military"]
 
+# The homepage groups stories by continent (the switcher pills + archive
+# tiles) and orders them newest-first. Keep this list in sync with
+# `continentOrder` in src/index.njk.
+CONTINENT_CHOICES = ["Middle East", "Americas", "Asia", "Europe", "Africa"]
+
 # value -> (hex color, one-line description of what it usually means here)
 COLOR_INFO = {
     "gold": ("#e8c87a", "economy / news"),
@@ -341,6 +346,12 @@ def run_interactive():
     ) if regions else ask_text("Region?", example="Middle East")
     print()
 
+    continent = ask_choice_from_list(
+        "Continent? (which archive group + map switcher pill this story belongs to)",
+        CONTINENT_CHOICES,
+    )
+    print()
+
     story_type = ask_choice_from_list(
         "Category? (one of the 5 story types)",
         TYPE_CHOICES,
@@ -371,10 +382,12 @@ def run_interactive():
     )
     print()
 
+    now = datetime.now()
     return dict(
         title=title,
         description=description,
         region=region,
+        continent=continent,
         tag=tag,
         type=story_type,
         color=color,
@@ -382,6 +395,10 @@ def run_interactive():
         lon=lon,
         zoom=zoom,
         byline=byline,
+        # Homepage sort/display fields. New stories are the newest, so they
+        # sort to the top via `order` (YYYYMM) and show this month's label.
+        date=now.strftime("%b %Y"),
+        order=int(now.strftime("%Y%m")),
     )
 
 
@@ -392,11 +409,13 @@ def build_defaults_answers():
     pipeline (files + stories.json + an eleventy build) can be exercised
     without a human sitting at the keyboard. Not meant for real stories.
     """
-    month_year = datetime.now().strftime("%B %Y")
+    now = datetime.now()
+    month_year = now.strftime("%B %Y")
     return dict(
         title="Test Story (delete me)",
         description="A canned test entry created by --defaults to check the story script end to end.",
         region="Test Region",
+        continent="Americas",
         tag="Test Region · News",
         type="news",
         color="blue",
@@ -404,6 +423,8 @@ def build_defaults_answers():
         lon=-122.3321,
         zoom=5.0,
         byline="Updated %s · Data: add your sources here" % month_year,
+        date=now.strftime("%b %Y"),
+        order=int(now.strftime("%Y%m")),
     )
 
 
@@ -572,6 +593,7 @@ def print_summary(answers, slug):
     print("  Title:       %s" % answers["title"])
     print("  Description: %s" % answers["description"])
     print("  Region:      %s" % answers["region"])
+    print("  Continent:   %s" % answers["continent"])
     print("  Type:        %s" % answers["type"])
     print("  Tag:         %s" % answers["tag"])
     print("  Location:    lat %s, lon %s" % (answers["lat"], answers["lon"]))
@@ -656,6 +678,7 @@ def main():
 
     new_entry = {
         "region": answers["region"],
+        "continent": answers["continent"],
         "coordinates": [round(answers["lon"], 6), round(answers["lat"], 6)],
         "tag": answers["tag"],
         "type": answers["type"],
@@ -663,6 +686,8 @@ def main():
         "description": answers["description"],
         "url": "/stories/%s/" % slug,
         "color": answers["color"],
+        "date": answers["date"],
+        "order": answers["order"],
     }
     stories.append(new_entry)
 

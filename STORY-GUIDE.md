@@ -51,6 +51,7 @@ You'll be asked for:
 - **Story title** — the headline, e.g. "Puget Sound Ferries: A System Under Strain"
 - **One-sentence description** — shown in the homepage popup and story cards
 - **Region** — pick a number from the list of existing regions, or choose "type a new one"
+- **Continent** — pick a number: Middle East / Americas / Asia / Europe / Africa. This is what groups the story on the homepage — its map switcher pill ("Asia · 3") and the "Browse the archive by continent" tiles.
 - **Category** — pick a number: news / economy / geography / demographics / military
 - **Tag** — a short label for the homepage; a sensible default is suggested, just press Enter to accept it, or type your own
 - **Location** — paste the coordinates you copied from Google Maps (see Step 3 below)
@@ -207,10 +208,20 @@ a coordinate.
 
 **A story doesn't show up on the homepage or in `/stories/`**
 Check `src/_data/stories.json` — the story needs its own entry there
-(region, coordinates, tag, type, title, description, url, color). The
-script adds this automatically when you create a story through it; this
-usually only comes up if an entry got deleted or a story's files were
-copied by hand instead of using the script.
+(region, continent, coordinates, tag, type, title, description, url,
+color, date, order). The script adds this automatically when you create
+a story through it; this usually only comes up if an entry got deleted
+or a story's files were copied by hand instead of using the script.
+
+**A story shows on the homepage but under the wrong continent, or in the
+wrong spot in the timeline**
+The homepage groups and sorts by two fields in `src/_data/stories.json`:
+`continent` (which switcher pill / archive tile it falls under) and
+`order` (a `YYYYMM` number — bigger is newer, so the newest story is
+featured and the rail runs newest-first). `date` is just the label shown
+next to it (e.g. `"Jul 2026"`). The script fills all three in for you;
+if you're hand-editing an older story that predates these fields, add
+them to its entry.
 
 **The map loads but shows no dots at all**
 Check `data.geojson` for a JSON mistake (usually a missing or extra

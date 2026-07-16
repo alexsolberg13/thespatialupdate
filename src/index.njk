@@ -4,40 +4,103 @@ title: The Spatial Update
 mapbox: true
 ---
 
+{#
+  Homepage — two views sharing one page, toggled in vanilla JS:
+    1. Editorial landing (default): featured story, "Latest" row, continent tiles.
+    2. Interactive map: continent switcher, story rail, Mapbox globe.
+  The editorial content is server-rendered from stories.json; the map view,
+  pills and rail are built client-side from the same data. See the
+  design handoff in ../Organizing the main page layout/design_handoff_homepage/.
+#}
+
 <style>
-  #body { display: flex; height: calc(100vh - 52px); height: calc(100dvh - 52px); overflow: hidden; }
+  /* The redesign's palette is the site's dark theme (see base.njk tokens),
+     so everything is expressed in CSS variables and adapts to light mode.
+     A handful of decorative "night map" values are literal on purpose. */
 
-  #sidebar {
-    width: 300px; flex-shrink: 0; background: var(--surface);
-    border-right: 1px solid var(--border); display: flex;
-    flex-direction: column; overflow: hidden;
+  .stage { position: relative; height: calc(100vh - 52px); height: calc(100dvh - 52px); overflow: hidden; }
+
+  /* ---- interactive map view (base layer) ---- */
+  .mapwrap { position: absolute; inset: 0; display: flex; flex-direction: column; }
+
+  .switch {
+    height: 46px; background: var(--surface-alt); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px; padding: 0 16px; flex-shrink: 0;
+    overflow-x: auto; scrollbar-width: none;
   }
-
-  .search-wrap { padding: 14px 16px; border-bottom: 1px solid var(--border-light); }
-  #search {
-    width: 100%; background: var(--bg); border: 1px solid var(--border);
-    border-radius: 5px; padding: 7px 10px; font-size: 12px;
-    color: var(--text-primary); font-family: Arial, sans-serif; outline: none;
+  .switch::-webkit-scrollbar { display: none; }
+  .homebtn {
+    font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.05em; color: var(--text-body);
+    padding: 5px 12px 5px 8px; border-right: 1px solid var(--border); margin-right: 4px;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0; background: none;
   }
-  #search::placeholder { color: var(--text-muted); }
-  #search:focus { border-color: var(--text-secondary); }
+  .homebtn:hover { color: var(--accent); }
+  .pills { display: flex; align-items: center; gap: 8px; }
+  .pill {
+    font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.04em;
+    padding: 5px 13px; border-radius: 20px; cursor: pointer; white-space: nowrap;
+    border: 1px solid var(--border); color: var(--text-body); background: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill.active {
+    background: var(--accent); color: var(--bg); border-color: var(--accent);
+  }
+  .pill.active:hover { color: var(--bg); }
+  .sort { margin-left: auto; font-family: Arial, sans-serif; font-size: 11px; color: var(--text-muted); white-space: nowrap; padding-left: 12px; }
 
-  .sidebar-meta { padding: 10px 16px 8px; border-bottom: 1px solid var(--border-light); }
-  .sidebar-count { font-size: 11px; color: var(--text-secondary); font-family: Arial, sans-serif; }
-  .sidebar-count span { color: var(--accent); }
+  .mapbody { flex: 1; display: flex; min-height: 0; position: relative; }
 
-  #story-list { overflow-y: auto; flex: 1; }
-  #story-list::-webkit-scrollbar { width: 3px; }
-  #story-list::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+  .rail {
+    width: 336px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; position: relative; z-index: 2; min-height: 0;
+  }
+  .searchbox-wrap { padding: 14px 16px; flex-shrink: 0; }
+  .searchbox {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 5px;
+    padding: 7px 10px; font-family: Arial, sans-serif; font-size: 12px;
+    color: var(--text-primary); outline: none;
+  }
+  .searchbox::placeholder { color: var(--text-muted); }
+  .searchbox:focus { border-color: var(--text-secondary); }
 
+  .timeline { flex: 1; overflow-y: auto; padding-bottom: 20px; min-height: 0; }
+  .timeline::-webkit-scrollbar { width: 3px; }
+  .timeline::-webkit-scrollbar-thumb { background: var(--scrollbar); }
+  .rail-empty { padding: 20px 24px; font-family: Arial, sans-serif; font-size: 12px; color: var(--text-muted); }
+
+  .month {
+    font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); padding: 12px 16px 4px 24px;
+  }
+  .titem { display: block; padding: 10px 16px 12px 30px; position: relative; cursor: pointer; text-decoration: none; }
+  .titem:hover, .titem.active { background: var(--surface-alt); }
+  .tline { position: absolute; left: 20px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .tnode { position: absolute; left: 16px; top: 15px; width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--surface); }
+  .ttitle { font-size: 13px; color: var(--text-primary); line-height: 1.4; }
+  .tmeta { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+  .treg { font-family: Arial, sans-serif; font-size: 10px; color: var(--text-secondary); }
+
+  .tbadge {
+    font-family: Arial, sans-serif; font-size: 9px; font-weight: 500; padding: 1px 5px;
+    border-radius: 2px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .badge-military    { background: #3a2320; color: #e0897e; }
+  .badge-economy     { background: #1f2e3d; color: #7fb0e0; }
+  .badge-geography   { background: #16342d; color: #5fd3bd; }
+  .badge-news        { background: #322813; color: #d8b45e; }
+  .badge-demographics { background: #322813; color: #d8b45e; }
+
+  #map { flex: 1; min-height: 0; position: relative; z-index: 1; background: var(--bg); }
+
+  /* Geo Radar toggle — pinned to the bottom of the rail (see JS below) */
   .radar-toggle-wrap { padding: 10px 16px; border-top: 1px solid var(--border-light); flex-shrink: 0; }
   .radar-toggle {
     display: flex; align-items: center; gap: 7px; cursor: pointer; user-select: none;
     font-family: Arial, sans-serif; font-size: 11px; color: var(--text-secondary);
   }
   .radar-toggle input[type="checkbox"] {
-    width: 12px; height: 12px; margin: 0; flex-shrink: 0;
-    accent-color: var(--accent); cursor: pointer;
+    width: 12px; height: 12px; margin: 0; flex-shrink: 0; accent-color: var(--accent); cursor: pointer;
   }
   .radar-toggle-hint {
     font-size: 9px; color: var(--text-muted); margin-left: auto;
@@ -46,145 +109,187 @@ mapbox: true
   .radar-toggle.is-unavailable { opacity: 0.5; cursor: default; }
   .radar-toggle.is-unavailable input[type="checkbox"] { cursor: not-allowed; }
 
-  .region-group { border-bottom: 1px solid var(--border-light); }
-  .region-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 11px 16px; cursor: pointer; user-select: none;
-    transition: background 0.15s;
+  /* ---- editorial landing (overlay) ---- */
+  .landing { position: absolute; inset: 0; background: var(--bg); overflow-y: auto; z-index: 20; }
+  .landing::-webkit-scrollbar { width: 8px; }
+  .landing::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 4px; }
+  .landing[hidden] { display: none; }
+
+  .land-inner { max-width: 1180px; margin: 0 auto; padding: 40px 40px 64px; display: flex; flex-direction: column; gap: 38px; }
+
+  .feat { display: flex; gap: 26px; }
+  .feat-text {
+    flex: 1.4; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 34px 36px; display: flex; flex-direction: column; justify-content: center; min-height: 260px;
   }
-  .region-header:hover { background: var(--bg); }
-  .region-left { display: flex; align-items: center; gap: 8px; }
-  .region-name { font-size: 11px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-family: Arial, sans-serif; }
-  .region-count { font-size: 10px; color: var(--text-muted); font-family: Arial, sans-serif; }
-  .region-chevron {
-    width: 0; height: 0; flex-shrink: 0;
-    border-left: 4px solid transparent; border-right: 4px solid transparent;
-    border-top: 5px solid var(--text-muted); transition: transform 0.2s;
+  .kicker { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .feat-title { font-size: 30px; line-height: 1.22; color: var(--text-primary); margin-bottom: 14px; max-width: 560px; }
+  .feat-desc { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.65; color: var(--text-body); max-width: 520px; }
+  .feat-meta { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+
+  .feat-map {
+    flex: 1; position: relative; background: #0d1420; border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; min-height: 260px; cursor: pointer;
   }
-  .region-chevron.open { transform: rotate(180deg); }
-  .region-stories { display: none; }
-  .region-stories.open { display: block; }
-
-  .story-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 10px 16px 10px 24px; text-decoration: none;
-    border-bottom: 1px solid var(--border-light); transition: background 0.15s;
+  .feat-map:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .feat-sphere {
+    position: absolute; left: 55%; top: 50%; transform: translate(-50%, -50%);
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 30%, #243450, #0f1826 60%, #0a1019);
+    box-shadow: inset -22px -22px 55px rgba(0, 0, 0, 0.55);
   }
-  .story-item:hover { background: var(--bg); }
-  .story-item.active { background: var(--bg); border-left: 2px solid var(--accent); padding-left: 22px; }
-  .item-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-  .item-body { flex: 1; min-width: 0; }
-  .item-title { font-size: 13px; color: var(--text-primary); line-height: 1.4; margin-bottom: 3px; }
-  .item-meta { display: flex; align-items: center; gap: 5px; }
-  .item-tag { font-size: 10px; color: var(--text-secondary); font-family: Arial, sans-serif; }
-  .item-type {
-    font-size: 9px; font-family: Arial, sans-serif; font-weight: 500;
-    padding: 1px 5px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.04em;
+  .feat-dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; }
+  .explore {
+    position: absolute; left: 18px; bottom: 16px; font-family: Arial, sans-serif; font-size: 12px;
+    letter-spacing: 0.04em; color: #e4e0da; background: rgba(20, 18, 16, 0.72);
+    padding: 8px 15px; border-radius: 22px; border: 1px solid #4a463f; transition: border-color 0.15s, color 0.15s;
   }
-  .type-news     { background: #fdf2d6; color: #8a6b20; }
-  .type-economy  { background: #dceaf6; color: #2a6aad; }
-  .type-geography { background: #d0f3ee; color: #1a8a75; }
-  .type-demographics { background: #fde8e6; color: #c0352a; }
-  .type-military { background: #fde8e6; color: #c0352a; }
+  .feat-map:hover .explore, .feat-map:focus-visible .explore { border-color: var(--accent); color: var(--accent); }
 
-  #map { flex: 1; height: 100%; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 12px; }
+  .sec-title { font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-primary); }
+  .sec-link { font-family: Arial, sans-serif; font-size: 11px; color: var(--text-secondary); cursor: pointer; white-space: nowrap; }
+  .sec-link:hover { color: var(--accent); }
 
-  #mobile-handle { display: none; }
-
-  @media (max-width: 768px) {
-    #body { flex-direction: column; }
-
-    #sidebar {
-      width: 100%; border-right: none; border-bottom: 1px solid var(--border);
-      max-height: 46px; flex-shrink: 0; overflow: hidden;
-      transition: max-height 0.25s ease;
-    }
-    #sidebar.expanded { max-height: 46dvh; overflow-y: auto; }
-
-    #mobile-handle {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 16px; height: 46px; flex-shrink: 0; cursor: pointer;
-      position: sticky; top: 0; background: var(--surface); z-index: 2;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .mobile-handle-left { display: flex; align-items: center; gap: 8px; }
-    .mobile-handle-chevron {
-      font-size: 10px; color: var(--text-muted); display: inline-block;
-      transition: transform 0.2s;
-    }
-    #sidebar.expanded .mobile-handle-chevron { transform: rotate(180deg); }
-    .mobile-handle-label {
-      font-size: 11px; font-weight: 500; color: var(--text-primary);
-      font-family: Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.07em;
-    }
-    .mobile-handle-count { font-size: 11px; color: var(--text-secondary); font-family: Arial, sans-serif; }
-    #mobile-search-toggle {
-      background: none; border: 1px solid var(--border); border-radius: 4px;
-      padding: 3px 9px; font-size: 13px; color: var(--text-secondary); cursor: pointer;
-      line-height: 1.5;
-    }
-    #mobile-search-toggle.active { border-color: var(--accent); color: var(--accent); }
-
-    #sidebar:not(.expanded) .search-wrap,
-    #sidebar:not(.expanded) .sidebar-meta,
-    #sidebar:not(.expanded) #story-list,
-    #sidebar:not(.expanded) .radar-toggle-wrap { display: none; }
-
-    #story-list { flex: none; }
-
-    #map { flex: 1; height: auto; }
+  .latest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .lcard {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px 20px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; display: block;
   }
+  .lcard:hover { border-color: var(--accent); }
+  .lcard-tag { font-family: Arial, sans-serif; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); margin-bottom: 9px; }
+  .lcard-title { font-size: 15px; line-height: 1.35; color: var(--text-primary); margin-bottom: 10px; }
+  .lcard-date { font-family: Arial, sans-serif; font-size: 11px; color: var(--text-secondary); }
 
+  .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .tile {
+    background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px;
+    padding: 17px 18px; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .tile:hover { border-color: var(--accent); background: var(--surface); }
+  .tile-name { font-family: Georgia, serif; font-size: 16px; color: var(--text-primary); }
+  .tile-count { font-family: Arial, sans-serif; font-size: 11px; color: var(--text-secondary); margin-top: 6px; }
+
+  /* ---- Mapbox popup ---- */
   .mapboxgl-popup-content {
-    background: var(--surface) !important; border: 1px solid var(--border);
-    border-radius: 8px; padding: 0; font-family: Georgia, serif;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    background: var(--surface) !important; border: 1px solid var(--border); border-radius: 8px;
+    padding: 0; font-family: Georgia, serif; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     width: 280px; max-width: calc(100vw - 32px); overflow: hidden;
   }
-  .mapboxgl-popup-close-button { color: var(--text-muted); font-size: 18px; padding: 6px 10px; background: none; }
-  .mapboxgl-popup-close-button:hover { color: var(--text-secondary); background: none; }
+  .mapboxgl-popup-close-button { color: var(--text-secondary); font-size: 18px; padding: 6px 10px; background: none; }
+  .mapboxgl-popup-close-button:hover { color: var(--text-primary); background: none; }
   .mapboxgl-popup-tip { border-top-color: var(--border) !important; }
   .popup-inner { padding: 16px 18px 18px; }
-  .popup-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 7px; font-family: Arial, sans-serif; }
+  .popup-tag { font-family: Arial, sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 7px; }
   .popup-title { font-size: 15px; line-height: 1.4; color: var(--text-primary); margin-bottom: 10px; }
-  .popup-desc { font-size: 12px; line-height: 1.65; color: var(--text-body); margin-bottom: 16px; font-family: Arial, sans-serif; }
+  .popup-desc { font-family: Arial, sans-serif; font-size: 12px; line-height: 1.65; color: var(--text-body); margin-bottom: 16px; }
   .popup-link {
-    display: block; text-align: center; font-size: 12px; color: #1a1816;
-    background: #e8c87a; padding: 9px 14px; border-radius: 4px;
-    text-decoration: none; font-family: Arial, sans-serif;
+    display: block; text-align: center; font-family: Arial, sans-serif; font-size: 12px; color: #1a1816;
+    background: #e8c87a; padding: 9px 14px; border-radius: 4px; text-decoration: none;
     letter-spacing: 0.03em; transition: background 0.15s;
   }
   .popup-link:hover { background: #f0d88a; }
   .radar-meta { display: block; font-size: 11px; color: var(--text-secondary); font-family: Arial, sans-serif; margin-top: 4px; }
   .radar-disclaimer { display: block; font-size: 9px; color: var(--text-muted); font-family: Arial, sans-serif; margin-top: 8px; letter-spacing: 0.02em; }
+
+  /* ---- responsive ---- */
+  @media (max-width: 900px) {
+    .latest-grid { grid-template-columns: 1fr; }
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+    .feat { flex-direction: column; }
+    .land-inner { padding: 28px 20px 56px; gap: 30px; }
+    .feat-title { font-size: 25px; }
+  }
+
+  @media (max-width: 768px) {
+    .mapbody { flex-direction: column; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 42dvh; }
+    #map { flex: 1; min-height: 240px; }
+  }
 </style>
 
-<div id="body">
-  <div id="sidebar">
-    <div id="mobile-handle">
-      <div class="mobile-handle-left">
-        <span class="mobile-handle-chevron">▾</span>
-        <span class="mobile-handle-label">Stories</span>
-        <span class="mobile-handle-count" id="mobile-handle-count"></span>
+{% set sorted = stories | sort(true, false, "order") %}
+{% set featured = sorted[0] %}
+{% set byCont = stories | groupby("continent") %}
+
+<div class="stage" id="stage" data-view="landing">
+  <!-- ===== interactive map view (base layer) ===== -->
+  <div class="mapwrap">
+    <div class="switch">
+      <span class="homebtn" id="home-btn" role="button" tabindex="0">← Home</span>
+      <div class="pills" id="pills"></div>
+      <span class="sort">Sorted: Newest first</span>
+    </div>
+    <div class="mapbody">
+      <div class="rail">
+        <div class="searchbox-wrap">
+          <input type="text" id="rail-search" class="searchbox" placeholder="Search stories…" autocomplete="off" />
+        </div>
+        <div class="timeline" id="timeline"></div>
+        <div class="radar-toggle-wrap">
+          <label class="radar-toggle" id="radar-toggle-label" title="Automated GDELT signals — unverified">
+            <input type="checkbox" id="radar-toggle-input" />
+            <span>Geo Radar — live event signals · last 24h</span>
+            <span class="radar-toggle-hint" id="radar-toggle-hint"></span>
+          </label>
+        </div>
       </div>
-      <button id="mobile-search-toggle" type="button" aria-label="Toggle search">🔍</button>
-    </div>
-    <div class="search-wrap">
-      <input type="text" id="search" placeholder="Search stories..." autocomplete="off" />
-    </div>
-    <div class="sidebar-meta">
-      <div class="sidebar-count" id="story-count"></div>
-    </div>
-    <div id="story-list"></div>
-    <div class="radar-toggle-wrap">
-      <label class="radar-toggle" id="radar-toggle-label" title="Automated GDELT signals — unverified">
-        <input type="checkbox" id="radar-toggle-input" />
-        <span>Geo Radar — live event signals · last 24h</span>
-        <span class="radar-toggle-hint" id="radar-toggle-hint"></span>
-      </label>
+      <div id="map"></div>
     </div>
   </div>
-  <div id="map"></div>
+
+  <!-- ===== editorial landing (overlay) ===== -->
+  <div class="landing" id="landing">
+    <div class="land-inner">
+      <div class="feat">
+        <div class="feat-text">
+          <div class="kicker">Featured · {{ featured.date }}</div>
+          <div class="feat-title">{{ featured.title }}</div>
+          <div class="feat-desc">{{ featured.description }}</div>
+          <div class="feat-meta">
+            <span class="treg">{{ featured.tag }}</span>
+            <span class="tbadge badge-{{ featured.type }}">{{ featured.type }}</span>
+          </div>
+        </div>
+        <div class="feat-map" id="feat-map" role="button" tabindex="0" aria-label="Explore the interactive map">
+          <div class="feat-sphere"></div>
+          <span class="feat-dot" style="left:48%;top:42%;background:#e05a4e;box-shadow:0 0 0 5px rgba(224,90,78,.2);"></span>
+          <span class="feat-dot" style="left:54%;top:48%;background:#e8c87a;box-shadow:0 0 0 5px rgba(232,200,122,.2);"></span>
+          <span class="feat-dot" style="left:44%;top:52%;background:#3ecfb2;box-shadow:0 0 0 5px rgba(62,207,178,.2);"></span>
+          <span class="explore">Explore the interactive map →</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-head">
+          <span class="sec-title">Latest</span>
+          <span class="sec-link" data-open-all role="button" tabindex="0">View all {{ stories.length }} on the map →</span>
+        </div>
+        <div class="latest-grid">
+          {% for s in sorted %}{% if loop.index0 >= 1 and loop.index0 <= 3 %}
+          <a class="lcard" href="{{ s.url }}" data-open-all>
+            <div class="lcard-tag">{{ s.tag }}</div>
+            <div class="lcard-title">{{ s.title }}</div>
+            <div class="lcard-date">{{ s.date }}</div>
+          </a>
+          {% endif %}{% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-head"><span class="sec-title">Browse the archive by continent</span></div>
+        <div class="tiles">
+          {% for c in ["Middle East", "Americas", "Asia", "Europe", "Africa"] %}
+          {% set count = (byCont[c] | default([])) | length %}
+          <div class="tile" data-continent="{{ c }}" role="button" tabindex="0">
+            <div class="tile-name">{{ c }}</div>
+            <div class="tile-count">{{ count }} stor{{ "y" if count == 1 else "ies" }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -199,8 +304,18 @@ mapbox: true
     blue: '#5b9bd5'
   };
 
-  const homeCenter = [20, 25];
-  const homeZoom   = 2.2;
+  // Per-continent globe framing for the switcher pills + tiles.
+  const continentMeta = {
+    'all':         { center: [20, 25],  zoom: 2.2 },
+    'Middle East': { center: [48, 27],  zoom: 3.6 },
+    'Americas':    { center: [-72, 12], zoom: 2.7 },
+    'Asia':        { center: [118, 26], zoom: 3.0 },
+    'Europe':      { center: [20, 54],  zoom: 3.3 },
+    'Africa':      { center: [22, 8],   zoom: 2.8 }
+  };
+  const continentOrder = ['Middle East', 'Americas', 'Asia', 'Europe', 'Africa'];
+  const homeCenter = continentMeta.all.center;
+  const homeZoom   = continentMeta.all.zoom;
 
   const isDarkMode = () => document.documentElement.getAttribute('data-theme') === 'dark';
 
@@ -226,19 +341,266 @@ mapbox: true
   map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
+  const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '300px', offset: 14 });
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, ch => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+  }
+
+  // ── View + continent state ───────────────────────────────────
+  const stageEl    = document.getElementById('stage');
+  const landingEl  = document.getElementById('landing');
+  const pillsEl     = document.getElementById('pills');
+  const timelineEl  = document.getElementById('timeline');
+  const railSearch  = document.getElementById('rail-search');
+
+  let view = 'landing';       // 'landing' | 'map'
+  let continent = 'all';       // 'all' | one of continentOrder
+
+  function setView(v) {
+    view = v;
+    stageEl.setAttribute('data-view', v);
+    landingEl.hidden = (v !== 'landing');
+    if (v === 'map') {
+      // The map is always mounted behind the overlay, but resize defensively
+      // in case the viewport changed while the landing was showing.
+      setTimeout(() => map.resize(), 50);
+    }
+  }
+
+  function openMap(toContinent) {
+    setContinent(toContinent || 'all', false);
+    setView('map');
+    applyContinent(true);
+  }
+
+  function goHome() {
+    setView('landing');
+  }
+
+  function setContinent(c, fly) {
+    continent = c;
+    updatePillStates();
+    buildRail(railSearch.value);
+    if (fly) applyContinent(true);
+  }
+
+  function applyContinent(fly) {
+    if (map.getLayer('story-dots')) {
+      const filter = continent === 'all' ? null : ['==', ['get', 'continent'], continent];
+      map.setFilter('story-dots', filter);
+      map.setFilter('story-glow', filter);
+    }
+    if (fly) flyToContinent();
+  }
+
+  function flyToContinent() {
+    const m = continentMeta[continent] || continentMeta.all;
+    map.flyTo({ center: m.center, zoom: m.zoom, duration: 900, essential: true });
+  }
+
+  function flyToStory(s) {
+    map.flyTo({ center: s.coordinates, zoom: 5, duration: 1100, essential: true });
+  }
+
+  function showPopup(s) {
+    const coords = s.coordinates.slice();
+    map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 4.5), duration: 900, essential: true });
+    map.once('moveend', () => {
+      popup.setLngLat(coords).setHTML(`
+        <div class="popup-inner">
+          <div class="popup-tag">${escapeHtml(s.tag)}</div>
+          <div class="popup-title">${escapeHtml(s.title)}</div>
+          <div class="popup-desc">${escapeHtml(s.description)}</div>
+          <a class="popup-link" href="${escapeHtml(s.url)}">Open the full story →</a>
+        </div>
+      `).addTo(map);
+    });
+  }
+
+  // ── Continent switcher pills ─────────────────────────────────
+  function continentCounts() {
+    const counts = {};
+    stories.forEach(s => { counts[s.continent] = (counts[s.continent] || 0) + 1; });
+    return counts;
+  }
+
+  function buildPills() {
+    const counts = continentCounts();
+    const defs = [{ name: 'all', label: 'All · ' + stories.length }]
+      .concat(continentOrder.map(n => ({ name: n, label: n + ' · ' + (counts[n] || 0) })));
+    pillsEl.innerHTML = '';
+    defs.forEach(def => {
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'pill' + (continent === def.name ? ' active' : '');
+      el.dataset.continent = def.name;
+      el.textContent = def.label;
+      el.addEventListener('click', () => setContinent(def.name, true));
+      pillsEl.appendChild(el);
+    });
+  }
+
+  function updatePillStates() {
+    pillsEl.querySelectorAll('.pill').forEach(el => {
+      el.classList.toggle('active', el.dataset.continent === continent);
+    });
+  }
+
+  // ── Story rail (reverse-chron, grouped by month) ─────────────
+  function buildRail(filter = '') {
+    const q = (filter || '').toLowerCase().trim();
+    const sorted = stories.slice().sort((a, b) => (b.order || 0) - (a.order || 0));
+    const filtered = sorted.filter(s => {
+      if (continent !== 'all' && s.continent !== continent) return false;
+      if (!q) return true;
+      return [s.title, s.tag, s.type, s.continent, s.description]
+        .some(v => (v || '').toLowerCase().includes(q));
+    });
+
+    timelineEl.innerHTML = '';
+    if (!filtered.length) {
+      const empty = document.createElement('div');
+      empty.className = 'rail-empty';
+      empty.textContent = q ? 'No stories match your search.' : 'No stories in this region yet.';
+      timelineEl.appendChild(empty);
+      return;
+    }
+
+    // Group consecutive items by their month label.
+    const groups = [];
+    filtered.forEach(s => {
+      let g = groups.length && groups[groups.length - 1].label === s.date
+        ? groups[groups.length - 1] : null;
+      if (!g) { g = { label: s.date, items: [] }; groups.push(g); }
+      g.items.push(s);
+    });
+
+    groups.forEach(group => {
+      const monthEl = document.createElement('div');
+      monthEl.className = 'month';
+      monthEl.textContent = group.label || '';
+      timelineEl.appendChild(monthEl);
+
+      group.items.forEach(s => {
+        const color = markerColors[s.color] || markerColors.gold;
+        const type = s.type || 'news';
+        const item = document.createElement('a');
+        item.className = 'titem';
+        item.href = s.url;
+        item.innerHTML = `
+          <div class="tline"></div>
+          <span class="tnode" style="background:${color}"></span>
+          <div class="ttitle">${escapeHtml(s.title)}</div>
+          <div class="tmeta">
+            <span class="treg">${escapeHtml(s.continent)}</span>
+            <span class="tbadge badge-${escapeHtml(type)}">${escapeHtml(type)}</span>
+          </div>
+        `;
+        item.addEventListener('mouseenter', () => { item.classList.add('active'); flyToStory(s); });
+        item.addEventListener('mouseleave', () => { item.classList.remove('active'); flyToContinent(); });
+        item.addEventListener('click', (e) => { e.preventDefault(); showPopup(s); });
+        timelineEl.appendChild(item);
+      });
+    });
+  }
+
+  // ── Map data + interactions ──────────────────────────────────
+  map.on('style.load', () => {
+    map.setFog(isDarkMode() ? fogDark : fogLight);
+
+    const geojson = {
+      type: 'FeatureCollection',
+      features: stories.map((s, i) => ({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: s.coordinates },
+        properties: { index: i, continent: s.continent, color: markerColors[s.color] || markerColors.gold }
+      }))
+    };
+
+    map.addSource('stories', { type: 'geojson', data: geojson, generateId: true });
+
+    map.addLayer({
+      id: 'story-glow', type: 'circle', source: 'stories',
+      paint: {
+        'circle-radius': ['case', ['boolean', ['feature-state', 'hover'], false], 18, 14],
+        'circle-color': ['get', 'color'],
+        'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.22, 0.15]
+      }
+    });
+
+    map.addLayer({
+      id: 'story-dots', type: 'circle', source: 'stories',
+      paint: {
+        'circle-radius': ['case', ['boolean', ['feature-state', 'hover'], false], 10, 7],
+        'circle-color': ['get', 'color'],
+        'circle-opacity': 0.9, 'circle-stroke-width': 1.5,
+        'circle-stroke-color': 'rgba(255,255,255,0.12)'
+      }
+    });
+
+    let hoveredId = null;
+    map.on('mouseenter', 'story-dots', (e) => {
+      map.getCanvas().style.cursor = 'pointer';
+      if (hoveredId !== null) map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: false });
+      hoveredId = e.features[0].id;
+      map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: true });
+    });
+    map.on('mouseleave', 'story-dots', () => {
+      map.getCanvas().style.cursor = '';
+      if (hoveredId !== null) map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: false });
+      hoveredId = null;
+    });
+
+    map.on('click', 'story-dots', (e) => {
+      showPopup(stories[e.features[0].properties.index]);
+    });
+
+    // Re-apply the active continent filter/framing (a theme switch re-runs
+    // style.load and wipes custom sources/layers).
+    applyContinent(false);
+    if (radarData) ensureRadarLayer();
+  });
+
+  document.addEventListener('themechange', (e) => {
+    map.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+  });
+
+  // ── Wire landing + navigation ────────────────────────────────
+  buildPills();
+  buildRail();
+
+  document.getElementById('feat-map').addEventListener('click', () => openMap('all'));
+  document.querySelectorAll('[data-open-all]').forEach(el => {
+    el.addEventListener('click', (e) => { e.preventDefault(); openMap('all'); });
+  });
+  document.querySelectorAll('.tile[data-continent]').forEach(el => {
+    el.addEventListener('click', () => openMap(el.dataset.continent));
+  });
+
+  document.getElementById('home-btn').addEventListener('click', goHome);
+  // The shared header brand doubles as "return to landing" on the homepage.
+  const brand = document.querySelector('.site-name');
+  if (brand) { brand.style.cursor = 'pointer'; brand.addEventListener('click', goHome); }
+
+  // Keyboard activation for the role="button" landing elements.
+  [document.getElementById('feat-map'), document.getElementById('home-btn')]
+    .concat(Array.from(document.querySelectorAll('[data-open-all][role="button"], .tile[data-continent]')))
+    .forEach(el => {
+      if (!el) return;
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); }
+      });
+    });
+
+  railSearch.addEventListener('input', e => buildRail(e.target.value));
+
   // ── Geo Radar (optional live GDELT signals, /leads/candidates.geojson) ──
   let radarData = null;
   let radarEnabled = false;
 
-  function escRadar(s) {
-    if (s == null) return '';
-    return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-  }
-
-  // The geojson the GDELT pipeline writes doesn't currently include a
-  // "category" property — infer conflict vs. cooperation defensively from
-  // the synopsis text (which always says "in conflict" or "engaging in
-  // cooperation"), falling back to a neutral color if neither is found.
   function deriveRadarCategory(p) {
     if (!p) return null;
     const raw = (p.category || '').toString().toLowerCase();
@@ -256,8 +618,8 @@ mapbox: true
       : 'Geo Radar signal';
     const title = p.headline || p.title || 'Unlabeled event';
     const lines = [];
-    if (p.synopsis) lines.push(escRadar(p.synopsis));
-    if (p.actors) lines.push(`<span class="radar-meta">${escRadar(p.actors)}</span>`);
+    if (p.synopsis) lines.push(escapeHtml(p.synopsis));
+    if (p.actors) lines.push(`<span class="radar-meta">${escapeHtml(p.actors)}</span>`);
 
     const stats = [];
     if (typeof p.mentions === 'number') stats.push(`${p.mentions} mentions`);
@@ -270,13 +632,13 @@ mapbox: true
     lines.push('<span class="radar-disclaimer">Automated GDELT signals — unverified</span>');
 
     const link = sources[0]
-      ? `<a class="popup-link" href="${escRadar(sources[0])}" target="_blank" rel="noopener">View source →</a>`
+      ? `<a class="popup-link" href="${escapeHtml(sources[0])}" target="_blank" rel="noopener">View source →</a>`
       : '';
 
     return `
       <div class="popup-inner">
-        <div class="popup-tag">${escRadar(tag)}</div>
-        <div class="popup-title">${escRadar(title)}</div>
+        <div class="popup-tag">${escapeHtml(tag)}</div>
+        <div class="popup-title">${escapeHtml(title)}</div>
         <div class="popup-desc">${lines.join('<br>')}</div>
         ${link}
       </div>
@@ -321,11 +683,6 @@ mapbox: true
   const radarLabel = document.getElementById('radar-toggle-label');
   const radarHint  = document.getElementById('radar-toggle-hint');
 
-  // Probe for the feed once, as soon as the page loads (it's a small daily
-  // file). This lets the toggle disable itself proactively if the GDELT
-  // pipeline hasn't produced a file yet, rather than only failing after the
-  // visitor tries to turn it on. The source/layer itself is still only
-  // added to the map lazily, the first time the toggle is switched on.
   const radarFetch = fetch('/leads/candidates.geojson')
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
@@ -355,202 +712,9 @@ mapbox: true
     }
     radarEnabled = true;
     radarFetch.then(() => {
-      if (!radarEnabled) return; // toggled off again before the fetch resolved
+      if (!radarEnabled) return;
       ensureRadarLayer();
       if (map.getLayer('geo-radar-dots')) map.setLayoutProperty('geo-radar-dots', 'visibility', 'visible');
     }).catch(() => { radarEnabled = false; });
-  });
-
-  map.on('style.load', () => {
-    map.setFog(isDarkMode() ? fogDark : fogLight);
-
-    const geojson = {
-      type: 'FeatureCollection',
-      features: stories.map((s, i) => ({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: s.coordinates },
-        properties: { index: i, color: markerColors[s.color] || markerColors.gold }
-      }))
-    };
-
-    map.addSource('stories', { type: 'geojson', data: geojson, generateId: true });
-
-    map.addLayer({
-      id: 'story-glow', type: 'circle', source: 'stories',
-      paint: {
-        'circle-radius': ['case', ['boolean', ['feature-state', 'hover'], false], 18, 14],
-        'circle-color': ['get', 'color'],
-        'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.22, 0.15]
-      }
-    });
-
-    map.addLayer({
-      id: 'story-dots', type: 'circle', source: 'stories',
-      paint: {
-        'circle-radius': ['case', ['boolean', ['feature-state', 'hover'], false], 10, 7],
-        'circle-color': ['get', 'color'],
-        'circle-opacity': 0.9, 'circle-stroke-width': 1.5,
-        'circle-stroke-color': 'rgba(255,255,255,0.12)'
-      }
-    });
-
-    let hoveredId = null;
-    map.on('mouseenter', 'story-dots', (e) => {
-      map.getCanvas().style.cursor = 'pointer';
-      if (hoveredId !== null) map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: false });
-      hoveredId = e.features[0].id;
-      map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: true });
-    });
-    map.on('mouseleave', 'story-dots', () => {
-      map.getCanvas().style.cursor = '';
-      if (hoveredId !== null) map.setFeatureState({ source: 'stories', id: hoveredId }, { hover: false });
-      hoveredId = null;
-    });
-
-    const popup = new mapboxgl.Popup({ closeButton: true, maxWidth: '300px', offset: 14 });
-
-    map.on('click', 'story-dots', (e) => {
-      const story = stories[e.features[0].properties.index];
-      const coords = e.features[0].geometry.coordinates.slice();
-      map.flyTo({ center: coords, zoom: 5, duration: 1000, essential: true });
-      map.once('moveend', () => {
-        popup.setLngLat(coords).setHTML(`
-          <div class="popup-inner">
-            <div class="popup-tag">${story.tag}</div>
-            <div class="popup-title">${story.title}</div>
-            <div class="popup-desc">${story.description}</div>
-            <a class="popup-link" href="${story.url}">Open the full story →</a>
-          </div>
-        `).addTo(map);
-      });
-    });
-
-    // Theme/style switches (see themechange listener below) wipe custom
-    // sources & layers, so re-add Geo Radar if it was already toggled on.
-    if (radarData) ensureRadarLayer();
-  });
-
-  document.addEventListener('themechange', (e) => {
-    map.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
-  });
-
-  // ── Sidebar ──────────────────────────────────────────────────
-  const regions = {};
-  stories.forEach((s, i) => {
-    if (!regions[s.region]) regions[s.region] = [];
-    regions[s.region].push({ ...s, index: i });
-  });
-  const sortedRegions = Object.keys(regions).sort();
-
-  const storyList  = document.getElementById('story-list');
-  const storyCount = document.getElementById('story-count');
-  const searchInput = document.getElementById('search');
-  const mobileHandleCount = document.getElementById('mobile-handle-count');
-  let flyBackTimer = null;
-
-  function buildSidebar(filter = '') {
-    storyList.innerHTML = '';
-    const q = filter.toLowerCase().trim();
-    let total = 0;
-
-    sortedRegions.forEach(regionName => {
-      const regionStories = regions[regionName].filter(s =>
-        !q || s.title.toLowerCase().includes(q) ||
-        s.tag.toLowerCase().includes(q) ||
-        s.type.toLowerCase().includes(q) ||
-        s.region.toLowerCase().includes(q)
-      );
-      if (!regionStories.length) return;
-      total += regionStories.length;
-
-      const group = document.createElement('div');
-      group.className = 'region-group';
-
-      const header = document.createElement('div');
-      header.className = 'region-header';
-      header.innerHTML = `
-        <div class="region-left">
-          <span class="region-name">${regionName}</span>
-          <span class="region-count">${regionStories.length}</span>
-        </div>
-        <div class="region-chevron open"></div>
-      `;
-
-      const storiesEl = document.createElement('div');
-      storiesEl.className = 'region-stories open';
-
-      regionStories.forEach(story => {
-        const color = markerColors[story.color] || markerColors.gold;
-        const item = document.createElement('a');
-        item.className = 'story-item';
-        item.href = story.url;
-        item.innerHTML = `
-          <div class="item-dot" style="background:${color}"></div>
-          <div class="item-body">
-            <div class="item-title">${story.title}</div>
-            <div class="item-meta">
-              <span class="item-tag">${story.tag}</span>
-              <span class="item-type type-${story.type}">${story.type}</span>
-            </div>
-          </div>
-        `;
-
-        item.addEventListener('mouseenter', () => {
-          item.classList.add('active');
-          if (flyBackTimer) clearTimeout(flyBackTimer);
-          map.flyTo({ center: story.coordinates, zoom: 5, duration: 1200, essential: true });
-        });
-        item.addEventListener('mouseleave', () => {
-          item.classList.remove('active');
-          flyBackTimer = setTimeout(() => {
-            map.flyTo({ center: homeCenter, zoom: homeZoom, duration: 1000, essential: true });
-          }, 300);
-        });
-
-        storiesEl.appendChild(item);
-      });
-
-      header.addEventListener('click', () => {
-        const isOpen = storiesEl.classList.contains('open');
-        storiesEl.classList.toggle('open', !isOpen);
-        header.querySelector('.region-chevron').classList.toggle('open', !isOpen);
-      });
-
-      group.appendChild(header);
-      group.appendChild(storiesEl);
-      storyList.appendChild(group);
-    });
-
-    storyCount.innerHTML = `<span>${total}</span> stor${total !== 1 ? 'ies' : 'y'} on the map`;
-    mobileHandleCount.textContent = total;
-  }
-
-  buildSidebar();
-  searchInput.addEventListener('input', e => buildSidebar(e.target.value));
-
-  // ── Mobile collapsible drawer ────────────────────────────────
-  const sidebarEl = document.getElementById('sidebar');
-  const mobileHandle = document.getElementById('mobile-handle');
-  const mobileSearchToggle = document.getElementById('mobile-search-toggle');
-
-  function setSidebarExpanded(expanded) {
-    sidebarEl.classList.toggle('expanded', expanded);
-    mobileSearchToggle.classList.toggle('active', expanded);
-  }
-
-  mobileHandle.addEventListener('click', (e) => {
-    if (e.target.closest('#mobile-search-toggle')) return;
-    setSidebarExpanded(!sidebarEl.classList.contains('expanded'));
-  });
-
-  mobileSearchToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const wasExpanded = sidebarEl.classList.contains('expanded');
-    setSidebarExpanded(!wasExpanded);
-    if (!wasExpanded) requestAnimationFrame(() => searchInput.focus());
-  });
-
-  sidebarEl.addEventListener('transitionend', (e) => {
-    if (e.propertyName === 'max-height') map.resize();
   });
 </script>
