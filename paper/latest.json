@@ -1,34 +1,34 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-16",
+  "date": "2026-07-17",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 61,
-    "hi_f": 70,
-    "lo_f": 58,
-    "precip_pct": 37,
-    "desc": "light rain"
+    "now_f": 58,
+    "hi_f": 73,
+    "lo_f": 56,
+    "precip_pct": 2,
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 61,
-      "hi_f": 70,
-      "lo_f": 58,
-      "precip_pct": 37,
-      "desc": "light rain"
+      "now_f": 58,
+      "hi_f": 73,
+      "lo_f": 56,
+      "precip_pct": 2,
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 59,
-      "hi_f": 73,
-      "lo_f": 55,
-      "precip_pct": 20,
-      "desc": "overcast"
+      "now_f": 52,
+      "hi_f": 80,
+      "lo_f": 48,
+      "precip_pct": 0,
+      "desc": "clear"
     }
   ],
-  "story_count": 71,
-  "score_count": 1,
+  "story_count": 73,
+  "score_count": 4,
   "top": [
     {
       "section": "U.S. National",
@@ -37,27 +37,27 @@
     },
     {
       "section": "World",
-      "title": "World Cup: Why is there a third-place playoff between France and England?",
+      "title": "Uganda school bus crash kills 20 children and 1 adult",
       "source": "aljazeera.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "US expands strikes into northern Iran and disables ship trying to run blockade",
-      "source": "opb.org"
+      "title": "Social casino list: 5 sites worth your time this weekend",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Truth Social launches service to give Wall Street traders an edge with real-time service",
+      "title": "Apple dethrones Nvidia as world's most valuable company, ending the chipmaker's long run at the top",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Private schools offer 41% more tree shade than state schools in England",
+      "title": "Biodiversity fears as human-bred hybrid fish integrate into Philippines lake",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "4 Forgotten Frontier Towns Most People Have Never Heard Of",
+      "title": "The 2,000-Year-Old+ Story Behind the Word \"Odyssey\"",
       "source": "mentalfloss.com"
     }
   ]
