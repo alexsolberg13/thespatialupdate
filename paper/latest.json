@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-17",
+  "date": "2026-07-18",
   "weather": {
     "name": "Port Orchard",
     "now_f": 58,
-    "hi_f": 73,
+    "hi_f": 76,
     "lo_f": 56,
-    "precip_pct": 2,
-    "desc": "overcast"
+    "precip_pct": 1,
+    "desc": "fog"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
       "now_f": 58,
-      "hi_f": 73,
+      "hi_f": 76,
       "lo_f": 56,
-      "precip_pct": 2,
-      "desc": "overcast"
+      "precip_pct": 1,
+      "desc": "fog"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 52,
-      "hi_f": 80,
-      "lo_f": 48,
+      "now_f": 55,
+      "hi_f": 82,
+      "lo_f": 52,
       "precip_pct": 0,
       "desc": "clear"
     }
   ],
-  "story_count": 73,
-  "score_count": 4,
+  "story_count": 74,
+  "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Here\u2019s the latest.",
+      "title": "These 16 Democrats Voted to Stop Israel Aid. AIPAC Took Action.",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Uganda school bus crash kills 20 children and 1 adult",
-      "source": "aljazeera.com"
+      "title": "Why data may become China\u2019s most durable advantage in the AI race",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Social casino list: 5 sites worth your time this weekend",
+      "title": "Liz Weston: We\u2019d like to avoid leaving a \u2018large tax bomb\u2019 to our kids when we pass. What\u2019s the best route?",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Apple dethrones Nvidia as world's most valuable company, ending the chipmaker's long run at the top",
+      "title": "U.S. military says it has completed the latest round of strikes against Iran, amid more disruptions to shipping",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Biodiversity fears as human-bred hybrid fish integrate into Philippines lake",
-      "source": "theguardian.com"
+      "title": "Popular sugar substitutes linked to faster brain aging",
+      "source": "sciencedaily.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "The 2,000-Year-Old+ Story Behind the Word \"Odyssey\"",
+      "title": "4 Ways Ancient Greece Is Misrepresented in Movies",
       "source": "mentalfloss.com"
     }
   ]
