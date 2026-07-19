@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-18",
+  "date": "2026-07-19",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 58,
-    "hi_f": 76,
-    "lo_f": 56,
-    "precip_pct": 1,
-    "desc": "fog"
+    "now_f": 56,
+    "hi_f": 77,
+    "lo_f": 54,
+    "precip_pct": 0,
+    "desc": "mostly clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 58,
-      "hi_f": 76,
-      "lo_f": 56,
-      "precip_pct": 1,
-      "desc": "fog"
+      "now_f": 56,
+      "hi_f": 77,
+      "lo_f": 54,
+      "precip_pct": 0,
+      "desc": "mostly clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 55,
-      "hi_f": 82,
-      "lo_f": 52,
+      "now_f": 58,
+      "hi_f": 85,
+      "lo_f": 54,
       "precip_pct": 0,
-      "desc": "clear"
+      "desc": "overcast"
     }
   ],
   "story_count": 74,
-  "score_count": 6,
+  "score_count": 7,
   "top": [
     {
       "section": "U.S. National",
-      "title": "These 16 Democrats Voted to Stop Israel Aid. AIPAC Took Action.",
+      "title": "S\u00e1nchez will attend the World Cup final, and so will his vocal critic, Trump.",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Why data may become China\u2019s most durable advantage in the AI race",
+      "title": "Fewer opportunities, less passion, no clue? How the US\u2019 China expertise is fading",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Liz Weston: We\u2019d like to avoid leaving a \u2018large tax bomb\u2019 to our kids when we pass. What\u2019s the best route?",
+      "title": "Oregon\u2019s outdoor industry is a smaller part of the economy than in other western states",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "U.S. military says it has completed the latest round of strikes against Iran, amid more disruptions to shipping",
+      "title": "AI may make you 'boring' at work, Columbia Business School professor says: How it can hurt your career",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Popular sugar substitutes linked to faster brain aging",
-      "source": "sciencedaily.com"
+      "title": "Majority of US voters link extreme weather to climate crisis, study finds",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "4 Ways Ancient Greece Is Misrepresented in Movies",
+      "title": "5 Timeless Historical Fiction Books to Read After the \u2018Odyssey\u2019",
       "source": "mentalfloss.com"
     }
   ]
