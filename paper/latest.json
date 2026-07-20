@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-19",
+  "date": "2026-07-20",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 56,
-    "hi_f": 77,
-    "lo_f": 54,
-    "precip_pct": 0,
-    "desc": "mostly clear"
+    "now_f": 64,
+    "hi_f": 88,
+    "lo_f": 55,
+    "precip_pct": 1,
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 56,
-      "hi_f": 77,
-      "lo_f": 54,
-      "precip_pct": 0,
-      "desc": "mostly clear"
+      "now_f": 64,
+      "hi_f": 88,
+      "lo_f": 55,
+      "precip_pct": 1,
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 58,
-      "hi_f": 85,
-      "lo_f": 54,
-      "precip_pct": 0,
+      "now_f": 65,
+      "hi_f": 82,
+      "lo_f": 60,
+      "precip_pct": 6,
       "desc": "overcast"
     }
   ],
   "story_count": 74,
-  "score_count": 7,
+  "score_count": 8,
   "top": [
     {
       "section": "U.S. National",
-      "title": "S\u00e1nchez will attend the World Cup final, and so will his vocal critic, Trump.",
+      "title": "Texas Book List: See What Students Will Be Required to Read",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Fewer opportunities, less passion, no clue? How the US\u2019 China expertise is fading",
-      "source": "scmp.com"
+      "title": "Andy Burnham pledges end to political instability as he becomes UK PM",
+      "source": "aljazeera.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Oregon\u2019s outdoor industry is a smaller part of the economy than in other western states",
+      "title": "Hunter Biden reveals \u2018single greatest mistake\u2019 of his father\u2019s presidency: \u2018I don\u2019t get it\u2019",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "AI may make you 'boring' at work, Columbia Business School professor says: How it can hurt your career",
-      "source": "cnbc.com"
+      "title": "Dr. Jill Lepore on why AI backlash is vital for the future",
+      "source": "theverge.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Majority of US voters link extreme weather to climate crisis, study finds",
+      "title": "Big Bear\u2019s missing bald eagle believed to have been found alive but injured",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "5 Timeless Historical Fiction Books to Read After the \u2018Odyssey\u2019",
+      "title": "Why Do Judges and Barristers Wear Wigs in Britain?",
       "source": "mentalfloss.com"
     }
   ]
