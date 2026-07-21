@@ -1,29 +1,29 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-20",
+  "date": "2026-07-21",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 64,
-    "hi_f": 88,
-    "lo_f": 55,
-    "precip_pct": 1,
+    "now_f": 67,
+    "hi_f": 94,
+    "lo_f": 61,
+    "precip_pct": 2,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 64,
-      "hi_f": 88,
-      "lo_f": 55,
-      "precip_pct": 1,
+      "now_f": 67,
+      "hi_f": 94,
+      "lo_f": 61,
+      "precip_pct": 2,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 65,
-      "hi_f": 82,
-      "lo_f": 60,
-      "precip_pct": 6,
+      "now_f": 68,
+      "hi_f": 97,
+      "lo_f": 62,
+      "precip_pct": 4,
       "desc": "overcast"
     }
   ],
@@ -32,33 +32,33 @@
   "top": [
     {
       "section": "U.S. National",
-      "title": "Texas Book List: See What Students Will Be Required to Read",
+      "title": "Democrats\u2019 Top Senate Candidate in Maine Won\u2019t Support Schumer for Leader",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Andy Burnham pledges end to political instability as he becomes UK PM",
+      "title": "Saudi condemns Houthi blockade: How will the rest of the world be impacted?",
       "source": "aljazeera.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Hunter Biden reveals \u2018single greatest mistake\u2019 of his father\u2019s presidency: \u2018I don\u2019t get it\u2019",
+      "title": "Family remembers \u2018true soulmates\u2019 killed after tree crashes onto car in Florida storm",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Dr. Jill Lepore on why AI backlash is vital for the future",
-      "source": "theverge.com"
+      "title": "Wall Street is selling more rental homes, as buying ban takes effect",
+      "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Big Bear\u2019s missing bald eagle believed to have been found alive but injured",
-      "source": "theguardian.com"
+      "title": "Psyche Approaches Mars",
+      "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "Why Do Judges and Barristers Wear Wigs in Britain?",
-      "source": "mentalfloss.com"
+      "title": "Swissair Flight 111 Memorial in Peggys Cove Preservation Area, Nova Scotia",
+      "source": "atlasobscura.com"
     }
   ]
 }
