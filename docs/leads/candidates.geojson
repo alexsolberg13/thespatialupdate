@@ -6,70 +6,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51.5148,
-          35.75
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
-        "date": "20260721",
-        "score": 3.324,
-        "mentions": 878,
-        "actors": "A US, AFRICA, AMBASSADOR, AMERICAN, ARMY, ASSOCIATED PRESS, AUTHORITIES, BAHRAIN",
-        "headline": "Tehran targets Gulf states after US hits Iran's south",
-        "synopsis": "A US and AFRICA \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 226 source(s) across 878 mentions.",
-        "sources": [
-          "https://www.thecourier.com.au/story/9314372/us-launches-10th-round-of-strikes-on-iran/",
-          "https://www.livemint.com/news/us-news/us-bombs-iran-for-ninth-day-as-standoff-over-hormuz-deepens-11784632292588.html",
-          "https://www.orissapost.com/bahrain-on-alert-as-iran-fires-fresh-missile-barrage/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Intent to cooperate \u2014 White House, District of Columbia, United States",
-        "date": "20260721",
-        "score": 3.157,
-        "mentions": 638,
-        "actors": "ADMINISTRATION, AIR FORCE, AL JAZEERA, AMERICAN, ARMY, ARMY OFFICER, ATTORNEY, AUTHORITIES",
-        "headline": "21 July 2026",
-        "synopsis": "ADMINISTRATION and AIR FORCE \u2014 intent to cooperate (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 164 source(s) across 638 mentions.",
-        "sources": [
-          "https://lobotero.com/2026/07/21/",
-          "https://www.jpost.com/international/article-903156",
-          "https://www.military.com/lebanons-president-will-meet-with-trump-in-washington-to-push-for-israeli-troop-withdrawal"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           77.2167,
           28.6667
         ]
       },
       "properties": {
         "title": "Protest \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 3.172,
-        "mentions": 674,
-        "actors": "ACTIVIST, ACTOR, AMIT, AUTHORITIES, CHANDIGARH, CHIEF MINISTER, CITIZEN, CONGRESS",
-        "headline": "Youths organize huge protest outside Indian Parliament",
-        "synopsis": "ACTIVIST and ACTOR \u2014 protest (in conflict) reported near Delhi, Delhi, India, covered by 160 source(s) across 674 mentions.",
+        "date": "20260722",
+        "score": 3.419,
+        "mentions": 1087,
+        "actors": "ACTIVIST, ACTOR, ANDHRA PRADESH, AUTHORITIES, BIHAR, COMPANIES, CONGRESS, CRIMINAL",
+        "headline": "Congress holds nationwide protests condemning detention of Rahul, Priyanka Gandhi in New Delhi",
+        "synopsis": "ACTIVIST and ACTOR \u2014 protest (in conflict) reported near Delhi, Delhi, India, covered by 253 source(s) across 1087 mentions.",
         "sources": [
-          "http://en.people.cn/n3/2026/0721/c90000-20479970.html",
-          "https://www.prokerala.com/news/articles/a1790574.html",
-          "https://aninews.in/news/national/politics/delhi-ncpscp-chief-sharad-pawar-supriya-sule-arrive-at-jantar-mantar-as-cjp-continues-protest20260721181120/"
+          "https://news.webindia123.com/news/Articles/India/20260722/4477670.html",
+          "https://aninews.in/news/national/politics/if-govt-doesnt-agree-millions-more-will-come-to-delhi-cjps-ashutosh-ranka20260722094105/",
+          "https://news.webindia123.com/news/Articles/India/20260722/4477648.html"
         ]
       }
     },
@@ -84,16 +36,40 @@
       },
       "properties": {
         "title": "Diplomatic cooperation \u2014 White House, District of Columbia, United States",
-        "date": "20260721",
-        "score": 3.075,
-        "mentions": 543,
-        "actors": "ADMINISTRATION, ALBERT, AMBASSADOR, AMERICAN, ARMENIA, ARMY, AZERBAIJAN, BRUNEI",
-        "headline": "Trump vows Iran will 'pay' after US service members killed",
-        "synopsis": "ADMINISTRATION and ALBERT \u2014 diplomatic cooperation (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 142 source(s) across 543 mentions.",
+        "date": "20260722",
+        "score": 3.348,
+        "mentions": 925,
+        "actors": "ACTIVIST, ADMINISTRATION, ADVOCATE, AMERICAN, ARGENTINA, AUSTRALIA, BUSINESS, CAMBODIA",
+        "headline": "Renewed US-Iran strikes: Is a major war looming",
+        "synopsis": "ACTIVIST and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 233 source(s) across 925 mentions.",
         "sources": [
-          "https://www.wgal.com/article/president-trump-vows-iran-will-pay-many-times-over-after-us-service-members-killed/73195868",
-          "https://dakotawarcollege.com/u-s-sen-lindsey-graham-to-be-honored-in-u-s-capitol/",
-          "https://thefederalist.com/2026/07/21/planned-parenthood-ramps-up-child-vivisection-thanks-to-more-tax-dollars-from-gop-congress/"
+          "http://www.pakistantelegraph.com/news/279201983/renewed-us-iran-strikes-is-a-major-war-looming",
+          "https://www.theintermountain.com/news/local-news/2026/07/luxe-hair-studio-opens-on-beverly-five-lane/",
+          "https://www.elpasoinc.com/news/ap_wire/trump-approves-nuclear-agreement-with-saudi-arabia-that-may-allow-the-kingdom-to-enrich-uranium/article_143cf918-effe-5e8c-a002-c9ab9280bc83.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
+        "date": "20260722",
+        "score": 3.352,
+        "mentions": 919,
+        "actors": "A US, AMERICAN, ARMY, AUTHORITIES, BAHRAIN, BRITAIN, CITIZEN, CIVILIAN",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "A US and AMERICAN \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 241 source(s) across 919 mentions.",
+        "sources": [
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://news.wjct.org/national-news/2026-07-22/u-s-and-iranian-attacks-continue-as-tensions-mount-on-a-key-waterway-in-the-red-sea",
+          "https://www.wvtm13.com/article/iran-strait-of-hormuz-retaliation-bridge-power/73228926"
         ]
       }
     },
@@ -107,17 +83,17 @@
         ]
       },
       "properties": {
-        "title": "Fighting / clashes \u2014 White House, District of Columbia, United States",
-        "date": "20260721",
-        "score": 3.106,
-        "mentions": 581,
-        "actors": "A US, ADMINISTRATION, AEROSPACE, AFGHANISTAN, AIRCRAFT CARRIER, AMERICAN, AMERICAN TROOPS, AQABA",
-        "headline": "Trump vows Iran will 'pay' after US service members killed",
-        "synopsis": "A US and ADMINISTRATION \u2014 fighting / clashes (in conflict) reported near White House, District of Columbia, United States, covered by 148 source(s) across 581 mentions.",
+        "title": "Appeal \u2014 Washington, District of Columbia, United States",
+        "date": "20260722",
+        "score": 3.332,
+        "mentions": 878,
+        "actors": "ADMINISTRATION, ADVISORY BOARD, AGRICULTURE SECRETARY, ALEXANDRIA, AMERICAN, ANTONIO GUTERRES, ASEAN, ATTORNEY",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "ADMINISTRATION and ADVISORY BOARD \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 235 source(s) across 878 mentions.",
         "sources": [
-          "https://www.ketv.com/article/president-trump-vows-iran-will-pay-many-times-over-after-us-service-members-killed/73195868",
-          "https://theconversation.com/legally-or-not-the-us-government-is-controlling-global-access-to-the-worlds-most-powerful-ai-286118",
-          "https://bentelevision.com/us-continues-to-attack-iran-as-tension-expands-to-red-sea/"
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://wlos.com/news/nation-world/white-house-seeks-87b-emergency-funding-as-iran-conflict-escalates-hegseth-testifies-dain-caine-trump-administration-strategy-senate-appropriations",
+          "https://investinglive.com:443/news/trump-sets-2-year-tariff-exemption-for-generic-drugs-then-steep-rises"
         ]
       }
     },
@@ -131,17 +107,41 @@
         ]
       },
       "properties": {
-        "title": "Appeal \u2014 White House, District of Columbia, United States",
-        "date": "20260721",
-        "score": 3.074,
-        "mentions": 568,
-        "actors": "ADMINISTRATION, AFRICA, AMERICAN, ARMENIAN, ATTORNEY, BRITAIN, BUREAUCRAT, CALIF",
-        "headline": "Chinese entities obtained US voter registration files of military members: report",
-        "synopsis": "ADMINISTRATION and AFRICA \u2014 appeal (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 129 source(s) across 568 mentions.",
+        "title": "Fighting / clashes \u2014 Washington, District of Columbia, United States",
+        "date": "20260722",
+        "score": 3.184,
+        "mentions": 668,
+        "actors": "ADMINISTRATION, AFGHANISTAN, AIR FORCE, AMERICAN, AMERICAN TROOPS, ARMED FORCES, ARMY, ASEAN",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "ADMINISTRATION and AFGHANISTAN \u2014 fighting / clashes (in conflict) reported near Washington, District of Columbia, United States, covered by 174 source(s) across 668 mentions.",
         "sources": [
-          "https://wchstv.com/news/nation-world/chinese-entities-obtained-us-voter-registration-files-of-military-members-report-white-house-donald-trump-elections",
-          "https://www.justsecurity.org/146230/trust-but-verify-three-grand-jury-reforms-to-hold-the-government-accountable/",
-          "https://theconversation.com/legally-or-not-the-us-government-is-controlling-global-access-to-the-worlds-most-powerful-ai-286118"
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://www.newsbusters.org/blogs/nb/james-waterman/2026/07/21/ms-now-socialist-republicans-are-seizing-means-production",
+          "https://www.wesh.com/article/senate-panel-advances-jay-clayton-nomination-dni/73221181"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Intent to cooperate \u2014 Washington, District of Columbia, United States",
+        "date": "20260722",
+        "score": 3.308,
+        "mentions": 867,
+        "actors": "A US, ADMINISTRATION, AIR FORCE, AMBASSADOR, AMERICAN, ATTORNEY, CANADA, CASABLANCA",
+        "headline": "GOP races to pass stopgap funding, budget reconciliation 3.0",
+        "synopsis": "A US and ADMINISTRATION \u2014 intent to cooperate (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 210 source(s) across 867 mentions.",
+        "sources": [
+          "https://www.koat.com/article/house-gop-stopgap-funding-budget-reconciliation-recess/73221263",
+          "https://www.foreignpolicyjournal.com/2026/07/21/congress-races-to-clear-packed-legislative-agenda-before-august-recess/",
+          "https://www.wesh.com/article/house-gop-stopgap-funding-budget-reconciliation-recess/73221263"
         ]
       }
     },
@@ -156,16 +156,16 @@
       },
       "properties": {
         "title": "Threat \u2014 Tehran, Tehran, Iran",
-        "date": "20260721",
-        "score": 2.98,
-        "mentions": 450,
-        "actors": "A US, AIRLINE, AMERICAN, ARMY, BAHRAIN, CIVILIAN, COMMANDER, COMPANIES",
-        "headline": "Another tanker attacked in Strait of Hormuz as US strikes Iran for 10th night",
-        "synopsis": "A US and AIRLINE \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 120 source(s) across 450 mentions.",
+        "date": "20260722",
+        "score": 2.987,
+        "mentions": 431,
+        "actors": "AMERICAN, ASEAN, BAHRAIN, BARACK OBAMA, BULGARIA, CHRISTIAN, DJIBOUTI, DUBAI",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "AMERICAN and ASEAN \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 136 source(s) across 431 mentions.",
         "sources": [
-          "https://www.richmondandtwickenhamtimes.co.uk/news/national/26296603.another-tanker-attacked-strait-hormuz-us-strikes-iran-10th-night/",
-          "https://thefrontierpost.com/iran-guards-say-hit-us-military-targets-in-bahrain-kuwait-state-media/",
-          "https://www.christianitytoday.com/2026/07/iran-shutters-landmark-church/"
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://www.kristv.com/us-news/iran-war/trump-threatens-strikes-on-iranian-infrastructure-if-ships-in-strait-are-attacked",
+          "https://cbn.com/news/israel/trump-ramps-military-pressure-warns-us-target-area-near-pickaxe-mountain-nuclear-site"
         ]
       }
     },
@@ -174,22 +174,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.0364,
-          38.8951
+          -77.0003,
+          38.889
         ]
       },
       "properties": {
-        "title": "Consultation \u2014 Washington, District of Columbia, United States",
-        "date": "20260721",
-        "score": 2.964,
-        "mentions": 404,
-        "actors": "A US, ABDULLAH, AIR FORCE, AMERICAN, ATTORNEY, BEIRUT, BELGIUM, BRUSSELS",
-        "headline": "From TV star to exiled journalist: Gulchehra Hoja tells Uyghur story",
-        "synopsis": "A US and ABDULLAH \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 136 source(s) across 404 mentions.",
+        "title": "Aid \u2014 Capitol Hill, District of Columbia, United States",
+        "date": "20260722",
+        "score": 3.035,
+        "mentions": 530,
+        "actors": "ADMINISTRATION, AGRICULTURE SECRETARY, AMERICAN, ARIZONA, ASSOCIATED PRESS, BORDER PATROL, BORDER SECURITY, CALIFORNIA",
+        "headline": "White House seeks $87B emergency funding as Iran conflict escalates, Hegseth testifies",
+        "synopsis": "ADMINISTRATION and AGRICULTURE SECRETARY \u2014 aid (engaging in cooperation) reported near Capitol Hill, District of Columbia, United States, covered by 118 source(s) across 530 mentions.",
         "sources": [
-          "https://focustaiwan.tw/politics/202607210008",
-          "https://www.aol.co.uk/articles/bbc-broadcaster-edward-stourton-dies-083749000.html",
-          "https://www.armstrongeconomics.com/world-news/war/putin-meets-with-top-north-korean-diplomat/"
+          "https://wlos.com/news/nation-world/white-house-seeks-87b-emergency-funding-as-iran-conflict-escalates-hegseth-testifies-dain-caine-trump-administration-strategy-senate-appropriations",
+          "https://www.koat.com/article/house-gop-stopgap-funding-budget-reconciliation-recess/73221263",
+          "https://www.independent.co.uk/news/world/americas/us-politics/pete-hegseth-iran-war-senate-hearing-b3019146.html"
         ]
       }
     },
@@ -204,16 +204,16 @@
       },
       "properties": {
         "title": "Coercion / seizure \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.906,
-        "mentions": 404,
-        "actors": "AUTHORITIES, CONGRESS, DELHI, EDUCATION MINIST, FARMER, FRENCH, GOVERNMENT, GUINEA",
-        "headline": "'Tear gas ke gole bhi...': Protester claims police fired expired tear gas shell during Cockroach Janta Party's 'Chalo Sansad' march",
-        "synopsis": "AUTHORITIES and CONGRESS \u2014 coercion / seizure (in conflict) reported near Delhi, Delhi, India, covered by 97 source(s) across 404 mentions.",
+        "date": "20260722",
+        "score": 2.971,
+        "mentions": 463,
+        "actors": "ADMINISTRATION, ATTORNEY, AUTHORITIES, CHIEF MINISTER, COLOMBO, COMPANY, CONGRESS, DELAWARE",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and ATTORNEY \u2014 coercion / seizure (in conflict) reported near Delhi, Delhi, India, covered by 107 source(s) across 463 mentions.",
         "sources": [
-          "https://www.moneycontrol.com/news/india/tear-gas-ke-gole-bhi-protester-claims-police-fired-expired-tear-gas-shell-during-cockroach-janta-party-s-chalo-sansad-march-13978992.html",
-          "https://www.moneycontrol.com/news/india/rahul-gandhi-detained-as-delhi-police-remove-congress-oppn-leaders-protesting-outside-pm-modi-s-residence-13979800.html",
-          "https://dominicanrepublicpost.com/wont-back-down-indian-student-protesters-return-after-police-crackdown/"
+          "https://www.sakshipost.com/news/national/punjab-farmers-blocked-way-delhi-over-india-us-trade-deal-481234",
+          "https://aninews.in/news/national/politics/democracy-or-dictatorship-ubt-sena-chief-uddhav-thackeray-slams-centre-over-crackdown-on-student-protest20260722111523/",
+          "https://www.tribuneindia.com/news/haryana/congress-leaders-detained-in-sirsa-ahead-of-delhi-protest-jjp-condemns-police-action/"
         ]
       }
     },
@@ -222,22 +222,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -6.5,
-          54.5
+          -77.0364,
+          38.8951
         ]
       },
       "properties": {
-        "title": "Appeal \u2014 Northern Ireland, Craigavon, United Kingdom",
-        "date": "20260721",
-        "score": 2.915,
-        "mentions": 388,
-        "actors": "GOVERNMENT, POLICE, PRIME MINISTER, SPOKESMAN, UNITED KINGDOM",
-        "headline": "\u2018Agree to disagree\u2019, Burnham tells Swinney on independence",
-        "synopsis": "GOVERNMENT and POLICE \u2014 appeal (engaging in cooperation) reported near Northern Ireland, Craigavon, United Kingdom, covered by 111 source(s) across 388 mentions.",
+        "title": "Consultation \u2014 Washington, District of Columbia, United States",
+        "date": "20260722",
+        "score": 2.995,
+        "mentions": 442,
+        "actors": "AMERICAN, ASEAN, BANK, BEIRUT, BRUNEI, BUSINESS, CANADA, CHINA",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "AMERICAN and ASEAN \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 135 source(s) across 442 mentions.",
         "sources": [
-          "https://www.stratford-herald.com/national/agree-to-disagree-burnham-tells-swinney-on-independence-source-169590/",
-          "https://www.lynnnews.co.uk/news/commissioner-to-end-woke-policing-9474915/",
-          "https://www.breakingnews.ie/ireland/keep-public-accountability-in-mind-on-anonymity-bids-omagh-bomb-inquiry-urged-1929751.html"
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://news.am/en/news/1051029",
+          "https://tribune.com.pk/story/2619607/pakistan-seeks-us-support-for-better-access-to-global-capital-markets"
         ]
       }
     },
@@ -252,16 +252,16 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Gaza, Israel (general), Israel",
-        "date": "20260721",
-        "score": 2.85,
-        "mentions": 343,
-        "actors": "A US, AFGHANISTAN, AUTHORITIES, BOSS, CAIRO, CITIZEN, CIVILIAN, COMMANDER",
-        "headline": "Israel is building a miles-long earthen barrier inside Gaza, entrenching its division",
-        "synopsis": "A US and AFGHANISTAN \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 98 source(s) across 343 mentions.",
+        "date": "20260722",
+        "score": 2.915,
+        "mentions": 400,
+        "actors": "A US, ARMY, AUTHORITIES, CIVILIAN, COLOMBIA, COMMANDER, DJIBOUTI, EGYPT",
+        "headline": "Wednesday July 22nd",
+        "synopsis": "A US and ARMY \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 104 source(s) across 400 mentions.",
         "sources": [
-          "https://www.winnipegfreepress.com/arts-and-life/life/faith/2026/07/21/israel-is-building-a-miles-long-earthen-barrier-inside-gaza-entrenching-its-division",
-          "https://www.freemalaysiatoday.com/category/world/2026/07/21/un-condemns-intensifying-israeli-attacks-in-gaza",
-          "http://www.jpost.com/middle-east/article-903188"
+          "https://theconservativetreehouse.com/blog/2026/07/22/wednesday-july-22nd-open-thread-2/",
+          "https://freebeacon.com/media/embarrassment-as-second-major-journalism-group-secretly-removes-terrorist-names-from-list-of-slain-journalists-in-gaza-groups-woes-mirror-those-of-cpj/",
+          "https://www.koat.com/article/israel-earthen-barrier-gaza-divider/73221833"
         ]
       }
     },
@@ -270,22 +270,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          77.2167,
-          28.6667
+          51.5148,
+          35.75
         ]
       },
       "properties": {
-        "title": "Diplomatic cooperation \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.879,
-        "mentions": 390,
-        "actors": "ACTOR, AMIT, AUSTRALIA, BUREAUCRACY, CABINET, CHIEF MINISTER, CITIZEN, CONGRESS",
-        "headline": "Rahul, Kharge, Mamata, Akhilesh, Kejriwal: Opposition unites for CJP demands; Centre responds",
-        "synopsis": "ACTOR and AMIT \u2014 diplomatic cooperation (engaging in cooperation) reported near Delhi, Delhi, India, covered by 89 source(s) across 390 mentions.",
+        "title": "Diplomatic cooperation \u2014 Tehran, Tehran, Iran",
+        "date": "20260722",
+        "score": 2.992,
+        "mentions": 485,
+        "actors": "ARMED GROUP, BAHRAIN, BRITISH, CIVIL SOCIETY, GENERALS, GOVERNMENT, HAMAS, IRAN",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "ARMED GROUP and BAHRAIN \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 110 source(s) across 485 mentions.",
         "sources": [
-          "https://timesofindia.indiatimes.com/india/rahul-kharge-mamata-akhilesh-kejriwal-opposition-unites-for-cjp-demands-centre-yet-to-respond/articleshow/132533417.cms",
-          "https://www.independent.co.uk/asia/india/delhi-cockroach-janta-party-cjp-protest-abhijeet-dipke-jantar-mantar-violence-b3018739.html",
-          "https://indianexpress.com/article/explained/explained-politics/jammu-kashmir-statehood-restoration-omar-abdullah-nc-protest-10797050/"
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://www.gulfcoastnewsnow.com/article/trump-nuclear-agreement-saudi-arabia/73223859",
+          "https://www.presstv.co.uk/Detail/2026/07/22/772775/iran-helped-save-kuwait-1990s-now-kuwait-hosts-us-bases-aids-aggression-against-iran"
         ]
       }
     },
@@ -294,22 +294,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          77.2167,
-          28.6667
+          77.2,
+          28.6
         ]
       },
       "properties": {
-        "title": "Demand \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.718,
-        "mentions": 297,
-        "actors": "ACTIVIST, AMIT, ARMY, CITIZEN, CONGRESS, DELHI, DOCTOR, EDUCATION MINIST",
-        "headline": "Rahul Gandhi demands Amit Shah's resignation over Delhi student protest crackdown",
-        "synopsis": "ACTIVIST and AMIT \u2014 demand (in conflict) reported near Delhi, Delhi, India, covered by 61 source(s) across 297 mentions.",
+        "title": "Protest \u2014 New Delhi, Delhi, India",
+        "date": "20260722",
+        "score": 2.828,
+        "mentions": 369,
+        "actors": "ACTOR, CHANDIGARH, CONGRESS, DELHI, EDUCATION MINIST, FARMER, GOVERNMENT, HARYANA",
+        "headline": null,
+        "synopsis": "ACTOR and CHANDIGARH \u2014 protest (in conflict) reported near New Delhi, Delhi, India, covered by 74 source(s) across 369 mentions.",
         "sources": [
-          "http://www.rozanaspokesman.com/news/nation/210726/rahul-gandhi-demands-home-ministers-resignation-pms-apology-over-st.html",
-          "https://foreignpolicy.com/2026/07/21/india-modi-bjp-decolonization-anglosphere-britain-united-states-hindu-nationalism/",
-          "https://www.newindianexpress.com/india/2026/Jul/21/rahul-gandhi-other-congress-leaders-protest-outside-pm-modis-residence-over-delhi-protest-crackdown"
+          "https://aninews.in/news/national/politics/is-this-bjps-ram-rajya-where-students-beaten-up-girls-clothes-torn-sp-mp-dimple-yadav-targets-centre-over-police-action-on-protesters20260722115426/",
+          "http://www.bignewsnetwork.com/news/279202572/who-will-you-listen-to-if-not-students-tmc-mp-kalyan-banerjee-asks-pm-modi-backs-students-protest",
+          "https://aninews.in/news/national/politics/bjp-to-hold-nationwide-protests-against-congress-following-demonstrations-outside-pms-residence20260722104559/"
         ]
       }
     },
@@ -318,118 +318,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          77.2167,
-          28.6667
+          120.982,
+          14.6042
         ]
       },
       "properties": {
-        "title": "Appeal \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.868,
-        "mentions": 376,
-        "actors": "ACTIVIST, ACTOR, ADMINISTRATION, BHOLA, BUSINESS, CABINET, CHIEF JUSTICE, CHINA",
-        "headline": "2023 Parliament Security Breach: Delhi Court Grants Interim Bail To Accused On Humanitarian Grounds",
-        "synopsis": "ACTIVIST and ACTOR \u2014 appeal (engaging in cooperation) reported near Delhi, Delhi, India, covered by 90 source(s) across 376 mentions.",
+        "title": "Consultation \u2014 Manila, Manila, Philippines",
+        "date": "20260722",
+        "score": 2.915,
+        "mentions": 388,
+        "actors": "ASEAN, ASSOCIATION OF SOUTHEAST ASIAN NATIONS, AUSTRALIA, AUTHORITIES, BEIJING, BRUNEI, CANADA, CHINA",
+        "headline": "DPM arrives in Manila to attend ASEAN Ministerial Meeting",
+        "synopsis": "ASEAN and ASSOCIATION OF SOUTHEAST ASIAN NATIONS \u2014 consultation (engaging in cooperation) reported near Manila, Manila, Philippines, covered by 111 source(s) across 388 mentions.",
         "sources": [
-          "https://www.livelaw.in/news-updates/2023-parliament-security-breach-accused-bail-humanitarian-grounds-542226",
-          "http://www.brazilsun.com/news/279201091/indian-farmers-march-to-delhi-to-protest-us-trade-deal",
-          "https://www.hindustantimes.com/india-news/delhi-hc-sonam-wangchuk-shift-to-hospital-of-his-choice-medanta-row-safdarjung-treatment-tests-cjp-protests-101784620269287.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          77.2167,
-          28.6667
-        ]
-      },
-      "properties": {
-        "title": "Rejection \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.664,
-        "mentions": 250,
-        "actors": "ACTIVIST, AUTHORITIES, BUSINESS, COLLEGE, CONGRESS, DELHI, EDUCATION MINIST, GOVERNMENT",
-        "headline": "Indian police criticised for brutal crackdown on \u2018cockroach\u2019 protests as leader rules out further marches",
-        "synopsis": "ACTIVIST and AUTHORITIES \u2014 rejection (in conflict) reported near Delhi, Delhi, India, covered by 63 source(s) across 250 mentions.",
-        "sources": [
-          "https://www.independent.co.uk/asia/india/cjp-protest-delhi-cockroach-janta-party-police-tear-gas-b3018634.html",
-          "https://www.prokerala.com/news/articles/a1790714.html",
-          "https://aninews.in/news/national/general-news/delhi-hc-orders-sonam-wangchuks-immediate-transfer-from-safdarjung-hospital-to-medanta-directs-him-to-abide-by-doctors-advice20260721155506/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          121.458,
-          31.2222
-        ]
-      },
-      "properties": {
-        "title": "Intent to cooperate \u2014 Shanghai, Shanghai, China",
-        "date": "20260721",
-        "score": 2.846,
-        "mentions": 329,
-        "actors": "ASEAN, BELGIUM, BUSINESS, CHINA, CHINESE, COMPANY, CZECH REPUBLIC, CZECHIA",
-        "headline": "Why China\u2019s internet is obsessed with Moonshot\u2019s viral new Kimi model",
-        "synopsis": "ASEAN and BELGIUM \u2014 intent to cooperate (engaging in cooperation) reported near Shanghai, Shanghai, China, covered by 104 source(s) across 329 mentions.",
-        "sources": [
-          "https://www.thenews.com.pk/latest/1409784-why-chinas-internet-is-obsessed-with-moonshots-viral-new-kimi-model",
-          "https://www.china-briefing.com/news/ctrip-pipl-fine-lessons-for-foreign-companies/",
-          "https://sl.china-embassy.gov.cn/eng/zgyw/202607/t20260721_11989057.htm"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          30.7386,
-          46.4639
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Odesa, Odes'ka Oblast, Ukraine",
-        "date": "20260721",
-        "score": 2.659,
-        "mentions": 285,
-        "actors": "AUTHORITIES, CARGO SHIP, CARGO VESSEL, CIVILIAN, DEPUTY, GUINEA, GUINEA BISSAU, MEDIA",
-        "headline": "Russian tsunami of fire sweeps Odesa",
-        "synopsis": "AUTHORITIES and CARGO SHIP \u2014 fighting / clashes (in conflict) reported near Odesa, Odes'ka Oblast, Ukraine, covered by 47 source(s) across 285 mentions.",
-        "sources": [
-          "https://www.bankingnews.gr/diethni/articles/889410/russian-tsunami-of-fire-sweeps-odesa-banderols-scorched-chornomorsk-nato-cargo-wiped-out%20title=",
-          "https://timesofindia.indiatimes.com/india/india-summons-russian-diplomat-over-4-indians-killed-in-strike-off-ukranian-coast/articleshow/132528298.cms",
-          "https://www.moneycontrol.com/world/ukraine-targets-moscow-with-400-drones-as-russian-strikes-kill-28-in-odesa-region-top-updates-article-13978982.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.116667,
-          51.5
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 London, London, City of, United Kingdom",
-        "date": "20260721",
-        "score": 2.797,
-        "mentions": 320,
-        "actors": "ADMIRAL, ATHENS, BIRMINGHAM, BOEING, BRITAIN, BRITISH, BUSINESS, CANADA",
-        "headline": "Greenwich Olympiad sees students from 53 countries gather",
-        "synopsis": "ADMIRAL and ATHENS \u2014 diplomatic cooperation (engaging in cooperation) reported near London, London, City of, United Kingdom, covered by 83 source(s) across 320 mentions.",
-        "sources": [
-          "https://www.london-now.co.uk/news/26295366.greenwich-olympiad-sees-students-53-countries-gather/",
-          "https://www.nursinginpractice.com/clinical/elderly-care/specialist-dementia-nurse-service-expands-support-for-chinese-families/",
-          "https://www.theboltonnews.co.uk/news/26294299.royal-warrant-awarded-bolton-textile-manufacturer-richard-haworth/"
+          "https://www.radio.gov.pk/22-07-2026/dpm-in-manila-to-participate-in-asean-regional-forum-ministerial-meeting",
+          "https://aninews.in/news/world/asia/eam-jaishankar-meets-us-state-secy-rubio-discusses-strategic-ties-as-quad-fm-meet-reconvenes-in-manila20260722102730/",
+          "http://www.thejakartapost.com/world/2026/07/22/indonesia-urges-asean-to-deliver-promises-as-middle-east-crisis-looms"
         ]
       }
     },
@@ -444,16 +348,16 @@
       },
       "properties": {
         "title": "Threat \u2014 Washington, District of Columbia, United States",
-        "date": "20260721",
-        "score": 2.619,
-        "mentions": 218,
-        "actors": "ABDULLAH, ADMINISTRATION, AMERICAN, BAHRAIN, BRITISH, CANADA, CANADIAN, CENTER FOR STRATEGIC AND INTERNATIONAL STUDIES",
-        "headline": "\ufeffFederal workforce in DC region falls to lowest level in 30 years: Here's what's behind it",
-        "synopsis": "ABDULLAH and ADMINISTRATION \u2014 threat (in conflict) reported near Washington, District of Columbia, United States, covered by 64 source(s) across 218 mentions.",
+        "date": "20260722",
+        "score": 2.824,
+        "mentions": 330,
+        "actors": "ADMINISTRATION, AGRICULTURE SECRETARY, AMERICAN, ARMY, ASEAN, BULGARIA, CANADA, CANADIAN",
+        "headline": "US and Iran trade attacks, overshadowing efforts to keep diplomacy alive",
+        "synopsis": "ADMINISTRATION and AGRICULTURE SECRETARY \u2014 threat (in conflict) reported near Washington, District of Columbia, United States, covered by 91 source(s) across 330 mentions.",
         "sources": [
-          "https://wsbt.com/news/nation-world/dc-federal-workforce-virginia-maryland-government-jobs-employment-bureau-labor-statistics-trump-administration-layoffs-unemployment-economy-trump-musk-firings-living-trump-president-data-hiring-dmv",
-          "https://investinglive.com:443/commodities/oil-holds-near-one-month-highs-as-renewed-us-iran-conflict-enters-10th-night",
-          "https://www.utne.com/environment/baby-nation/"
+          "https://www.harwichandmanningtreestandard.co.uk/news/national/26300224.us-iran-trade-attacks-overshadowing-efforts-keep-diplomacy-alive/",
+          "https://patriotpost.us/opinion/129334-the-unconstitutionality-of-the-democratic-socialists-of-america-2026-07-22",
+          "https://www.washingtonexaminer.com/in_focus/4655452/the-kids-are-right-about-ai-low-favorability-who-benefits-polls-students-adults/"
         ]
       }
     },
@@ -462,118 +366,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.3333,
-          31.4167
+          120.982,
+          14.6042
         ]
       },
       "properties": {
-        "title": "Diplomatic cooperation \u2014 Gaza, Israel (general), Israel",
-        "date": "20260721",
-        "score": 2.72,
-        "mentions": 287,
-        "actors": "AL JAZEERA, AMBASSADOR, AUSTRALIA, AUSTRALIAN, CALIFORNIA, CHRISTIAN, COMMANDER, COMPANIES",
-        "headline": "Ro Khanna\u2019s attempt to embarrass Israel exposes ineptitude \u2026 and a losing message",
-        "synopsis": "AL JAZEERA and AMBASSADOR \u2014 diplomatic cooperation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 66 source(s) across 287 mentions.",
+        "title": "Intent to cooperate \u2014 Manila, Manila, Philippines",
+        "date": "20260722",
+        "score": 2.898,
+        "mentions": 419,
+        "actors": "ADMINISTRATION, ALBERT, ASEAN, ASSOCIATION OF SOUTHEAST ASIAN NATIONS, BRUNEI, BUSINESS, CHINA, CHINESE",
+        "headline": "\"It is only through deeper cooperation we can de-risk and diversify\": Jaishankar at ASEAN Post-Ministerial Conference with India 2026 in Manila",
+        "synopsis": "ADMINISTRATION and ALBERT \u2014 intent to cooperate (engaging in cooperation) reported near Manila, Manila, Philippines, covered by 86 source(s) across 419 mentions.",
         "sources": [
-          "https://www.jns.org/opinion/james-sinkinson/ro-khannas-attempt-to-embarrass-israel-exposes-ineptitude-and-a-losing-message",
-          "http://thepeninsulaqatar.com/editorial/21/07/2026/gazas-unending-pain",
-          "https://dunyanews.tv/en/World/963694-hamas-says-khalil-alhayya-elected-as-groups-new-chief"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          77.2167,
-          28.6667
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.569,
-        "mentions": 225,
-        "actors": "ACTIVIST, CORRESPONDENT, DELHI, EDUCATION MINIST, FARMER, HARYANA, KING, MALLIKARJUN KHARGE",
-        "headline": "'Tear gas ke gole bhi...': Protester claims police fired expired tear gas shell during Cockroach Janta Party's 'Chalo Sansad' march",
-        "synopsis": "ACTIVIST and CORRESPONDENT \u2014 fighting / clashes (in conflict) reported near Delhi, Delhi, India, covered by 45 source(s) across 225 mentions.",
-        "sources": [
-          "https://www.moneycontrol.com/news/india/tear-gas-ke-gole-bhi-protester-claims-police-fired-expired-tear-gas-shell-during-cockroach-janta-party-s-chalo-sansad-march-13978992.html",
-          "https://www.livelaw.in/articles/right-walk-parliament-542227",
-          "http://www.brazilsun.com/news/279201091/indian-farmers-march-to-delhi-to-protest-us-trade-deal"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          116.388,
-          39.9289
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Beijing, Beijing, China",
-        "date": "20260721",
-        "score": 2.692,
-        "mentions": 263,
-        "actors": "AMERICAN, BEIJING, CAMBODIA, CANBERRA, CHINA, CHINESE, COMPANIES, DEFENSE MINIST",
-        "headline": "China firmly supports cause of UN: top diplomat",
-        "synopsis": "AMERICAN and BEIJING \u2014 diplomatic cooperation (engaging in cooperation) reported near Beijing, Beijing, China, covered by 67 source(s) across 263 mentions.",
-        "sources": [
-          "https://en.people.cn/n3/2026/0721/c90000-20480039.html",
-          "https://thediplomat.com/2026/07/philippine-marine-injured-in-clash-with-china-coast-guard-at-disputed-south-china-sea-shoal/",
-          "https://www.yahoo.com/news/world/articles/china-philippines-trade-accusations-sailor-034957833.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          77.2167,
-          28.6667
-        ]
-      },
-      "properties": {
-        "title": "Assault \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.56,
-        "mentions": 204,
-        "actors": "ACTIVIST, AUTHORITIES, CONGRESS, DELHI, DEMONSTRATOR, GANG, GOVERNMENT, HOSPITAL",
-        "headline": null,
-        "synopsis": "ACTIVIST and AUTHORITIES \u2014 assault (in conflict) reported near Delhi, Delhi, India, covered by 52 source(s) across 204 mentions.",
-        "sources": [
-          "https://aninews.in/news/national/politics/not-in-favour-of-suppressing-students-voice-chirag-paswan-on-cjp-protest-says-dialogue-is-good-medium20260721114653/",
-          "https://www.oneindia.com/india/rahul-gandhi-slams-govt-for-blocking-neet-ug-protest-discussion-in-parliament-says-pm-modi-should-8152267.html",
-          "https://scroll.in/latest/1094420/updates-cjp-alleges-police-fired-pellet-guns-at-protesters-demonstrations-resume-at-jantar-mantar"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          77.2167,
-          28.6667
-        ]
-      },
-      "properties": {
-        "title": "Yield/concede \u2014 Delhi, Delhi, India",
-        "date": "20260721",
-        "score": 2.691,
-        "mentions": 279,
-        "actors": "ACTIVIST, AMIT, BIHARI, CABINET, CITIZEN, COMPANY, CONGRESS, DELHI",
-        "headline": "'Voice of students will not be ignored': Rahul Gandhi asks patriotic Indians to join his protest outside PM's house",
-        "synopsis": "ACTIVIST and AMIT \u2014 yield/concede (engaging in cooperation) reported near Delhi, Delhi, India, covered by 59 source(s) across 279 mentions.",
-        "sources": [
-          "https://www.newindianexpress.com/india/2026/Jul/21/rahul-gandhi-other-congress-leaders-protest-outside-pm-modis-residence-over-delhi-protest-crackdown",
-          "https://www.aljazeera.com/news/2026/7/21/indias-cockroach-protest-movement-halts-marches-after-police-violence",
-          "https://dominicanrepublicpost.com/wont-back-down-indian-student-protesters-return-after-police-crackdown/"
+          "http://www.azerbaijannews.net/news/279202255/it-is-only-through-deeper-cooperation-we-can-de-risk-and-diversify-jaishankar-at-asean-post-ministerial-conference-with-india-2026-in-manila",
+          "https://bworldonline.com/the-nation/2026/07/22/765321/dole-backs-msmes/",
+          "https://www.rappler.com/voices/newsletters/be-the-good-covering-the-sara-duterte-impeachment-trial/"
         ]
       }
     },
@@ -588,16 +396,208 @@
       },
       "properties": {
         "title": "Rejection \u2014 Washington, District of Columbia, United States",
-        "date": "20260721",
-        "score": 2.547,
-        "mentions": 211,
-        "actors": "ADMINISTRATION, AMERICAN, ATTORNEY, CHINA, CONGRESS, EGYPT, EMPLOYEE, ETHIOPIA",
-        "headline": "Secret Service Sued Over White House Tourist Shooting",
-        "synopsis": "ADMINISTRATION and AMERICAN \u2014 rejection (in conflict) reported near Washington, District of Columbia, United States, covered by 45 source(s) across 211 mentions.",
+        "date": "20260722",
+        "score": 2.814,
+        "mentions": 320,
+        "actors": "ACTOR, ADMINISTRATION, AMERICAN, ATTORNEY, BANK, BOSS, CALIFORNIA, CHINA",
+        "headline": "Iran fires missiles at Jordan\u2019s Aqaba as explosions heard in Eilat",
+        "synopsis": "ACTOR and ADMINISTRATION \u2014 rejection (in conflict) reported near Washington, District of Columbia, United States, covered by 91 source(s) across 320 mentions.",
         "sources": [
-          "https://www.jdjournal.com/2026/07/20/secret-service-lawsuit-white-house-tourist-shooting/",
-          "https://www.thedailybeast.com/trump-goons-creepy-bid-to-spy-on-new-york-times-reporters-mom-over-af1-reporting-exposed/",
-          "https://www.cbsnews.com/news/biden-bid-block-release-biographer-tapes-denied-decision-put-on-hold/"
+          "https://www.ynetnews.com/article/hyfx6gcnmx",
+          "https://www.thestar.com.my/tech/tech-news/2026/07/22/us-senator-urges-wall-street-to-reject-039troubling039-paid-early-access-to-trump-posts",
+          "https://www.bostonglobe.com/2026/07/21/nation/trump-saudi-arabia-nuclear-agreement/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2167,
+          28.6667
+        ]
+      },
+      "properties": {
+        "title": "Appeal \u2014 Delhi, Delhi, India",
+        "date": "20260722",
+        "score": 2.822,
+        "mentions": 378,
+        "actors": "ACTOR, AUTHORITIES, CITIZEN, CLERGY, CONGRESS, COUNSEL, DELHI, DEPUTY",
+        "headline": "CJP protest: Delhi University urges calm, says students' fears are being exploited",
+        "synopsis": "ACTOR and AUTHORITIES \u2014 appeal (engaging in cooperation) reported near Delhi, Delhi, India, covered by 68 source(s) across 378 mentions.",
+        "sources": [
+          "https://www.livemint.com/news/india/cjp-protest-delhi-university-urges-calm-says-students-fears-are-being-exploited-11784690010604.html",
+          "https://island.lk/three-high-profile-alleged-suicides-shaping-key-investigations/",
+          "https://www.livelaw.in/high-court/delhi-high-court/jantar-mantar-protest-delhi-police-force-response-cctv-preservation-ordered-cjp-march-neet-leak-542382"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.3333,
+          31.4167
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Gaza, Israel (general), Israel",
+        "date": "20260722",
+        "score": 2.754,
+        "mentions": 279,
+        "actors": "ACTIVIST, ADMINISTRATION, GAZA, GENERAL ASSEMBLY, GOVERNMENT, GREECE, GREEK, HAMAS",
+        "headline": null,
+        "synopsis": "ACTIVIST and ADMINISTRATION \u2014 coercion / seizure (in conflict) reported near Gaza, Israel (general), Israel, covered by 85 source(s) across 279 mentions.",
+        "sources": [
+          "https://wflafm.iheart.com/content/2026-07-22-nyc-mayor-backs-off-arrest-pledge-for-israeli-pm/",
+          "https://countercurrents.org/2026/07/at-least-12-palestinians-killed-in-israeli-attacks-across-gaza-despite-ceasefire-several-burned-to-death/",
+          "https://www.aljazeera.com/opinions/2026/7/22/americas-decades-old-bipartisan-consensus-on-israel-has-been-shattered"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2167,
+          28.6667
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Delhi, Delhi, India",
+        "date": "20260722",
+        "score": 2.807,
+        "mentions": 355,
+        "actors": "ACTIVIST, ACTOR, ALLAHABAD, AMIT, AMRITSAR, ANTI GOVERNMENT STUDENT, ASEAN, BANGLADESH",
+        "headline": "\"152 paper leaks from 2014, resign first: Congress MP Manickam Tagore slams Dharmendra Pradhan",
+        "synopsis": "ACTIVIST and ACTOR \u2014 diplomatic cooperation (engaging in cooperation) reported near Delhi, Delhi, India, covered by 71 source(s) across 355 mentions.",
+        "sources": [
+          "https://news.webindia123.com/news/Articles/India/20260722/4477648.html",
+          "https://www.newindianexpress.com/india/2026/Jul/22/opposition-creating-manufactured-anger-rajnath-singh-on-delhi-protests",
+          "https://indianexpress.com/article/india/rahul-gandhi-neet-dharmendra-pradhan-resignation-key-takeaways-10798572/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5167,
+          50.4333
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260722",
+        "score": 2.669,
+        "mentions": 231,
+        "actors": "AIR FORCE, ARMY, AUTHORITIES, CITIZEN, CIVILIAN, COMMANDER, COMPANY, DONBAS",
+        "headline": "Ukraine overhauls its military top brass for the fight against Russia",
+        "synopsis": "AIR FORCE and ARMY \u2014 fighting / clashes (in conflict) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 76 source(s) across 231 mentions.",
+        "sources": [
+          "https://www.durangoherald.com/articles/associated-press/ukraine-overhauls-its-military-top-brass-for-the-fight-against-russia/",
+          "https://www.rnz.co.nz/news/world/766084/ukraine-s-zelensky-sacks-army-chief-syrsky",
+          "https://www.dailysabah.com/politics/1-killed-in-drone-attack-on-turkish-ship-as-black-sea-security-wanes/news"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.388,
+          39.9289
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Beijing, Beijing, China",
+        "date": "20260722",
+        "score": 2.799,
+        "mentions": 352,
+        "actors": "AFRICA, AFRICAN UNION, AMBASSADOR, ASEAN, ASEAN COUNTRIES, AUSTRALIA, BANGLADESH, BEIJING",
+        "headline": "US and Solomon Islands discuss return of Peace Corps",
+        "synopsis": "AFRICA and AFRICAN UNION \u2014 diplomatic cooperation (engaging in cooperation) reported near Beijing, Beijing, China, covered by 69 source(s) across 352 mentions.",
+        "sources": [
+          "https://www.thecourier.com.au/story/9315195/us-and-solomon-islands-discuss-return-of-peace-corps/",
+          "https://vietnamnews.vn/politics-laws/1795954/viet-nam-highlights-innovation-and-infrastructure-as-pillars-of-asean-china-ties.html",
+          "https://news.az/news/beijing-slams-eu-fine-against-aliexpress-vows-to-defend-chinese-firms"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2167,
+          28.6667
+        ]
+      },
+      "properties": {
+        "title": "Demand \u2014 Delhi, Delhi, India",
+        "date": "20260722",
+        "score": 2.664,
+        "mentions": 283,
+        "actors": "ACTIVIST, ACTOR, AMIT, CITIZEN, CONGRESS, COUNSEL, DELHI, ECHELON",
+        "headline": null,
+        "synopsis": "ACTIVIST and ACTOR \u2014 demand (in conflict) reported near Delhi, Delhi, India, covered by 49 source(s) across 283 mentions.",
+        "sources": [
+          "https://www.prokerala.com/news/articles/a1790950.html",
+          "https://www.tribuneindia.com/news/india/cjp-protest-supreme-court-bar-bodies-condemn-police-action-on-student-protesters-at-jantar-mantar-demand-independent-inquiry/",
+          "https://www.rediff.com/news/report/wont-leave-jantar-mantar-until-cjp-protest-continues/20260722.htm"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0003,
+          38.889
+        ]
+      },
+      "properties": {
+        "title": "Yield/concede \u2014 Capitol Hill, District of Columbia, United States",
+        "date": "20260722",
+        "score": 2.795,
+        "mentions": 314,
+        "actors": "ADMINISTRATION, AMERICAN, ATTORNEY, BUSINESS, CIVILIAN, COMPANIES, COMPANY, CONGRESS",
+        "headline": "GOP races to pass stopgap funding, budget reconciliation 3.0",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 yield/concede (engaging in cooperation) reported near Capitol Hill, District of Columbia, United States, covered by 85 source(s) across 314 mentions.",
+        "sources": [
+          "https://www.wesh.com/article/house-gop-stopgap-funding-budget-reconciliation-recess/73221263",
+          "https://kelo.com/2026/07/22/venezuelas-maduro-due-back-in-us-court-in-drug-trafficking-case/",
+          "https://www.theguardian.com/us-news/2026/jul/21/trump-financial-details-bbc-lawsuit"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.8385,
+          28.9684
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Bushehr, Bushehr, Iran",
+        "date": "20260722",
+        "score": 2.646,
+        "mentions": 234,
+        "actors": "AMERICAN, BAHRAIN, GERMAN, IRAN, IRANIAN, IRAQ, ISRAEL, JORDAN",
+        "headline": "Iran fires missiles at Jordan\u2019s Aqaba as explosions heard in Eilat",
+        "synopsis": "AMERICAN and BAHRAIN \u2014 fighting / clashes (in conflict) reported near Bushehr, Bushehr, Iran, covered by 65 source(s) across 234 mentions.",
+        "sources": [
+          "https://www.ynetnews.com/article/hyfx6gcnmx",
+          "https://www.internazionale.it/ultime-notizie-reuters/2026/07/22/rubio-says-us-still-willing-to-negotiate-over-iran-crisis",
+          "https://dominicanrepublicpost.com/explosions-in-iran-as-us-launches-new-strikes/"
         ]
       }
     }

@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-21",
+  "date": "2026-07-22",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 67,
-    "hi_f": 94,
-    "lo_f": 61,
-    "precip_pct": 2,
-    "desc": "overcast"
+    "now_f": 70,
+    "hi_f": 95,
+    "lo_f": 64,
+    "precip_pct": 5,
+    "desc": "drizzle"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 67,
-      "hi_f": 94,
-      "lo_f": 61,
-      "precip_pct": 2,
-      "desc": "overcast"
+      "now_f": 70,
+      "hi_f": 95,
+      "lo_f": 64,
+      "precip_pct": 5,
+      "desc": "drizzle"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 68,
-      "hi_f": 97,
-      "lo_f": 62,
-      "precip_pct": 4,
-      "desc": "overcast"
+      "now_f": 75,
+      "hi_f": 94,
+      "lo_f": 68,
+      "precip_pct": 20,
+      "desc": "rain"
     }
   ],
-  "story_count": 74,
-  "score_count": 8,
+  "story_count": 73,
+  "score_count": 10,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Democrats\u2019 Top Senate Candidate in Maine Won\u2019t Support Schumer for Leader",
+      "title": "Wildfire Threatening Pleasanton Prompts Evacuation Order for Thousands",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Saudi condemns Houthi blockade: How will the rest of the world be impacted?",
-      "source": "aljazeera.com"
+      "title": "US to announce deal allowing Saudi Arabia a nuclear programme",
+      "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Family remembers \u2018true soulmates\u2019 killed after tree crashes onto car in Florida storm",
-      "source": "oregonlive.com"
+      "title": "Han pasado cinco a\u00f1os desde que una ola de calor mortal azot\u00f3 a Oreg\u00f3n. Esto es lo que ha cambiado.",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "Wall Street is selling more rental homes, as buying ban takes effect",
-      "source": "cnbc.com"
+      "title": "AMD and Anthropic reach $5 billion AI infrastructure deal",
+      "source": "theverge.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Psyche Approaches Mars",
+      "title": "NASA Joins Genesis Mission to Accelerate AI-Driven Discovery",
       "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "Swissair Flight 111 Memorial in Peggys Cove Preservation Area, Nova Scotia",
+      "title": "Leroy's Place New Orleans in New Orleans, Louisiana",
       "source": "atlasobscura.com"
     }
   ]
