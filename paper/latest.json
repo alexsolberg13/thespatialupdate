@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-22",
+  "date": "2026-07-23",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 70,
-    "hi_f": 95,
-    "lo_f": 64,
-    "precip_pct": 5,
-    "desc": "drizzle"
+    "now_f": 63,
+    "hi_f": 79,
+    "lo_f": 62,
+    "precip_pct": 26,
+    "desc": "fog"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 70,
-      "hi_f": 95,
-      "lo_f": 64,
-      "precip_pct": 5,
-      "desc": "drizzle"
+      "now_f": 63,
+      "hi_f": 79,
+      "lo_f": 62,
+      "precip_pct": 26,
+      "desc": "fog"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 75,
-      "hi_f": 94,
-      "lo_f": 68,
-      "precip_pct": 20,
-      "desc": "rain"
+      "now_f": 64,
+      "hi_f": 82,
+      "lo_f": 61,
+      "precip_pct": 2,
+      "desc": "overcast"
     }
   ],
-  "story_count": 73,
-  "score_count": 10,
+  "story_count": 69,
+  "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Wildfire Threatening Pleasanton Prompts Evacuation Order for Thousands",
-      "source": "nytimes.com"
+      "title": "Protesters gather in Madison after man fatally shot by a police officer",
+      "source": "washingtonpost.com"
     },
     {
       "section": "World",
-      "title": "US to announce deal allowing Saudi Arabia a nuclear programme",
+      "title": "Oil prices hit $100 for the first time since May",
       "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Han pasado cinco a\u00f1os desde que una ola de calor mortal azot\u00f3 a Oreg\u00f3n. Esto es lo que ha cambiado.",
+      "title": "OpenAI blamed a hacking event on its AI models gone rogue. Here is what to know",
       "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "AMD and Anthropic reach $5 billion AI infrastructure deal",
-      "source": "theverge.com"
+      "title": "Trump says Saudi nuclear deal contingent on relations with Israel, does not include enrichment",
+      "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "NASA Joins Genesis Mission to Accelerate AI-Driven Discovery",
+      "title": "NASA Astronaut Chris Williams Closes Out Space Station Mission",
       "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "Leroy's Place New Orleans in New Orleans, Louisiana",
-      "source": "atlasobscura.com"
+      "title": "The Song Bob Dylan Called the \"Greatest Ever Written\"",
+      "source": "mentalfloss.com"
     }
   ]
 }
