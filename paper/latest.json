@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-23",
+  "date": "2026-07-24",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 63,
-    "hi_f": 79,
-    "lo_f": 62,
-    "precip_pct": 26,
+    "now_f": 61,
+    "hi_f": 82,
+    "lo_f": 60,
+    "precip_pct": 1,
     "desc": "fog"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 63,
-      "hi_f": 79,
-      "lo_f": 62,
-      "precip_pct": 26,
+      "now_f": 61,
+      "hi_f": 82,
+      "lo_f": 60,
+      "precip_pct": 1,
       "desc": "fog"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 64,
-      "hi_f": 82,
-      "lo_f": 61,
-      "precip_pct": 2,
+      "now_f": 62,
+      "hi_f": 83,
+      "lo_f": 59,
+      "precip_pct": 0,
       "desc": "overcast"
     }
   ],
-  "story_count": 69,
-  "score_count": 6,
+  "story_count": 70,
+  "score_count": 4,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Protesters gather in Madison after man fatally shot by a police officer",
-      "source": "washingtonpost.com"
+      "title": "Nolan Wells\u2019 Death Rattles Black Parents About All-White Spaces",
+      "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Oil prices hit $100 for the first time since May",
-      "source": "bbc.co.uk"
+      "title": "Hong Kong can act as \u2018super converter\u2019 for mainland China, Paul Chan says",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "OpenAI blamed a hacking event on its AI models gone rogue. Here is what to know",
-      "source": "opb.org"
+      "title": "Popular chocolatier hit with child labor lawsuit",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Trump says Saudi nuclear deal contingent on relations with Israel, does not include enrichment",
+      "title": "Treasury yields retreat, 10-year hovers around January 2025 highs",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "NASA Astronaut Chris Williams Closes Out Space Station Mission",
-      "source": "nasa.gov"
+      "title": "France evacuates Cap Ferret peninsula as Spanish wildfires merge near Madrid \u2013 Europe live",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "The Song Bob Dylan Called the \"Greatest Ever Written\"",
-      "source": "mentalfloss.com"
+      "title": "Students in Florida Discovered a 400-Year-Old Intact Pot That Reveals Conflict Among Indigenous, Spanish and English Powers",
+      "source": "smithsonianmag.com"
     }
   ]
 }
