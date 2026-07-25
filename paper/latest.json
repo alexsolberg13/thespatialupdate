@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-24",
+  "date": "2026-07-25",
   "weather": {
     "name": "Port Orchard",
     "now_f": 61,
-    "hi_f": 82,
-    "lo_f": 60,
-    "precip_pct": 1,
-    "desc": "fog"
+    "hi_f": 71,
+    "lo_f": 59,
+    "precip_pct": 7,
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
       "now_f": 61,
-      "hi_f": 82,
-      "lo_f": 60,
-      "precip_pct": 1,
-      "desc": "fog"
+      "hi_f": 71,
+      "lo_f": 59,
+      "precip_pct": 7,
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 62,
-      "hi_f": 83,
-      "lo_f": 59,
+      "now_f": 58,
+      "hi_f": 77,
+      "lo_f": 54,
       "precip_pct": 0,
-      "desc": "overcast"
+      "desc": "mostly clear"
     }
   ],
-  "story_count": 70,
-  "score_count": 4,
+  "story_count": 71,
+  "score_count": 9,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Nolan Wells\u2019 Death Rattles Black Parents About All-White Spaces",
+      "title": "From Celebration to Escalation: How Trump\u2019s Iran Cease-Fire Collapsed",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Hong Kong can act as \u2018super converter\u2019 for mainland China, Paul Chan says",
+      "title": "Police smash triad-linked drug ring using foreign women to target pubgoers",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Popular chocolatier hit with child labor lawsuit",
+      "title": "Liz Weston: Are credit card surcharges legal? What you need to know",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Treasury yields retreat, 10-year hovers around January 2025 highs",
+      "title": "Trump sued hours after new tariffs take effect, as experts say they may not hold up",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "France evacuates Cap Ferret peninsula as Spanish wildfires merge near Madrid \u2013 Europe live",
+      "title": "France and Spain race to control wildfires as more than 250,000 evacuated \u2013 live",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Students in Florida Discovered a 400-Year-Old Intact Pot That Reveals Conflict Among Indigenous, Spanish and English Powers",
-      "source": "smithsonianmag.com"
+      "title": "The Eric Clapton Classic Inspired By George Harrison's Then-Wife",
+      "source": "mentalfloss.com"
     }
   ]
 }
