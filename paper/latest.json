@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-25",
+  "date": "2026-07-26",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 61,
+    "now_f": 62,
     "hi_f": 71,
-    "lo_f": 59,
-    "precip_pct": 7,
+    "lo_f": 60,
+    "precip_pct": 11,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 61,
+      "now_f": 62,
       "hi_f": 71,
-      "lo_f": 59,
-      "precip_pct": 7,
+      "lo_f": 60,
+      "precip_pct": 11,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 58,
-      "hi_f": 77,
-      "lo_f": 54,
-      "precip_pct": 0,
-      "desc": "mostly clear"
+      "now_f": 62,
+      "hi_f": 80,
+      "lo_f": 58,
+      "precip_pct": 1,
+      "desc": "overcast"
     }
   ],
-  "story_count": 71,
+  "story_count": 66,
   "score_count": 9,
   "top": [
     {
       "section": "U.S. National",
-      "title": "From Celebration to Escalation: How Trump\u2019s Iran Cease-Fire Collapsed",
+      "title": "Paul Andrews, Founder of the Woodstock of U.F.O.s, Dies at 77",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Police smash triad-linked drug ring using foreign women to target pubgoers",
+      "title": "China has put a Polish university on its European dual-use exports blacklist. Why?",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Liz Weston: Are credit card surcharges legal? What you need to know",
+      "title": "Most Oregonians work at small businesses \u2014 or really, really big ones",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Trump sued hours after new tariffs take effect, as experts say they may not hold up",
+      "title": "Inside the S&P 500 AI boom, industrials are getting as rich as tech stocks",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "France and Spain race to control wildfires as more than 250,000 evacuated \u2013 live",
-      "source": "theguardian.com"
+      "title": "The best way to save giant sequoias may be more fire",
+      "source": "sciencedaily.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "The Eric Clapton Classic Inspired By George Harrison's Then-Wife",
+      "title": "The Best Greek Mythology Trivia Questions to Test Your Mortal Intellect",
       "source": "mentalfloss.com"
     }
   ]
