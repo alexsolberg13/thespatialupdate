@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-26",
+  "date": "2026-07-27",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 62,
-    "hi_f": 71,
-    "lo_f": 60,
-    "precip_pct": 11,
+    "now_f": 63,
+    "hi_f": 77,
+    "lo_f": 57,
+    "precip_pct": 2,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 62,
-      "hi_f": 71,
-      "lo_f": 60,
-      "precip_pct": 11,
+      "now_f": 63,
+      "hi_f": 77,
+      "lo_f": 57,
+      "precip_pct": 2,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 62,
-      "hi_f": 80,
-      "lo_f": 58,
+      "now_f": 60,
+      "hi_f": 83,
+      "lo_f": 51,
       "precip_pct": 1,
-      "desc": "overcast"
+      "desc": "clear"
     }
   ],
-  "story_count": 66,
-  "score_count": 9,
+  "story_count": 68,
+  "score_count": 7,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Paul Andrews, Founder of the Woodstock of U.F.O.s, Dies at 77",
+      "title": "What We Know About Lindsay Clancy\u2019s Trial for the Deaths of Her Children",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "China has put a Polish university on its European dual-use exports blacklist. Why?",
-      "source": "scmp.com"
+      "title": "Three dead and several injured in shooting at food festival near Seattle's Space Needle",
+      "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Most Oregonians work at small businesses \u2014 or really, really big ones",
+      "title": "Portland\u2019s passion for women\u2019s sports drew this journalist across the country: Letter from the Editor",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Inside the S&P 500 AI boom, industrials are getting as rich as tech stocks",
+      "title": "Sam Altman to meet with Trump administration, senators this week. Here's what he plans to say",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "The best way to save giant sequoias may be more fire",
-      "source": "sciencedaily.com"
+      "title": "Europe live: Officials warn that wildfires could still be burning in November",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "The Best Greek Mythology Trivia Questions to Test Your Mortal Intellect",
-      "source": "mentalfloss.com"
+      "title": "Submarine Safari in Amarilla Golf, Spain",
+      "source": "atlasobscura.com"
     }
   ]
 }
