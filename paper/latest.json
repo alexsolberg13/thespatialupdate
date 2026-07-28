@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-27",
+  "date": "2026-07-28",
   "weather": {
     "name": "Port Orchard",
     "now_f": 63,
-    "hi_f": 77,
-    "lo_f": 57,
-    "precip_pct": 2,
+    "hi_f": 73,
+    "lo_f": 61,
+    "precip_pct": 6,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
       "now_f": 63,
-      "hi_f": 77,
-      "lo_f": 57,
-      "precip_pct": 2,
+      "hi_f": 73,
+      "lo_f": 61,
+      "precip_pct": 6,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 60,
-      "hi_f": 83,
-      "lo_f": 51,
-      "precip_pct": 1,
-      "desc": "clear"
+      "now_f": 61,
+      "hi_f": 80,
+      "lo_f": 57,
+      "precip_pct": 0,
+      "desc": "partly cloudy"
     }
   ],
-  "story_count": 68,
-  "score_count": 7,
+  "story_count": 69,
+  "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "What We Know About Lindsay Clancy\u2019s Trial for the Deaths of Her Children",
+      "title": "Here Is the Schedule for Lindsey Graham\u2019s Services and Funeral",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Three dead and several injured in shooting at food festival near Seattle's Space Needle",
-      "source": "bbc.co.uk"
+      "title": "Record Chinese biotech out-licensing meets rising US scrutiny",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Portland\u2019s passion for women\u2019s sports drew this journalist across the country: Letter from the Editor",
+      "title": "Painted Hills charred by wildfire, national monument remains closed",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Sam Altman to meet with Trump administration, senators this week. Here's what he plans to say",
+      "title": "UPS expects third-quarter domestic revenue to be flat but CEO tells CNBC the company is through its 'bumps'",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Europe live: Officials warn that wildfires could still be burning in November",
+      "title": "New evacuation from tourist sites near Bordeaux as France and Spain fight wildfires",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Submarine Safari in Amarilla Golf, Spain",
-      "source": "atlasobscura.com"
+      "title": "See a Rare Ceiling Fresco From Pompeii That Archaeologists Are Carefully Reassembling, Piece by Piece, Like an Ancient Puzzle",
+      "source": "smithsonianmag.com"
     }
   ]
 }
