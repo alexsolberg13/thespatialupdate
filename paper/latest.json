@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-28",
+  "date": "2026-07-29",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 63,
-    "hi_f": 73,
-    "lo_f": 61,
-    "precip_pct": 6,
+    "now_f": 60,
+    "hi_f": 75,
+    "lo_f": 53,
+    "precip_pct": 0,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 63,
-      "hi_f": 73,
-      "lo_f": 61,
-      "precip_pct": 6,
+      "now_f": 60,
+      "hi_f": 75,
+      "lo_f": 53,
+      "precip_pct": 0,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 61,
-      "hi_f": 80,
-      "lo_f": 57,
+      "now_f": 60,
+      "hi_f": 82,
+      "lo_f": 54,
       "precip_pct": 0,
-      "desc": "partly cloudy"
+      "desc": "mostly clear"
     }
   ],
-  "story_count": 69,
+  "story_count": 72,
   "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Here Is the Schedule for Lindsey Graham\u2019s Services and Funeral",
+      "title": "Fauci Invokes the Fifth Amendment, Refusing to Answer Senate Committee Questions",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Record Chinese biotech out-licensing meets rising US scrutiny",
+      "title": "Fauci refuses to answer questions at heated Senate hearing on Covid-19 origins",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Painted Hills charred by wildfire, national monument remains closed",
+      "title": "Fans mourning Oscar-winning music legend, 56, after fatal motorcycle crash",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "UPS expects third-quarter domestic revenue to be flat but CEO tells CNBC the company is through its 'bumps'",
+      "title": "Secret Service 'illegally' surveilled Comey in Trump \u20188647\u2019 threat case: court filing",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "New evacuation from tourist sites near Bordeaux as France and Spain fight wildfires",
-      "source": "theguardian.com"
+      "title": "Understanding How Martian Auroras Are Made",
+      "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "See a Rare Ceiling Fresco From Pompeii That Archaeologists Are Carefully Reassembling, Piece by Piece, Like an Ancient Puzzle",
+      "title": "Heading to a National Park? Watch Out for Elk. They Attack People Way More Often Than Bears Do, According to a New Study",
       "source": "smithsonianmag.com"
     }
   ]

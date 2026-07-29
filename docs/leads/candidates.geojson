@@ -6,94 +6,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 3.439,
-        "mentions": 1046,
-        "actors": "ADMINISTRATION, ADVOCATE, AFGHANISTAN, AIR FORCE, AMBASSADOR, AMERICAN, BAHRAIN, BERLIN",
-        "headline": "Mamdani fomenting hate Netanyahu",
-        "synopsis": "ADMINISTRATION and ADVOCATE \u2014 diplomatic cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 332 source(s) across 1046 mentions.",
-        "sources": [
-          "http://www.heraldglobe.com/news/279212596/mamdani-fomenting-hate-netanyahu",
-          "https://abc3340.com/news/nation-world/president-donald-trump-kyiv-zelenskyy-to-meet-at-white-house-oval-office-as-ukraine-seeks-more-us-air-defenses-patriot-license-nato-summit-russia-missile-attacks-war-putin-sen-lindsey-graham-funeral",
-          "https://www.newsday.com/news/nation/carter-camacho-shotgun-capitol-georgia-v00278"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -79.4167,
-          43.6667
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Toronto, Ontario, Canada",
-        "date": "20260728",
-        "score": 2.98,
-        "mentions": 539,
-        "actors": "AUTHORITIES, CANADA, CANADIAN, CONSTABLE, CONSULATE, FIREFIGHTER, GUN FOR HIRE, GUNMAN",
-        "headline": "Toronto shooting: Jewish bakeries, US consulate targeted amid guns for hire probe, foreign interference claims",
-        "synopsis": "AUTHORITIES and CANADA \u2014 fighting / clashes (in conflict) reported near Toronto, Ontario, Canada, covered by 89 source(s) across 539 mentions.",
-        "sources": [
-          "https://www.brisbanetimes.com.au/world/north-america/toronto-reels-after-shootings-targeting-jewish-bakeries-us-consulate-20260728-p60j27.html",
-          "https://www.foxnews.com/world/gunman-fired-us-consulate-toronto-second-time-building-shot-year",
-          "https://www.thenews.com.pk/latest/1410454-us-consulate-in-toronto-targeted-in-shooting-for-second-time-this-year"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Intent to cooperate \u2014 White House, District of Columbia, United States",
-        "date": "20260728",
-        "score": 3.347,
-        "mentions": 833,
-        "actors": "A US, ADMINISTRATION, AIRCRAFT CARRIER, AMERICAN, ATTORNEY, BAGHDAD, BAHRAIN, CATHOLIC",
-        "headline": "Proposed Rules for Automatic Draft Registration for Selective Service Withdrawn \u00e2\u0080\u0093 NaturalNews.com",
-        "synopsis": "A US and ADMINISTRATION \u2014 intent to cooperate (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 308 source(s) across 833 mentions.",
-        "sources": [
-          "https://www.naturalnews.com/2026-07-28-proposed-rules-for-automatic-draft-registration-withdrawn.html",
-          "https://abc3340.com/news/nation-world/president-donald-trump-kyiv-zelenskyy-to-meet-at-white-house-oval-office-as-ukraine-seeks-more-us-air-defenses-patriot-license-nato-summit-russia-missile-attacks-war-putin-sen-lindsey-graham-funeral",
-          "http://www.bignewsnetwork.com/news/279212937/us-strategic-petroleum-reserve-falls-to-lowest-level-since-1983"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           51.5148,
           35.75
         ]
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
-        "date": "20260728",
-        "score": 2.913,
-        "mentions": 412,
-        "actors": "AIRCRAFT CARRIER, AMERICAN, BAHRAIN, CARRIER, CHINA, CIVILIAN, EMBASSY, FIREFIGHTER",
-        "headline": "Iran publicly executes two January protesters in Isfahan square",
-        "synopsis": "AIRCRAFT CARRIER and AMERICAN \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 104 source(s) across 412 mentions.",
+        "date": "20260729",
+        "score": 3.362,
+        "mentions": 985,
+        "actors": "A US, AEROSPACE, AIRCRAFT CARRIER, AL JAZEERA, AMERICAN, AMERICAN TROOPS, BRITISH, BUSINESS",
+        "headline": null,
+        "synopsis": "A US and AEROSPACE \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 256 source(s) across 985 mentions.",
         "sources": [
-          "https://www.jpost.com/middle-east/iran-news/article-903874",
-          "https://ianslive.in/166-indian-seafarers-near-strait-of-hormuz-mea--20260728164705",
-          "https://en.apa.az/asia/ft-iran-has-preserved-combat-capability-of-its-missile-forces-five-months-after-us-strikes-517877"
+          "https://www.juneesoutherncross.com.au/story/9319549/iran-rules-out-omani-proposal-to-manage-hormuz/",
+          "https://www.clickorlando.com/news/world/2026/07/29/jordan-says-it-intercepted-missiles-launched-from-iran/",
+          "https://www.arabnews.com/node/2652647/middle-east"
         ]
       }
     },
@@ -107,17 +35,17 @@
         ]
       },
       "properties": {
-        "title": "Appeal \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 3.149,
-        "mentions": 640,
-        "actors": "AFRICA, AIR FORCE, AMERICAN, ATTORNEY, AUSTRALIA, BAHAMA, BENGHAZI, BRAZIL",
-        "headline": "Trump administration urges Supreme Court to allow order targeting mail-in voting before midterms",
-        "synopsis": "AFRICA and AIR FORCE \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 167 source(s) across 640 mentions.",
+        "title": "Diplomatic cooperation \u2014 Washington, District of Columbia, United States",
+        "date": "20260729",
+        "score": 3.346,
+        "mentions": 941,
+        "actors": "ACTIVIST, ADMINISTRATION, AIR FORCE, AMERICAN, APPEALS COURT, ARMY, BEIJING, CANADA",
+        "headline": "'A true American original': The service honoring Lindsey Graham",
+        "synopsis": "ACTIVIST and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 255 source(s) across 941 mentions.",
         "sources": [
-          "https://www.republicanherald.com/2026/07/27/supreme-court-trump-elections/",
-          "https://www.militarytimes.com/news/your-navy/2026/07/27/navy-asks-private-sector-for-help-building-temporary-housing-during-renovations/",
-          "https://www.naturalnews.com/2026-07-28-proposed-rules-for-automatic-draft-registration-withdrawn.html"
+          "https://www.wisn.com/article/american-original-memorial-service-honoring-sen-lindsey-graham/73287707",
+          "https://wpde.com/news/nation-world/supporting-jimothy-members-of-congress-rally-behind-seattles-short-spined-raccoon-wild-animals-short-spine-syndrome-birth-defect-deformity-seattle-washington-ballard-neighborhood",
+          "https://www.republicanherald.com/2026/07/28/howard-university-students-unenrolled/"
         ]
       }
     },
@@ -132,16 +60,16 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 2.873,
-        "mentions": 367,
-        "actors": "ACADEMICS, AMERICAN, ATTORNEY, CANADA, CARRIER, CHILE, CHINA, CITIZEN",
-        "headline": "Georgia teen pleads guilty to gun charge for running onto Capitol grounds with loaded shotgun",
-        "synopsis": "ACADEMICS and AMERICAN \u2014 fighting / clashes (in conflict) reported near Washington, District of Columbia, United States, covered by 104 source(s) across 367 mentions.",
+        "date": "20260729",
+        "score": 3.123,
+        "mentions": 629,
+        "actors": "ADMINISTRATION, AEROSPACE, AIR FORCE, AMERICAN, AMERICAN TROOPS, BELIEVER, BOSS, CHINA",
+        "headline": "Urgent: U.S. intercepted Iran's \"surprise attack\" on American forces in Middle East: CENTCOM-Xinhua",
+        "synopsis": "ADMINISTRATION and AEROSPACE \u2014 fighting / clashes (in conflict) reported near Washington, District of Columbia, United States, covered by 158 source(s) across 629 mentions.",
         "sources": [
-          "https://wtop.com/dc/2026/07/georgia-teen-pleads-guilty-to-gun-charge-for-running-onto-capitol-grounds-with-loaded-shotgun/",
-          "https://www.wfmd.com/2026/07/28/kash-patels-attorney-rejects-the-atlantics-effort-to-dismiss-defamation-lawsuit-vows-accountability/",
-          "https://www.rfdtv.com/beef-herd-shrinks-while-replacement-heifers-increase-slightly"
+          "https://english.news.cn/northamerica/20260729/ca83557d45ec4e19a0e0d8462a78d128/c.html",
+          "https://www.winnipegfreepress.com/arts-and-life/life/faith/2026/07/29/jordan-says-it-intercepted-missiles-launched-from-iran",
+          "https://www.arabnews.com/node/2652648/world"
         ]
       }
     },
@@ -150,22 +78,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30.5167,
-          50.4333
+          -77.0364,
+          38.8951
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 Kyiv, Kyyiv, Misto, Ukraine",
-        "date": "20260728",
-        "score": 3.002,
-        "mentions": 414,
-        "actors": "AIRCRAFT CARRIER, BRITAIN, IRAN, ISRAEL, ISRAELI, KIEV, KYIV, LEBANON",
-        "headline": "Zelenskyy and Trump meet at White House before Graham funeral",
-        "synopsis": "AIRCRAFT CARRIER and BRITAIN \u2014 intent to cooperate (engaging in cooperation) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 172 source(s) across 414 mentions.",
+        "title": "Consultation \u2014 White House, District of Columbia, United States",
+        "date": "20260729",
+        "score": 3.228,
+        "mentions": 689,
+        "actors": "ACTIVIST, AFRICA, AIR FORCE, AMERICAN, ARGENTINA, BURKINA FASO, CABINET, CHINA",
+        "headline": "'Positive and productive': Zelenskyy and Netanyahu meet President Trump at White House to discuss wars",
+        "synopsis": "ACTIVIST and AFRICA \u2014 consultation (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 241 source(s) across 689 mentions.",
         "sources": [
-          "https://www.wokv.com/news/politics/zelenskyy-will-visit/ZUXZBPJQBE6LDORZJHNBGQSX6A/",
-          "https://www.winchesterstar.com/associated_press/washington/zelenskyy-will-visit-trump-at-the-white-house-before-sen-grahams-funeral/article_f2c96e93-c188-54e3-bde8-c821075cba4f.html",
-          "https://en.interfax.com.ua/news/general/1188653.html"
+          "https://www.ketv.com/article/zelenskyy-netanyahu-meet-trump-white-house-discuss-wars/73288330",
+          "https://allafrica.com/stories/202607290145.html",
+          "https://www.finanznachrichten.de/nachrichten-2026-07/69152794-biotech-stocks-at-52-week-highs-incy-rises-with-q2-results-plse-si-bvs-lbrx-020.htm"
         ]
       }
     },
@@ -180,16 +108,16 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Gaza, Israel (general), Israel",
-        "date": "20260728",
-        "score": 2.828,
-        "mentions": 354,
-        "actors": "A US, ARMY, BRAZIL, BRITISH, CIVILIAN, CRIMINAL, DEMOCRATIC PARTY, DETAINEE",
-        "headline": "Netanyahu in the White House: What\u2019s on the agenda and what\u2019s next?",
-        "synopsis": "A US and ARMY \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 86 source(s) across 354 mentions.",
+        "date": "20260729",
+        "score": 2.89,
+        "mentions": 364,
+        "actors": "AL JAZEERA, AMERICAN, AMERICAN TROOPS, ARGENTINA, CIVILIAN, COMMANDER, DRUZE, GAZA",
+        "headline": null,
+        "synopsis": "AL JAZEERA and AMERICAN \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 123 source(s) across 364 mentions.",
         "sources": [
-          "https://dominicanrepublicpost.com/netanyahu-in-the-white-house-whats-on-the-agenda-and-whats-next/",
-          "https://aa.com.tr/en/us-israel-iran-war/us-warplanes-take-off-from-israel-to-attack-iran-israeli-defense-minister-says/4011451",
-          "https://www.middleeasteye.net/profile/israel-gadi-eisenkot"
+          "https://www.nynganobserver.com.au/story/9319550/jewish-medicos-raise-alarm-over-patient-safety-fears/",
+          "https://www.al-monitor.com/originals/2026/07/explainer-who-are-iraqs-iranian-backed-armed-groups",
+          "https://www.christianpost.com/voices/israel-us-and-the-judgment-of-god-on-iran.html"
         ]
       }
     },
@@ -203,17 +131,17 @@
         ]
       },
       "properties": {
-        "title": "Consultation \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 2.998,
-        "mentions": 458,
-        "actors": "AMERICAN, CHINA, FARMER, GAZA, IRAN, ISLAMIC, ISRAEL, ISRAELI",
-        "headline": "America\u2019s Changing Policy on Afghanistan",
-        "synopsis": "AMERICAN and CHINA \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 137 source(s) across 458 mentions.",
+        "title": "Appeal \u2014 Washington, District of Columbia, United States",
+        "date": "20260729",
+        "score": 3.151,
+        "mentions": 640,
+        "actors": "ADMINISTRATION, AFRICANS, AIR FORCE, AMERICAN, ASSOCIATED PRESS, BAGHDAD, BEIJING, BELGIUM",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AFRICANS \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 180 source(s) across 640 mentions.",
         "sources": [
-          "https://thediplomat.com/2026/07/americas-changing-policy-on-afghanistan/",
-          "https://www.thenationalnews.com/business/energy/2026/07/28/syria-has-moved-21m-tonnes-of-iraqi-fuel-to-europe-by-road-since-april/",
-          "https://aninews.in/news/world/us/nobody-tells-me-what-we-should-be-selling-trump-on-netanyahus-opposition-to-proposed-f-35-jet-deal20260728063820/"
+          "https://khow.iheart.com/content/2026-07-29-fcc-bans-chinese-humanoid-robots-over-security-concerns/",
+          "https://www.republicanherald.com/2026/07/28/iran-us-troops-missile-attack/",
+          "https://www.yahoo.com/news/politics/articles/trump-asks-supreme-court-throw-232649577.html"
         ]
       }
     },
@@ -222,70 +150,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          77.2167,
-          28.6667
+          -77.0643,
+          38.9435
         ]
       },
       "properties": {
-        "title": "Protest \u2014 Delhi, Delhi, India",
-        "date": "20260728",
-        "score": 2.801,
-        "mentions": 340,
-        "actors": "AMIT, AUTHORITIES, BIHAR, CONGRESS, CRIMINAL, DELHI, EDUCATION MINIST, GANGSTER",
-        "headline": "NEET protests: SC moots independent probe into police excesses, orders release of detained minors",
-        "synopsis": "AMIT and AUTHORITIES \u2014 protest (in conflict) reported near Delhi, Delhi, India, covered by 80 source(s) across 340 mentions.",
+        "title": "Rejection \u2014 University Of The District Of Columbia, District of Columbia, United States",
+        "date": "20260729",
+        "score": 2.765,
+        "mentions": 312,
+        "actors": "ACTOR, ADMINISTRATION, AMERICAN, APPEALS COURT, BRITAIN, CHINA, CHINESE, CHRISTIAN",
+        "headline": "Some schools are extending admissions for students unenrolled by Howard University",
+        "synopsis": "ACTOR and ADMINISTRATION \u2014 rejection (in conflict) reported near University Of The District Of Columbia, District of Columbia, United States, covered by 81 source(s) across 312 mentions.",
         "sources": [
-          "https://www.thehindu.com/news/national/supreme-court-neet-jantar-mantar-cjp-delhi-protest-police-excesses-hearing-updates-july-28-2026/article71275783.ece",
-          "https://www.moneycontrol.com/news/india/jantar-mantar-surveillance-row-why-this-ai-powered-facial-recognition-tech-is-drawing-scrutiny-13985954.html",
-          "https://www.yahoo.com/news/politics/articles/where-does-india-cockroach-movement-125500252.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Yield/concede \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 2.925,
-        "mentions": 430,
-        "actors": "A US, ADMINISTRATION, AMERICAN, ATTORNEY, CANADIAN, CHIEF OF STAFF, COMMUNITY, COMPANY",
-        "headline": "Trump urges Thune to keep Senate in session, possibly end filibuster for SAVE America Act",
-        "synopsis": "A US and ADMINISTRATION \u2014 yield/concede (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 102 source(s) across 430 mentions.",
-        "sources": [
-          "https://upnorthlive.com/news/nation-world/trump-pressures-thune-to-keep-senate-in-session-end-filibuster-for-save-america-act-recess-john-thune-august-citizenship-id",
-          "https://www.yahoo.com/news/politics/articles/chad-announces-withdrawal-international-criminal-075018663.html",
-          "https://english.news.cn/northamerica/20260728/b2a81e97cc164d49b7398bac630211fe/c.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Rejection \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 2.755,
-        "mentions": 305,
-        "actors": "ADMINISTRATION, AMERICAN, ASEAN, ATTORNEY, ATTORNEY GENERAL, BEIJING, BRAZIL, CHAMBER",
-        "headline": "Chad announces withdrawal from International Criminal Court",
-        "synopsis": "ADMINISTRATION and AMERICAN \u2014 rejection (in conflict) reported near Washington, District of Columbia, United States, covered by 76 source(s) across 305 mentions.",
-        "sources": [
-          "https://www.yahoo.com/news/politics/articles/chad-announces-withdrawal-international-criminal-075018663.html",
-          "https://www.mondaq.com:443/unitedstates/terrorism-homeland-security-defence/1823336/planes-trains-and-continuing-resolutions",
-          "https://jewishworldreview.com/0726/nover072826.php"
+          "https://www.republicanherald.com/2026/07/28/howard-university-students-unenrolled/",
+          "https://www.samaa.tv/2087354354-us-saudi-arabia-target-iran-backed-groups-in-iraq-after-drone-attacks",
+          "https://www.mondaq.com:443/unitedstates/securities/1823828/the-high-price-of-insider-information-what-prediction-markets-mean-for-investment-funds-and-corporate-clients"
         ]
       }
     },
@@ -300,16 +180,16 @@
       },
       "properties": {
         "title": "Diplomatic cooperation \u2014 Tehran, Tehran, Iran",
-        "date": "20260728",
-        "score": 2.846,
-        "mentions": 357,
-        "actors": "AFGHANISTAN, AMBASSADOR, AMERICAN, ARMED GROUP, BRITAIN, DEFENSE MINIST, IRAN, IRANIAN",
-        "headline": "Saudi Arabia slams Iraq after drone attacks by Iran-backed militias",
-        "synopsis": "AFGHANISTAN and AMBASSADOR \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 94 source(s) across 357 mentions.",
+        "date": "20260729",
+        "score": 2.935,
+        "mentions": 410,
+        "actors": "ADMINISTRATION, ADMIRAL, CHINA, CHINESE, COMPANY, DEPUTY, FRANCE, GOVERNMENT",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and ADMIRAL \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 126 source(s) across 410 mentions.",
         "sources": [
-          "http://www.jpost.com/middle-east/article-903884",
-          "https://www.bankingnews.gr/diethni/articles/890869/trump-s-trick-scenario-of-nato-involvement-in-war-with-iran-3-scenarios-following-caspian-strike%20title=",
-          "http://www.bignewsnetwork.com/news/279212811/with-iran-and-ukraine-high-on-agenda-trump-to-welcome-zelensky-and-netanyahu-to-white-house"
+          "https://www.samaa.tv/2087354369-iran-condemns-us-saudi-strikes-in-iraq-as-clear-aggression",
+          "https://www.khaama.com/trump-honors-lindsey-graham-as-a-true-american-original-at-washington-memorial/",
+          "https://www.worthynews.com/116327-iran-fires-ballistic-missiles-at-u-s-forces-in-jordan-triggering-joint-american-saudi-strikes-in-iraq"
         ]
       }
     },
@@ -324,16 +204,16 @@
       },
       "properties": {
         "title": "Threat \u2014 Tehran, Tehran, Iran",
-        "date": "20260728",
-        "score": 2.66,
-        "mentions": 259,
-        "actors": "A US, AMERICAN, HERITAGE FOUNDATION, HINDU, INTELLIGENCE, IRAN, IRANIAN, ISRAEL",
-        "headline": "Trump claims US and Iran having friendly talks",
-        "synopsis": "A US and AMERICAN \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 61 source(s) across 259 mentions.",
+        "date": "20260729",
+        "score": 2.737,
+        "mentions": 301,
+        "actors": "A US, AMERICAN, AMERICAN TROOPS, CHINA, CIVILIAN, COMMANDER, COMPANIES, DEPUTY",
+        "headline": null,
+        "synopsis": "A US and AMERICAN \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 74 source(s) across 301 mentions.",
         "sources": [
-          "http://www.myanmarnews.net/news/279213378/trump-claims-us-and-iran-having-friendly-talks",
-          "https://www.dailyexcelsior.com/iran-oman-saudi-arabia-call-for-joint-diplomatic-efforts-to-secure-strait-of-hormuz/",
-          "https://www.juancole.com/2026/07/american-enforcing-maritime.html"
+          "https://www.juneesoutherncross.com.au/story/9319549/iran-rules-out-omani-proposal-to-manage-hormuz/",
+          "https://www.theguardian.com/us-news/2026/jul/29/first-thing-us-blocks-iranian-missile-barrage",
+          "https://www.naturalnews.com/2026-07-29-trump-threatens-military-action-against-houthis-iran.html"
         ]
       }
     },
@@ -342,22 +222,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51.5148,
-          35.75
+          -77.0364,
+          38.8951
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 Tehran, Tehran, Iran",
-        "date": "20260728",
-        "score": 2.82,
-        "mentions": 325,
-        "actors": "AMERICAN, DEFENSE MINIST, DEPUTY, EBRAHIM AZIZI, IRAN, IRANIAN, ISLAMIC, ISRAEL",
-        "headline": "How the Houthis Could Expand the Iran War and Disrupt Global Shipping",
-        "synopsis": "AMERICAN and DEFENSE MINIST \u2014 intent to cooperate (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 98 source(s) across 325 mentions.",
+        "title": "Intent to cooperate \u2014 Washington, District of Columbia, United States",
+        "date": "20260729",
+        "score": 2.914,
+        "mentions": 404,
+        "actors": "ABU DHABI, ADMINISTRATION, AIR FORCE, AMERICAN, ATTORNEY, BEIJING, BRAZIL, BRAZILIAN",
+        "headline": "Trump's critical minerals push faces U.S. supply shortfall",
+        "synopsis": "ABU DHABI and ADMINISTRATION \u2014 intent to cooperate (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 115 source(s) across 404 mentions.",
         "sources": [
-          "https://indianexpress.com/article/explained/explained-global/iran-war-houthi-red-sea-shipping-explained-10807399/",
-          "https://www.hindustantimes.com/world-news/trumps-warning-despite-breakthrough-hopes-omans-crucial-offer-for-iran-over-hormuz-latest-updates-in-us-iran-war-101785224365102.html",
-          "https://www.azernews.az/analysis/261635.html"
+          "http://www.newzealandstar.com/news/279212505/trump-s-critical-minerals-push-faces-u-s-supply-shortfall",
+          "https://www.kezi.com/news/national/lindsey-graham-eulogized-as-an-american-original-at-services-drawing-world-leaders-in-washington/article_fd343b6d-7021-5109-b3b5-d05d933244bc.html",
+          "https://wflafm.iheart.com/content/2026-07-28-openais-altman-to-meet-with-wh-officials/"
         ]
       }
     },
@@ -366,22 +246,70 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68333,
-          40.4
+          37.6156,
+          55.7522
         ]
       },
       "properties": {
-        "title": "Fighting / clashes \u2014 Madrid, Madrid, Spain",
-        "date": "20260728",
-        "score": 2.656,
-        "mentions": 267,
-        "actors": "AUTHORITIES, EUROPE, FIGHTER, FIREFIGHTER, FRANCE, FRENCH, GREECE, ITALY",
-        "headline": "Wildfires Q&A: submit your holiday questions to our travel expert",
-        "synopsis": "AUTHORITIES and EUROPE \u2014 fighting / clashes (in conflict) reported near Madrid, Madrid, Spain, covered by 56 source(s) across 267 mentions.",
+        "title": "Fighting / clashes \u2014 Kremlin, Moskva, Russia",
+        "date": "20260729",
+        "score": 2.731,
+        "mentions": 289,
+        "actors": "AFRICA, AUTHORITIES, DONETSK, FRENCH, IRAN, IRANIAN, ISRAEL, ISRAELI",
+        "headline": "Ukraine negotiator: 'We have the upper hand'",
+        "synopsis": "AFRICA and AUTHORITIES \u2014 fighting / clashes (in conflict) reported near Kremlin, Moskva, Russia, covered by 78 source(s) across 289 mentions.",
         "sources": [
-          "https://www.thetimes.com/travel/advice/q-and-a-our-travel-expert-answers-your-questions-about-the-wildfires-sp7pq526k",
-          "https://www.yahoo.com/news/world/articles/photos-show-destruction-france-spain-121645964.html",
-          "https://www.dw.com/en/heat-wave-threatens-to-worsen-france-spain-wildfires/a-78137994"
+          "https://www.kmxt.org/2026-07-28/ukraine-negotiator-we-have-the-upper-hand",
+          "https://www.hurriyetdailynews.com/russia-issues-international-wanted-notice-for-telegram-chief-durov-224956",
+          "https://www.rferl.org/a/russia-migration-migrants-kyrgyzstan-tajikistan-uzbekistan-central-asia/33816803.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5167,
+          50.4333
+        ]
+      },
+      "properties": {
+        "title": "Consultation \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260729",
+        "score": 2.786,
+        "mentions": 293,
+        "actors": "AMERICAN, FINLAND, FINNISH, IRAN, IRAQ, ISRAEL, LAWMAKER, LOCKHEED MARTIN",
+        "headline": "Ukraine negotiator: 'We have the upper hand'",
+        "synopsis": "AMERICAN and FINLAND \u2014 consultation (engaging in cooperation) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 104 source(s) across 293 mentions.",
+        "sources": [
+          "https://www.kmxt.org/2026-07-28/ukraine-negotiator-we-have-the-upper-hand",
+          "https://www.independent.co.uk/news/world/middle-east/trump-netanyahu-zelensky-meeting-white-house-b3023574.html",
+          "https://www.spotlightnepal.com/2026/07/29/trump-praises-back-back-meetings-netanyahu/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2167,
+          28.6667
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Delhi, Delhi, India",
+        "date": "20260729",
+        "score": 2.704,
+        "mentions": 304,
+        "actors": "ADMINISTRATION, AMIT, ASSEMBLIES, BANK, BIHAR, CAREGIVER, CENTRAL BANK, CHIEF JUSTICE",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AMIT \u2014 coercion / seizure (in conflict) reported near Delhi, Delhi, India, covered by 60 source(s) across 304 mentions.",
+        "sources": [
+          "https://www.newkerala.com/news/a/st-stephens-college-bans-shorts-classrooms-library-under-570.htm",
+          "https://www.hindustantimes.com/cities/delhi-news/cops-bid-to-arrest-student-leader-aishe-ghosh-cpi-m-cries-foul-101785262082192.html",
+          "https://www.livemint.com/news/india-among-regions-at-highest-risk-as-strait-of-hormuz-closure-threatens-global-marine-biodiversity-11785325438092.html"
         ]
       }
     },
@@ -396,40 +324,16 @@
       },
       "properties": {
         "title": "Consultation \u2014 Tehran, Tehran, Iran",
-        "date": "20260728",
-        "score": 2.811,
-        "mentions": 315,
-        "actors": "AIR FORCE, AMERICAN, IRAN, IRANIAN, ISLAMIC, ISRAEL, LEBANON, MILITARY",
-        "headline": "US-Iran war",
-        "synopsis": "AIR FORCE and AMERICAN \u2014 consultation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 99 source(s) across 315 mentions.",
+        "date": "20260729",
+        "score": 2.768,
+        "mentions": 299,
+        "actors": "CHINA, CHINESE, EMIRATI, FINLAND, FINNISH, IRAN, IRANIAN, IRAQ",
+        "headline": "More US Aircraft At Risk? China To Equip Iranian Military With 400 Shoulder-Fired Missile System",
+        "synopsis": "CHINA and CHINESE \u2014 consultation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 90 source(s) across 299 mentions.",
         "sources": [
-          "https://dunyanews.tv/en/Event-Reporting/268",
-          "https://dominicanrepublicpost.com/netanyahu-in-the-white-house-whats-on-the-agenda-and-whats-next/",
-          "http://europe.chinadaily.com.cn/a/202607/28/WS6a68002aa310986e2b467994.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Coercion / seizure \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 2.604,
-        "mentions": 222,
-        "actors": "ACTIVIST, ADMINISTRATION, AGRICULTURE SECRETARY, AMERICAN, ATTORNEY, BANK, BUREAUCRAT, CIRCUIT COURT OF APPEALS",
-        "headline": "Pro-life dad wins seven-figure settlement in Biden DOJ FACE Act case",
-        "synopsis": "ACTIVIST and ADMINISTRATION \u2014 coercion / seizure (in conflict) reported near Washington, District of Columbia, United States, covered by 60 source(s) across 222 mentions.",
-        "sources": [
-          "https://www.foxnews.com/media/first-fox-trump-doj-reaches-settlement-pro-life-protester-targeted-biden-admin",
-          "https://www.jns.org/opinion/avi-abelow/trump-just-delivered-israel-a-major-victory-in-lebanon",
-          "https://www.yahoo.com/news/us/articles/local-sheriff-office-host-three-074303295.html"
+          "https://www.newsx.com/world/more-us-aircraft-at-risk-china-to-equip-iranian-military-with-400-shoulder-fired-missile-system-253976/",
+          "https://www.africanews.com/2026/07/29/israeli-pm-holds-first-meeting-with-us-president-since-start-of-iran-war/",
+          "https://www.businesstimes.com.sg/international/global/oman-presents-iran-gulf-backed-plan-voluntary-fees-hormuz-transit-us-rejects-tolls"
         ]
       }
     },
@@ -443,17 +347,17 @@
         ]
       },
       "properties": {
-        "title": "Diplomatic cooperation \u2014 Kyiv, Kyyiv, Misto, Ukraine",
-        "date": "20260728",
-        "score": 2.776,
-        "mentions": 282,
-        "actors": "ADVOCATE, AMERICAN, AZERBAIJAN, BRITAIN, BRITISH, CHINA, DOWNING STREET, IRAN",
-        "headline": "UK grants Ukraine access to 'Stone Cloak' jamming tech as Burnham hosts Zelenskyy for talks",
-        "synopsis": "ADVOCATE and AMERICAN \u2014 diplomatic cooperation (engaging in cooperation) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 101 source(s) across 282 mentions.",
+        "title": "Fighting / clashes \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260729",
+        "score": 2.697,
+        "mentions": 258,
+        "actors": "CIVILIAN, DONETSK, FRANCE, FREIGHTER, INDUSTRY, IRAN, IRANIAN, ISRAELI",
+        "headline": "'Positive and productive': Zelenskyy and Netanyahu meet President Trump at White House to discuss wars",
+        "synopsis": "CIVILIAN and DONETSK \u2014 fighting / clashes (in conflict) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 80 source(s) across 258 mentions.",
         "sources": [
-          "http://www.heraldglobe.com/news/279212659/uk-grants-ukraine-access-to-stone-cloak-jamming-tech-as-burnham-hosts-zelenskyy-for-talks",
-          "https://www.bankingnews.gr/diethni/articles/890816/fierce-outburst-by-russian-generals-why-aren-t-we-eliminating-zelensky-the-putin-taboo-and-the-risk-of-total-ignition%20title=",
-          "https://www.aol.co.uk/articles/ukraine-batters-moscow-hours-crucial-125014000.html"
+          "https://www.ketv.com/article/zelenskyy-netanyahu-meet-trump-white-house-discuss-wars/73288330",
+          "https://www.kmxt.org/2026-07-28/ukraine-negotiator-we-have-the-upper-hand",
+          "https://www.naturalnews.com/2026-07-28-three-injured-ukranian-drone-strike-warehouses-st-petersburg.html"
         ]
       }
     },
@@ -462,46 +366,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          144.967,
-          -37.8167
+          51.5148,
+          35.75
         ]
       },
       "properties": {
-        "title": "Coercion / seizure \u2014 Melbourne, Victoria, Australia",
-        "date": "20260728",
-        "score": 2.604,
-        "mentions": 251,
-        "actors": "AUSTRALIA, CAPTAIN, COUNSEL, DRUG KINGPIN, GANG, GANGLAND, IRAQ, IRAQI",
-        "headline": "Melbourne businessman found guilty of rape, but his name remains a secret",
-        "synopsis": "AUSTRALIA and CAPTAIN \u2014 coercion / seizure (in conflict) reported near Melbourne, Victoria, Australia, covered by 47 source(s) across 251 mentions.",
+        "title": "Yield/concede \u2014 Tehran, Tehran, Iran",
+        "date": "20260729",
+        "score": 2.755,
+        "mentions": 313,
+        "actors": "AFGHAN, AFGHANISTAN, AMERICAN, ARABIAN SEA, DJIBOUTI, GENEVA, IRAN, IRANIAN",
+        "headline": "US-Iran war: No quick end to the war as US and Saudis strike Iran\u2019s allies in Iraq",
+        "synopsis": "AFGHAN and AFGHANISTAN \u2014 yield/concede (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 76 source(s) across 313 mentions.",
         "sources": [
-          "https://www.brisbanetimes.com.au/national/victoria/melbourne-businessman-found-guilty-of-rape-but-his-name-remains-a-secret-20260723-p60hur.html",
-          "https://www.begadistrictnews.com.au/story/9319485/deported-drug-kingpin-sentenced-to-life-by-iraqi-court/",
-          "https://www.smh.com.au/environment/sustainability/ev-industry-fights-back-against-copper-thieves-targeting-public-chargers-20260723-p60hw0.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.116667,
-          51.5
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 London, London, City of, United Kingdom",
-        "date": "20260728",
-        "score": 2.729,
-        "mentions": 304,
-        "actors": "ALBERT, ARMY, BRITAIN, BUSINESS, COMMUNITY, DETECTIVE, DOWNING STREET, EGYPT",
-        "headline": "David Hockney print hidden in book for 46 years before \u00a341,000 sale",
-        "synopsis": "ALBERT and ARMY \u2014 diplomatic cooperation (engaging in cooperation) reported near London, London, City of, United Kingdom, covered by 66 source(s) across 304 mentions.",
-        "sources": [
-          "https://www.wharfedaleobserver.co.uk/news/26416684.david-hockney-print-hidden-book-46-years-41-000-sale/",
-          "https://www.clactonandfrintongazette.co.uk/news/26416093.boy-critical-condition-mersea-beach-incident/",
-          "https://terradaily.com/td-in-1856-a-14-year-old-chemistry-student-named-william-perkin-was-trying-to-synthesise-quinine-in-his-parents-attic-in-london-when-he-ended-up-with-a-black-sludge-that-dyed-silk-a-brilliant-purple-l/"
+          "https://www.watoday.com.au/world/middle-east/no-quick-end-to-the-war-as-us-and-saudi-strike-iran-s-allies-in-iraq-20260729-p60jsg.html",
+          "https://www.businesstimes.com.sg/international/aramco-mulls-new-oil-pricing-asia-houthis-threaten-flows",
+          "https://www.ynetnews.com/article/rk5ivqvbmg"
         ]
       }
     },
@@ -516,16 +396,16 @@
       },
       "properties": {
         "title": "Threat \u2014 Washington, District of Columbia, United States",
-        "date": "20260728",
-        "score": 2.591,
-        "mentions": 209,
-        "actors": "ADMINISTRATION, AMERICAN, ATTORNEY, BRITISH, BUSINESS, CHINA, CORRESPONDENT, CRIMINAL",
-        "headline": "Q2 Lobbying Revenue Reaches New Peak for US Firms",
-        "synopsis": "ADMINISTRATION and AMERICAN \u2014 threat (in conflict) reported near Washington, District of Columbia, United States, covered by 63 source(s) across 209 mentions.",
+        "date": "20260729",
+        "score": 2.662,
+        "mentions": 251,
+        "actors": "A US, ACTOR, ADMINISTRATION, AMERICAN, AMERICAN TROOPS, ATTORNEY, BEIJING, BERLIN",
+        "headline": "GOP Senators Use Filibuster As Excuse To Do Nothing For Voters",
+        "synopsis": "A US and ACTOR \u2014 threat (in conflict) reported near Washington, District of Columbia, United States, covered by 69 source(s) across 251 mentions.",
         "sources": [
-          "https://www.jdjournal.com/2026/07/28/us-firms-q2-lobbying-revenue-record-2026/",
-          "https://islandsbusiness.com/news-break/mixed-messages-over-solomons-us-security-deal/",
-          "https://www.israelnationalnews.com/flashes/690677"
+          "https://thefederalist.com/2026/07/29/gop-senators-use-the-filibuster-as-an-excuse-to-do-nothing-for-voters/",
+          "https://www.riotimesonline.com/copper-markets-latam-wednesday-july-29-2026/",
+          "https://indianexpress.com/article/world/us-saudi-strikes-iran-war-missile-attack-latest-updates-west-asia-crisis-10808319/"
         ]
       }
     },
@@ -534,22 +414,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.3333,
-          31.4167
+          37.6156,
+          55.7522
         ]
       },
       "properties": {
-        "title": "Diplomatic cooperation \u2014 Gaza, Israel (general), Israel",
-        "date": "20260728",
-        "score": 2.704,
-        "mentions": 257,
-        "actors": "ADMINISTRATION, AMERICAN, ASEAN, BRAZIL, CANADA, CHINA, CONGRESS, FOREIGN AFFAIRS MINIST",
-        "headline": "Netanyahu to meet Trump for first time since Iran war",
-        "synopsis": "ADMINISTRATION and AMERICAN \u2014 diplomatic cooperation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 80 source(s) across 257 mentions.",
+        "title": "Diplomatic cooperation \u2014 Moscow, Moskva, Russia",
+        "date": "20260729",
+        "score": 2.745,
+        "mentions": 286,
+        "actors": "AFRICA, ANKARA, AZERBAIJAN, BARACK OBAMA, CHINA, CIVILIAN, COMPANY, DUBAI",
+        "headline": "Zelenskyy has 'good meeting' with Trump at White House as he seeks more cooperation with US",
+        "synopsis": "AFRICA and ANKARA \u2014 diplomatic cooperation (engaging in cooperation) reported near Moscow, Moskva, Russia, covered by 86 source(s) across 286 mentions.",
         "sources": [
-          "https://www.al-monitor.com/originals/2026/07/netanyahu-heads-us-first-trump-meeting-iran-war",
-          "https://www.middleeastmonitor.com/20260728-former-new-york-mayor-secretly-honoured-israeli-soldiers-amid-gaza-genocide/",
-          "https://www.deccanchronicle.com/world/netanyahu-meets-trump-amid-iran-war-gaza-tensions-and-diplomatic-differences-1974524"
+          "https://www.thehindubusinessline.com/news/world/zelenskyy-has-good-meeting-with-trump-at-white-house-as-he-seeks-more-cooperation-with-us/article71279662.ece",
+          "https://www.kyivpost.com/post/81276",
+          "https://pragativadi.com/us-senate-advances-russia-sanctions-bill-india-faces-risk-of-up-to-100-tariffs-over-russian-oil-imports/"
         ]
       }
     },
@@ -558,22 +438,70 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.3333,
-          31.4167
+          51.5148,
+          35.75
         ]
       },
       "properties": {
-        "title": "Rejection \u2014 Gaza, Israel (general), Israel",
-        "date": "20260728",
+        "title": "Rejection \u2014 Tehran, Tehran, Iran",
+        "date": "20260729",
+        "score": 2.583,
+        "mentions": 200,
+        "actors": "ACTOR, BEIJING, CITIZEN, COMPANY, FOREIGN MINIST, GOVERNMENT, HASSAN, IRAN",
+        "headline": null,
+        "synopsis": "ACTOR and BEIJING \u2014 rejection (in conflict) reported near Tehran, Tehran, Iran, covered by 69 source(s) across 200 mentions.",
+        "sources": [
+          "https://www.samaa.tv/2087354354-us-saudi-arabia-target-iran-backed-groups-in-iraq-after-drone-attacks",
+          "https://timesofindia.indiatimes.com/world/middle-east/middle-east-war-escalates-multiple-dead-in-us-saudi-strikes-in-iraq-iran-targets-hormuz-ships-top-developments/articleshow/132699604.cms",
+          "https://www.businesstimes.com.sg/international/us-says-it-intercepted-iranian-ballistic-missiles-launched-towards-us-forces-middle-east"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Aid \u2014 Washington, District of Columbia, United States",
+        "date": "20260729",
+        "score": 2.714,
+        "mentions": 308,
+        "actors": "ADMINISTRATION, AMERICAN, AMMAN, ASSOCIATED PRESS, ATLANTA, ATTORNEY GENERAL, BURGLAR, BUSINESS",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 aid (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 62 source(s) across 308 mentions.",
+        "sources": [
+          "https://www.yoursourceone.com/news/national_news/teleprompter-operator-accused-of-betting-on-trump-speeches-is-out-of-a-job/article_d2a361f5-6732-5b86-aba3-8d1f7245ea22.html",
+          "https://isp.netscape.com:443/news/world/story/0001/20260728/8d2ae29300a8dc5495a4ce56c5312bf1",
+          "https://www.wbap.com/2026/07/29/on-this-day-in-1776-congress-gave-washington-another-aide-as-war-outpaced-his-staff/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2167,
+          28.6667
+        ]
+      },
+      "properties": {
+        "title": "Protest \u2014 Delhi, Delhi, India",
+        "date": "20260729",
         "score": 2.579,
-        "mentions": 214,
-        "actors": "ADVOCATE, GAZA, GOVERNMENT, HAMAS, HELEN CLARK, INTELLIGENCE CHIEF, IRAN, ISRAEL",
-        "headline": "Mamdani fomenting hate Netanyahu",
-        "synopsis": "ADVOCATE and GAZA \u2014 rejection (in conflict) reported near Gaza, Israel (general), Israel, covered by 56 source(s) across 214 mentions.",
+        "mentions": 239,
+        "actors": "ACTIVIST, AMIT, ASSEMBLIES, BIHAR, CHIEF JUSTICE, CONGRESS, CRIMINAL, DELHI",
+        "headline": "EXPLAINED: Why Supreme Court protected CJP protesters but didn't club FIRs",
+        "synopsis": "ACTIVIST and AMIT \u2014 protest (in conflict) reported near Delhi, Delhi, India, covered by 47 source(s) across 239 mentions.",
         "sources": [
-          "http://www.heraldglobe.com/news/279212596/mamdani-fomenting-hate-netanyahu",
-          "http://www.russiaherald.com/news/279209559/with-karim-khan-ousted-the-international-criminal-court-looks-ahead",
-          "https://www.middleeasteye.net/profile/israel-gadi-eisenkot"
+          "https://www.theweek.in/news/india/2026/07/29/explained-why-supreme-court-protected-cjp-protesters-but-didn-t-club-firs.html",
+          "https://aninews.in/news/national/politics/rahul-gandhi-used-unparliamentary-languagewhat-is-more-unfortunate-than-calling-youth-of-the-country-idiots-jitendra-singh-in-lok-sabha20260729155207/",
+          "https://www.aljazeera.com/news/2026/7/29/how-has-the-indian-government-responded-to-cockroach-protests"
         ]
       }
     },
@@ -582,22 +510,94 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.3333,
-          31.4167
+          30.5167,
+          50.4333
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 Gaza, Israel (general), Israel",
-        "date": "20260728",
-        "score": 2.698,
-        "mentions": 248,
-        "actors": "EGYPT, EGYPTIAN, EUROPEAN, FIGHTER JET, GAZA, HAMAS, IRAN, ISRAEL",
-        "headline": "Trump expresses frustrations with Netanyahu before their first meeting since launching the Iran war",
-        "synopsis": "EGYPT and EGYPTIAN \u2014 intent to cooperate (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 83 source(s) across 248 mentions.",
+        "title": "Intent to cooperate \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260729",
+        "score": 2.7,
+        "mentions": 256,
+        "actors": "COMPANIES, FRANCE, INTELLIGENCE, IRAN, IRANIAN, ISRAEL, ISRAELI, KYIV",
+        "headline": "'Positive and productive': Zelenskyy and Netanyahu meet President Trump at White House to discuss wars",
+        "synopsis": "COMPANIES and FRANCE \u2014 intent to cooperate (engaging in cooperation) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 83 source(s) across 256 mentions.",
         "sources": [
-          "https://www.winnipegfreepress.com/world/2026/07/28/netanyahus-first-meeting-with-trump-since-the-iran-war-began-is-a-chance-to-smooth-over-strains",
-          "https://www.middleeasteye.net/profile/israel-gadi-eisenkot",
-          "https://www.channelnewsasia.com/singapore/man-charged-terrorism-financing-gaza-6282546"
+          "https://www.ketv.com/article/zelenskyy-netanyahu-meet-trump-white-house-discuss-wars/73288330",
+          "https://www.insurancejournal.com/news/international/2026/07/29/879389.htm",
+          "https://euobserver.com/227918/with-twice-the-arable-land-of-france-ukraines-vast-farms-spooks-european-counterparts-amid-looming-fight-over-market-access-and-eu-subsidies/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.7728,
+          24.6408
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Riyadh, Ar Riya?, Saudi Arabia",
+        "date": "20260729",
+        "score": 2.573,
+        "mentions": 210,
+        "actors": "DJIBOUTI, FIGHTER, IRAN, IRANIAN, IRAQ, IRAQI, ISLAMIC, KING",
+        "headline": "US-Iran war: No quick end to the war as US and Saudis strike Iran\u2019s allies in Iraq",
+        "synopsis": "DJIBOUTI and FIGHTER \u2014 fighting / clashes (in conflict) reported near Riyadh, Ar Riya?, Saudi Arabia, covered by 59 source(s) across 210 mentions.",
+        "sources": [
+          "https://www.watoday.com.au/world/middle-east/no-quick-end-to-the-war-as-us-and-saudi-strike-iran-s-allies-in-iraq-20260729-p60jsg.html",
+          "https://www.middleeasteye.net/news/iraq-government-calls-urgent-security-meeting-after-joint-us-and-saudi-attacks",
+          "https://freerepublic.com/tag/*/index?more=4389720"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5167,
+          50.4333
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260729",
+        "score": 2.697,
+        "mentions": 244,
+        "actors": "BEIJING, COMPANY, EUROPE, EUROPEAN, FINLAND, IRAN, ISRAEL, JAPAN",
+        "headline": "Iran Says It \u2018Does Not Seek Escalation\u2019 After Sybiha Call Over Caspian Sea Strike, Demands Compensation",
+        "synopsis": "BEIJING and COMPANY \u2014 diplomatic cooperation (engaging in cooperation) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 90 source(s) across 244 mentions.",
+        "sources": [
+          "https://www.kyivpost.com/post/81292",
+          "https://nypost.com/2026/07/28/us-news/senate-advances-lindsey-grahams-russia-sanctions-bill-shortly-after-his-funeral/",
+          "https://calgarysun.com/news/world/zelenskyy-and-netanyahu-meet-with-trump-as-wars-on-russia-and-iran-converge/wcm/131fd32c-9630-4549-b3b3-fb1f0abfbe4e"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2167,
+          28.6667
+        ]
+      },
+      "properties": {
+        "title": "Demand \u2014 Delhi, Delhi, India",
+        "date": "20260729",
+        "score": 2.541,
+        "mentions": 235,
+        "actors": "ACTIVIST, ACTOR, AMIT, CHIEF JUSTICE, CITIZEN, COMMUNITY, CONGRESS, CRIMINAL",
+        "headline": "Best team/partner to intern with in Dentons Link Legal, Delhi",
+        "synopsis": "ACTIVIST and ACTOR \u2014 demand (in conflict) reported near Delhi, Delhi, India, covered by 39 source(s) across 235 mentions.",
+        "sources": [
+          "https://www.legallyindia.com/convos/topic/490685-Best-team-partner-to-intern-with-in-Dentons-Link-Legal-Delhi",
+          "https://timesofindia.indiatimes.com/india/citizens-have-every-right-to-demand-answers-cjp-responds-to-delhi-police-notice-to-x-over-derogatory-content/articleshow/132707107.cms",
+          "https://www.tribuneindia.com/news/india/amit-shah-must-go-rahul-gandhi-claims-lok-sabha-gagged-him/"
         ]
       }
     }
