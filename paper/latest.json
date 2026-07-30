@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-29",
+  "date": "2026-07-30",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 60,
-    "hi_f": 75,
-    "lo_f": 53,
-    "precip_pct": 0,
-    "desc": "overcast"
+    "now_f": 56,
+    "hi_f": 78,
+    "lo_f": 51,
+    "precip_pct": 1,
+    "desc": "mostly clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 60,
-      "hi_f": 75,
-      "lo_f": 53,
-      "precip_pct": 0,
-      "desc": "overcast"
+      "now_f": 56,
+      "hi_f": 78,
+      "lo_f": 51,
+      "precip_pct": 1,
+      "desc": "mostly clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 60,
-      "hi_f": 82,
-      "lo_f": 54,
+      "now_f": 58,
+      "hi_f": 81,
+      "lo_f": 53,
       "precip_pct": 0,
-      "desc": "mostly clear"
+      "desc": "overcast"
     }
   ],
-  "story_count": 72,
+  "story_count": 69,
   "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Fauci Invokes the Fifth Amendment, Refusing to Answer Senate Committee Questions",
+      "title": "Rescue Boat Crews Show Signs of Brain Injuries, but Coast Guard Isn\u2019t Looking",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Fauci refuses to answer questions at heated Senate hearing on Covid-19 origins",
+      "title": "Transport authorities order probe after crash paralyses traffic on airport link",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Fans mourning Oscar-winning music legend, 56, after fatal motorcycle crash",
+      "title": "Packers legend Ahman Green reveals Parkinson\u2019s diagnosis",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Secret Service 'illegally' surveilled Comey in Trump \u20188647\u2019 threat case: court filing",
+      "title": "AI investor Leopold Aschenbrenner forced to unwind all public stock positions after steep losses, sources say",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Understanding How Martian Auroras Are Made",
+      "title": "Starburst Galaxy Centaurus A",
       "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "Heading to a National Park? Watch Out for Elk. They Attack People Way More Often Than Bears Do, According to a New Study",
-      "source": "smithsonianmag.com"
+      "title": "The Saugerties Lighthouse in Saugerties, New York",
+      "source": "atlasobscura.com"
     }
   ]
 }
