@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-30",
+  "date": "2026-07-31",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 56,
-    "hi_f": 78,
-    "lo_f": 51,
+    "now_f": 61,
+    "hi_f": 81,
+    "lo_f": 54,
     "precip_pct": 1,
-    "desc": "mostly clear"
+    "desc": "clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 56,
-      "hi_f": 78,
-      "lo_f": 51,
+      "now_f": 61,
+      "hi_f": 81,
+      "lo_f": 54,
       "precip_pct": 1,
-      "desc": "mostly clear"
+      "desc": "clear"
     },
     {
       "name": "Lebanon, OR",
       "now_f": 58,
-      "hi_f": 81,
+      "hi_f": 87,
       "lo_f": 53,
       "precip_pct": 0,
-      "desc": "overcast"
+      "desc": "clear"
     }
   ],
-  "story_count": 69,
+  "story_count": 68,
   "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Rescue Boat Crews Show Signs of Brain Injuries, but Coast Guard Isn\u2019t Looking",
+      "title": "Missteps Mount in Justice Dept.\u2019s Case Against Minnesota Anti-ICE Protesters",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Transport authorities order probe after crash paralyses traffic on airport link",
+      "title": "How global AI boom is intensifying US-China undersea stand-off",
       "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Packers legend Ahman Green reveals Parkinson\u2019s diagnosis",
-      "source": "oregonlive.com"
+      "title": "Anthropic says its AI models hacked 3 organizations during testing",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "AI investor Leopold Aschenbrenner forced to unwind all public stock positions after steep losses, sources say",
+      "title": "New York sues Kalshi, says prediction market is running 'illegal gambling operation'",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Starburst Galaxy Centaurus A",
-      "source": "nasa.gov"
+      "title": "Curiosity Blog, Sols 4961-4967: Approaching a Break in the Rock Record?",
+      "source": "science.nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "The Saugerties Lighthouse in Saugerties, New York",
+      "title": "Bray Road in Elkhorn, Wisconsin",
       "source": "atlasobscura.com"
     }
   ]
