@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-07-31",
+  "date": "2026-08-01",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 61,
-    "hi_f": 81,
-    "lo_f": 54,
-    "precip_pct": 1,
-    "desc": "clear"
+    "now_f": 63,
+    "hi_f": 73,
+    "lo_f": 60,
+    "precip_pct": 22,
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 61,
-      "hi_f": 81,
-      "lo_f": 54,
-      "precip_pct": 1,
-      "desc": "clear"
+      "now_f": 63,
+      "hi_f": 73,
+      "lo_f": 60,
+      "precip_pct": 22,
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 58,
-      "hi_f": 87,
-      "lo_f": 53,
-      "precip_pct": 0,
-      "desc": "clear"
+      "now_f": 62,
+      "hi_f": 71,
+      "lo_f": 57,
+      "precip_pct": 2,
+      "desc": "overcast"
     }
   ],
   "story_count": 68,
-  "score_count": 6,
+  "score_count": 7,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Missteps Mount in Justice Dept.\u2019s Case Against Minnesota Anti-ICE Protesters",
+      "title": "Charges Dropped Against Ex-Olympian David Hearn Accused of Damaging Reflecting Pool",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "How global AI boom is intensifying US-China undersea stand-off",
-      "source": "scmp.com"
+      "title": "Mountaineer Nirmal Purja killed in Pakistan avalanche, his company says",
+      "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Anthropic says its AI models hacked 3 organizations during testing",
-      "source": "opb.org"
+      "title": "Nike retro shoes under $85, more deals at extra 25% off right now",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "New York sues Kalshi, says prediction market is running 'illegal gambling operation'",
+      "title": "Trump Media's new paid data service goes live, giving clients faster access to Trump\u2019s posts",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Curiosity Blog, Sols 4961-4967: Approaching a Break in the Rock Record?",
-      "source": "science.nasa.gov"
+      "title": "NASA\u2019s Curiosity rover finds a mysterious honeycomb landscape on Mars",
+      "source": "sciencedaily.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Bray Road in Elkhorn, Wisconsin",
-      "source": "atlasobscura.com"
+      "title": "Good News in History, August 1",
+      "source": "goodnewsnetwork.org"
     }
   ]
 }

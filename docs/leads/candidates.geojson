@@ -6,118 +6,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.3333,
-          31.4167
+          -77.05,
+          38.8893
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 3.438,
-        "mentions": 1083,
-        "actors": "ADMINISTRATION, AL JAZEERA, AL QAEDA, ARMED GROUP, AZERBAIJAN, CAIRO, COMPANIES, EGYPT",
-        "headline": "Donald Trump announces Board of Peace reached deal for Hamas disarmament in Gaza",
-        "synopsis": "ADMINISTRATION and AL JAZEERA \u2014 intent to cooperate (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 312 source(s) across 1083 mentions.",
+        "title": "Diplomatic cooperation \u2014 Lincoln Memorial, District of Columbia, United States",
+        "date": "20260801",
+        "score": 3.023,
+        "mentions": 492,
+        "actors": "ADMINISTRATION, AMERICAN, ASSOCIATED PRESS, AUTHORITIES, BULGARIA, BUSINESS LEADER, COMPANIES, COMPANY",
+        "headline": "National Military Monument honors more than 41 million Americans who have served",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 diplomatic cooperation (engaging in cooperation) reported near Lincoln Memorial, District of Columbia, United States, covered by 111 source(s) across 492 mentions.",
         "sources": [
-          "https://www.jpost.com/middle-east/article-904192",
-          "http://www.iraqsun.com/news/279217125/trump-claims-his-board-of-peace-reached-historic-gaza-deal",
-          "https://www.wtxl.com/world/middle-east/trump-says-hamas-other-armed-groups-in-gaza-agree-to-disarm-under-us-peace-plan"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -5.35702,
-          35.8519
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Fnideq, Tanger-T\u00e9uan, Morocco",
-        "date": "20260731",
-        "score": 3.003,
-        "mentions": 541,
-        "actors": "AFRICA, ALGERIA, ITALY, LAWYER, MIGRANT, MOROCCAN, MOROCCO, POLICE",
-        "headline": "At least 18 die after breach of border between Morocco and Spanish territory of Ceuta",
-        "synopsis": "AFRICA and ALGERIA \u2014 fighting / clashes (in conflict) reported near Fnideq, Tanger-T\u00e9uan, Morocco, covered by 102 source(s) across 541 mentions.",
-        "sources": [
-          "https://www.kalw.org/npr-news/2026-07-30/at-least-18-die-after-breach-of-border-between-morocco-and-spanish-exclave-of-ceuta",
-          "https://www.abc.net.au/news/2026-07-31/spain-migrants-morocco-crossing-swimming-ceuta-military/106980368",
-          "https://www.centralwesterndaily.com.au/story/9321681/spain-and-morocco-halt-deadly-rush-on-spanish-enclave/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Yield/concede \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 3.156,
-        "mentions": 666,
-        "actors": "A US, ABDULLAH, ADELAIDE, ADMINISTRATION, AMERICAN, ANKARA, ARMED GROUP, AUTHORITIES",
-        "headline": "Hamas says it will disarm if Israel halts strikes and withdraws from Gaza",
-        "synopsis": "A US and ABDULLAH \u2014 yield/concede (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 163 source(s) across 666 mentions.",
-        "sources": [
-          "https://www.southwalesargus.co.uk/news/national/26426696.hamas-reaches-agreement-disarm-officials-say/",
-          "https://wmeq.iheart.com/content/2026-07-31-trump-announces-hamas-disarmament-deal/",
-          "http://www.iraqsun.com/news/279217125/trump-claims-his-board-of-peace-reached-historic-gaza-deal"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.116667,
-          51.5
-        ]
-      },
-      "properties": {
-        "title": "Coercion / seizure \u2014 London, London, City of, United Kingdom",
-        "date": "20260731",
-        "score": 2.872,
-        "mentions": 406,
-        "actors": "ACTIVIST, AFRICA, AZERBAIJAN, AZERBAIJANI, BRITAIN, BRITISH, BUCCANEER, COMPANY",
-        "headline": "British man accused of spying for Iran at RAF base could be extradited to UK",
-        "synopsis": "ACTIVIST and AFRICA \u2014 coercion / seizure (in conflict) reported near London, London, City of, United Kingdom, covered by 85 source(s) across 406 mentions.",
-        "sources": [
-          "https://www.thetelegraphandargus.co.uk/news/national/26425262.british-man-arrested-cyprus-accused-hostile-surveillance-raf-base/",
-          "https://www.rutland-times.co.uk/national/british-man-accused-of-spying-for-iran-at-raf-base-could-be-extradited-to-uk-170031/",
-          "https://www.oskaloosa.com/news/national_news/uk-funeral-director-sentenced-to-20-years-in-prison-after-bereaved-families-given-wrong-ashes/article_d49e244e-b45f-5725-9bfb-c3e5a4f8701c.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 3.148,
-        "mentions": 615,
-        "actors": "A US, ADMINISTRATION, AL QAEDA, AMNESTY INTERNATIONAL, ANTI DEFAMATION LEAGUE, ANTONIO GUTERRES, BULGARIA, CHINA",
-        "headline": "How Deep Is The Rot?",
-        "synopsis": "A US and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 182 source(s) across 615 mentions.",
-        "sources": [
-          "https://lobotero.com/2026/07/31/how-deep-is-the-rot/",
-          "https://www.independent.co.uk/asia/india/india-israel-gaza-arms-supply-palestine-genocide-b3024471.html",
-          "https://kfoxtv.com/news/nation-world/hamas-agrees-to-disarm-as-trump-board-of-peace-works-to-move-gaza-peace-plan-along-ceasefire-israel-palestine-technocratic-international-stabilization-force-surrender-weapons-turkey-egypt-qatar"
+          "https://wchstv.com/news/nation-world/national-military-monument-honors-more-than-41-million-americans-who-served",
+          "https://laist.com/brief/news/housing-homelessness/california-sb-9-malibu-pasadena-lawsuit-settlement-yimby",
+          "https://www.latimes.com/business/story/2026-08-01/anthropics-claude-goes-rogue-hacks-three-organizations-during-testing"
         ]
       }
     },
@@ -132,112 +36,16 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Melilla, Spain (general), Spain",
-        "date": "20260731",
-        "score": 2.864,
-        "mentions": 378,
-        "actors": "AFRICA, ALGERIA, ASSOCIATED PRESS, AUTHORITIES, BORDER GUARD, EUROPE, GUERILLA, ILLEGAL IMMIGRANT",
-        "headline": null,
-        "synopsis": "AFRICA and ALGERIA \u2014 fighting / clashes (in conflict) reported near Melilla, Spain (general), Spain, covered by 94 source(s) across 378 mentions.",
+        "date": "20260801",
+        "score": 2.998,
+        "mentions": 439,
+        "actors": "AFRICA, GERMANY, IRAN, ITALY, MEXICO, MIGRANT, MOROCCAN, MOROCCO",
+        "headline": "Thousands of migrants leave after crossing into Spanish territory of Ceuta",
+        "synopsis": "AFRICA and GERMANY \u2014 fighting / clashes (in conflict) reported near Melilla, Spain (general), Spain, covered by 121 source(s) across 439 mentions.",
         "sources": [
-          "http://www.thegazette.com/news/world/at-least-18-die-after-thousands-breach-border-between-morocco-and-spanish-territory-of-ceuta/article_00362b53-5f73-5dc5-8e86-32b1e9d4571d.html",
-          "https://www.newcastleherald.com.au/story/9321146/army-called-as-migrants-rush-to-spains-ceuta-territory/",
-          "https://www.theepochtimes.com/world/spains-ceuta-overwhelmed-as-nearly-50000-illegal-immigrants-cross-from-morocco-in-a-day-6069722"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Intent to cooperate \u2014 White House, District of Columbia, United States",
-        "date": "20260731",
-        "score": 3.071,
-        "mentions": 577,
-        "actors": "ADMINISTRATION, ATTORNEY, BANK, BANK OF AMERICA, BRITISH, BRITISH COLUMBIA, CHRISTIAN, CIVILIAN",
-        "headline": "Trump announces deal for Hamas to disarm in Gaza",
-        "synopsis": "ADMINISTRATION and ATTORNEY \u2014 intent to cooperate (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 133 source(s) across 577 mentions.",
-        "sources": [
-          "https://www.dunfermlinepress.com/news/national/26425192.trump-announces-deal-hamas-disarm-gaza/",
-          "https://english.news.cn/20260731/8fc64fdd49d7453a936391e9eeb1d068/c.html",
-          "https://abc6onyourside.com/news/nation-world/report-iran-to-buy-60m-70m-in-chinese-shoulder-fired-air-defense-missiles-oil-strait-hormuz-pete-hegseth-nato-president-xi-jinping"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 2.847,
-        "mentions": 368,
-        "actors": "AL JAZEERA, ARMY, BRITISH, CABINET, CHIEF EXECUTIVE, CIVILIAN, DEFENSE MINIST, DIRECTOR GENERAL",
-        "headline": "Hamas agrees to US-led disarmament proposal in Gaza but Israel yet to respond",
-        "synopsis": "AL JAZEERA and ARMY \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 90 source(s) across 368 mentions.",
-        "sources": [
-          "https://www.abc.net.au/news/2026-07-31/trump-says-gaza-deal-on-disarming-hamas-israel-withdrawal/106980528",
-          "https://www.bssnews.net/international/410435",
-          "https://www.kcbd.com/2026/07/31/friday-morning-top-stories-2-seriously-injured-after-suv-drives-into-home-east-lubbock/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 3.043,
-        "mentions": 506,
-        "actors": "ACTOR, ADMINISTRATION, ADVOCATE, AMERICAN, AUSTRALIA, BAHRAIN, BANK, BOEING",
-        "headline": null,
-        "synopsis": "ACTOR and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 147 source(s) across 506 mentions.",
-        "sources": [
-          "https://wiod.iheart.com/content/2026-07-30-elon-musk-to-invest-100m-in-gop-midterms/",
-          "https://www.observer-reporter.com/news/local-news/2026/jul/31/job-fair-being-held-in-washington-today/",
-          "https://www.theepochtimes.com/business/us-gas-prices-remain-elevated-amid-ongoing-middle-east-tensions-6069732"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          51.5148,
-          35.75
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
-        "date": "20260731",
-        "score": 2.785,
-        "mentions": 320,
-        "actors": "A US, AMERICAN, CORRESPONDENT, DJIBOUTI, DONALD TUSK, EGYPT, EGYPTIAN, FIGHTER",
-        "headline": "US, Iran trade barrages as quick resolution hopes dim",
-        "synopsis": "A US and AMERICAN \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 83 source(s) across 320 mentions.",
-        "sources": [
-          "https://www.westernadvocate.com.au/story/9321164/us-iran-trade-barrages-as-quick-resolution-hopes-dim/",
-          "https://www.globalsecurity.org/military/library/news/2026/07/mil-260730-rferl03.htm",
-          "https://www.bankingnews.gr/diethni/articles/891486/iran-shocks-with-strategic-shift-to-strike-us-first-as-hormuz-bottleneck-threatens-to-wreck-trump-presidency"
+          "https://www.clactonandfrintongazette.co.uk/news/national/26428486.thousands-migrants-leave-crossing-spanish-territory-ceuta/",
+          "https://hayspost.com/posts/b81d6303-dc28-424f-830b-aa1e2922bd51",
+          "https://www.illawarramercury.com.au/story/9321798/unprecedented-migrants-surge-to-spanish-enclave/"
         ]
       }
     },
@@ -252,16 +60,40 @@
       },
       "properties": {
         "title": "Appeal \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 2.985,
-        "mentions": 450,
-        "actors": "ADMINISTRATION, AFRICA, AIRLINE, AMERICAN, ATTORNEY GENERAL, BEIJING, BILL CLINTON, BOSTON",
-        "headline": "Urgent: Trump says agreement on complete disarmament of Hamas and other armed groups in Gaza has been reached-Xinhua",
-        "synopsis": "ADMINISTRATION and AFRICA \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 133 source(s) across 450 mentions.",
+        "date": "20260801",
+        "score": 2.919,
+        "mentions": 381,
+        "actors": "AFRICA, AMERICAN, ARIZONA, ATTORNEY, BANGLADESH, BELIEVER, CHINA, CIVILIAN",
+        "headline": "In Arizona, Increasingly More Grads Aren't Meeting Proficiency Standards",
+        "synopsis": "AFRICA and AMERICAN \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 103 source(s) across 381 mentions.",
         "sources": [
-          "https://english.news.cn/20260731/8fc64fdd49d7453a936391e9eeb1d068/c.html",
-          "https://www.hcamag.com/nz/news/general/employees-call-it-a-situationship-employers-should-be-worried/584406",
-          "https://www.nbcwashington.com/news/local/tuskegee-universitys-dress-code-change-sparks-discourse-from-dmv-based-alumni/4136550/"
+          "https://pjmedia.com/catherinesalgado/2026/07/31/in-arizona-increasingly-more-grads-arent-meeting-proficiency-standards-n4955674",
+          "https://www.jdjournal.com/2026/07/31/fauci-criminal-charges-senate-covid-hearing/",
+          "https://www.islamicinvitationturkey.com/iran-urges-muslim-countries-to-reconsider-cooperation-with-us/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5167,
+          50.4333
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260801",
+        "score": 2.94,
+        "mentions": 395,
+        "actors": "ADMINISTRATION, AMERICAN, BANGKOK, BELARUSIAN, CITY MAYOR, CIVILIAN, COMMUNITY, EUROPE",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 fighting / clashes (in conflict) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 108 source(s) across 395 mentions.",
+        "sources": [
+          "https://ktvz.com/news/national-world/cnn-world/2026/08/01/zelensky-warns-air-defenses-are-being-overwhelmed-as-russia-pounds-ukraine-killing-9/",
+          "https://www.bankingnews.gr/diethni/articles/891718/russia-launches-27-iskander-missiles-destroying-5-strategic-targets-in-kiev-as-zelensky-admits-only-one-missile-intercepted",
+          "https://en.interfax.com.ua/news/general/1189899.html"
         ]
       }
     },
@@ -275,17 +107,233 @@
         ]
       },
       "properties": {
-        "title": "Rejection \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 2.763,
-        "mentions": 292,
-        "actors": "ADMINISTRATION, AL JAZEERA, AMERICAN, CHINA, CITIZEN, COMPANY, DETAINEE, EGYPT",
-        "headline": "Trump claims his Board of Peace reached 'historic' Gaza deal",
-        "synopsis": "ADMINISTRATION and AL JAZEERA \u2014 rejection (in conflict) reported near Gaza, Israel (general), Israel, covered by 88 source(s) across 292 mentions.",
+        "title": "Intent to cooperate \u2014 Gaza, Israel (general), Israel",
+        "date": "20260801",
+        "score": 2.902,
+        "mentions": 349,
+        "actors": "CAIRO, COMMUNITY, EGYPT, ENVOY, GAZA, GOOGLE, GOVERNMENT, HAMAS",
+        "headline": "Hamas agreement is 'only good news' in recent days: UN chief",
+        "synopsis": "CAIRO and COMMUNITY \u2014 intent to cooperate (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 111 source(s) across 349 mentions.",
         "sources": [
-          "http://www.iraqsun.com/news/279217125/trump-claims-his-board-of-peace-reached-historic-gaza-deal",
-          "https://www.aljazeera.com/news/2026/7/31/gaza-board-of-peace-announces-hamas-disarmament-agreement-what-we-know",
-          "https://www.newsday.com/news/nation/hamas-disarm-trump-gaza-board-of-peace-p07668"
+          "https://dunyanews.tv/en/World/965687-hamas-agreement-is-only-good-news-in-recent-days-un-chief",
+          "https://brudirect.com/post/Bowen:-Plan-for-Hamas-to-disarm-faces-big-obstacles,-yet-it-offers-rare-hope-for-Gaza",
+          "https://www.dailymail.com/news/article-16021027/Israeli-minister-Hamas-disarmament-Trump-massacre-Hamas.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 White House, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.798,
+        "mentions": 299,
+        "actors": "AMERICAN, BUSINESS, CALIFORNIA, CHINESE, CITIZEN, CIVILIAN, GOVERNMENT, HAMAS",
+        "headline": "Fire zone duplexes",
+        "synopsis": "AMERICAN and BUSINESS \u2014 fighting / clashes (in conflict) reported near White House, District of Columbia, United States, covered by 84 source(s) across 299 mentions.",
+        "sources": [
+          "https://laist.com/brief/news/housing-homelessness/california-sb-9-malibu-pasadena-lawsuit-settlement-yimby",
+          "http://www.middleeaststar.com/news/279218179/us-and-israel-prepare-to-bomb-iran-energy-infrastructure-media",
+          "http://science20.com/hank_campbell/if_you_are_a_biologist_you_should_stop_giving_money_to_aaas_right_now-243301"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.3333,
+          31.4167
+        ]
+      },
+      "properties": {
+        "title": "Yield/concede \u2014 Gaza, Israel (general), Israel",
+        "date": "20260801",
+        "score": 2.847,
+        "mentions": 328,
+        "actors": "AMERICAN, EXPATRIATE, GAZA, GOVERNMENT, HAMAS, HOSPITAL, INDONESIA, INTERPOL",
+        "headline": "World News: Trump praises Gaza deal as Israel and Hamas see hurdles",
+        "synopsis": "AMERICAN and EXPATRIATE \u2014 yield/concede (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 92 source(s) across 328 mentions.",
+        "sources": [
+          "https://www.gdnonline.com:443/Details/1402212/Trump-hails-Gaza-deal-while-Israel-and-Hamas-see-hurdles",
+          "https://www.dailymail.com/news/article-16021027/Israeli-minister-Hamas-disarmament-Trump-massacre-Hamas.html",
+          "https://www.gjsentinel.com/news/world/a-high-stakes-test-for-trump-s-gaza-ceasefire-board-as-hamas-disarmament-looms/article_aa2b1f60-0c24-5a11-86fd-1829d6f66d64.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.3333,
+          31.4167
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Gaza, Israel (general), Israel",
+        "date": "20260801",
+        "score": 2.773,
+        "mentions": 285,
+        "actors": "AFRICA, AMERICAN, BRITAIN, BRITISH, CABINET, COMMANDER, EGYPT, EUROPE",
+        "headline": "El Nino to Intensify Heat on 'a Planet Already on Fire'",
+        "synopsis": "AFRICA and AMERICAN \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 80 source(s) across 285 mentions.",
+        "sources": [
+          "https://drudge.com/news/293635/el-nino-intensify-heat-planet",
+          "https://www.ynetnews.com/magazine/article/hydip4osge",
+          "https://www.middleeasteye.net/news/after-israel-killed-her-three-sons-she-found-hope-newborn-then-israel-killed-him-too"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.3333,
+          31.4167
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Gaza, Israel (general), Israel",
+        "date": "20260801",
+        "score": 2.753,
+        "mentions": 278,
+        "actors": "AMERICAN, ANTONIO GUTERRES, BAHRAIN, BANDUNG, CAIRO, CONGRESS, CONSUL GENERAL, EGYPT",
+        "headline": "'We cried instead of celebrating': War and loss shadow Gaza's top students",
+        "synopsis": "AMERICAN and ANTONIO GUTERRES \u2014 diplomatic cooperation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 75 source(s) across 278 mentions.",
+        "sources": [
+          "https://www.middleeasteye.net/news/we-cried-instead-celebrating-war-and-loss-shadow-gazas-top-students",
+          "https://www.siasat.com/donald-trump-hails-gaza-deal-but-will-hamas-disarm-3517152/",
+          "https://www.independent.co.uk/news/world/middle-east/israel-gaza-hamas-disarms-palestine-board-of-peace-trump-b3025504.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
+        "date": "20260801",
+        "score": 2.741,
+        "mentions": 267,
+        "actors": "ADMINISTRATION, AMERICAN, BRITAIN, CIVILIAN, EGYPT, EGYPTIAN, FIGHTER, GOVERNMENT",
+        "headline": "US and Israel prepare to bomb Iran's energy infrastructure",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 76 source(s) across 267 mentions.",
+        "sources": [
+          "http://www.middleeaststar.com/news/279218179/us-and-israel-prepare-to-bomb-iran-energy-infrastructure-media",
+          "https://www.gatestoneinstitute.org/22761/eu-iran-appeasement",
+          "https://www.rferl.org/a/iran-war-stoil-army-war-college-interview/33819707.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Yield/concede \u2014 Washington, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.75,
+        "mentions": 289,
+        "actors": "AUTHORITIES, BEIJING, BOEING, CHRISTIAN, COMPANY, COUNSEL, CRIMINAL, EUROPEAN",
+        "headline": null,
+        "synopsis": "AUTHORITIES and BEIJING \u2014 yield/concede (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 68 source(s) across 289 mentions.",
+        "sources": [
+          "https://929thebull.com/ixp/137/p/cwsf-new-things-2026/",
+          "https://www.thecollegefix.com/iu-student-development-officer-who-wants-cops-jailed-for-shooting-unarmed-civilians-now-targets-ice/",
+          "https://www.thealpenanews.com/opinion/editorials-and-columns/2026/08/trump-was-never-funny/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Threat \u2014 Tehran, Tehran, Iran",
+        "date": "20260801",
+        "score": 2.717,
+        "mentions": 246,
+        "actors": "ARMED FORCES, BRITAIN, CAIRO, COMPANY, DJIBOUTI, EGYPT, GOVERNMENT, IRAN",
+        "headline": null,
+        "synopsis": "ARMED FORCES and BRITAIN \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 78 source(s) across 246 mentions.",
+        "sources": [
+          "https://aa.com.tr/en/americas/kuwait-downs-iranian-drones-targeting-country-s-north-bubiyan-island/4015613",
+          "http://www.dhakacourier.com.bd/news/World_this_week/The-US-military-struck-dozens-of-targets-in-Iran/10366",
+          "https://www.dailymail.com/news/article-16021185/Trump-Iran-war-energy-infrastructure-strikes.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.05,
+          38.8893
+        ]
+      },
+      "properties": {
+        "title": "Intent to cooperate \u2014 Lincoln Memorial, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.711,
+        "mentions": 263,
+        "actors": "ADMINISTRATION, ADVOCATE, AMERICAN, ATTORNEY, BANGLADESH, BANK OF AMERICA, BUSINESS LEADER, COMPANY",
+        "headline": "David Hearn: DOJ moves to dismiss Reflecting Pool vandalism charge against Olympian",
+        "synopsis": "ADMINISTRATION and ADVOCATE \u2014 intent to cooperate (engaging in cooperation) reported near Lincoln Memorial, District of Columbia, United States, covered by 66 source(s) across 263 mentions.",
+        "sources": [
+          "https://abc11.com/post/david-hearn-doj-moves-dismiss-reflecting-pool-vandalism-charge-olympian/19608634/",
+          "https://www.bankingnews.gr/diethni/articles/891703/plundering-ukraine-why-trump-is-letting-putin-dismantle-kiev-to-clear-the-way-for-a-10-billion-dollar-resources-grab%20title=",
+          "https://www.yahoo.com/news/us/articles/lawyer-miracles-accused-lying-immigration-031921416.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.05,
+          38.8893
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Lincoln Memorial, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.71,
+        "mentions": 264,
+        "actors": "A US, AFGHAN, AFGHANISTAN, AFRICA, ATTORNEY, AUTHORITIES, CALIFORNIA, CHINA",
+        "headline": "Prosecutors move to dismiss Reflecting Pool vandalism case, saying 'botched installation' to blame",
+        "synopsis": "A US and AFGHAN \u2014 coercion / seizure (in conflict) reported near Lincoln Memorial, District of Columbia, United States, covered by 65 source(s) across 264 mentions.",
+        "sources": [
+          "https://www.kasu.org/politics/2026-07-31/prosecutors-move-to-dismiss-reflecting-pool-vandalism-case-saying-botched-installation-to-blame",
+          "https://wjla.com/news/local/doj-east-capitol-street-armed-carjacking-prison-department-of-justice-washington-dc",
+          "http://www.thegazette.com/news/national/authorities-release-early-ransom-note-in-nancy-guthrie-case-hoping-someone-recognizes-it/article_132c470a-e3f1-51f3-9efe-050fd9ede59d.html"
         ]
       }
     },
@@ -300,16 +348,16 @@
       },
       "properties": {
         "title": "Consultation \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 2.828,
-        "mentions": 314,
-        "actors": "AMERICAN, CABINET, EGYPT, ENGINEER, GAZA, IRAN, IRAQ, ISRAEL",
-        "headline": null,
-        "synopsis": "AMERICAN and CABINET \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 111 source(s) across 314 mentions.",
+        "date": "20260801",
+        "score": 2.678,
+        "mentions": 215,
+        "actors": "A CABINET MEETING, ATTORNEY, BLOGGER, BOSS, DEPUTY, ENVOY, EUROPEAN COMMISSION, GAZA",
+        "headline": "About Robert Stacy McCain : The Other McCain",
+        "synopsis": "A CABINET MEETING and ATTORNEY \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 82 source(s) across 215 mentions.",
         "sources": [
-          "https://news.az/news/what-are-trump-s-terms-to-start-talks-with-iran",
-          "http://www.britainnews.net/news/279215330/attacks-resume-in-the-middle-east-as-us-saudis-hit-iraq",
-          "https://www.justsecurity.org/150786/early-edition-july-31-2026/"
+          "https://theothermccain.com/about/comment-page-1/",
+          "https://www.thehindubusinessline.com/info-tech/openai-finds-more-ai-agent-escape-incidents-during-hugging-face-hack-investigation/article71293399.ece",
+          "https://aninews.in/news/world/us/us-weighs-strikes-on-irans-energy-infrastructure-within-days-israel-may-join-report20260801051340/"
         ]
       }
     },
@@ -318,22 +366,70 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.0364,
-          38.8951
+          -77.05,
+          38.8893
         ]
       },
       "properties": {
-        "title": "Fighting / clashes \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 2.753,
-        "mentions": 307,
-        "actors": "A US, ABDULLAH, ADMINISTRATION, AFGHAN, AFGHANISTAN, AMERICAN, AMNESTY INTERNATIONAL, ARMY",
-        "headline": "Fighting restarts as US, Saudis strike Iran's allies in Iraq",
-        "synopsis": "A US and ABDULLAH \u2014 fighting / clashes (in conflict) reported near Washington, District of Columbia, United States, covered by 75 source(s) across 307 mentions.",
+        "title": "Threat \u2014 Lincoln Memorial, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.668,
+        "mentions": 246,
+        "actors": "ACTOR, ADMINISTRATION, ADVOCATE, AMERICAN, AMMAN, ATTORNEY, BRITISH, CONGRESS",
+        "headline": "Justice Department moves to dismiss case against Olympian over damaged Reflecting Pool",
+        "synopsis": "ACTOR and ADMINISTRATION \u2014 threat (in conflict) reported near Lincoln Memorial, District of Columbia, United States, covered by 59 source(s) across 246 mentions.",
         "sources": [
-          "http://www.britainnews.net/news/279215330/attacks-resume-in-the-middle-east-as-us-saudis-hit-iraq",
-          "https://www.ynetnews.com/article/rjb1lj9rmx",
-          "https://www.dailymail.com/news/article-16019011/Elon-Musk-doppelganger-chef-China-mobbed-fans-likeness-Tesla-tycoon.html"
+          "https://katv.com/news/nation-world/dc-reflecting-pool-paint-coating-damage-case-dismissed-national-mall-washington-david-hearn-america-250-trump-administration-park-police-us-attorneys",
+          "https://lasvegassun.com/news/2026/aug/01/voters-face-a-crucial-choice-in-the-upcoming-midte/",
+          "https://www.vanguardngr.com/2026/08/iran-military-accuses-us-of-escalating-tensions-in-region/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.5148,
+          35.75
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Tehran, Tehran, Iran",
+        "date": "20260801",
+        "score": 2.64,
+        "mentions": 244,
+        "actors": "ADMINISTRATION, AMERICAN, ARMED MEN, CONGRESS, GOVERNMENT, IRAN, IRANIAN, ISLAMIC",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 51 source(s) across 244 mentions.",
+        "sources": [
+          "https://powertalk967.iheart.com/content/2026-07-31-israel-set-to-join-us-in-huge-iran-strike/",
+          "https://english.news.cn/20260801/818b1d1c8af140a78b566587536fa2c6/c.html",
+          "https://pakobserver.net/iran-and-turkiye-the-powers-destined-to-reshape-the-middle-east/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.6156,
+          55.7522
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Kremlin, Moskva, Russia",
+        "date": "20260801",
+        "score": 2.659,
+        "mentions": 222,
+        "actors": "ADMINISTRATION, AMERICAN, BELARUS, CARTEL, EUROPE, IDAHO, INDUSTRY, INSURGENT",
+        "headline": "Telegram founder Durov charged by Russia with promoting terrorism",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 fighting / clashes (in conflict) reported near Kremlin, Moskva, Russia, covered by 69 source(s) across 222 mentions.",
+        "sources": [
+          "http://www.newjerseytelegraph.com/news/279215338/russia-issues-global-arrest-warrant-against-telegram-founder-durov",
+          "https://www.globalsecurity.org/wmd/library/news/ukraine/2026/07/ukraine-260731-rferl02.htm",
+          "https://www.ksat.com/news/world/2026/08/01/russia-hits-ukrainian-capital-with-ballistic-missiles-and-drones-killing-at-least-9/"
         ]
       }
     },
@@ -348,16 +444,16 @@
       },
       "properties": {
         "title": "Appeal \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 2.773,
-        "mentions": 321,
-        "actors": "ARCHBISHOP, AUSTIN, EGYPT, FINANCE MINIST, FRANCE, GAZA, GERMAN, GIDEON SAAR",
-        "headline": "\"Historic breakthrough\": Board of Peace says Hamas agrees to roadmap to \"relinquish\" weapons",
-        "synopsis": "ARCHBISHOP and AUSTIN \u2014 appeal (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 77 source(s) across 321 mentions.",
+        "date": "20260801",
+        "score": 2.582,
+        "mentions": 196,
+        "actors": "AUTHORITIES, CIVILIAN, CONGRESS, DEFENSE MINIST, DUTCH, FINANCE MINIST, GAZA, GLASGOW",
+        "headline": null,
+        "synopsis": "AUTHORITIES and CIVILIAN \u2014 appeal (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 57 source(s) across 196 mentions.",
         "sources": [
-          "http://www.iraqsun.com/news/279217319/historic-breakthrough-board-of-peace-says-hamas-agrees-to-roadmap-to-relinquish-weapons",
-          "https://us.cnn.com/2026/07/30/politics/hamas-disarmament-agreement-trump-board-of-peace",
-          "https://www.jns.org/news/world/singapore-probes-british-band-after-palestinian-flag-displayed-at-concert"
+          "https://kvia.com/news/us-world/cnn-world/2026/07/31/someone-will-die-incitement-against-journalists-alarms-israel-as-elections-near/",
+          "https://kvia.com/news/us-world/cnn-world/2026/07/31/trump-announces-a-breakthrough-in-gaza-but-there-are-major-caveats-heres-what-we-know/",
+          "https://www.middleeasteye.net/news/we-cried-instead-celebrating-war-and-loss-shadow-gazas-top-students"
         ]
       }
     },
@@ -366,46 +462,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          37.6156,
-          55.7522
+          -5.35702,
+          35.8519
         ]
       },
       "properties": {
-        "title": "Fighting / clashes \u2014 Moscow, Moskva, Russia",
-        "date": "20260731",
-        "score": 2.728,
-        "mentions": 280,
-        "actors": "AFRICA, AMERICAN, AUTHORITIES, BUSINESS, CHINA, CIVILIAN, GOVERNOR, IRAN",
-        "headline": "Poland says 'nuclear capable' missile from Russia has hit country and 'exploded'",
-        "synopsis": "AFRICA and AMERICAN \u2014 fighting / clashes (in conflict) reported near Moscow, Moskva, Russia, covered by 78 source(s) across 280 mentions.",
+        "title": "Fighting / clashes \u2014 Fnideq, Tanger-T\u00e9uan, Morocco",
+        "date": "20260801",
+        "score": 2.628,
+        "mentions": 223,
+        "actors": "AFRICA, GERMANY, MIGRANT, MOROCCAN, MOROCCO, POLICE, PRIME MINISTER, REUTERS",
+        "headline": "Thousands of migrants leave after crossing into Spanish territory of Ceuta",
+        "synopsis": "AFRICA and GERMANY \u2014 fighting / clashes (in conflict) reported near Fnideq, Tanger-T\u00e9uan, Morocco, covered by 57 source(s) across 223 mentions.",
         "sources": [
-          "https://www.mirror.co.uk/news/world-news/poland-says-nuclear-capable-missile-37488983",
-          "https://www.rferl.org/a/ukraine-war-russia-kyiv-visit-us-envoys-witkoff-kushner/33819200.html",
-          "https://www.dailymail.com/news/article-16019105/Russian-missile-exploded-Poland-nuke-capable-Nato-necessary-measures-defend-territory.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Consultation \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 2.77,
-        "mentions": 320,
-        "actors": "A US, CABINET, CAIRO, DIPLOMAT, EGYPT, GAZA, HAMAS, IRAN",
-        "headline": "Hamas says it will disarm if Israel halts strikes and withdraws from Gaza",
-        "synopsis": "A US and CABINET \u2014 consultation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 76 source(s) across 320 mentions.",
-        "sources": [
-          "https://www.wiltshiretimes.co.uk/news/national/26426696.hamas-says-will-disarm-israel-halts-strikes-withdraws-gaza/",
-          "https://wmeq.iheart.com/content/2026-07-31-trump-announces-hamas-disarmament-deal/",
-          "https://www.sandiegouniontribune.com/2026/07/31/hamas-disarm-israel-gaza-war/"
+          "https://www.clactonandfrintongazette.co.uk/news/national/26428486.thousands-migrants-leave-crossing-spanish-territory-ceuta/",
+          "https://www.independent.co.uk/news/uk/home-news/spain-ceuta-europe-uk-morocco-migrant-crisis-b3025758.html",
+          "https://www.cp24.com/news/world/2026/07/31/hundreds-rally-in-madrid-against-migrant-invasion-in-spain-live-updates-here/"
         ]
       }
     },
@@ -419,17 +491,17 @@
         ]
       },
       "properties": {
-        "title": "Rejection \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 2.72,
-        "mentions": 281,
-        "actors": "ADMINISTRATION, ADVOCATE, AFRICA, AMERICAN, ATTORNEY, BANK, CONGRESS, CORPORATION",
-        "headline": "Trump's CDC nominee advances to final Senate vote",
-        "synopsis": "ADMINISTRATION and ADVOCATE \u2014 rejection (in conflict) reported near Washington, District of Columbia, United States, covered by 74 source(s) across 281 mentions.",
+        "title": "Material cooperation \u2014 Washington, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.459,
+        "mentions": 147,
+        "actors": "ADMINISTRATION, ALBERTA, AMERICAN, BANK, BULGARIA, CANADA, CANADIAN, CHINA",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and ALBERTA \u2014 material cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 50 source(s) across 147 mentions.",
         "sources": [
-          "https://www.wdsu.com/article/trump-cdc-nominee-advances-senate/73310453",
-          "https://www.hindustantimes.com/world-news/the-u-s-liberated-kuwait-but-now-struggles-to-protect-it-from-iran-101785489260045.html",
-          "https://www.thenews.com.pk/latest/1410788-anthropic-says-claude-ai-hacked-three-organizations-during-safety-tests-heres-what-happened"
+          "https://pakobserver.net/punjab-woos-us-investors-with-new-investment-opportunities/",
+          "https://ianslive.in/american-company-faces-china-ai-scrutiny--20260801071802",
+          "https://www.theyeshivaworld.com/news/general/2581254/russia-aids-iran-moscow-sharing-satellite-and-signals-intelligence-officials-say.html"
         ]
       }
     },
@@ -438,22 +510,46 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68333,
-          40.4
+          -77.0364,
+          38.8951
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 Madrid, Madrid, Spain",
-        "date": "20260731",
-        "score": 2.739,
-        "mentions": 295,
-        "actors": "AFRICANS, ARMED FORCES, AUTHORITIES, COMPANIES, EUROPEAN, EUROPEAN COMMISSION, GIORGIA MELONI, GOVERNMENT",
-        "headline": "60,000 cross into Spanish territory of Ceuta in 24 hours after border breach",
-        "synopsis": "AFRICANS and ARMED FORCES \u2014 intent to cooperate (engaging in cooperation) reported near Madrid, Madrid, Spain, covered by 75 source(s) across 295 mentions.",
+        "title": "Rejection \u2014 White House, District of Columbia, United States",
+        "date": "20260801",
+        "score": 2.561,
+        "mentions": 203,
+        "actors": "A CABINET MEETING, ADMINISTRATION, ADVOCATE, AMERICAN, BANK, COMPANY, CONGRESS, GAZA",
+        "headline": "Fire zone duplexes",
+        "synopsis": "A CABINET MEETING and ADMINISTRATION \u2014 rejection (in conflict) reported near White House, District of Columbia, United States, covered by 47 source(s) across 203 mentions.",
         "sources": [
-          "https://www.gazette-news.co.uk/news/national/26426849.60-000-cross-spanish-territory-ceuta-24-hours-border-breach/",
-          "http://www.thegazette.com/news/world/at-least-18-die-after-thousands-breach-border-between-morocco-and-spanish-territory-of-ceuta/article_00362b53-5f73-5dc5-8e86-32b1e9d4571d.html",
-          "https://www.albawaba.com/news/mass-migration-surge-sees-49000-people-1634180"
+          "https://laist.com/brief/news/housing-homelessness/california-sb-9-malibu-pasadena-lawsuit-settlement-yimby",
+          "https://abc11.com/post/david-hearn-doj-moves-dismiss-reflecting-pool-vandalism-charge-olympian/19608634/",
+          "http://www.thegazette.com/news/national/authorities-release-early-ransom-note-in-nancy-guthrie-case-hoping-someone-recognizes-it/article_132c470a-e3f1-51f3-9efe-050fd9ede59d.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5167,
+          50.4333
+        ]
+      },
+      "properties": {
+        "title": "Consultation \u2014 Kiev, Ukraine (general), Ukraine",
+        "date": "20260801",
+        "score": 2.453,
+        "mentions": 132,
+        "actors": "KIEV, KYIV, LOCKHEED MARTIN, MOSCOW, NORTH ATLANTIC TREATY ORGANIZATION, POLISH, PRESIDENT, RAYTHEON",
+        "headline": "Comment by Foreign Ministry Spokeswoman Maria Zakharova regarding the latest UAV attacks on vessels in the Black Sea",
+        "synopsis": "KIEV and KYIV \u2014 consultation (engaging in cooperation) reported near Kiev, Ukraine (general), Ukraine, covered by 60 source(s) across 132 mentions.",
+        "sources": [
+          "https://www.globalsecurity.org/wmd/library/news/ukraine/2026/07/ukraine-260730-russia-mfa02.htm",
+          "https://www.yahoo.com/news/world/articles/russian-attacks-kyiv-kill-9-050630777.html",
+          "https://www.thehindu.com/news/international/russian-attacks-on-kyiv-kill-4-wound-more-than-a-dozen/article71293403.ece"
         ]
       }
     },
@@ -468,16 +564,16 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Madrid, Madrid, Spain",
-        "date": "20260731",
-        "score": 2.711,
-        "mentions": 284,
-        "actors": "AFRICA, AUTHORITIES, CHANCELLOR, EUROPE, EUROPEAN, FIREFIGHTER, FRANCE, GREECE",
-        "headline": "Spain deploys military to Ceuta after hordes of migrant invaders overwhelm enclave, clash with authorities",
-        "synopsis": "AFRICA and AUTHORITIES \u2014 fighting / clashes (in conflict) reported near Madrid, Madrid, Spain, covered by 69 source(s) across 284 mentions.",
+        "date": "20260801",
+        "score": 2.556,
+        "mentions": 190,
+        "actors": "AFRICA, ATHENS, EUROPE, FRANCE, GERMAN, GERMANY, GUNMAN, ILLEGAL IMMIGRANT",
+        "headline": "ICYMI: Watch How Over 60,000 Migrants Crossed Into Spain From Morocco \u2022 Channels Television",
+        "synopsis": "AFRICA and ATHENS \u2014 fighting / clashes (in conflict) reported near Madrid, Madrid, Spain, covered by 52 source(s) across 190 mentions.",
         "sources": [
-          "https://humanevents.com/2026/07/30/spain-deploys-military-to-ceuta-after-hoards-of-migrant-invaders-overwhelm-enclave-clash-with-authorities",
-          "https://www.azfamily.com/2026/07/31/least-34-die-after-breach-border-between-morocco-spain/",
-          "https://www.dailymail.com/news/article-16018015/How-migrants-stormed-Spanish-enclave-loophole.html"
+          "https://www.channelstv.com/2026/08/01/icymi-watch-how-over-60000-migrants-crossed-into-spain-from-morocco/",
+          "https://townhall.com/columnists/struanstevenson/2026/08/01/irans-contract-killers-have-reached-britains-streets-n2680474",
+          "https://www.theepochtimes.com/world/spains-mass-illegal-immigration-crisis-what-to-know-6069978"
         ]
       }
     },
@@ -486,118 +582,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.0364,
-          38.8951
+          77.2167,
+          28.6667
         ]
       },
       "properties": {
-        "title": "Aid \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 2.676,
-        "mentions": 277,
-        "actors": "ACTOR, ADMINISTRATION, ADVOCATE, AIRCRAFT CARRIER, ASSOCIATED PRESS, AUTHORITIES, BLOG, BRAZIL",
-        "headline": "New Research Highlights Systemwide Supply Chain Challenges in Move to Natural Food Dyes",
-        "synopsis": "ACTOR and ADMINISTRATION \u2014 aid (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 59 source(s) across 277 mentions.",
+        "title": "Appeal \u2014 Delhi, Delhi, India",
+        "date": "20260801",
+        "score": 2.432,
+        "mentions": 167,
+        "actors": "ADMINISTRATION, AMERICAN, AMIT, AUTHORITIES, BUSINESS, CONVICTS, DELHI, DEMONSTRATOR",
+        "headline": "Protest for Amit Shah\u2019s resignation over July 20 action will continue: AISA chief Neha",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 appeal (engaging in cooperation) reported near Delhi, Delhi, India, covered by 33 source(s) across 167 mentions.",
         "sources": [
-          "https://perishablenews.com/retailfoodservice/new-research-highlights-systemwide-supply-chain-challenges-in-move-to-natural-food-dyes/",
-          "https://www.bbc.co.uk/news/articles/c89n0xykw2go",
-          "https://www.manilatimes.net/2026/07/31/tmt-newswire/globenewswire/is-wall-street-repackaging-ai-debt-the-same-way-it-repackaged-subprime-mortgages-in-2008/2395855"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Coercion / seizure \u2014 Washington, District of Columbia, United States",
-        "date": "20260731",
-        "score": 2.635,
-        "mentions": 267,
-        "actors": "ABDULLAH, AFGHAN, AMERICAN, AUTHORITIES, CHINA, CHRISTIAN, COMMUNITY, COMPANY",
-        "headline": "Revisiting Robert Hur's recommendation? Biden tapes prompt transparency questions",
-        "synopsis": "ABDULLAH and AFGHAN \u2014 coercion / seizure (in conflict) reported near Washington, District of Columbia, United States, covered by 50 source(s) across 267 mentions.",
-        "sources": [
-          "https://abc6onyourside.com/news/nation-world/revisiting-robert-hurs-recommendation-biden-tapes-prompt-transparency-questions-joe-ghostwriter-memo-classfied-documents-senate-vice-president",
-          "https://ianslive.in/2273-indian-nationals-deported-from-us-this-year-mea--20260731174950",
-          "https://www.spokesman.com/stories/2026/jul/30/cda-physician-sentenced-to-federal-prison-for-defr/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          73.1667,
-          33.7
-        ]
-      },
-      "properties": {
-        "title": "Appeal \u2014 Islamabad, Islamabad, Pakistan",
-        "date": "20260731",
-        "score": 2.585,
-        "mentions": 225,
-        "actors": "ADMINISTRATIVE UNIT, BAHRAIN, BANGLADESH, BUSINESS, COMMUNITY, DJIBOUTI, EGYPT, FINANCE MINIST",
-        "headline": null,
-        "synopsis": "ADMINISTRATIVE UNIT and BAHRAIN \u2014 appeal (engaging in cooperation) reported near Islamabad, Islamabad, Pakistan, covered by 53 source(s) across 225 mentions.",
-        "sources": [
-          "https://www.samaa.tv/2087354492-pm-calls-for-committee-to-review-world-bank-s-fiscal-federalism-recommendations",
-          "https://timesofindia.indiatimes.com/world/pakistan/pakistan-minister-invokes-cockroaches-analogy-says-united-gen-z-can-turn-everything-upside-down/articleshow/132765500.cms",
-          "https://www.newkerala.com/news/a/india-slams-crackdown-civilians-pojk-urges-intl-community-498.htm"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Coercion / seizure \u2014 Gaza, Israel (general), Israel",
-        "date": "20260731",
-        "score": 2.625,
-        "mentions": 226,
-        "actors": "ACTIVIST, AIR FORCE, AMERICAN, BRITISH, DEMONSTRATOR, DETAINEE, DIPLOMAT, DOCTOR",
-        "headline": "World News: Gaza ceasefire talks see rare progress",
-        "synopsis": "ACTIVIST and AIR FORCE \u2014 coercion / seizure (in conflict) reported near Gaza, Israel (general), Israel, covered by 66 source(s) across 226 mentions.",
-        "sources": [
-          "https://www.gdnonline.com:443/Details/1402113/Gaza-ceasefire-talks-see-rare-progress",
-          "https://consortiumnews.com/2026/07/31/jonathan-cook-israels-icc-scalp/",
-          "https://www.kcbd.com/2026/07/31/friday-morning-top-stories-2-seriously-injured-after-suv-drives-into-home-east-lubbock/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.083333,
-          51.5667
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Stoke Newington, Hackney, United Kingdom",
-        "date": "20260731",
-        "score": 2.577,
-        "mentions": 203,
-        "actors": "ABBOT, ARCHBISHOP, BAHRAIN, BISHOP, BRITAIN, BRITISH, BUSINESS, CATHOLIC",
-        "headline": "Diane Abbott readmitted to Labour Party after \u2018formal warning\u2019",
-        "synopsis": "ABBOT and ARCHBISHOP \u2014 diplomatic cooperation (engaging in cooperation) reported near Stoke Newington, Hackney, United Kingdom, covered by 62 source(s) across 203 mentions.",
-        "sources": [
-          "https://www.richmondandtwickenhamtimes.co.uk/news/national/26425114.diane-abbott-readmitted-labour-party-formal-warning/",
-          "https://www.upstreamonline.com/finance/chevron-cheers-fourfold-profits-boost/2-1-2023263",
-          "https://news.webindia123.com/news/Articles/Business/20260731/4481429.html"
+          "https://www.thehindu.com/news/national/no-apology-for-protest-language-july-20-crackdown-must-be-answered-aisa-president-neha/article71294264.ece",
+          "https://udaipurkiran.com/congress-leaders-question-pms-silence-on-violence-against-children/",
+          "https://aninews.in/news/national/general-news/odisha-floodwaters-inundate-dokandar-village-in-puri-residents-seek-urgent-relief20260801130218/"
         ]
       }
     }
