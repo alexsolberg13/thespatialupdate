@@ -1,30 +1,30 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-01",
+  "date": "2026-08-02",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 63,
-    "hi_f": 73,
-    "lo_f": 60,
-    "precip_pct": 22,
+    "now_f": 56,
+    "hi_f": 69,
+    "lo_f": 53,
+    "precip_pct": 11,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 63,
-      "hi_f": 73,
-      "lo_f": 60,
-      "precip_pct": 22,
+      "now_f": 56,
+      "hi_f": 69,
+      "lo_f": 53,
+      "precip_pct": 11,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 62,
-      "hi_f": 71,
-      "lo_f": 57,
-      "precip_pct": 2,
-      "desc": "overcast"
+      "now_f": 53,
+      "hi_f": 74,
+      "lo_f": 50,
+      "precip_pct": 0,
+      "desc": "mostly clear"
     }
   ],
   "story_count": 68,
@@ -32,33 +32,33 @@
   "top": [
     {
       "section": "U.S. National",
-      "title": "Charges Dropped Against Ex-Olympian David Hearn Accused of Damaging Reflecting Pool",
+      "title": "How a Top Law Firm Went From Standing Up to Trump to Bending the Knee",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Mountaineer Nirmal Purja killed in Pakistan avalanche, his company says",
-      "source": "bbc.co.uk"
+      "title": "Israeli strikes kill 9 in Gaza, cabinet minister says no deal to stop",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Nike retro shoes under $85, more deals at extra 25% off right now",
+      "title": "These are Oregon\u2019s most deadly occupations",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Trump Media's new paid data service goes live, giving clients faster access to Trump\u2019s posts",
-      "source": "cnbc.com"
+      "title": "HP\u2019s HyperX Omen 15 isn\u2019t quite the budget-friendly gaming laptop its predecessor was",
+      "source": "theverge.com"
     },
     {
       "section": "Science & Environment",
-      "title": "NASA\u2019s Curiosity rover finds a mysterious honeycomb landscape on Mars",
-      "source": "sciencedaily.com"
+      "title": "Evacuations near Athens as Greece becomes focus of Europe\u2019s wildfire crisis",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Good News in History, August 1",
-      "source": "goodnewsnetwork.org"
+      "title": "5 Unique Cemeteries Worth Visiting, According to Mental Floss Editors",
+      "source": "mentalfloss.com"
     }
   ]
 }
