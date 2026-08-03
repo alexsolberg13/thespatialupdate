@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-02",
+  "date": "2026-08-03",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 56,
-    "hi_f": 69,
-    "lo_f": 53,
-    "precip_pct": 11,
-    "desc": "overcast"
+    "now_f": 58,
+    "hi_f": 76,
+    "lo_f": 50,
+    "precip_pct": 0,
+    "desc": "partly cloudy"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 56,
-      "hi_f": 69,
-      "lo_f": 53,
-      "precip_pct": 11,
-      "desc": "overcast"
+      "now_f": 58,
+      "hi_f": 76,
+      "lo_f": 50,
+      "precip_pct": 0,
+      "desc": "partly cloudy"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 53,
-      "hi_f": 74,
-      "lo_f": 50,
+      "now_f": 59,
+      "hi_f": 85,
+      "lo_f": 51,
       "precip_pct": 0,
-      "desc": "mostly clear"
+      "desc": "clear"
     }
   ],
-  "story_count": 68,
-  "score_count": 7,
+  "story_count": 65,
+  "score_count": 5,
   "top": [
     {
       "section": "U.S. National",
-      "title": "How a Top Law Firm Went From Standing Up to Trump to Bending the Knee",
+      "title": "ICE Killed Him. A.I. Helped Turn Him Into a Folk Ballad, Fast.",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Israeli strikes kill 9 in Gaza, cabinet minister says no deal to stop",
-      "source": "scmp.com"
+      "title": "Australia\u2019s under-16 social media ban failing, study shows: What it means",
+      "source": "aljazeera.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "These are Oregon\u2019s most deadly occupations",
-      "source": "oregonlive.com"
+      "title": "Oregon needs transit-oriented upzoning, says one Portlander",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "HP\u2019s HyperX Omen 15 isn\u2019t quite the budget-friendly gaming laptop its predecessor was",
-      "source": "theverge.com"
+      "title": "Oil prices tumble after Trump calls off attack on Iran",
+      "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Evacuations near Athens as Greece becomes focus of Europe\u2019s wildfire crisis",
+      "title": "Romania blasts rock to divert water from drought-hit Danube to nuclear reactor",
       "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "5 Unique Cemeteries Worth Visiting, According to Mental Floss Editors",
-      "source": "mentalfloss.com"
+      "title": "Smallpox DNA Hidden for Centuries in Mummies Found in Chile Suggests European Colonists Brought the Virus to the Americas",
+      "source": "smithsonianmag.com"
     }
   ]
 }
