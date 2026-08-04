@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-03",
+  "date": "2026-08-04",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 58,
-    "hi_f": 76,
-    "lo_f": 50,
+    "now_f": 60,
+    "hi_f": 82,
+    "lo_f": 54,
     "precip_pct": 0,
-    "desc": "partly cloudy"
+    "desc": "clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 58,
-      "hi_f": 76,
-      "lo_f": 50,
+      "now_f": 60,
+      "hi_f": 82,
+      "lo_f": 54,
       "precip_pct": 0,
-      "desc": "partly cloudy"
+      "desc": "clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 59,
-      "hi_f": 85,
-      "lo_f": 51,
+      "now_f": 58,
+      "hi_f": 92,
+      "lo_f": 52,
       "precip_pct": 0,
-      "desc": "clear"
+      "desc": "overcast"
     }
   ],
-  "story_count": 65,
+  "story_count": 67,
   "score_count": 5,
   "top": [
     {
       "section": "U.S. National",
-      "title": "ICE Killed Him. A.I. Helped Turn Him Into a Folk Ballad, Fast.",
+      "title": "Todd Blanche Clears Committee Vote, Paving Way for Attorney General Confirmation",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Australia\u2019s under-16 social media ban failing, study shows: What it means",
-      "source": "aljazeera.com"
+      "title": "Mass funeral in Gaza for 112 Palestinians killed in 2023 Israeli strike",
+      "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Oregon needs transit-oriented upzoning, says one Portlander",
+      "title": "A veteran was detained by the National Guard in her front yard. Now she's suing",
       "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "Oil prices tumble after Trump calls off attack on Iran",
+      "title": "Jeff Bezos just filed to sell $4 billion in Amazon. The shares are falling",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Romania blasts rock to divert water from drought-hit Danube to nuclear reactor",
-      "source": "theguardian.com"
+      "title": "Cancer-fighting chewing gum cuts HPV levels by up to 93%",
+      "source": "sciencedaily.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Smallpox DNA Hidden for Centuries in Mummies Found in Chile Suggests European Colonists Brought the Virus to the Americas",
-      "source": "smithsonianmag.com"
+      "title": "Denby Dale Railway Viaduct in Denby Dale, England",
+      "source": "atlasobscura.com"
     }
   ]
 }
