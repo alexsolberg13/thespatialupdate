@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-04",
+  "date": "2026-08-05",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 60,
-    "hi_f": 82,
-    "lo_f": 54,
+    "now_f": 61,
+    "hi_f": 86,
+    "lo_f": 53,
     "precip_pct": 0,
     "desc": "clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 60,
-      "hi_f": 82,
-      "lo_f": 54,
+      "now_f": 61,
+      "hi_f": 86,
+      "lo_f": 53,
       "precip_pct": 0,
       "desc": "clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 58,
+      "now_f": 61,
       "hi_f": 92,
-      "lo_f": 52,
+      "lo_f": 54,
       "precip_pct": 0,
-      "desc": "overcast"
+      "desc": "clear"
     }
   ],
-  "story_count": 67,
-  "score_count": 5,
+  "story_count": 66,
+  "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Todd Blanche Clears Committee Vote, Paving Way for Attorney General Confirmation",
+      "title": "Could U.S. Water Systems Be a New Front in the Iran War?",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Mass funeral in Gaza for 112 Palestinians killed in 2023 Israeli strike",
-      "source": "bbc.co.uk"
+      "title": "US hawks push Trump on multibillion-dollar Taiwan arms deal ahead of Xi summit",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "A veteran was detained by the National Guard in her front yard. Now she's suing",
-      "source": "opb.org"
+      "title": "Over 1,218 flights delayed, 50 canceled amid widespread U.S. travel disruptions",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Jeff Bezos just filed to sell $4 billion in Amazon. The shares are falling",
+      "title": "Abdul El-Sayed wins Michigan Democratic Senate primary as voters pivot to the left",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Cancer-fighting chewing gum cuts HPV levels by up to 93%",
-      "source": "sciencedaily.com"
+      "title": "Reader Q&A: Our natural history writer Patrick Barkham is answering your questions on invertebrates \u2013 live",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Denby Dale Railway Viaduct in Denby Dale, England",
-      "source": "atlasobscura.com"
+      "title": "A Serpentine Sculpture Inspired by Benjamin Franklin's 'Join, or Die' Call for Unity Is Taking Shape\u2014Segment by Segment\u2014in Philadelphia",
+      "source": "smithsonianmag.com"
     }
   ]
 }
