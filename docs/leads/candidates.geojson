@@ -6,142 +6,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30.5167,
-          50.4333
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Kyiv, Kyyiv, Misto, Ukraine",
-        "date": "20260805",
-        "score": 3.151,
-        "mentions": 654,
-        "actors": "ADMINISTRATION, AIR FORCE, AUTHORITIES, CIVILIAN, COMMENTATOR, COMPANIES, COMPANY, DEFENSE FORCE",
-        "headline": "Russian missile and drone barrage in Ukrainian capital region kills at least 17",
-        "synopsis": "ADMINISTRATION and AIR FORCE \u2014 fighting / clashes (in conflict) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 159 source(s) across 654 mentions.",
-        "sources": [
-          "https://www.malverngazette.co.uk/news/national/26437327.russian-missile-drone-barrage-ukrainian-capital-region-kills-least-15/",
-          "https://www.theglobeandmail.com/world/article-ukraine-russian-attack-on-kyiv/",
-          "https://english.news.cn/europe/20260805/6a21476c1b304a8e9548ee48020e6cec/c.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           -77.0364,
           38.8951
         ]
       },
       "properties": {
         "title": "Diplomatic cooperation \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 3.127,
-        "mentions": 609,
-        "actors": "ABDULLAH II, ADMINISTRATION, ADVOCATE, AL QAEDA, AMBASSADOR, AMERICAN, APPEALS COURT, ARMENIAN",
-        "headline": "Echoes. Would it be wrong for a Catholic to attend a nondenominational praise and worship night?. Published 8/5/2026",
-        "synopsis": "ABDULLAH II and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 160 source(s) across 609 mentions.",
+        "date": "20260806",
+        "score": 3.191,
+        "mentions": 681,
+        "actors": "ADMINISTRATION, ADVOCATE, AFGHANISTAN, AKEN, AL QAEDA, AMBASSADOR, AMERICAN, ANKARA",
+        "headline": "UK and US \u2018closest allies\u2019, says Miliband as he ducks criticism of Trump in DC",
+        "synopsis": "ADMINISTRATION and ADVOCATE \u2014 diplomatic cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 184 source(s) across 681 mentions.",
         "sources": [
-          "https://thebostonpilot.com/Opinion/article.asp?ID=203068",
-          "https://newrepublic.com/post/213974/trump-20th-loss-state-voter-rolls-fraud-crusade",
-          "https://www.jns.org/opinion/column/mitchell-bard/the-folly-of-negotiating-with-islamists"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          37.6156,
-          55.7522
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Moscow, Moskva, Russia",
-        "date": "20260805",
-        "score": 3.029,
-        "mentions": 512,
-        "actors": "AIR FORCE, ATTORNEY, AUTHORITIES, CANADIAN, CHIEF OF STAFF, CHINA, CIVILIAN, CRIMEA",
-        "headline": "Russian missile and drone barrage in Ukrainian capital region kills at least 17",
-        "synopsis": "AIR FORCE and ATTORNEY \u2014 fighting / clashes (in conflict) reported near Moscow, Moskva, Russia, covered by 129 source(s) across 512 mentions.",
-        "sources": [
-          "https://www.malverngazette.co.uk/news/national/26437327.russian-missile-drone-barrage-ukrainian-capital-region-kills-least-15/",
-          "https://www.kedm.org/npr-news/2026-08-05/russian-missile-and-drone-barrage-in-ukrainian-capital-region-kills-17",
-          "https://english.news.cn/europe/20260805/6a21476c1b304a8e9548ee48020e6cec/c.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Intent to cooperate \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 3.035,
-        "mentions": 533,
-        "actors": "ADMINISTRATION, AMBASSADOR, AMERICAN, ARMY, ATTORNEY GENERAL, BUSINESS, CHAMBER OF COMMERCE, CHRISTIAN",
-        "headline": "Strait reopening \u2018essential\u2019 for UK families, says Ed Miliband ahead of US talks",
-        "synopsis": "ADMINISTRATION and AMBASSADOR \u2014 intent to cooperate (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 123 source(s) across 533 mentions.",
-        "sources": [
-          "https://www.thewestmorlandgazette.co.uk/news/national/26437291.strait-reopening-essential-uk-families-says-ed-miliband-ahead-us-talks/",
-          "https://www.thenewsherald.com/2026/08/05/chatbot-financial-advice/",
-          "https://www.clickondetroit.com/business/2026/08/05/trump-says-deal-to-reopen-strait-of-hormuz-could-come-as-early-as-wednesday/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Fighting / clashes \u2014 Gaza, Israel (general), Israel",
-        "date": "20260805",
-        "score": 2.889,
-        "mentions": 398,
-        "actors": "ACTIVIST, AFRICA, AL JAZEERA, BEIRUT, BERLIN, CITIZEN, CIVILIAN, DEMOCRATIC PARTY",
-        "headline": null,
-        "synopsis": "ACTIVIST and AFRICA \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 95 source(s) across 398 mentions.",
-        "sources": [
-          "https://www.clevelandjewishnews.com/jta/decision-day-in-michigan-el-sayed-and-stevens-thrust-democratic-party-battles-over-israel-to/article_5bc2cf8b-8bb4-51e4-8797-ad89a142d84a.html",
-          "https://www.thecable.ng/palestine-between-haganah-and-hamas/",
-          "https://www.jns.org/news/israel-news/anti-war-activists-storm-offices-of-israeli-finance-ministers-party"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Appeal \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 2.976,
-        "mentions": 456,
-        "actors": "ADMINISTRATION, AL QAEDA, AMERICAN, AMIT, BISHOP, CANADA, CANADIAN, CATHOLIC",
-        "headline": "National Park Service concludes Trump\u2019s arch is so big that it would intrude on other DC landmarks",
-        "synopsis": "ADMINISTRATION and AL QAEDA \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 120 source(s) across 456 mentions.",
-        "sources": [
-          "https://www.the-independent.com/news/world/americas/us-politics/trump-arch-washington-national-park-service-plans-b3026741.html",
-          "https://www.dailymail.com/news/article-16028731/Trump-scrutiny-raking-100K-access-Truth-Social-posts.html",
-          "https://www.nbcphiladelphia.com/news/national-international/trump-arch-harm-integrity-washington-historical-sites-report/4443430/"
+          "https://www.newsandstar.co.uk/news/national/26440647.uk-us-closest-allies-says-miliband-ducks-criticism-trump-dc/",
+          "https://www.wftv.com/news/7-tips-healthy-back/2NO43QWCCY45TEDLLYELRHNW4U/",
+          "http://www.arabherald.com/news/279224668/venezuelan-oil-is-victors-spoils-trump"
         ]
       }
     },
@@ -156,16 +36,112 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 2.796,
-        "mentions": 319,
-        "actors": "A US, AIR FORCE, AMERICAN, ARMY, BEIJING, BLOG, CANADA, CHAMBER",
-        "headline": "One man dead, another injured in Northwest DC shooting",
-        "synopsis": "A US and AIR FORCE \u2014 fighting / clashes (in conflict) reported near Washington, District of Columbia, United States, covered by 87 source(s) across 319 mentions.",
+        "date": "20260806",
+        "score": 2.964,
+        "mentions": 459,
+        "actors": "A US, ADMINISTRATION, ALGERIA, AMERICAN, ARIZONA, ARMY, BRITISH, CALIFORNIA",
+        "headline": "Helicopter carrying Trump comes within one mile of crashing into jet",
+        "synopsis": "A US and ADMINISTRATION \u2014 fighting / clashes (in conflict) reported near Washington, District of Columbia, United States, covered by 110 source(s) across 459 mentions.",
         "sources": [
-          "https://www.fox5dc.com/news/one-man-dead-another-injured-northwest-dc-shooting",
-          "https://lavozcolorado.com/2026/08/05/a-week-in-review-205/",
-          "https://www.naturalnews.com/2026-08-05-white-house-accelerates-ai-data-center-development.html"
+          "https://www.express.co.uk/news/world/2236573/helicopter-carrying-trump-washington-crash",
+          "http://www.arabherald.com/news/279224668/venezuelan-oil-is-victors-spoils-trump",
+          "https://www.kptv.com/2026/08/05/arrest-made-1994-cold-case-murder-85-year-old-gaston-woman/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Intent to cooperate \u2014 Washington, District of Columbia, United States",
+        "date": "20260806",
+        "score": 3.035,
+        "mentions": 513,
+        "actors": "ADMINISTRATION, ADVOCATE, AIR FORCE, AIRWAY, AMBASSADOR, AMERICAN, ARMY, ATTORNEY GENERAL",
+        "headline": "Miliband denies relations with \u2018closest ally\u2019 US harmed by his Trump criticism",
+        "synopsis": "ADMINISTRATION and ADVOCATE \u2014 intent to cooperate (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 132 source(s) across 513 mentions.",
+        "sources": [
+          "https://www.clydebankpost.co.uk/news/national/26440674.miliband-denies-relations-closest-ally-us-harmed-trump-criticism/",
+          "https://www.theblaze.com/columns/opinion/the-biden-autopen-scandal-has-one-big-winner-anthony-fauci",
+          "https://www.wvik.org/npr-top-stories/2026-08-05/small-texas-law-firm-set-to-receive-150m-to-represent-unaccompanied-migrant-children"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.6156,
+          55.7522
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Moscow, Moskva, Russia",
+        "date": "20260806",
+        "score": 2.949,
+        "mentions": 387,
+        "actors": "AUTHORITIES, CHINA, CIVILIAN, COMMANDER, CONGRESS, EMPLOYEE, EXPORTER, FIREFIGHTER",
+        "headline": "Ukraine strikes more oil facilities deep inside Russia, Zelensky says",
+        "synopsis": "AUTHORITIES and CHINA \u2014 fighting / clashes (in conflict) reported near Moscow, Moskva, Russia, covered by 142 source(s) across 387 mentions.",
+        "sources": [
+          "https://www.hamhigh.co.uk/news/national/26441354.ukraine-strikes-oil-facilities-deep-inside-russia-zelensky-says/",
+          "https://www.dailystar.co.uk/news/latest-news/secret-burial-held-putins-top-37519185",
+          "https://dailypioneer.com/news/north-korea-fires-short-range-ballistic-missile-seoul-says"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Appeal \u2014 Washington, District of Columbia, United States",
+        "date": "20260806",
+        "score": 2.982,
+        "mentions": 468,
+        "actors": "A CABINET MEETING, ADMINISTRATION, ADVOCATE, AMERICAN, ARIZONA, ATTORNEY, AUSTRALIA, BAHRAIN",
+        "headline": null,
+        "synopsis": "A CABINET MEETING and ADMINISTRATION \u2014 appeal (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 117 source(s) across 468 mentions.",
+        "sources": [
+          "https://www.wxow.com/news/top-stories/faa-investigating-air-safety-incident-involving-trump-s-marine-one-helicopter/article_3d773c9e-4ea0-518d-aba3-346c0970c3a2.html",
+          "https://www.medicaldaily.com/hemp-thc-ban-delay-november-12-december-11-timeline-476927",
+          "https://www.mainlinemedianews.com/2026/08/06/disabilities-legal-protections/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0178,
+          38.8773
+        ]
+      },
+      "properties": {
+        "title": "Rejection \u2014 Environmental Protection Agency, District of Columbia, United States",
+        "date": "20260806",
+        "score": 2.751,
+        "mentions": 286,
+        "actors": "AMERICAN, ATTORNEY, CHRISTIAN, COMPANY, CONSULATE, COSTA RICA, DEFENSE SECRETARY, DISNEY",
+        "headline": "Small Texas law firm set to receive $150M to represent unaccompanied migrant children",
+        "synopsis": "AMERICAN and ATTORNEY \u2014 rejection (in conflict) reported near Environmental Protection Agency, District of Columbia, United States, covered by 83 source(s) across 286 mentions.",
+        "sources": [
+          "https://www.wvik.org/npr-top-stories/2026-08-05/small-texas-law-firm-set-to-receive-150m-to-represent-unaccompanied-migrant-children",
+          "https://www.insurancebusinessmag.com/us/news/technology/openais-ai-models-teamed-up-to-hack-their-way-online--then-meta-admitted-a-breach-of-its-own-585210.aspx",
+          "https://jp.ibtimes.com/independent-journalist-reveals-what-he-saw-inside-mitch-mcconnells-hospital-after-vanishing-103429"
         ]
       }
     },
@@ -180,112 +156,16 @@
       },
       "properties": {
         "title": "Consultation \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 2.971,
-        "mentions": 455,
-        "actors": "ACTIVIST, ACTOR, BRAZIL, BRITAIN, CONGRESSWOMAN, DUBAI, ECONOMIST, EL SALVADOR",
-        "headline": "Strait reopening \u2018essential\u2019 for UK families, says Ed Miliband ahead of US talks",
-        "synopsis": "ACTIVIST and ACTOR \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 117 source(s) across 455 mentions.",
+        "date": "20260806",
+        "score": 2.902,
+        "mentions": 374,
+        "actors": "ACTOR, ADMINISTRATION, AMERICAN, BEIJING, BORDER SECURITY, BUSINESS, CANADA, CANADIAN",
+        "headline": "Miliband denies relations with \u2018closest ally\u2019 US harmed by his Trump criticism",
+        "synopsis": "ACTOR and ADMINISTRATION \u2014 consultation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 116 source(s) across 374 mentions.",
         "sources": [
-          "https://www.thewestmorlandgazette.co.uk/news/national/26437291.strait-reopening-essential-uk-families-says-ed-miliband-ahead-us-talks/",
-          "https://www.financialmirror.com/2026/08/05/wti-recovers-some-losses-on-technical-rebound-diplomatic-optimism/",
-          "https://www.koreaherald.com/article/10831457"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Coercion / seizure \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 2.758,
-        "mentions": 316,
-        "actors": "ADMINISTRATION, AL QAIDA, AMBASSADOR AT, APPEALS COURT, ATTORNEY, AUTHORITIES, BRAZIL, BRITISH",
-        "headline": "The logic of Iran's brinkmanship",
-        "synopsis": "ADMINISTRATION and AL QAIDA \u2014 coercion / seizure (in conflict) reported near Washington, District of Columbia, United States, covered by 71 source(s) across 316 mentions.",
-        "sources": [
-          "https://nationalpost.com/opinion/the-logic-of-irans-brinkmanship",
-          "https://www.christianitydaily.com:443/news/former-us-ambassador-morse-tan-barred-from-leaving-south-korea.html",
-          "https://www.independent.co.uk/news/world/americas/us-politics/trump-brazil-visa-diplomatic-b3027771.html"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Gaza, Israel (general), Israel",
-        "date": "20260805",
-        "score": 2.88,
-        "mentions": 401,
-        "actors": "AMERICAN, BRITISH, CABINET, CIVILIAN, CONGRESSMAN, DIPLOMAT, EGYPT, GAZA",
-        "headline": null,
-        "synopsis": "AMERICAN and BRITISH \u2014 diplomatic cooperation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 89 source(s) across 401 mentions.",
-        "sources": [
-          "https://talkradio1080.iheart.com/content/2026-08-05-wesley-bell-wins-missouri-democratic-primary/",
-          "https://livenews.co.nz/2026/08/05/kaitorete-must-not-become-a-launchpad-for-war/",
-          "https://www.israelnationalnews.com/news/431272"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -77.0364,
-          38.8951
-        ]
-      },
-      "properties": {
-        "title": "Rejection \u2014 Washington, District of Columbia, United States",
-        "date": "20260805",
-        "score": 2.751,
-        "mentions": 294,
-        "actors": "ACADEMICS, ADMINISTRATION, AMERICAN, ATTORNEY, BRAZIL, BRAZILIAN, CHINA, CHINESE",
-        "headline": "Judge criticizes the Justice Department as he dismisses Jan. 6 seditious conspiracy case",
-        "synopsis": "ACADEMICS and ADMINISTRATION \u2014 rejection (in conflict) reported near Washington, District of Columbia, United States, covered by 79 source(s) across 294 mentions.",
-        "sources": [
-          "https://www.winnipegfreepress.com/world/2026/08/05/judge-criticizes-the-justice-department-as-he-dismisses-jan-6-seditious-conspiracy-case",
-          "https://english.news.cn/20260805/eb0cfb184c094bf1b6132dc3561b6102/c.html",
-          "http://www.bignewsnetwork.com/news/279222941/not-our-draft-netanyahu-rejects-trump-gaza-plan-disagrees-to-withdraw-until-hamas-is-completely-disarmed"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          51.5148,
-          35.75
-        ]
-      },
-      "properties": {
-        "title": "Consultation \u2014 Tehran, Tehran, Iran",
-        "date": "20260805",
-        "score": 2.834,
-        "mentions": 340,
-        "actors": "A US, CHINESE, DUBAI, IRAN, IRANIAN, ISLAMABAD, ISLAMIC, ISRAEL",
-        "headline": "Iran says it was ready to strike Ukraine after Caspian Sea attack; US sees possible Strait of Hormuz deal",
-        "synopsis": "A US and CHINESE \u2014 consultation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 95 source(s) across 340 mentions.",
-        "sources": [
-          "https://www.ibtimes.co.in/iran-says-it-was-ready-strike-ukraine-after-caspian-sea-attack-us-sees-possible-strait-hormuz-904459",
-          "https://www.geo.tv/latest/676199-pakistans-strategic-moment",
-          "https://www.presstv.co.uk/Detail/2026/08/05/773761/Six-Pakistani-cabinet-ministers-Iran"
+          "https://www.clydebankpost.co.uk/news/national/26440674.miliband-denies-relations-closest-ally-us-harmed-trump-criticism/",
+          "http://www.europesun.com/news/279223865/iran-says-progress-made-with-oman-on-strait-of-hormuz-route",
+          "https://www.upi.com/Top_News/World-News/2026/08/06/retalitory-sanctions/8101786000794/"
         ]
       }
     },
@@ -300,16 +180,64 @@
       },
       "properties": {
         "title": "Fighting / clashes \u2014 Tehran, Tehran, Iran",
-        "date": "20260805",
-        "score": 2.606,
-        "mentions": 222,
-        "actors": "A US, ADMINISTRATION, AMERICAN, BRIGADIER GENERAL, CHINA, CIVILIAN, DJIBOUTI, DUBAI",
-        "headline": "Hegseth Rejects Media Report on US Missile Stockpile Concerns",
-        "synopsis": "A US and ADMINISTRATION \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 60 source(s) across 222 mentions.",
+        "date": "20260806",
+        "score": 2.726,
+        "mentions": 268,
+        "actors": "A US, AMERICAN, ARMY, CIVILIAN, DEFENCE SECRETARY, DJIBOUTI, GOVERNMENT, IRAN",
+        "headline": "Trump's Iran maximum pressure strategy risks IRGC regime collapse",
+        "synopsis": "A US and AMERICAN \u2014 fighting / clashes (in conflict) reported near Tehran, Tehran, Iran, covered by 82 source(s) across 268 mentions.",
         "sources": [
-          "https://www.theepochtimes.com/us/hegseth-rejects-media-report-on-us-missile-stockpile-concerns-6071538",
-          "https://english.news.cn/20260805/a93ae187e72243399252f29efa39d227/c.html",
-          "https://aa.com.tr/en/americas/trump-says-strait-of-hormuz-to-open-very-soon-warns-iran-of-very-hard-response-if-talks-fail/4018589"
+          "https://www.foxnews.com/opinion/irans-deepest-weakness-exposed-americas-maximum-pressure-campaign",
+          "https://www.hellenicshippingnews.com/iran-war-oil-banking-on-phantom-deal/",
+          "https://dailytrust.com/iran-says-close-to-hormuz-plan-with-oman/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.3333,
+          31.4167
+        ]
+      },
+      "properties": {
+        "title": "Diplomatic cooperation \u2014 Gaza, Israel (general), Israel",
+        "date": "20260806",
+        "score": 2.817,
+        "mentions": 348,
+        "actors": "ADMINISTRATION, AMERICAN, CANADA, CHABAD, CONGRESS, COPENHAGEN, DEMOCRATIC PARTY, DENMARK",
+        "headline": "Israeli strike that killed journalist in Lebanon was war crime, say rights groups",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 diplomatic cooperation (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 82 source(s) across 348 mentions.",
+        "sources": [
+          "https://www.theguardian.com/world/2026/aug/06/israeli-strike-that-killed-journalist-in-lebanon-was-war-say-rights-groups",
+          "https://rewind1051.com/news/030030-takeaways-from-tuesdays-elections-el-sayed-pulls-off-narrow-victory-over-democratic-establishment/",
+          "https://theconversation.com/gazas-road-map-is-driven-by-trump-but-reluctant-passengers-and-serious-potholes-could-derail-pathway-to-peace-288996"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5167,
+          50.4333
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Kyiv, Kyyiv, Misto, Ukraine",
+        "date": "20260806",
+        "score": 2.699,
+        "mentions": 259,
+        "actors": "ADMINISTRATION, AIR FORCE, BRUSSELS, CIVILIAN, COMPANIES, CRIMEA, DONETSK, EMPLOYEE",
+        "headline": null,
+        "synopsis": "ADMINISTRATION and AIR FORCE \u2014 fighting / clashes (in conflict) reported near Kyiv, Kyyiv, Misto, Ukraine, covered by 75 source(s) across 259 mentions.",
+        "sources": [
+          "https://www.cnbc.com/2026/08/06/ukraine-war-russia-zelenskyy-oil-refinery.html",
+          "https://www.hurriyetdailynews.com/nato-allies-weigh-more-air-defense-support-for-ukraine-225275",
+          "https://theshillongtimes.com/2026/08/06/russian-missile-drone-barrage-in-ukraine-kills-17/"
         ]
       }
     },
@@ -324,16 +252,16 @@
       },
       "properties": {
         "title": "Intent to cooperate \u2014 Tehran, Tehran, Iran",
-        "date": "20260805",
-        "score": 2.769,
-        "mentions": 278,
-        "actors": "ADMINISTRATION, AMERICAN, BAGHDAD, DJIBOUTI, EGYPT, FOREIGN MINIST, IRAN, IRANIAN",
-        "headline": "Iranian nurses assaulted after strike over poor working conditions",
-        "synopsis": "ADMINISTRATION and AMERICAN \u2014 intent to cooperate (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 98 source(s) across 278 mentions.",
+        "date": "20260806",
+        "score": 2.728,
+        "mentions": 314,
+        "actors": "AMERICAN, ARMY CHIEF, EUROPEAN, FOREIGN MINIST, GOVERNMENT, HINDU, IRAN, IRANIAN",
+        "headline": "Iran says agreement on Strait of Hormuz at \u2018final stage\u2019",
+        "synopsis": "AMERICAN and ARMY CHIEF \u2014 intent to cooperate (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 60 source(s) across 314 mentions.",
         "sources": [
-          "https://www.jpost.com/middle-east/article-904675",
-          "https://www.breitbart.com/politics/2026/08/04/rubio-hormuz-talks-accelerate-after-trump-warning-treasury-secretary-bessent-says-deal-possible-by-tomorrow/",
-          "https://maritime-executive.com/article/report-u-s-officials-back-plan-for-iran-oman-to-split-control-of-hormuz"
+          "https://www.theboltonnews.co.uk/news/national/26440720.iran-says-agreement-strait-hormuz-final-stage/",
+          "https://yalibnan.com/2026/08/06/iran-says-it-has-reached-a-temporary-agreement-with-oman-on-hormuz-shipping-route/",
+          "https://www.irishtimes.com/business/markets/2026/08/06/oil-holds-losses-as-iran-and-oman-reach-agreement-over-hormuz/"
         ]
       }
     },
@@ -347,17 +275,17 @@
         ]
       },
       "properties": {
-        "title": "Rejection \u2014 Gaza, Israel (general), Israel",
-        "date": "20260805",
-        "score": 2.585,
-        "mentions": 218,
-        "actors": "ADMINISTRATION, ARMY, CAIRO, CHINA, CONGRESS, DOCTOR, GAZA, HAMAS",
-        "headline": "\"Not our draft\": Netanyahu rejects Trump's Gaza plan, disagrees to withdraw until \"Hamas is completely disarmed\"",
-        "synopsis": "ADMINISTRATION and ARMY \u2014 rejection (in conflict) reported near Gaza, Israel (general), Israel, covered by 55 source(s) across 218 mentions.",
+        "title": "Fighting / clashes \u2014 Gaza, Israel (general), Israel",
+        "date": "20260806",
+        "score": 2.668,
+        "mentions": 254,
+        "actors": "DEMOCRATIC PARTY, GAZA, GERMANY, GOVERNANCE, HAMAS, IRAN, ISRAEL, ISRAELI",
+        "headline": "\u2018If I Leave, Who Is Going to Rescue People?\u2019",
+        "synopsis": "DEMOCRATIC PARTY and GAZA \u2014 fighting / clashes (in conflict) reported near Gaza, Israel (general), Israel, covered by 65 source(s) across 254 mentions.",
         "sources": [
-          "http://www.bignewsnetwork.com/news/279222941/not-our-draft-netanyahu-rejects-trump-gaza-plan-disagrees-to-withdraw-until-hamas-is-completely-disarmed",
-          "https://www.independent.co.uk/news/world/middle-east/trump-netanyahu-gaza-peace-deal-hamas-b3027712.html",
-          "https://wrp.org.uk/features/bma-motions-fight-for-pay-and-support-for-palestine/"
+          "https://nymag.com/intelligencer/article/lebanon-paramedics-israel-bombs-mary-turfah.html",
+          "http://www.jpost.com/israel-news/article-904733",
+          "https://wrp.org.uk/editorials/tuc-must-act-by-calling-a-general-strike-in-support-of-palestine/"
         ]
       }
     },
@@ -366,22 +294,94 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34.3333,
-          31.4167
+          144.967,
+          -37.8167
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 Gaza, Israel (general), Israel",
-        "date": "20260805",
-        "score": 2.752,
-        "mentions": 279,
-        "actors": "ADMINISTRATION, ARMED GROUP, ARMY, BANK, BRITISH, CABINET, CIVILIAN, DEFENSE MINIST",
-        "headline": "Greens accuse SNP of 'cosying up' to Israel-linked Barclays with bonds scheme",
-        "synopsis": "ADMINISTRATION and ARMED GROUP \u2014 intent to cooperate (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 88 source(s) across 279 mentions.",
+        "title": "Appeal \u2014 Melbourne, Victoria, Australia",
+        "date": "20260806",
+        "score": 2.676,
+        "mentions": 348,
+        "actors": "AUSTRALIA, AUSTRALIAN, COMMUNITY, DOCTOR, GOVERNMENT, LAWYER, POLICE, PREMIER",
+        "headline": null,
+        "synopsis": "AUSTRALIA and AUSTRALIAN \u2014 appeal (engaging in cooperation) reported near Melbourne, Victoria, Australia, covered by 36 source(s) across 348 mentions.",
         "sources": [
-          "https://www.thenational.scot/news/26438593.greens-rage-scottish-ministers-non-answer-barclays-partnership/",
-          "https://www.haaretz.com/israel-news/security-aviation/2026-08-05/ty-article-magazine/israel-captured-230-square-miles-of-lebanon-razed-villages-and-built-new-bases/0000019f-cc0c-db9d-a9ff-fdbcb2660000",
-          "https://wrp.org.uk/features/bma-motions-fight-for-pay-and-support-for-palestine/"
+          "https://www.nvi.com.au/story/9325006/flowers-line-good-samaritans-shop-after-deadly-attack/",
+          "https://www.dungogchronicle.com.au/story/9325170/court-intervenes-to-send-alleged-ambo-stabber-to-trial/",
+          "https://www.illawarramercury.com.au/story/9325006/teens-charges-upgraded-over-beloved-shop-owners-death/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8258,
+          18.975
+        ]
+      },
+      "properties": {
+        "title": "Assault \u2014 Bombay, Maharashtra, India",
+        "date": "20260806",
+        "score": 2.616,
+        "mentions": 214,
+        "actors": "AMIT, BOMBAY, CHIEF MINISTER, CONVICTS, EDITOR IN CHIEF, EMPLOYEE, GOVERNMENT, HIGH COURT",
+        "headline": "Bombay High Court Convicts Tarun Tejpal in 2013 Rape Case, Sentences Him to 10 Years in Jail",
+        "synopsis": "AMIT and BOMBAY \u2014 assault (in conflict) reported near Bombay, Maharashtra, India, covered by 68 source(s) across 214 mentions.",
+        "sources": [
+          "https://www.oneindia.com/india/tarun-tejpal-convicted-in-2013-goa-sexual-assault-case-as-bombay-high-court-overturns-acquittal-8168181.html",
+          "https://pragativadi.com/bombay-high-court-convicts-tarun-tejpal-in-2013-rape-case/",
+          "https://www.tribuneindia.com/news/india/bombay-high-court-convicts-tehelka-ex-editor-tarun-tejpal-in-2013-sexual-assault-case-sets-aside-acquittal/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8258,
+          18.975
+        ]
+      },
+      "properties": {
+        "title": "Yield/concede \u2014 Mumbai, Maharashtra, India",
+        "date": "20260806",
+        "score": 2.651,
+        "mentions": 252,
+        "actors": "AMIT, AUTHORITIES, AUTOMAKER, BOMBAY, COMPANY, CONVICTS, CORPORATION, DOCTOR",
+        "headline": "IIFL Capital partners with Flytxt to leverage Agentic AI for sustainable AUM growth",
+        "synopsis": "AMIT and AUTHORITIES \u2014 yield/concede (engaging in cooperation) reported near Mumbai, Maharashtra, India, covered by 60 source(s) across 252 mentions.",
+        "sources": [
+          "https://www.thehindu.com/brandhub/pr-release/iifl-capital-partners-with-flytxt-to-leverage-agentic-ai-for-sustainable-aum-growth/article71312137.ece",
+          "https://www.mid-day.com/mumbai/mumbai-news/article/bmc-launches-pedestrian-first-drive-to-clear-mumbai-footpaths-of-encroachments-23643466",
+          "https://economictimes.indiatimes.com/news/india/protest-is-a-legitimate-form-of-democratic-dialogue-should-build-consensus-mohan-bhagwat/articleshow/133008092.cms"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          90.4086,
+          23.7231
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Dhaka, Dhaka, Bangladesh",
+        "date": "20260806",
+        "score": 2.595,
+        "mentions": 222,
+        "actors": "ABDULLAH, BANGLADESH, BANGLADESHI, BHOPAL, DETECTIVE, DHAKA, EGYPTIAN, EMBASSY",
+        "headline": "Ousted Bangladeshi leader vows to return from exile despite facing a death sentence",
+        "synopsis": "ABDULLAH and BANGLADESH \u2014 coercion / seizure (in conflict) reported near Dhaka, Dhaka, Bangladesh, covered by 56 source(s) across 222 mentions.",
+        "sources": [
+          "https://www.wvik.org/npr-top-stories/2026-08-05/ousted-bangladeshi-leader-vows-to-return-from-exile-despite-facing-a-death-sentence",
+          "https://www.abc.net.au/news/2026-08-06/ousted-bangladesh-prime-minister-sheikh-hasina-return-analysis/107002232",
+          "https://www.gatestoneinstitute.org/22772/bangladesh-terrorism-syed-mohammad-ziaul-haque"
         ]
       }
     },
@@ -395,17 +395,89 @@
         ]
       },
       "properties": {
-        "title": "Threat \u2014 White House, District of Columbia, United States",
-        "date": "20260805",
-        "score": 2.508,
-        "mentions": 183,
-        "actors": "AIR FORCE, AMERICAN, AUTHORITIES, BEIJING, BRITISH, BUSINESS, CHINA, CHINESE",
-        "headline": "US military has used up 'virtually all' of its long-range missiles in war with Iran",
-        "synopsis": "AIR FORCE and AMERICAN \u2014 threat (in conflict) reported near White House, District of Columbia, United States, covered by 50 source(s) across 183 mentions.",
+        "title": "Yield/concede \u2014 White House, District of Columbia, United States",
+        "date": "20260806",
+        "score": 2.619,
+        "mentions": 216,
+        "actors": "AFRICA, AIR FORCE, AMERICAN, ANKARA, ARMENIA, BANK, CHINA, CHRISTIAN",
+        "headline": "What Happened to South Africa's Nukes?",
+        "synopsis": "AFRICA and AIR FORCE \u2014 yield/concede (engaging in cooperation) reported near White House, District of Columbia, United States, covered by 68 source(s) across 216 mentions.",
         "sources": [
-          "https://www.lbc.co.uk/article/us-used-up-long-range-missiles-in-iran-war-5HjdfdS_2/",
-          "https://www.newsweek.com/why-us-failed-stop-9-11-terror-attacks-12247985",
-          "https://www.explosion.com/206280/trump-threatens-eu-tariffs-over-apple-and-big-tech-fines/"
+          "https://redstate.com/wardclark/2026/08/06/what-happened-to-south-africas-nukes-n2205244",
+          "https://www.newsweek.com/trump-administration-accused-of-destroying-reflecting-pool-evidence-12290702",
+          "https://www.dailyrepublic.com/news/trump-fuels-hopes-of-hormuz-opening-with-hints-deal-is-close/article_8dcb7d31-c8aa-4e5d-995a-074c9d9497db.html"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Washington, District of Columbia, United States",
+        "date": "20260806",
+        "score": 2.594,
+        "mentions": 225,
+        "actors": "AL QAIDA, ARIZONA, AUTHORITIES, BISHOP, CANADA, CHINA, COMMUNITY, COMPANY",
+        "headline": "Trump insists US has 'massive amounts' of munitions, vows to jail 'treasonous' leakers",
+        "synopsis": "AL QAIDA and ARIZONA \u2014 coercion / seizure (in conflict) reported near Washington, District of Columbia, United States, covered by 54 source(s) across 225 mentions.",
+        "sources": [
+          "https://nypost.com/2026/08/06/us-news/trump-insists-us-has-massive-amounts-of-munitions-vows-to-jail-treasonous-leakers/",
+          "https://www.aol.com/articles/republicans-vote-hold-anthony-fauci-131938000.html",
+          "https://thefederalist.com/2026/08/06/four-prosecutors-refused-to-pursue-hacker-behind-2020-breach-of-633k-arizona-voters/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0364,
+          38.8951
+        ]
+      },
+      "properties": {
+        "title": "Material cooperation \u2014 Washington, District of Columbia, United States",
+        "date": "20260806",
+        "score": 2.618,
+        "mentions": 251,
+        "actors": "AMERICAN, ATTORNEY, ATTORNEY GENERAL, BUSINESS, CHINA, COMPANY, EMPLOYEE, ENVOY",
+        "headline": "Trump grills Hegseth",
+        "synopsis": "AMERICAN and ATTORNEY \u2014 material cooperation (engaging in cooperation) reported near Washington, District of Columbia, United States, covered by 50 source(s) across 251 mentions.",
+        "sources": [
+          "http://www.bignewsnetwork.com/news/279224690/trump-grills-hegseth-wapo",
+          "https://www.fox5dc.com/news/questions-surround-future-gw-hospitals-long-standing-midwifery-practice-patients-seek-answers",
+          "https://www.zerohedge.com/crypto/if-clarity-dies-democrats-killed-it-lummis-urges-senate-act-crypto-bill-recess"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8258,
+          18.975
+        ]
+      },
+      "properties": {
+        "title": "Coercion / seizure \u2014 Mumbai, Maharashtra, India",
+        "date": "20260806",
+        "score": 2.538,
+        "mentions": 197,
+        "actors": "ADVOCATE, AMIT, AUTHORITIES, BOMBAY, CHIEF MINISTER, CONVICTS, EDITOR IN CHIEF, GOVERNANCE",
+        "headline": "Congress Leader Rahul Gandhi Meets Viral Mumbai Model Rhiya Ahir & Other Student Protesters; Felicitates Them For Their Bravery",
+        "synopsis": "ADVOCATE and AMIT \u2014 coercion / seizure (in conflict) reported near Mumbai, Maharashtra, India, covered by 51 source(s) across 197 mentions.",
+        "sources": [
+          "https://www.freepressjournal.in/lifestyle/congress-leader-rahul-gandhi-meets-viral-mumbai-model-rhiya-ahir-other-student-protesters-felicitates-them-for-their-bravery",
+          "https://www.adgully.com/post/18975/united-spirits-says-fssai-order-over-whisky-labeling-has-no-material-financial-impact",
+          "https://www.rediff.com/business/report/tata-sons-agm-will-chandras-term-be-renewed/20260806.htm"
         ]
       }
     },
@@ -420,16 +492,40 @@
       },
       "properties": {
         "title": "Diplomatic cooperation \u2014 Tehran, Tehran, Iran",
-        "date": "20260805",
-        "score": 2.731,
-        "mentions": 281,
-        "actors": "ACTIVIST, AMNESTY INTERNATIONAL, BAGHDAD, DOHA, EUROPE, GAZA, GOVERNMENT, HAMAS",
-        "headline": "US, Iran and Oman near interim deal to reopen Strait of Hormuz",
-        "synopsis": "ACTIVIST and AMNESTY INTERNATIONAL \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 77 source(s) across 281 mentions.",
+        "date": "20260806",
+        "score": 2.606,
+        "mentions": 205,
+        "actors": "ADVOCATE, ARMENIA, AUTHORITIES, BAGHDAD, DEPUTY, IRAN, IRANIAN, ISRAEL",
+        "headline": null,
+        "synopsis": "ADVOCATE and ARMENIA \u2014 diplomatic cooperation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 70 source(s) across 205 mentions.",
         "sources": [
-          "https://investinglive.com/commodities/us-iran-and-oman-near-interim-deal-to-reopen-strait-of-hormuz/",
-          "https://www.mirror.co.uk/news/world-news/iran-usa-hormuz-deal-war-37514714",
-          "https://www.theepochtimes.com/us/hegseth-rejects-media-report-on-us-missile-stockpile-concerns-6071538"
+          "https://paktribune.com/iran-denies-us-talks-as-hormuz-deal-nears/",
+          "https://www.khaama.com/2-explosions-heard-near-oil-tanker-in-strait-of-hormuz/",
+          "https://www.irishtimes.com/business/markets/2026/08/06/oil-holds-losses-as-iran-and-oman-reach-agreement-over-hormuz/"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.2333,
+          31.7667
+        ]
+      },
+      "properties": {
+        "title": "Fighting / clashes \u2014 Jerusalem, Israel (general), Israel",
+        "date": "20260806",
+        "score": 2.517,
+        "mentions": 182,
+        "actors": "ARMY, ASSAILANT, COMMUNITY, COMPANY, DETROIT, GAZA, INTELLIGENCE, IRAN",
+        "headline": "Police arrest suspect over threat to murder MK Tzvi Sukkot",
+        "synopsis": "ARMY and ASSAILANT \u2014 fighting / clashes (in conflict) reported near Jerusalem, Israel (general), Israel, covered by 53 source(s) across 182 mentions.",
+        "sources": [
+          "https://www.israelnationalnews.com/news/431334",
+          "https://www.israelnationalnews.com/flashes/691284",
+          "https://www.winnipegfreepress.com/world/2026/08/06/rights-groups-accuse-israel-of-targeting-and-killing-lebanese-journalist-amal-khalil"
         ]
       }
     },
@@ -443,89 +539,17 @@
         ]
       },
       "properties": {
-        "title": "Threat \u2014 Tehran, Tehran, Iran",
-        "date": "20260805",
-        "score": 2.506,
-        "mentions": 165,
-        "actors": "ACTIVIST, CHINA, COMMENTATOR, DJIBOUTI, EGYPT, IRAN, IRANIAN, ISLAMIC",
-        "headline": "Bill O\u2019Reilly reveals he is haunted by the warning he gave Trump before launching Iran war",
-        "synopsis": "ACTIVIST and CHINA \u2014 threat (in conflict) reported near Tehran, Tehran, Iran, covered by 61 source(s) across 165 mentions.",
+        "title": "Consultation \u2014 Tehran, Tehran, Iran",
+        "date": "20260806",
+        "score": 2.603,
+        "mentions": 223,
+        "actors": "ARMY, DEPUTY, DIPLOMAT, FIGHTER, IRAN, IRANIAN, ISLAMIC, ISRAEL",
+        "headline": "The South African company thriving on the US-Israeli war on Iran",
+        "synopsis": "ARMY and DEPUTY \u2014 consultation (engaging in cooperation) reported near Tehran, Tehran, Iran, covered by 58 source(s) across 223 mentions.",
         "sources": [
-          "https://www.independent.co.uk/news/world/americas/us-politics/trump-iran-war-bill-oreilly-b3027901.html",
-          "http://www.kenyastar.com/news/279223353/explosions-reported-in-dubai-industrial-district",
-          "https://irannewsupdate.com/news/society/irans-teachers-under-pressure-why-the-regime-fears-independent-educators/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          151.217,
-          -33.8833
-        ]
-      },
-      "properties": {
-        "title": "Diplomatic cooperation \u2014 Sydney, New South Wales, Australia",
-        "date": "20260805",
-        "score": 2.715,
-        "mentions": 326,
-        "actors": "ADVOCATE, AIRLINE, ANDHRA PRADESH, AUSTRALIA, AUSTRALIAN, COMMUNITY, DEPUTY, INDIGENOUS",
-        "headline": null,
-        "synopsis": "ADVOCATE and AIRLINE \u2014 diplomatic cooperation (engaging in cooperation) reported near Sydney, New South Wales, Australia, covered by 52 source(s) across 326 mentions.",
-        "sources": [
-          "https://www.maitlandmercury.com.au/story/9324844/six-years-21-drafts-earn-hip-hop-poet-top-book-prize/",
-          "https://www.hardenexpress.com.au/story/9324111/push-for-pen-and-paper-tests-as-literacy-results-dive/",
-          "https://artdaily.com/news/198793/MCA-Australia-and-ACON-launch-Bonnie-Huang-exhibition-at-Westfield-Parramatta"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.116667,
-          51.5
-        ]
-      },
-      "properties": {
-        "title": "Coercion / seizure \u2014 London, London, City of, United Kingdom",
-        "date": "20260805",
-        "score": 2.467,
-        "mentions": 184,
-        "actors": "BRITAIN, CRIMINAL, FRANCE, GAZA, INTERNATIONAL COMMITTEE OF THE RED CROSS, IRAN, ISLAM, ISRAEL",
-        "headline": "Myanmar\u2019s detained leader Aung San Suu Kyi meets Red Cross official",
-        "synopsis": "BRITAIN and CRIMINAL \u2014 coercion / seizure (in conflict) reported near London, London, City of, United Kingdom, covered by 39 source(s) across 184 mentions.",
-        "sources": [
-          "http://www.nigeriasun.com/news/279221049/detained-leader-suu-kyi-meets-official-from-red-cross-in-myanmar",
-          "https://www.el-balad.com/17038890",
-          "https://www.islingtongazette.co.uk/news/26436423.waltz-shoreditch-named-londons-best-cocktail-bar/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          34.3333,
-          31.4167
-        ]
-      },
-      "properties": {
-        "title": "Yield/concede \u2014 Gaza, Israel (general), Israel",
-        "date": "20260805",
-        "score": 2.675,
-        "mentions": 260,
-        "actors": "AMERICAN, ARMY, CHINESE, CIVILIAN, DEMOCRATIC PARTY, DISPLACED RESIDENTS, DUBAI, GAZA",
-        "headline": "Trump\u2019s Gaza peace plan in tatters after Netanyahu rejects draft terms for disarming Hamas",
-        "synopsis": "AMERICAN and ARMY \u2014 yield/concede (engaging in cooperation) reported near Gaza, Israel (general), Israel, covered by 65 source(s) across 260 mentions.",
-        "sources": [
-          "https://www.independent.co.uk/news/world/middle-east/trump-netanyahu-gaza-peace-deal-hamas-b3027712.html",
-          "https://english.aawsat.com/arab-world/5303585-israeli-army-backs-netanyahu-sets-3-red-lines-over-gaza-agreement",
-          "https://www.scoop.co.nz/stories/HL2608/S00012/stillborn-peace-plans-israel-hamas-and-the-question-of-disarmament.htm"
+          "http://www.bignewsnetwork.com/news/279224666/the-south-african-company-thriving-on-the-us-israeli-war-on-iran",
+          "https://www.middleeasteye.net/live-blog/live-blog-update/trump-says-he-would-prefer-deal-iran-further-military-action",
+          "https://www.newsghana.com.gh/pentagon-depletes-long-range-missiles-amid-continuing-strategic-defeats-against-iran/"
         ]
       }
     },
@@ -540,16 +564,16 @@
       },
       "properties": {
         "title": "Rejection \u2014 Tehran, Tehran, Iran",
-        "date": "20260805",
-        "score": 2.467,
-        "mentions": 161,
-        "actors": "ADMINISTRATION, DJIBOUTI, EGYPT, GENEVA, IRAN, IRANIAN, KIEV, MEDIA",
-        "headline": "US hopeful Hormuz strait deal will be done 'today or tomorrow' after ship hit",
-        "synopsis": "ADMINISTRATION and DJIBOUTI \u2014 rejection (in conflict) reported near Tehran, Tehran, Iran, covered by 51 source(s) across 161 mentions.",
+        "date": "20260806",
+        "score": 2.473,
+        "mentions": 176,
+        "actors": "ADMINISTRATION, AMERICAN, APPEALS COURT, GENEVA, HASSAN, INTELLIGENCE, IRAN, IRANIAN",
+        "headline": "Iran says agreement on Strait of Hormuz at \u2018final stage\u2019",
+        "synopsis": "ADMINISTRATION and AMERICAN \u2014 rejection (in conflict) reported near Tehran, Tehran, Iran, covered by 44 source(s) across 176 mentions.",
         "sources": [
-          "https://www.citizen.co.za/news/news-world/us-hopeful-hormuz-strait-deal-will-be-done-today-or-tomorrow-after-ship-hit/",
-          "https://www.dailymail.com/news/article-16029693/Deal-Strait-Hormuz-TODAY-Iran-greater-control-traffic.html",
-          "https://www.businesstimes.com.sg/international/trump-discusses-iran-qatari-emir-hopes-hormuz-deal-grows"
+          "https://www.theboltonnews.co.uk/news/national/26440720.iran-says-agreement-strait-hormuz-final-stage/",
+          "https://kdhnews.com/news/world/iran-and-the-us-say-a-strait-of-hormuz-deal-is-close-but-one-or/article_74aaf8db-e9c8-5d72-a843-1af541c4a8b6.html",
+          "https://www.egyptindependent.com/an-agreement-on-the-strait-of-hormuz-is-taking-shape-but-not-one-trump-wants/"
         ]
       }
     },
@@ -558,46 +582,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -0.116667,
-          51.5
+          7.53333,
+          9.08333
         ]
       },
       "properties": {
-        "title": "Intent to cooperate \u2014 London, London, City of, United Kingdom",
-        "date": "20260805",
-        "score": 2.656,
-        "mentions": 280,
-        "actors": "BRAZIL, BURGLAR, BUSINESS, COMPANY, EUROPEAN, JAPAN, LAS VEGAS, LONDON",
-        "headline": "Strait reopening \u2018essential\u2019 for UK families, says Ed Miliband ahead of US talks",
-        "synopsis": "BRAZIL and BURGLAR \u2014 intent to cooperate (engaging in cooperation) reported near London, London, City of, United Kingdom, covered by 50 source(s) across 280 mentions.",
+        "title": "Diplomatic cooperation \u2014 Abuja, Abuja Federal Capital Territory, Nigeria",
+        "date": "20260806",
+        "score": 2.599,
+        "mentions": 240,
+        "actors": "ABUJA, ADMINISTRATION, AFRICA, ARMY STAFF, BANGLADESH, BURUNDI, CATHOLIC, COMPANY",
+        "headline": "Tinubu's Troop Pay Hike Divides Opposition Parties",
+        "synopsis": "ABUJA and ADMINISTRATION \u2014 diplomatic cooperation (engaging in cooperation) reported near Abuja, Abuja Federal Capital Territory, Nigeria, covered by 49 source(s) across 240 mentions.",
         "sources": [
-          "https://www.thewestmorlandgazette.co.uk/news/national/26437291.strait-reopening-essential-uk-families-says-ed-miliband-ahead-us-talks/",
-          "https://www.investegate.co.uk/announcement/rns/gresham-house-renewable-energy-vct-2--gv2o/circular-publication-and-notice-of-general-meeting/9704899",
-          "https://www.thenationalnews.com/news/uk/2026/08/05/uks-number-10-north-to-be-new-destination-for-world-leaders/"
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          0.016667,
-          51.5333
-        ]
-      },
-      "properties": {
-        "title": "Rejection \u2014 West Ham, Newham, United Kingdom",
-        "date": "20260805",
-        "score": 2.464,
-        "mentions": 214,
-        "actors": "BARRISTER, CIVIL SOCIETY, GAZETTE, GOVERNMENT, HOLLAND, IRAN, JEWISH, JUDGE",
-        "headline": "Burnham \u2018not considering\u2019 public inquiry into Epstein\u2019s UK activities",
-        "synopsis": "BARRISTER and CIVIL SOCIETY \u2014 rejection (in conflict) reported near West Ham, Newham, United Kingdom, covered by 28 source(s) across 214 mentions.",
-        "sources": [
-          "https://www.hampshirechronicle.co.uk/news/national/26437821.burnham-not-considering-public-inquiry-epsteins-uk-activities/",
-          "https://www.personneltoday.com/hr/ryanair-pilots-launch-group-claim-over-holiday-pay/",
-          "https://www.aol.co.uk/articles/gary-glitter-appears-court-charged-134457000.html"
+          "https://punchng.com/tinubus-troop-pay-hike-divides-opposition/",
+          "https://hallmarknews.com/afcfta-seals-3-1bn-customs-modernisation-deal-to-strengthen-african-trade/",
+          "https://www.nigerianeye.com/2026/08/vdm-sets-conditions-before-honouring.html"
         ]
       }
     }

@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-05",
+  "date": "2026-08-06",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 61,
-    "hi_f": 86,
-    "lo_f": 53,
+    "now_f": 65,
+    "hi_f": 88,
+    "lo_f": 58,
     "precip_pct": 0,
     "desc": "clear"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 61,
-      "hi_f": 86,
-      "lo_f": 53,
+      "now_f": 65,
+      "hi_f": 88,
+      "lo_f": 58,
       "precip_pct": 0,
       "desc": "clear"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 61,
-      "hi_f": 92,
-      "lo_f": 54,
+      "now_f": 62,
+      "hi_f": 93,
+      "lo_f": 57,
       "precip_pct": 0,
       "desc": "clear"
     }
   ],
-  "story_count": 66,
-  "score_count": 6,
+  "story_count": 69,
+  "score_count": 5,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Could U.S. Water Systems Be a New Front in the Iran War?",
+      "title": "Moderate Democrats Prepare for \u2018War\u2019 Against an Ascendant Left",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "US hawks push Trump on multibillion-dollar Taiwan arms deal ahead of Xi summit",
-      "source": "scmp.com"
+      "title": "EasyJet agrees to \u00a35.7bn takeover by US firm",
+      "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Over 1,218 flights delayed, 50 canceled amid widespread U.S. travel disruptions",
+      "title": "14-year-olds arrested in Gresham shooting that left another teen in critical condition",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Abdul El-Sayed wins Michigan Democratic Senate primary as voters pivot to the left",
+      "title": "Versant shares surge 10% after company raises 2026 outlook on platforms, advertising momentum",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "Reader Q&A: Our natural history writer Patrick Barkham is answering your questions on invertebrates \u2013 live",
-      "source": "theguardian.com"
+      "title": "JOB OPPORTUNITIES: NASA OFFICE OF THE GENERAL COUNSEL",
+      "source": "nasa.gov"
     },
     {
       "section": "The Lighter Side",
-      "title": "A Serpentine Sculpture Inspired by Benjamin Franklin's 'Join, or Die' Call for Unity Is Taking Shape\u2014Segment by Segment\u2014in Philadelphia",
+      "title": "This World War II Submarine Noted for Sinking Enemy Ships Just Journeyed Across Lake Michigan for a Multimillion-Dollar Makeover",
       "source": "smithsonianmag.com"
     }
   ]
