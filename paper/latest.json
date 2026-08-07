@@ -1,64 +1,64 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-06",
+  "date": "2026-08-07",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 65,
-    "hi_f": 88,
+    "now_f": 60,
+    "hi_f": 87,
     "lo_f": 58,
     "precip_pct": 0,
-    "desc": "clear"
+    "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 65,
-      "hi_f": 88,
+      "now_f": 60,
+      "hi_f": 87,
       "lo_f": 58,
       "precip_pct": 0,
-      "desc": "clear"
+      "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 62,
-      "hi_f": 93,
-      "lo_f": 57,
+      "now_f": 58,
+      "hi_f": 89,
+      "lo_f": 56,
       "precip_pct": 0,
       "desc": "clear"
     }
   ],
-  "story_count": 69,
-  "score_count": 5,
+  "story_count": 67,
+  "score_count": 6,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Moderate Democrats Prepare for \u2018War\u2019 Against an Ascendant Left",
+      "title": "Murkowski Will Oppose Blanche as Attorney General, Putting His Confirmation at Risk",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "EasyJet agrees to \u00a35.7bn takeover by US firm",
-      "source": "bbc.co.uk"
+      "title": "US unexpectedly loses jobs in July, in blow to Trump\u2019s economy claims",
+      "source": "scmp.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "14-year-olds arrested in Gresham shooting that left another teen in critical condition",
-      "source": "oregonlive.com"
+      "title": "Hospital staff said he was faking it and released him. He died from an overdose soon after",
+      "source": "opb.org"
     },
     {
       "section": "Tech & Business",
-      "title": "Versant shares surge 10% after company raises 2026 outlook on platforms, advertising momentum",
+      "title": "Shares of this digital medical platform were up more than 100% at one point. Here's what's driving it",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "JOB OPPORTUNITIES: NASA OFFICE OF THE GENERAL COUNSEL",
-      "source": "nasa.gov"
+      "title": "New autism therapy shows surprising benefits even in adult mice",
+      "source": "sciencedaily.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "This World War II Submarine Noted for Sinking Enemy Ships Just Journeyed Across Lake Michigan for a Multimillion-Dollar Makeover",
-      "source": "smithsonianmag.com"
+      "title": "Quiz: Can You Name the 5 Coldest Countries on Earth?",
+      "source": "mentalfloss.com"
     }
   ]
 }
