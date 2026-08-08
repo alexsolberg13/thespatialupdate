@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pitch sheet 2026-08-08 — The Spatial Update</title>
+<style>
+  :root {
+    --ink: #14181d;
+    --paper: #f7f6f3;
+    --rule: #d9d5cc;
+    --muted: #6b6f76;
+    --pick: #0b5f4a;
+    --pick-soft: #e4efe9;
+    --warn: #9a4a1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0 0 7.5rem;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 1.25rem 1rem 0; }
+
+  header { border-bottom: 2px solid var(--ink); padding-bottom: .6rem; margin-bottom: 1.1rem; }
+  .kicker {
+    font: 600 .68rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+  }
+  h1 { font: 700 1.6rem/1.15 Georgia, "Iowan Old Style", serif; margin: .35rem 0 .3rem; }
+  .meta { font: 400 .8rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+
+  .pitch {
+    border: 1px solid var(--rule); border-radius: 3px; background: #fff;
+    margin: 0 0 .8rem; padding: .85rem .9rem; cursor: pointer;
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .pitch:has(input:checked) { border-color: var(--pick); border-left-width: 5px; background: var(--pick-soft); }
+  .pitch:focus-within { outline: 2px solid var(--pick); outline-offset: 2px; }
+
+  .row { display: flex; gap: .7rem; align-items: flex-start; }
+  input[type=checkbox] { width: 1.35rem; height: 1.35rem; margin: .15rem 0 0; accent-color: var(--pick); flex: none; }
+  .num {
+    font: 600 .78rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--muted); flex: none; min-width: 1.6rem;
+  }
+  .body { flex: 1; min-width: 0; }
+  h2 { font: 600 1.02rem/1.3 Georgia, "Iowan Old Style", serif; margin: 0 0 .15rem; }
+  .place { font: 500 .84rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); word-break: break-word; }
+  .angle { margin: .5rem 0 0; font-size: .9rem; }
+  .angle b { font-weight: 600; }
+  .head { margin: .45rem 0 0; font-size: .88rem; color: #33383f; font-style: italic; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: .3rem; margin: .55rem 0 0; }
+  .tag {
+    font: 500 .7rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    padding: .3rem .45rem; border: 1px solid var(--rule); border-radius: 2px; color: var(--muted);
+  }
+  .tag.good { color: var(--pick); border-color: #a8ccbf; }
+  .tag.warn { color: var(--warn); border-color: #e0bfa6; }
+
+  details { margin: .55rem 0 0; }
+  summary {
+    font: 500 .78rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--muted); cursor: pointer; padding: .2rem 0;
+  }
+  details ul { margin: .45rem 0 0; padding-left: 1.1rem; }
+  details li { font-size: .82rem; margin-bottom: .28rem; word-break: break-all; }
+  details a { color: var(--pick); }
+
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0; background: var(--ink); color: #fff;
+    padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 14px rgba(0,0,0,.18);
+  }
+  .bar-in { max-width: 46rem; margin: 0 auto; display: flex; gap: .7rem; align-items: center; }
+  .sel {
+    flex: 1; min-width: 0; font: 500 .82rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #cfd3d8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .sel strong { color: #fff; font-weight: 600; }
+  button {
+    font: 600 .85rem/1 inherit; padding: .7rem 1rem; border: 0; border-radius: 3px;
+    background: #fff; color: var(--ink); cursor: pointer; flex: none;
+  }
+  button:disabled { opacity: .35; cursor: default; }
+  button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .empty { padding: 2rem 0; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">The Spatial Update &middot; assignment desk</div>
+    <h1>Pitch sheet</h1>
+    <div class="meta">2026-08-08 &middot; 20 pitches &middot; from latest.json</div>
+  </header>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="1">
+      <div class="num">01</div>
+      <div class="body">
+        <h2>Diplomatic cooperation</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Shein executive chairman to move into advisory role</p>
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">691 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="http://www.newzealandstar.com/news/279185206/shein-executive-chairman-to-move-into-advisory-role" target="_blank" rel="noopener noreferrer">http://www.newzealandstar.com/news/279185206/shein-executive-chairman-to-move-into-advisory-role</a></li><li><a href="https://www.wglt.org/2026-07-15/todd-blanche-faces-high-stakes-confirmation-hearing-for-attorney-general" target="_blank" rel="noopener noreferrer">https://www.wglt.org/2026-07-15/todd-blanche-faces-high-stakes-confirmation-hearing-for-attorney-general</a></li><li><a href="https://www.prnewswire.com/news-releases/cisos-connect-opens-submissions-for-the-2026-ciso-choice-awards-recognizing-excellence-in-cybersecurity-302826462.html" target="_blank" rel="noopener noreferrer">https://www.prnewswire.com/news-releases/cisos-connect-opens-submissions-for-the-2026-ciso-choice-awards-recognizing-excellence-in-cybersecurity-302826462.html</a></li><li><a href="https://newrepublic.com/article/213066/iran-war-trump-lose-twice" target="_blank" rel="noopener noreferrer">https://newrepublic.com/article/213066/iran-war-trump-lose-twice</a></li><li><a href="https://www.ibtimes.co.uk/newly-leaked-emails-show-todd-blanche-spearheading-trumps-doj-revenge-push-1808794" target="_blank" rel="noopener noreferrer">https://www.ibtimes.co.uk/newly-leaked-emails-show-todd-blanche-spearheading-trumps-doj-revenge-push-1808794</a></li><li><a href="https://wtop.com/dc/2026/07/d-c-leaders-push-back-on-plan-to-keep-national-guard-troops-through-2029/" target="_blank" rel="noopener noreferrer">https://wtop.com/dc/2026/07/d-c-leaders-push-back-on-plan-to-keep-national-guard-troops-through-2029/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="2">
+      <div class="num">02</div>
+      <div class="body">
+        <h2>Appeal</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">DSA unveils new platform including radical structural changes to US government</p>
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">518 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://abcnews4.com/news/nation-world/dsa-unveils-new-platform-including-radical-structural-changes-to-us-government-dsa-melot-kiros-democrat-party-republicans" target="_blank" rel="noopener noreferrer">https://abcnews4.com/news/nation-world/dsa-unveils-new-platform-including-radical-structural-changes-to-us-government-dsa-melot-kiros-democrat-party-republicans</a></li><li><a href="https://www.bostonherald.com/2026/07/14/wyden-alleges-rfk-jr-broke-law-calls-libertarians/" target="_blank" rel="noopener noreferrer">https://www.bostonherald.com/2026/07/14/wyden-alleges-rfk-jr-broke-law-calls-libertarians/</a></li><li><a href="https://www.newsbusters.org/blogs/free-speech/corinne-weaver/2018/09/26/social-media-firms-google-partner-liberal-influenced" target="_blank" rel="noopener noreferrer">https://www.newsbusters.org/blogs/free-speech/corinne-weaver/2018/09/26/social-media-firms-google-partner-liberal-influenced</a></li><li><a href="https://english.aawsat.com/opinion/5296235-us-and-middle-east-dilemma" target="_blank" rel="noopener noreferrer">https://english.aawsat.com/opinion/5296235-us-and-middle-east-dilemma</a></li><li><a href="https://wjla.com/news/local/dc-weather-dmv-heat-advisory-extreme-triple-digit-temperatures-safety-summer-hydration-tips-exhaustion-stroke-cooling-centers-forecast-avoid-caffine-light-clothing-drink-water-ac-warning-signs-children-pets" target="_blank" rel="noopener noreferrer">https://wjla.com/news/local/dc-weather-dmv-heat-advisory-extreme-triple-digit-temperatures-safety-summer-hydration-tips-exhaustion-stroke-cooling-centers-forecast-avoid-caffine-light-clothing-drink-water-ac-warning-signs-children-pets</a></li><li><a href="https://www.ibtimes.co.uk/senate-blocks-us-defence-bill-iran-conflict-1808687" target="_blank" rel="noopener noreferrer">https://www.ibtimes.co.uk/senate-blocks-us-defence-bill-iran-conflict-1808687</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="3">
+      <div class="num">03</div>
+      <div class="body">
+        <h2>Fighting / clashes</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Acting AG Todd Blanche faces a key test. And, ICE pauses most traffic stops</p>
+        <p class="angle"><b>Spatial angle:</b> a strike or engagement location — precision of the coordinate is the whole claim</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">418 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.wsiu.org/2026-07-15/acting-ag-todd-blanche-faces-a-key-test-and-ice-pauses-most-traffic-stops" target="_blank" rel="noopener noreferrer">https://www.wsiu.org/2026-07-15/acting-ag-todd-blanche-faces-a-key-test-and-ice-pauses-most-traffic-stops</a></li><li><a href="https://grenadachronicle.com/could-the-us-take-control-of-irans-southern-islands/" target="_blank" rel="noopener noreferrer">https://grenadachronicle.com/could-the-us-take-control-of-irans-southern-islands/</a></li><li><a href="https://www.kyuk.org/2026-07-15/u-s-and-iran-standoff-over-the-strait-of-hormuz-intensifies" target="_blank" rel="noopener noreferrer">https://www.kyuk.org/2026-07-15/u-s-and-iran-standoff-over-the-strait-of-hormuz-intensifies</a></li><li><a href="http://www.iranherald.com/news/279188069/trump-claims-other-people-could-lead-ground-campaign-in-iran" target="_blank" rel="noopener noreferrer">http://www.iranherald.com/news/279188069/trump-claims-other-people-could-lead-ground-campaign-in-iran</a></li><li><a href="https://www.witn.com/2026/07/15/17-year-old-facing-conspiracy-charges-kinston-shooting-investigation/" target="_blank" rel="noopener noreferrer">https://www.witn.com/2026/07/15/17-year-old-facing-conspiracy-charges-kinston-shooting-investigation/</a></li><li><a href="https://www.presstv.ir/Detail/2026/07/15/772295/Iran-Army-" target="_blank" rel="noopener noreferrer">https://www.presstv.ir/Detail/2026/07/15/772295/Iran-Army-</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="4">
+      <div class="num">04</div>
+      <div class="body">
+        <h2>Yield/concede</h2>
+        <div class="place">White House, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Human rights groups sue over Trump administration&#x27;s sanctions on ICC for investigations into Israel</p>
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">392 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.clickorlando.com/news/politics/2026/07/15/human-rights-groups-sue-over-trump-administrations-sanctions-on-icc-for-investigations-into-israel/" target="_blank" rel="noopener noreferrer">https://www.clickorlando.com/news/politics/2026/07/15/human-rights-groups-sue-over-trump-administrations-sanctions-on-icc-for-investigations-into-israel/</a></li><li><a href="https://wjactv.com/news/nation-world/jay-clayton-faces-senate-intelligence-committee-confirmation-hearing-after-trumps-weeks-long-delay-national-intelligence-director-gabbard-resignation-republican-democrat-bill-pulte-backlash-save-america-act-fisa" target="_blank" rel="noopener noreferrer">https://wjactv.com/news/nation-world/jay-clayton-faces-senate-intelligence-committee-confirmation-hearing-after-trumps-weeks-long-delay-national-intelligence-director-gabbard-resignation-republican-democrat-bill-pulte-backlash-save-america-act-fisa</a></li><li><a href="https://www.messenger-inquirer.com/ap/ap_international_news/former-obama-counsel-kathryn-ruemmler-to-testify-in-epstein-probe/article_77023f7e-8750-5e5b-ae6e-3fd2d810bdae.html" target="_blank" rel="noopener noreferrer">https://www.messenger-inquirer.com/ap/ap_international_news/former-obama-counsel-kathryn-ruemmler-to-testify-in-epstein-probe/article_77023f7e-8750-5e5b-ae6e-3fd2d810bdae.html</a></li><li><a href="https://www.bostonherald.com/2026/07/14/congress-russia-sanctions-graham-tribute/" target="_blank" rel="noopener noreferrer">https://www.bostonherald.com/2026/07/14/congress-russia-sanctions-graham-tribute/</a></li><li><a href="https://www.worthynews.com/115975-senate-records-jack-smith-team-bypassed-safeguards-accessed-texts-involving-44-members-of-congress" target="_blank" rel="noopener noreferrer">https://www.worthynews.com/115975-senate-records-jack-smith-team-bypassed-safeguards-accessed-texts-involving-44-members-of-congress</a></li><li><a href="https://www.newsweek.com/donald-trump-remade-gop-what-happens-when-he-leaves-12194544" target="_blank" rel="noopener noreferrer">https://www.newsweek.com/donald-trump-remade-gop-what-happens-when-he-leaves-12194544</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="5">
+      <div class="num">05</div>
+      <div class="body">
+        <h2>Fighting / clashes</h2>
+        <div class="place">Tehran, Tehran, Iran &middot; 35.7500, 51.5148</div>
+        
+        <p class="angle"><b>Spatial angle:</b> a strike or engagement location — precision of the coordinate is the whole claim</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">follow-on: iran-strikes</span><span class="tag ">753 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.sandiegouniontribune.com/2026/07/15/iran-us-blockade-strikes/" target="_blank" rel="noopener noreferrer">https://www.sandiegouniontribune.com/2026/07/15/iran-us-blockade-strikes/</a></li><li><a href="https://hannity.com/media-room/strait-fire-america-pounds-iran-as-battle-for-global-oil-route-explodes/" target="_blank" rel="noopener noreferrer">https://hannity.com/media-room/strait-fire-america-pounds-iran-as-battle-for-global-oil-route-explodes/</a></li><li><a href="https://www.cubaheadlines.com/articles/335152" target="_blank" rel="noopener noreferrer">https://www.cubaheadlines.com/articles/335152</a></li><li><a href="https://www.independent.co.uk/news/world/middle-east/dubai-uae-hormuz-iran-jebel-ali-port-b3015060.html" target="_blank" rel="noopener noreferrer">https://www.independent.co.uk/news/world/middle-east/dubai-uae-hormuz-iran-jebel-ali-port-b3015060.html</a></li><li><a href="https://www.ibtimes.com.au/us-iran-conflict-strait-hormuz-1872345" target="_blank" rel="noopener noreferrer">https://www.ibtimes.com.au/us-iran-conflict-strait-hormuz-1872345</a></li><li><a href="https://www.mediaite.com/media/news/trump-declares-hormuz-open-to-all-except-iran-warning-regime-faces-total-destruction/" target="_blank" rel="noopener noreferrer">https://www.mediaite.com/media/news/trump-declares-hormuz-open-to-all-except-iran-warning-regime-faces-total-destruction/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="6">
+      <div class="num">06</div>
+      <div class="body">
+        <h2>Coercion / seizure</h2>
+        <div class="place">White House, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Human rights groups sue over Trump administration&#x27;s sanctions on ICC for investigations into Israel</p>
+        <p class="angle"><b>Spatial angle:</b> a change in who holds ground — before/after territory</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">302 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.clickorlando.com/news/politics/2026/07/15/human-rights-groups-sue-over-trump-administrations-sanctions-on-icc-for-investigations-into-israel/" target="_blank" rel="noopener noreferrer">https://www.clickorlando.com/news/politics/2026/07/15/human-rights-groups-sue-over-trump-administrations-sanctions-on-icc-for-investigations-into-israel/</a></li><li><a href="https://wkjc.com/politics/56a6925be6c23aa6e0b5a9df124c89be" target="_blank" rel="noopener noreferrer">https://wkjc.com/politics/56a6925be6c23aa6e0b5a9df124c89be</a></li><li><a href="https://www.dailystar.co.uk/news/weird-news/blundering-bank-robber-hands-cashier-37434911" target="_blank" rel="noopener noreferrer">https://www.dailystar.co.uk/news/weird-news/blundering-bank-robber-hands-cashier-37434911</a></li><li><a href="https://capitolhillblue.com/node/103388" target="_blank" rel="noopener noreferrer">https://capitolhillblue.com/node/103388</a></li><li><a href="https://www.theepochtimes.com/us/coast-guard-apprehends-35-suspected-illegal-immigrants-3-smugglers-near-san-diego-6062022" target="_blank" rel="noopener noreferrer">https://www.theepochtimes.com/us/coast-guard-apprehends-35-suspected-illegal-immigrants-3-smugglers-near-san-diego-6062022</a></li><li><a href="https://finance.yahoo.com/economy/policy/articles/judge-blasts-trump-improper-10-231801135.html" target="_blank" rel="noopener noreferrer">https://finance.yahoo.com/economy/policy/articles/judge-blasts-trump-improper-10-231801135.html</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="7">
+      <div class="num">07</div>
+      <div class="body">
+        <h2>Fighting / clashes</h2>
+        <div class="place">London, London, City of, United Kingdom &middot; 51.5000, -0.1167</div>
+        <p class="head">Starmer says more needs to be done to defend democracy after Widdecombe murder</p>
+        <p class="angle"><b>Spatial angle:</b> a strike or engagement location — precision of the coordinate is the whole claim</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">308 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.hillingdontimes.co.uk/news/national/26282229.starmer-says-needs-done-defend-democracy-widdecombe-murder/" target="_blank" rel="noopener noreferrer">https://www.hillingdontimes.co.uk/news/national/26282229.starmer-says-needs-done-defend-democracy-widdecombe-murder/</a></li><li><a href="https://montrealgazette.com/press-releases/business-wire/thredd-joins-the-visa-agentic-ready-programme-bringing-agent-network-readiness-to-issuers-across-europe-starting-with-zilch/" target="_blank" rel="noopener noreferrer">https://montrealgazette.com/press-releases/business-wire/thredd-joins-the-visa-agentic-ready-programme-bringing-agent-network-readiness-to-issuers-across-europe-starting-with-zilch/</a></li><li><a href="https://news.webindia123.com/news/Articles/India/20260715/4474969.html" target="_blank" rel="noopener noreferrer">https://news.webindia123.com/news/Articles/India/20260715/4474969.html</a></li><li><a href="https://www.latimes.com/science/story/2026-07-14/experimental-alzheimers-drug-shows-some-promise-as-researchers-hunt-new-approaches" target="_blank" rel="noopener noreferrer">https://www.latimes.com/science/story/2026-07-14/experimental-alzheimers-drug-shows-some-promise-as-researchers-hunt-new-approaches</a></li><li><a href="https://www.newarkadvertiser.co.uk/national/starmer-says-more-needs-to-be-done-to-defend-democracy-after-widdecombe-murder-169361/" target="_blank" rel="noopener noreferrer">https://www.newarkadvertiser.co.uk/national/starmer-says-more-needs-to-be-done-to-defend-democracy-after-widdecombe-murder-169361/</a></li><li><a href="https://nuclear-news.net/2026/07/15/" target="_blank" rel="noopener noreferrer">https://nuclear-news.net/2026/07/15/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="8">
+      <div class="num">08</div>
+      <div class="body">
+        <h2>Intent to cooperate</h2>
+        <div class="place">London, London, City of, United Kingdom &middot; 51.5000, -0.1167</div>
+        <p class="head">Samsung unveils Flex Titanium technology for next-generation foldable Galaxy smartphones</p>
+        <p class="angle"><b>Spatial angle:</b> location is specific, but the spatial angle needs finding — read the sources first</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">312 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://timesofindia.indiatimes.com/technology/mobiles-tabs/samsung-unveils-flex-titanium-technology-for-next-generation-foldable-galaxy-smartphones/articleshow/132414451.cms" target="_blank" rel="noopener noreferrer">https://timesofindia.indiatimes.com/technology/mobiles-tabs/samsung-unveils-flex-titanium-technology-for-next-generation-foldable-galaxy-smartphones/articleshow/132414451.cms</a></li><li><a href="https://www.civilserviceworld.com/jobs/listing/director-uk-government" target="_blank" rel="noopener noreferrer">https://www.civilserviceworld.com/jobs/listing/director-uk-government</a></li><li><a href="https://www.dailymail.com/travel/article-15978661/Brits-train-direct-London-GERMANY-Eurostar-rival.html" target="_blank" rel="noopener noreferrer">https://www.dailymail.com/travel/article-15978661/Brits-train-direct-London-GERMANY-Eurostar-rival.html</a></li><li><a href="https://www.investegate.co.uk/announcement/rns/zotefoams--ztf/publication-of-circular-notice-of-gm/9669008" target="_blank" rel="noopener noreferrer">https://www.investegate.co.uk/announcement/rns/zotefoams--ztf/publication-of-circular-notice-of-gm/9669008</a></li><li><a href="https://www.philstar.com/lifestyle/fashion-and-beauty/2026/07/15/2542352/nicole-borromeodeparts-londons-miss-worldwide-tour" target="_blank" rel="noopener noreferrer">https://www.philstar.com/lifestyle/fashion-and-beauty/2026/07/15/2542352/nicole-borromeodeparts-londons-miss-worldwide-tour</a></li><li><a href="https://www.somersetcountygazette.co.uk/news/26277978.taunton-july-16-22-2026/" target="_blank" rel="noopener noreferrer">https://www.somersetcountygazette.co.uk/news/26277978.taunton-july-16-22-2026/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="9">
+      <div class="num">09</div>
+      <div class="body">
+        <h2>Aid</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Supreme Court justices, in rare congressional appearance, seek major boost in security funds</p>
+        <p class="angle"><b>Spatial angle:</b> delivery into a place — access routes are the constraint</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">293 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.abajournal.com/syndicated/article/supreme-court-justices-seek-security-funds-in-rare-congressional-appearance" target="_blank" rel="noopener noreferrer">https://www.abajournal.com/syndicated/article/supreme-court-justices-seek-security-funds-in-rare-congressional-appearance</a></li><li><a href="https://wkjc.com/politics/56a6925be6c23aa6e0b5a9df124c89be" target="_blank" rel="noopener noreferrer">https://wkjc.com/politics/56a6925be6c23aa6e0b5a9df124c89be</a></li><li><a href="https://www.bostonglobe.com/2026/07/15/opinion/long-term-care-affordability/" target="_blank" rel="noopener noreferrer">https://www.bostonglobe.com/2026/07/15/opinion/long-term-care-affordability/</a></li><li><a href="https://www.theglobeandmail.com/politics/article-senior-trump-official-calls-middle-powers-strategy-waste-of-time-money/" target="_blank" rel="noopener noreferrer">https://www.theglobeandmail.com/politics/article-senior-trump-official-calls-middle-powers-strategy-waste-of-time-money/</a></li><li><a href="https://www.unionleader.com/news/courts/e-jean-carroll-receives-5-63-million-owed-by-trump-in-sex-abuse-case/article_886b433a-cd38-53d1-b0e0-0d9ec499252e.html" target="_blank" rel="noopener noreferrer">https://www.unionleader.com/news/courts/e-jean-carroll-receives-5-63-million-owed-by-trump-in-sex-abuse-case/article_886b433a-cd38-53d1-b0e0-0d9ec499252e.html</a></li><li><a href="https://hayspost.com/posts/27c7d47a-8282-476e-8f1e-3134d373e39f" target="_blank" rel="noopener noreferrer">https://hayspost.com/posts/27c7d47a-8282-476e-8f1e-3134d373e39f</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="10">
+      <div class="num">10</div>
+      <div class="body">
+        <h2>Rejection</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">US Senate rejected the $1.15 trillion military spending bill</p>
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">279 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://en.apa.az/america/us-senate-rejected-the-115-trillion-military-spending-bill-516213" target="_blank" rel="noopener noreferrer">https://en.apa.az/america/us-senate-rejected-the-115-trillion-military-spending-bill-516213</a></li><li><a href="https://www.dailymail.com/vertical-galleries/article-15979535/Dr-Phil-Ive-reviewed-hundreds-secret-government-UFO-files.html" target="_blank" rel="noopener noreferrer">https://www.dailymail.com/vertical-galleries/article-15979535/Dr-Phil-Ive-reviewed-hundreds-secret-government-UFO-files.html</a></li><li><a href="https://english.news.cn/europe/20260715/d512c0969faa4721a0927948794eb46f/c.html" target="_blank" rel="noopener noreferrer">https://english.news.cn/europe/20260715/d512c0969faa4721a0927948794eb46f/c.html</a></li><li><a href="https://www.israelnationalnews.com/news/430179" target="_blank" rel="noopener noreferrer">https://www.israelnationalnews.com/news/430179</a></li><li><a href="https://www.wpsdlocal6.com/news/after-lindsey-grahams-death-questions-linger-about-aging-politicians-and-health-transparency/article_bb40b671-593c-4e0c-a888-267ea18d19e6.html" target="_blank" rel="noopener noreferrer">https://www.wpsdlocal6.com/news/after-lindsey-grahams-death-questions-linger-about-aging-politicians-and-health-transparency/article_bb40b671-593c-4e0c-a888-267ea18d19e6.html</a></li><li><a href="https://www.ideastream.org/2026-07-14/e-jean-carroll-receives-5-6-million-from-trump-in-sexual-abuse-and-defamation-case" target="_blank" rel="noopener noreferrer">https://www.ideastream.org/2026-07-14/e-jean-carroll-receives-5-6-million-from-trump-in-sexual-abuse-and-defamation-case</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="11">
+      <div class="num">11</div>
+      <div class="body">
+        <h2>Appeal</h2>
+        <div class="place">London, London, City of, United Kingdom &middot; 51.5000, -0.1167</div>
+        <p class="head">Starmer says more needs to be done to defend democracy after Widdecombe murder</p>
+        <p class="angle"><b>Spatial angle:</b> location is specific, but the spatial angle needs finding — read the sources first</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">286 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.hexham-courant.co.uk/news/national/26282229.starmer-says-needs-done-defend-democracy-widdecombe-murder/" target="_blank" rel="noopener noreferrer">https://www.hexham-courant.co.uk/news/national/26282229.starmer-says-needs-done-defend-democracy-widdecombe-murder/</a></li><li><a href="https://www.maravipost.com/scientists-need-more-than-laboratory-skills-to-tackle-africas-biggest-health-challenges-2/" target="_blank" rel="noopener noreferrer">https://www.maravipost.com/scientists-need-more-than-laboratory-skills-to-tackle-africas-biggest-health-challenges-2/</a></li><li><a href="https://english.news.cn/20260715/0f87f231f59147a4b2c3344a13c6ce74/c.html" target="_blank" rel="noopener noreferrer">https://english.news.cn/20260715/0f87f231f59147a4b2c3344a13c6ce74/c.html</a></li><li><a href="https://www.finanznachrichten.de/nachrichten-2026-07/69035663-saba-capital-glass-lewis-joins-iss-in-calling-for-board-change-at-workspace-008.htm" target="_blank" rel="noopener noreferrer">https://www.finanznachrichten.de/nachrichten-2026-07/69035663-saba-capital-glass-lewis-joins-iss-in-calling-for-board-change-at-workspace-008.htm</a></li><li><a href="https://www.investegate.co.uk/announcement/rns/nextenergy-solar-fund-limited-red--nesf/disclosure-table/9669782" target="_blank" rel="noopener noreferrer">https://www.investegate.co.uk/announcement/rns/nextenergy-solar-fund-limited-red--nesf/disclosure-table/9669782</a></li><li><a href="https://www.realitytea.com/2026/07/14/prince-william-palace-life-royal-family/" target="_blank" rel="noopener noreferrer">https://www.realitytea.com/2026/07/14/prince-william-palace-life-royal-family/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="12">
+      <div class="num">12</div>
+      <div class="body">
+        <h2>Consultation</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Pat Oliphant, fearless Pulitzer-winning political cartoonist, dies at 90</p>
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">243 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.reporterherald.com/2026/07/14/obit-political-cartoonist-oliphant/" target="_blank" rel="noopener noreferrer">https://www.reporterherald.com/2026/07/14/obit-political-cartoonist-oliphant/</a></li><li><a href="https://www.foreignpolicyjournal.com/2026/07/14/pulitzer-winning-political-cartoonist-pat-oliphant-dies-at-90-in-santa-fe/" target="_blank" rel="noopener noreferrer">https://www.foreignpolicyjournal.com/2026/07/14/pulitzer-winning-political-cartoonist-pat-oliphant-dies-at-90-in-santa-fe/</a></li><li><a href="https://athens-times.com/us-launches-new-wave-of-strikes-on-iran-amid-hormuz-strait-crisis/" target="_blank" rel="noopener noreferrer">https://athens-times.com/us-launches-new-wave-of-strikes-on-iran-amid-hormuz-strait-crisis/</a></li><li><a href="https://www.express.co.uk/news/uk/2229327/major-update-issued-sunken-ww2" target="_blank" rel="noopener noreferrer">https://www.express.co.uk/news/uk/2229327/major-update-issued-sunken-ww2</a></li><li><a href="https://www.manilatimes.net/2026/07/15/tmt-newswire/plentisoft/rep-young-kim-meets-with-womens-business-owners-group-hears-challenges-facing-women-entrepreneurs/2384712" target="_blank" rel="noopener noreferrer">https://www.manilatimes.net/2026/07/15/tmt-newswire/plentisoft/rep-young-kim-meets-with-womens-business-owners-group-hears-challenges-facing-women-entrepreneurs/2384712</a></li><li><a href="https://www.dailymail.com/news/article-15977801/Supreme-Court-justices-respond-Trumps-dangerous-rhetoric-scathing-criticisms.html" target="_blank" rel="noopener noreferrer">https://www.dailymail.com/news/article-15977801/Supreme-Court-justices-respond-Trumps-dangerous-rhetoric-scathing-criticisms.html</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="13">
+      <div class="num">13</div>
+      <div class="body">
+        <h2>Diplomatic cooperation</h2>
+        <div class="place">Kyiv, Kyyiv, Misto, Ukraine &middot; 50.4333, 30.5167</div>
+        <p class="head">Top EU official pledges support on visit to Ukraine</p>
+        <p class="angle"><b>Spatial angle:</b> location is specific, but the spatial angle needs finding — read the sources first</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">278 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.juneesoutherncross.com.au/story/9311581/top-eu-official-pledges-support-on-visit-to-ukraine/" target="_blank" rel="noopener noreferrer">https://www.juneesoutherncross.com.au/story/9311581/top-eu-official-pledges-support-on-visit-to-ukraine/</a></li><li><a href="http://www.rockymounttelegram.com/news/world/a-top-eu-official-pledges-military-support-for-ukraines-sovereignty-against-russias-invasion/article_9b98757f-ed8b-5df8-94f8-98740f322bed.html" target="_blank" rel="noopener noreferrer">http://www.rockymounttelegram.com/news/world/a-top-eu-official-pledges-military-support-for-ukraines-sovereignty-against-russias-invasion/article_9b98757f-ed8b-5df8-94f8-98740f322bed.html</a></li><li><a href="https://www.euronews.com/my-europe/2026/07/15/von-der-leyen-and-zelenskyy-sign-eu-ukraine-drone-deal" target="_blank" rel="noopener noreferrer">https://www.euronews.com/my-europe/2026/07/15/von-der-leyen-and-zelenskyy-sign-eu-ukraine-drone-deal</a></li><li><a href="https://dailypioneer.com/news/eu-chief-ursula-von-der-leyen-reaffirms-support-for-ukraine-during-kyiv-visit" target="_blank" rel="noopener noreferrer">https://dailypioneer.com/news/eu-chief-ursula-von-der-leyen-reaffirms-support-for-ukraine-during-kyiv-visit</a></li><li><a href="https://www.novinite.com/view_news.php?id=239592" target="_blank" rel="noopener noreferrer">https://www.novinite.com/view_news.php?id=239592</a></li><li><a href="https://thetablet.org/united-states-senator-lindsey-graham-dies-at-71/" target="_blank" rel="noopener noreferrer">https://thetablet.org/united-states-senator-lindsey-graham-dies-at-71/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="14">
+      <div class="num">14</div>
+      <div class="body">
+        <h2>Fighting / clashes</h2>
+        <div class="place">Houston, Texas, United States &middot; 29.7633, -95.3633</div>
+        <p class="head">ICE suspends traffic stops in wake of fatal shootings</p>
+        <p class="angle"><b>Spatial angle:</b> a strike or engagement location — precision of the coordinate is the whole claim</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">248 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.illawarramercury.com.au/story/9310928/ice-suspends-traffic-stops-in-wake-of-fatal-shootings/" target="_blank" rel="noopener noreferrer">https://www.illawarramercury.com.au/story/9310928/ice-suspends-traffic-stops-in-wake-of-fatal-shootings/</a></li><li><a href="https://www.reporterherald.com/2026/07/14/mexico-us-ice-death-investigations/" target="_blank" rel="noopener noreferrer">https://www.reporterherald.com/2026/07/14/mexico-us-ice-death-investigations/</a></li><li><a href="https://abcnews.com/International/wireStory/mexico-asks-us-state-attorneys-general-investigate-migrant-134761936" target="_blank" rel="noopener noreferrer">https://abcnews.com/International/wireStory/mexico-asks-us-state-attorneys-general-investigate-migrant-134761936</a></li><li><a href="https://www.sanfordherald.com/news/national/congressional-committee-to-hold-hearing-in-houston-after-ice-fatal-shootings/article_dee5b3bf-fb61-51a1-a07d-5e957aa9e080.html" target="_blank" rel="noopener noreferrer">https://www.sanfordherald.com/news/national/congressional-committee-to-hold-hearing-in-houston-after-ice-fatal-shootings/article_dee5b3bf-fb61-51a1-a07d-5e957aa9e080.html</a></li><li><a href="https://www.unitaid.eu/pregnant-woman-narrative-public-records-i2ep.html" target="_blank" rel="noopener noreferrer">https://www.unitaid.eu/pregnant-woman-narrative-public-records-i2ep.html</a></li><li><a href="https://www.click2houston.com/news/texas/2026/07/14/crowd-packs-houston-city-hall-to-demand-action-express-anger-after-ice-shooting/" target="_blank" rel="noopener noreferrer">https://www.click2houston.com/news/texas/2026/07/14/crowd-packs-houston-city-hall-to-demand-action-express-anger-after-ice-shooting/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="15">
+      <div class="num">15</div>
+      <div class="body">
+        <h2>Intent to cooperate</h2>
+        <div class="place">White House, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">5 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">425 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.messenger-inquirer.com/ap/ap_international_news/former-obama-counsel-kathryn-ruemmler-to-testify-in-epstein-probe/article_77023f7e-8750-5e5b-ae6e-3fd2d810bdae.html" target="_blank" rel="noopener noreferrer">https://www.messenger-inquirer.com/ap/ap_international_news/former-obama-counsel-kathryn-ruemmler-to-testify-in-epstein-probe/article_77023f7e-8750-5e5b-ae6e-3fd2d810bdae.html</a></li><li><a href="https://news.am/en/news/1049962" target="_blank" rel="noopener noreferrer">https://news.am/en/news/1049962</a></li><li><a href="https://www.financial-news.co.uk/micron-trump-accounts-move-is-the-biggest-corporate-play-of-its-kind/" target="_blank" rel="noopener noreferrer">https://www.financial-news.co.uk/micron-trump-accounts-move-is-the-biggest-corporate-play-of-its-kind/</a></li><li><a href="https://www.zerohedge.com/geopolitical/trump-gave-saudi-crown-prince-green-light-attack-yemens-sanaa-airport" target="_blank" rel="noopener noreferrer">https://www.zerohedge.com/geopolitical/trump-gave-saudi-crown-prince-green-light-attack-yemens-sanaa-airport</a></li><li><a href="https://wjla.com/news/local/helicopter-georgetown-landing-reservior-northwest-washington-dc-military-joint-base-andrews-precautionary-tale-problem-jba-embassy-faa-maintenance" target="_blank" rel="noopener noreferrer">https://wjla.com/news/local/helicopter-georgetown-landing-reservior-northwest-washington-dc-military-joint-base-andrews-precautionary-tale-problem-jba-embassy-faa-maintenance</a></li><li><a href="https://ianslive.in/indian-origin-anil-menon-reaches-space-station--20260715054203" target="_blank" rel="noopener noreferrer">https://ianslive.in/indian-origin-anil-menon-reaches-space-station--20260715054203</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="16">
+      <div class="num">16</div>
+      <div class="body">
+        <h2>Fighting / clashes</h2>
+        <div class="place">Kyiv, Kyyiv, Misto, Ukraine &middot; 50.4333, 30.5167</div>
+        <p class="head">Moscow targeted by hundreds of Ukrainian drones</p>
+        <p class="angle"><b>Spatial angle:</b> a strike or engagement location — precision of the coordinate is the whole claim</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">234 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.illawarramercury.com.au/story/9310870/moscow-targeted-by-hundreds-of-ukrainian-drones/" target="_blank" rel="noopener noreferrer">https://www.illawarramercury.com.au/story/9310870/moscow-targeted-by-hundreds-of-ukrainian-drones/</a></li><li><a href="https://en.interfax.com.ua/news/general/1185112.html" target="_blank" rel="noopener noreferrer">https://en.interfax.com.ua/news/general/1185112.html</a></li><li><a href="https://www.bbc.co.uk/news/articles/c8929jv8kdzo" target="_blank" rel="noopener noreferrer">https://www.bbc.co.uk/news/articles/c8929jv8kdzo</a></li><li><a href="https://www.lbc.co.uk/article/russia-ukraine-odesa-moscow-5Hjddck_2/" target="_blank" rel="noopener noreferrer">https://www.lbc.co.uk/article/russia-ukraine-odesa-moscow-5Hjddck_2/</a></li><li><a href="https://www.euronews.com/my-europe/2026/07/15/june-was-deadliest-month-for-ukraine-civilians-in-over-four-years-un-monitors-say" target="_blank" rel="noopener noreferrer">https://www.euronews.com/my-europe/2026/07/15/june-was-deadliest-month-for-ukraine-civilians-in-over-four-years-un-monitors-say</a></li><li><a href="https://www.armstrongeconomics.com/world-news/war/europe-is-closing-the-door-on-ukraines-fighting-age-men/" target="_blank" rel="noopener noreferrer">https://www.armstrongeconomics.com/world-news/war/europe-is-closing-the-door-on-ukraines-fighting-age-men/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="17">
+      <div class="num">17</div>
+      <div class="body">
+        <h2>Diplomatic cooperation</h2>
+        <div class="place">London, London, City of, United Kingdom &middot; 51.5000, -0.1167</div>
+        <p class="head">&#x27;Fabulous&#x27; afternoon tea for two reduced to £4.30 each in 24-hour deal</p>
+        <p class="angle"><b>Spatial angle:</b> location is specific, but the spatial angle needs finding — read the sources first</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">228 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.chroniclelive.co.uk/whats-on/shopping/fabulous-afternoon-tea-two-reduced-34293082" target="_blank" rel="noopener noreferrer">https://www.chroniclelive.co.uk/whats-on/shopping/fabulous-afternoon-tea-two-reduced-34293082</a></li><li><a href="https://economictimes.indiatimes.com/news/india/andy-burnham-likely-to-remain-pro-india-if-he-becomes-uk-pm-trade-chief-harjinder-kang/articleshow/132406128.cms" target="_blank" rel="noopener noreferrer">https://economictimes.indiatimes.com/news/india/andy-burnham-likely-to-remain-pro-india-if-he-becomes-uk-pm-trade-chief-harjinder-kang/articleshow/132406128.cms</a></li><li><a href="https://dominicanrepublicpost.com/gibraltar-border-controls-lifted-is-it-part-of-schengen-the-uk/" target="_blank" rel="noopener noreferrer">https://dominicanrepublicpost.com/gibraltar-border-controls-lifted-is-it-part-of-schengen-the-uk/</a></li><li><a href="https://www.timeout.com/london/news/london-direct-trains-cologne-gemini-2030-071526" target="_blank" rel="noopener noreferrer">https://www.timeout.com/london/news/london-direct-trains-cologne-gemini-2030-071526</a></li><li><a href="https://news.webindia123.com/news/Articles/Business/20260715/4474966.html" target="_blank" rel="noopener noreferrer">https://news.webindia123.com/news/Articles/Business/20260715/4474966.html</a></li><li><a href="https://www.aol.co.uk/articles/unprecedented-changes-uk-climate-normalising-230138000.html" target="_blank" rel="noopener noreferrer">https://www.aol.co.uk/articles/unprecedented-changes-uk-climate-normalising-230138000.html</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="18">
+      <div class="num">18</div>
+      <div class="body">
+        <h2>Diplomatic cooperation</h2>
+        <div class="place">New Delhi, Delhi, India &middot; 28.6000, 77.2000</div>
+        <p class="head">Cabinet okays National Investment Policy to add fresh 10 million tonnes urea capacity</p>
+        <p class="angle"><b>Spatial angle:</b> location is specific, but the spatial angle needs finding — read the sources first</p>
+        <div class="tags"><span class="tag good">5 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">305 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://economictimes.indiatimes.com/industry/indl-goods/svs/chem-/-fertilisers/cabinet-okays-national-investment-policy-to-add-fresh-10-million-tonnes-urea-capacity/articleshow/132415786.cms" target="_blank" rel="noopener noreferrer">https://economictimes.indiatimes.com/industry/indl-goods/svs/chem-/-fertilisers/cabinet-okays-national-investment-policy-to-add-fresh-10-million-tonnes-urea-capacity/articleshow/132415786.cms</a></li><li><a href="https://www.newkerala.com/news/a/meaningful-contribution-palestine-welcomes-indias-new-development-projects-537.htm" target="_blank" rel="noopener noreferrer">https://www.newkerala.com/news/a/meaningful-contribution-palestine-welcomes-indias-new-development-projects-537.htm</a></li><li><a href="https://www.freepressjournal.in/education/national-dental-commission-scraps-mandatory-provisional-registration-for-bds-internship-graduates-can-now-apply-directly-for-permanent-registration" target="_blank" rel="noopener noreferrer">https://www.freepressjournal.in/education/national-dental-commission-scraps-mandatory-provisional-registration-for-bds-internship-graduates-can-now-apply-directly-for-permanent-registration</a></li><li><a href="https://economictimes.indiatimes.com/industry/indl-goods/svs/steel/india-wins-big-with-duty-free-access-for-11-lakh-tonnes-of-a-key-industrial-metal-under-uk-trade-pact/articleshow/132407736.cms" target="_blank" rel="noopener noreferrer">https://economictimes.indiatimes.com/industry/indl-goods/svs/steel/india-wins-big-with-duty-free-access-for-11-lakh-tonnes-of-a-key-industrial-metal-under-uk-trade-pact/articleshow/132407736.cms</a></li><li><a href="https://www.thehindu.com/news/national/oil-exploration-only-after-resolving-assam-nagaland-border-disputes-konyak-union/article71223859.ece" target="_blank" rel="noopener noreferrer">https://www.thehindu.com/news/national/oil-exploration-only-after-resolving-assam-nagaland-border-disputes-konyak-union/article71223859.ece</a></li><li><a href="https://idrw.org/italy-sees-india-as-a-key-partner-for-gcap-but-timing-may-be-the-biggest-obstacle/" target="_blank" rel="noopener noreferrer">https://idrw.org/italy-sees-india-as-a-key-partner-for-gcap-but-timing-may-be-the-biggest-obstacle/</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="19">
+      <div class="num">19</div>
+      <div class="body">
+        <h2>Threat</h2>
+        <div class="place">Tehran, Tehran, Iran &middot; 35.7500, 51.5148</div>
+        <p class="head">Iran threatens to halt energy exports after US reimposes blockade</p>
+        <p class="angle"><b>Spatial angle:</b> location is specific, but the spatial angle needs finding — read the sources first</p>
+        <div class="tags"><span class="tag good">6 outlets</span><span class="tag good">mappable</span><span class="tag ">follow-on: iran-strikes</span><span class="tag ">390 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://www.sandiegouniontribune.com/2026/07/15/iran-us-blockade-strikes/" target="_blank" rel="noopener noreferrer">https://www.sandiegouniontribune.com/2026/07/15/iran-us-blockade-strikes/</a></li><li><a href="http://www.brazilsun.com/news/279188316/us-completes-another-round-of-strikes-on-iranian-military-targets" target="_blank" rel="noopener noreferrer">http://www.brazilsun.com/news/279188316/us-completes-another-round-of-strikes-on-iranian-military-targets</a></li><li><a href="https://www.huffingtonpost.co.uk/entry/donald-trump-war-crime-iran_uk_6a57391ce4b0540b8c7b98b0" target="_blank" rel="noopener noreferrer">https://www.huffingtonpost.co.uk/entry/donald-trump-war-crime-iran_uk_6a57391ce4b0540b8c7b98b0</a></li><li><a href="https://www.irishnews.com/opinion/human-and-economic-costs-of-unnecessary-iran-war-mounting-the-irish-news-view-LZVIPXYW5ZGTNGM3JJQBHWFQBY/" target="_blank" rel="noopener noreferrer">https://www.irishnews.com/opinion/human-and-economic-costs-of-unnecessary-iran-war-mounting-the-irish-news-view-LZVIPXYW5ZGTNGM3JJQBHWFQBY/</a></li><li><a href="https://news.am/en/news/1049877" target="_blank" rel="noopener noreferrer">https://news.am/en/news/1049877</a></li><li><a href="https://www.omanobserver.om/article/1192887/business/markets/trump-drops-plan-to-tax-ships" target="_blank" rel="noopener noreferrer">https://www.omanobserver.om/article/1192887/business/markets/trump-drops-plan-to-tax-ships</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+  <label class="pitch">
+    <div class="row">
+      <input type="checkbox" data-n="20">
+      <div class="num">20</div>
+      <div class="body">
+        <h2>Threat</h2>
+        <div class="place">Washington, District of Columbia, United States &middot; 38.8951, -77.0364</div>
+        <p class="head">Heat safety tips as DMV faces triple-digit temperatures</p>
+        <p class="angle"><b>Spatial angle:</b> a subnational unit with its own politics</p>
+        <div class="tags"><span class="tag good">5 outlets</span><span class="tag good">mappable</span><span class="tag ">new ground</span><span class="tag ">254 mentions</span></div>
+        <details><summary>6 source links</summary><ul><li><a href="https://wjla.com/news/local/dc-weather-dmv-heat-advisory-extreme-triple-digit-temperatures-safety-summer-hydration-tips-exhaustion-stroke-cooling-centers-forecast-avoid-caffine-light-clothing-drink-water-ac-warning-signs-children-pets" target="_blank" rel="noopener noreferrer">https://wjla.com/news/local/dc-weather-dmv-heat-advisory-extreme-triple-digit-temperatures-safety-summer-hydration-tips-exhaustion-stroke-cooling-centers-forecast-avoid-caffine-light-clothing-drink-water-ac-warning-signs-children-pets</a></li><li><a href="https://wjla.com/news/local/helicopter-georgetown-landing-reservior-northwest-washington-dc-military-joint-base-andrews-precautionary-tale-problem-jba-embassy-faa-maintenance" target="_blank" rel="noopener noreferrer">https://wjla.com/news/local/helicopter-georgetown-landing-reservior-northwest-washington-dc-military-joint-base-andrews-precautionary-tale-problem-jba-embassy-faa-maintenance</a></li><li><a href="https://www.nakedcapitalism.com/2026/07/iran-war-trump-tacos-on-strait-of-hormuz-fee-as-blockade-starts-but-again-threatens-to-attack-iran-energy-and-critical-infrastructure-as-iran-warns-of-closure-of-bab-el-mandeb-destruction-of-gulf-st.html" target="_blank" rel="noopener noreferrer">https://www.nakedcapitalism.com/2026/07/iran-war-trump-tacos-on-strait-of-hormuz-fee-as-blockade-starts-but-again-threatens-to-attack-iran-energy-and-critical-infrastructure-as-iran-warns-of-closure-of-bab-el-mandeb-destruction-of-gulf-st.html</a></li><li><a href="http://www.bignewsnetwork.com/news/279188824/oil-for-everyone-or-no-one-iran-warns" target="_blank" rel="noopener noreferrer">http://www.bignewsnetwork.com/news/279188824/oil-for-everyone-or-no-one-iran-warns</a></li><li><a href="https://www.middleeastmonitor.com/20260715-eu-rejects-us-campaign-against-the-international-criminal-court/" target="_blank" rel="noopener noreferrer">https://www.middleeastmonitor.com/20260715-eu-rejects-us-campaign-against-the-international-criminal-court/</a></li><li><a href="https://www.scmp.com/news/china/diplomacy/article/3360606/china-report-warns-against-european-led-nato-30-expansion-asia-pacific" target="_blank" rel="noopener noreferrer">https://www.scmp.com/news/china/diplomacy/article/3360606/china-report-warns-against-european-led-nato-30-expansion-asia-pacific</a></li></ul></details>
+      </div>
+    </div>
+  </label>
+
+</div>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="sel" id="sel">Nothing selected yet</div>
+    <button id="copy" disabled>Copy selections</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var DATE = "2026-08-08";
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]'));
+  var sel = document.getElementById('sel');
+  var btn = document.getElementById('copy');
+
+  function picked() {
+    return boxes.filter(function (b) { return b.checked; })
+                .map(function (b) { return b.dataset.n; });
+  }
+  function payload() {
+    return "PITCH SET " + DATE + "\nSELECTED: " + picked().join(", ");
+  }
+  function refresh() {
+    var p = picked();
+    btn.disabled = p.length === 0;
+    btn.textContent = 'Copy selections';
+    sel.innerHTML = p.length
+      ? '<strong>' + p.length + ' selected</strong> &middot; ' + p.join(', ')
+      : 'Nothing selected yet';
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', refresh); });
+
+  btn.addEventListener('click', function () {
+    var text = payload();
+    function ok() { btn.textContent = 'Copied'; setTimeout(refresh, 1600); }
+    function fallback() {
+      var t = document.createElement('textarea');
+      t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.focus(); t.select();
+      try { document.execCommand('copy'); ok(); }
+      catch (e) { btn.textContent = 'Press Ctrl+C'; }
+      document.body.removeChild(t);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>
