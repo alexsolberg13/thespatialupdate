@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-07",
+  "date": "2026-08-08",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 60,
-    "hi_f": 87,
-    "lo_f": 58,
-    "precip_pct": 0,
+    "now_f": 59,
+    "hi_f": 84,
+    "lo_f": 59,
+    "precip_pct": 1,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 60,
-      "hi_f": 87,
-      "lo_f": 58,
-      "precip_pct": 0,
+      "now_f": 59,
+      "hi_f": 84,
+      "lo_f": 59,
+      "precip_pct": 1,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 58,
+      "now_f": 54,
       "hi_f": 89,
-      "lo_f": 56,
+      "lo_f": 54,
       "precip_pct": 0,
-      "desc": "clear"
+      "desc": "overcast"
     }
   ],
-  "story_count": 67,
-  "score_count": 6,
+  "story_count": 66,
+  "score_count": 8,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Murkowski Will Oppose Blanche as Attorney General, Putting His Confirmation at Risk",
+      "title": "Democrats Vow to Unite Behind Abdul El-Sayed in Michigan, but Tensions Remain",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "US unexpectedly loses jobs in July, in blow to Trump\u2019s economy claims",
-      "source": "scmp.com"
+      "title": "Child among three killed in Russian missile attacks near Kyiv",
+      "source": "bbc.co.uk"
     },
     {
       "section": "Pacific Northwest",
-      "title": "Hospital staff said he was faking it and released him. He died from an overdose soon after",
-      "source": "opb.org"
+      "title": "What to do when yellowjackets move in near your garden tomatoes",
+      "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Shares of this digital medical platform were up more than 100% at one point. Here's what's driving it",
+      "title": "Berkshire earnings rose last quarter and CEO Greg Abel is starting to deploy Buffett's massive cash hoard",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "New autism therapy shows surprising benefits even in adult mice",
-      "source": "sciencedaily.com"
+      "title": "The ornithological artist drawing 1,000 birds by hand \u2013 all for an app that wants you off your phone",
+      "source": "theguardian.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Quiz: Can You Name the 5 Coldest Countries on Earth?",
+      "title": "Quiz: Can You Identify the Sitcom From the Boss?",
       "source": "mentalfloss.com"
     }
   ]
