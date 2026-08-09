@@ -1,63 +1,63 @@
 {
   "type": "morning_paper",
-  "date": "2026-08-08",
+  "date": "2026-08-09",
   "weather": {
     "name": "Port Orchard",
-    "now_f": 59,
-    "hi_f": 84,
-    "lo_f": 59,
-    "precip_pct": 1,
+    "now_f": 56,
+    "hi_f": 80,
+    "lo_f": 56,
+    "precip_pct": 2,
     "desc": "overcast"
   },
   "weather_all": [
     {
       "name": "Port Orchard",
-      "now_f": 59,
-      "hi_f": 84,
-      "lo_f": 59,
-      "precip_pct": 1,
+      "now_f": 56,
+      "hi_f": 80,
+      "lo_f": 56,
+      "precip_pct": 2,
       "desc": "overcast"
     },
     {
       "name": "Lebanon, OR",
-      "now_f": 54,
-      "hi_f": 89,
-      "lo_f": 54,
+      "now_f": 55,
+      "hi_f": 86,
+      "lo_f": 55,
       "precip_pct": 0,
-      "desc": "overcast"
+      "desc": "mostly clear"
     }
   ],
-  "story_count": 66,
+  "story_count": 65,
   "score_count": 8,
   "top": [
     {
       "section": "U.S. National",
-      "title": "Democrats Vow to Unite Behind Abdul El-Sayed in Michigan, but Tensions Remain",
+      "title": "Michigan Senate Candidate, a Former Trump Critic, Shifts Toward Election Skepticism",
       "source": "nytimes.com"
     },
     {
       "section": "World",
-      "title": "Child among three killed in Russian missile attacks near Kyiv",
-      "source": "bbc.co.uk"
+      "title": "Netanyahu rejects Trump\u2019s Board of Peace plan for Gaza",
+      "source": "aljazeera.com"
     },
     {
       "section": "Pacific Northwest",
-      "title": "What to do when yellowjackets move in near your garden tomatoes",
+      "title": "When will \u2018House of the Dragon\u2019 season 4 be released?",
       "source": "oregonlive.com"
     },
     {
       "section": "Tech & Business",
-      "title": "Berkshire earnings rose last quarter and CEO Greg Abel is starting to deploy Buffett's massive cash hoard",
+      "title": "5 \u2018rules\u2019 your parents taught you that are sabotaging your career, says expert\u2014like \u2018always be grateful\u2019",
       "source": "cnbc.com"
     },
     {
       "section": "Science & Environment",
-      "title": "The ornithological artist drawing 1,000 birds by hand \u2013 all for an app that wants you off your phone",
-      "source": "theguardian.com"
+      "title": "60,000-year-old ostrich eggshell engravings reveal a surprisingly sophisticated human mind",
+      "source": "sciencedaily.com"
     },
     {
       "section": "The Lighter Side",
-      "title": "Quiz: Can You Identify the Sitcom From the Boss?",
+      "title": "Quiz: How Many Famous Book Titles Can You Complete?",
       "source": "mentalfloss.com"
     }
   ]
