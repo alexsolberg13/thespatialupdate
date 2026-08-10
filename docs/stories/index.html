@@ -66,7 +66,8 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 28px; flex-shrink: 0; z-index: 10; position: relative;
     }
-    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; }
+    .site-name { font-size: 16px; font-weight: normal; letter-spacing: 0.07em; color: var(--text-primary); text-transform: uppercase; text-decoration: none; transition: opacity 0.15s; }
+    .site-name:hover { opacity: 0.7; }
     .site-name span { color: var(--accent); }
     .header-right { display: flex; align-items: center; gap: 14px; }
     .site-tagline { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
@@ -125,11 +126,10 @@
 <body>
 
   <div id="site-header">
-    <div class="site-name">The Spatial <span>Update</span></div>
+    <a class="site-name" href="/" aria-label="The Spatial Update — home">The Spatial <span>Update</span></a>
     <div class="header-right">
       <nav class="site-nav">
         <a href="/stories/">Stories</a>
-        <a href="/paper/">Paper</a>
         <a href="/about/">About</a>
       </nav>
       <button id="theme-toggle" aria-label="Toggle theme">☽</button>
@@ -140,7 +140,6 @@
     </div>
     <nav id="mobile-nav">
       <a href="/stories/">Stories</a>
-      <a href="/paper/">Paper</a>
       <a href="/about/">About</a>
     </nav>
   </div>

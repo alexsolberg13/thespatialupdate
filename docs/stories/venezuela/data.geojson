@@ -3,7 +3,13 @@
   "features": [
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-61.5, 10.9] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.5,
+          10.9
+        ]
+      },
       "properties": {
         "type": "strike_caribbean",
         "phase": "phase1",
@@ -13,12 +19,20 @@
         "actor": "US Navy",
         "killed": 11,
         "description": "The first strike of Operation Southern Spear. A speedboat in international waters between Venezuela and Trinidad was hit by a US naval vessel. Trump announced 11 'narcoterrorists' killed, alleging Tren de Aragua involvement. Two survivors were later killed in subsequent strikes.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 4
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-63.2, 11.8] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.2,
+          11.8
+        ]
+      },
       "properties": {
         "type": "strike_caribbean",
         "phase": "phase1",
@@ -28,12 +42,20 @@
         "actor": "US Military",
         "killed": 3,
         "description": "Second strike in the Southern Command area of responsibility. Dominican Republic later stated it cooperated with the US Navy in locating the boat.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 2
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-64.8, 12.3] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.8,
+          12.3
+        ]
+      },
       "properties": {
         "type": "strike_caribbean",
         "phase": "phase1",
@@ -43,12 +65,20 @@
         "actor": "US Military",
         "killed": 3,
         "description": "Third strike in the southern Caribbean. Three people killed aboard a vessel allegedly smuggling drugs.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 2
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-64.0, 11.2] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.0,
+          11.2
+        ]
+      },
       "properties": {
         "type": "strike_caribbean",
         "phase": "phase2",
@@ -58,12 +88,20 @@
         "actor": "US Military",
         "killed": 4,
         "description": "Four killed in a strike on a vessel 'just off the coast of Venezuela,' transporting substantial narcotics. One of the closest strikes yet to Venezuelan territory.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-65.5, 11.0] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.5,
+          11.0
+        ]
+      },
       "properties": {
         "type": "strike_caribbean",
         "phase": "phase2",
@@ -73,12 +111,20 @@
         "actor": "US Military",
         "killed": 6,
         "description": "First night operation. Hegseth wrote: 'Day or NIGHT, we will map your networks, track your people, hunt you down, and kill you.' Six killed in the Caribbean, shortly after a B-52 bomber flight near Caracas.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-65.8, 10.6] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.8,
+          10.6
+        ]
+      },
       "properties": {
         "type": "strike_caribbean",
         "phase": "phase2",
@@ -88,12 +134,20 @@
         "actor": "US Military",
         "killed": 2,
         "description": "A 'very large drug-carrying submarine' was struck. Two people survived — one from Ecuador, one from Colombia — later repatriated. Their home governments found no evidence of a crime.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 2
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-80.5, 5.2] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.5,
+          5.2
+        ]
+      },
       "properties": {
         "type": "strike_pacific",
         "phase": "phase2",
@@ -103,12 +157,20 @@
         "actor": "US Military",
         "killed": 5,
         "description": "The campaign expanded to the Eastern Pacific for the first time. Two strikes in rapid succession — first killing two, then three — marking a significant geographic expansion of operations.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-82.1, 4.5] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.1,
+          4.5
+        ]
+      },
       "properties": {
         "type": "strike_pacific",
         "phase": "phase2",
@@ -118,12 +180,20 @@
         "actor": "US Military",
         "killed": 18,
         "description": "Three strikes hit four vessels in two days in the Eastern Pacific. 14 killed across three strikes on Oct 27, then four more on Oct 29. One survivor. The largest single-day death toll of the campaign.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 5
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-62.5, 11.5] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.5,
+          11.5
+        ]
+      },
       "properties": {
         "type": "military_asset",
         "phase": "phase1",
@@ -133,12 +203,20 @@
         "actor": "US Navy",
         "killed": 0,
         "description": "The USS Iwo Jima amphibious ready group deployed to the southern Caribbean — the first major naval buildup. Over 4,000 Navy and Marine personnel sent to the region alongside guided-missile destroyers and submarines. Maduro and his wife would later be embarked on the USS Iwo Jima after capture.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-60.0, 12.5] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.0,
+          12.5
+        ]
+      },
       "properties": {
         "type": "military_asset",
         "phase": "phase3",
@@ -148,12 +226,20 @@
         "actor": "US Navy",
         "killed": 0,
         "description": "The USS Gerald R. Ford — the world's largest aircraft carrier — arrived in Caribbean waters, accompanied by three warships and thousands of personnel. Its arrival dramatically escalated the visible US military posture near Venezuela.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 4
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-63.8, 10.8] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.8,
+          10.8
+        ]
+      },
       "properties": {
         "type": "tanker_seizure",
         "phase": "phase3",
@@ -163,12 +249,20 @@
         "actor": "US Navy",
         "killed": 0,
         "description": "The US seized a sanctioned oil tanker off Venezuela's coast — part of a naval blockade on the 'shadow fleet' carrying Venezuelan oil. Trump announced the seizure publicly. A second tanker was seized Dec 20.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-67.2, 10.5] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.2,
+          10.5
+        ]
+      },
       "properties": {
         "type": "strike_venezuela",
         "phase": "phase3",
@@ -178,27 +272,43 @@
         "actor": "CIA",
         "killed": 0,
         "description": "The first known American strike inside Venezuelan territory. The CIA conducted a drone strike on a port facility used by drug-trafficking boats — a major escalation crossing Venezuelan sovereign territory.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 4
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-66.9, 10.5] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.9,
+          10.5
+        ]
+      },
       "properties": {
         "type": "strike_venezuela",
         "phase": "phase4",
-        "date": "Jan 3, 2026 — 10:46 PM ET",
+        "date": "Jan 2, 2026 — 10:46 PM ET",
         "datecode": 20260103,
         "title": "Operation Absolute Resolve — Caracas Strikes",
         "actor": "US Military",
         "killed": 0,
         "description": "150+ aircraft launched from 20 bases across the hemisphere. Helicopters flew at 100 feet over water. Strikes hit Venezuelan military and air infrastructure across multiple sites. Venezuelan forces opened fire; one US aircraft was hit but remained flyable. No US lives lost.",
+        "source": "https://breakingdefense.com/2026/01/venezuela-150-aircraft-cyber-effects-maduro-operation-how-it-happened-caine/",
+        "claim_type": "reported",
         "magnitude": 5
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-66.88, 10.49] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.88,
+          10.49
+        ]
+      },
       "properties": {
         "type": "capture",
         "phase": "phase4",
@@ -208,12 +318,20 @@
         "actor": "Delta Force / FBI HRT",
         "killed": 0,
         "description": "Delta Force and FBI Hostage Rescue Team stormed Maduro's fortified compound. A CIA source inside the Venezuelan government had tracked his movements for months. Maduro tried to flee to his steel-reinforced safe room but gave up. He and wife Cilia Flores were taken into custody. By 3:29 AM ET, both were aboard the USS Iwo Jima.",
+        "source": "https://www.foxnews.com/us/us-military-details-timeline-operation-capture-maduro-revealing-more-than-150-aircraft-involved",
+        "claim_type": "reported",
         "magnitude": 5
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-75.1, 20.0] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.1,
+          20.0
+        ]
+      },
       "properties": {
         "type": "transfer",
         "phase": "phase4",
@@ -223,12 +341,20 @@
         "actor": "FBI",
         "killed": 0,
         "description": "After capture, Maduro and Flores were transported from Venezuela to Guantanamo Bay before being flown to New York City. The FBI handled the transport, with helicopters later landing at the West Side Heliport in Manhattan.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-74.0, 40.7] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0,
+          40.7
+        ]
+      },
       "properties": {
         "type": "transfer",
         "phase": "phase4",
@@ -238,12 +364,20 @@
         "actor": "DOJ / FBI",
         "killed": 0,
         "description": "Maduro and Flores arrived at the West Side Heliport by helicopter, then were transferred to the Metropolitan Detention Center in Brooklyn. Maduro faces narco-terrorism, drug trafficking, and weapons charges in the Southern District of New York — an indictment originally unsealed in 2020.",
+        "source": "",
+        "claim_type": "UNVERIFIED",
         "magnitude": 3
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-79.1, 43.6] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.9146,
+          10.5061
+        ]
+      },
       "properties": {
         "type": "context",
         "phase": "phase1",
@@ -253,12 +387,20 @@
         "actor": "Venezuela",
         "killed": 0,
         "description": "Despite losing the July 2024 election by all independent tallies, Maduro was inaugurated for a third term. The US, EU, and dozens of countries refused to recognize the result. Biden raised the reward for Maduro's arrest to $25 million in his final days in office.",
+        "source": "https://en.wikipedia.org/wiki/Third_inauguration_of_Nicol%C3%A1s_Maduro",
+        "claim_type": "reported",
         "magnitude": 2
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-80.1, 26.7] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.1,
+          26.7
+        ]
+      },
       "properties": {
         "type": "context",
         "phase": "phase4",
@@ -268,6 +410,8 @@
         "actor": "White House",
         "killed": 0,
         "description": "Trump watched the operation live from a draped-off room at Mar-a-Lago, with screens showing a live feed and social media posts on X. At 10:46 PM ET on Jan 2, he gave the final launch order. He had spoken to Maduro privately by phone days before, warning him to step down.",
+        "source": "https://www.foxnews.com/us/us-military-details-timeline-operation-capture-maduro-revealing-more-than-150-aircraft-involved",
+        "claim_type": "reported",
         "magnitude": 2
       }
     }

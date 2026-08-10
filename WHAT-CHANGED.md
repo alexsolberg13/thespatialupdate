@@ -1,3 +1,17 @@
+# What changed — August 9, 2026
+
+Claude removed the automated story-finding stack — Harvey is finding stories a different way now. Review in VS Code, then commit and push via the Source Control panel as usual.
+
+## Removed
+- **Morning paper** — `scripts/morning_paper.py`, `scripts/build_paper_index.py`, the `paper/` and `docs/paper/` folders, the "Paper" nav links, the "Morning Edition" line on /about/, and the `/paper/` sitemap entry.
+- **GDELT morning leads** — `scripts/gdelt_leads.py`, the `leads/` and `docs/leads/` folders, the `Disallow: /leads/` robots line.
+- **Geo Radar map layer** — the homepage toggle and all its code in `src/index.njk` (it fed on the deleted leads data).
+- **Pitch sheet** — `scripts/pitch_sheet.py` and the `pitches/` folder (Stage 1 of the old protocol; it read the GDELT leads).
+- **Daily GitHub Action** — `.github/workflows/daily-leads.yml` and the phone notifier `scripts/mobile_notify.py`. There is no scheduled automation anymore.
+- Site rebuilt, so `docs/` no longer references any of the above. The by-hand story-writing protocol (CLAUDE.md §5) is unchanged.
+
+---
+
 # What changed — July 14, 2026
 
 Claude made these improvements. Review in VS Code, then commit and push via the Source Control panel as usual.

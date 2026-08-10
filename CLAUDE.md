@@ -20,10 +20,17 @@ control. Don't put working files there; they won't be committed and won't deploy
 site: reported stories where the geography *is* the story, each carrying an
 interactive map. Run by Harvey, based in Port Orchard / Bremerton, Washington.
 
-Editorial line, and it matters for everything below: **automation finds and
-prepares, a human writes and publishes.** No generated prose ships without
-being rewritten in Harvey's voice, and no factual claim ships without a
-traceable source. Tooling exists to make that discipline cheap, not to skip it.
+Editorial line, and it matters for everything below: **a human writes and
+publishes.** No generated prose ships without being rewritten in Harvey's voice,
+and no factual claim ships without a traceable source. Tooling exists to make
+that discipline cheap, not to skip it.
+
+**Note (2026-08-09):** the old automated story-finding pipeline — a GDELT news
+scraper (`gdelt_leads.py`), a phone-ranked pitch sheet (`pitch_sheet.py`), and a
+personal morning paper (`morning_paper.py`) with its daily GitHub Action — has
+been removed. Harvey is finding stories a different way now. What remains below
+is the site itself and the by-hand story-writing discipline; the "how stories
+get found" step is deliberately open.
 
 ---
 
@@ -45,8 +52,9 @@ traceable source. Tooling exists to make that discipline cheap, not to skip it.
 
 - **Site**: Eleventy (11ty) static site, Mapbox for interactive maps.
 - **Hosting**: GitHub Pages, served from the `/docs` folder.
-- **Automation**: GitHub Actions + Python 3 scripts, standard library where
-  possible (`requests` is the one common dependency).
+- **Automation**: none currently. The one remaining Python script is a local
+  story scaffolder; there is no GitHub Action. (See the note in section 1 — the
+  scraper/paper automation was removed 2026-08-09.)
 
 ```
 CLAUDE.md         this file
@@ -56,25 +64,12 @@ WHAT-CHANGED.md   running changelog
 CNAME             thespatialupdate.com
 
 scripts/          Python automation
-  gdelt_leads.py
-  morning_paper.py
-  mobile_notify.py
-  build_paper_index.py    rebuilds paper/index.html archive page
   new_story.py            scaffolds a new src/stories/<slug>/ folder
-  pitch_sheet.py
 
-leads/            GDELT scraper output (candidates.json, .geojson, digest)
-paper/            morning newspaper output
-pitches/          pitch sheet output
-dossiers/         research packets    [planned, not built]
 src/              Eleventy source (stories live in src/stories/<slug>/)
 docs/             built site, served by GitHub Pages
 _site/            stale Eleventy default output — NOT served, safe to ignore
-.github/workflows/daily-leads.yml
 ```
-
-Both `leads/` and `paper/` outputs are written twice: a dated file
-(`2026-08-07.html`) and a stable `latest.*` alias. Keep that convention.
 
 **Watch out for `_site/`.** Eleventy's default output directory. This project
 publishes from `docs/` instead, so `_site/` holds an outdated build that nothing
@@ -83,129 +78,49 @@ looking at `docs/`.
 
 **Story coordinate convention.** Stories store coordinates **lon-first**, both in
 the Eleventy front matter (`coordinates: [-68.0, 8.0]`) and inside
-`data.geojson` (`"coordinates": [lon, lat]`, per the GeoJSON spec). GDELT and the
-pitch sheet work in **lat-first** `(lat, lon)`. Anything crossing that boundary
-has to swap, and it's the likeliest source of a marker landing in the wrong
-ocean. Note the story map file is `data.geojson`, not `story.geojson` as
-section 5 Stage 3 describes — reconcile that when Stage 3 gets automated.
+`data.geojson` (`"coordinates": [lon, lat]`, per the GeoJSON spec). Many outside
+data sources give coordinates **lat-first** `(lat, lon)`. Anything crossing that
+boundary has to swap, and it's the likeliest source of a marker landing in the
+wrong ocean. Note the published story map file is `data.geojson`, not
+`story.geojson` as section 5 Stage 3 still describes — reconcile that if Stage 3
+ever gets automated.
 
 ---
 
 ## 4. Existing scripts
-
-### `gdelt_leads.py`
-Fetches GDELT 2.0 15-minute event exports over a lookback window, filters to
-city/landmark-precision geocoding, clusters records describing the same
-real-world event, scores by attention × recency, and writes `candidates.json`,
-`candidates.geojson`, and a styled HTML digest.
-
-Has a `TOPIC_PRESET` config system (`conflict`, `cooperation`, `broad`,
-`infrastructure`) and `BALANCE_CATEGORIES` to alternate conflict/cooperation so
-the sheet isn't all violence. Goldstein score was deliberately removed from
-ranking — it structurally favours violent events.
-
-**Cluster fields** (confirmed in use): `label`, `place`, `lat`, `lon`, `score`,
-`total_mentions`, `records`, `source_urls`. Possibly also `geo_type`, `headline`,
-`synopsis`, actor fields. Downstream code should read defensively — see the
-`g()` helper in `pitch_sheet.py`.
-
-### `morning_paper.py`
-Harvey's personal daily paper, unrelated to the public site. 30+ RSS feeds
-across World, U.S. National, Pacific Northwest, Science and Environment, Tech
-and Business, The Lighter Side, Sports Desk, Geo Radar. Adds Open-Meteo weather
-for Port Orchard WA and Lebanon OR, Stooq market data, Wikipedia On This Day,
-and ESPN scores for the Mariners, Seahawks, Kraken, Sounders, Trail Blazers, and
-Oregon State.
-
-### `mobile_notify.py`
-Push notifications via ntfy.sh (free, no account). Handles both the leads format
-and the morning paper format. The GitHub Actions secret is named **`NTFY_TOPIC`**.
-
-### `build_paper_index.py`
-Regenerates `paper/index.html`, the browsable archive of past editions, from the
-dated `edition-YYYY-MM-DD.html` files on disk. Run by the Action after the paper
-is published.
 
 ### `new_story.py`
 Scaffolds a new `src/stories/<slug>/` folder — front matter, starter
 `data.geojson`, sidebar include. Run this rather than hand-copying an existing
 story folder. See `STORY-GUIDE.md` for the manual process it automates.
 
-### `pitch_sheet.py`  *(newest — Stage 1 of the protocol below)*
-See section 5.
-
-### Workflow
-`.github/workflows/daily-leads.yml`, display name "Morning paper". Runs at
-13:00 UTC daily, has `workflow_dispatch` for manual runs, commits outputs to
-`paper/` and `docs/paper/`, and sends a tap-to-open notification pointing at
-`thespatialupdate.com/paper/latest.html`.
-
-The leads step runs with `continue-on-error: true` and its outputs are copied
-only if they exist — a bad GDELT run must never stop the paper publishing. Keep
-that shape for any step added later.
-
-**`pitch_sheet.py` is not in the workflow yet.** It runs by hand only. Wiring it
-in means adding a step after the leads step, copying `pitches/latest.html` into
-`docs/pitches/`, and adding `pitches/ docs/pitches/` to the `git add` line — but
-hold off until a week of hand-run sheets shows the ranking is worth reading daily.
-
-**Known open issue:** the RSS feed URLs and ESPN endpoints in `morning_paper.py`
-were never testable from the sandbox they were written in. Some may 404 on live
-runs and need individual fixing. Everything fails silently by design, so a dead
-feed shows up as a missing section, not a crash.
+This is the only script left. The GDELT scraper (`gdelt_leads.py`), pitch sheet
+(`pitch_sheet.py`), morning paper (`morning_paper.py`), archive builder
+(`build_paper_index.py`), phone notifier (`mobile_notify.py`), and the daily
+GitHub Action that ran them were all removed on 2026-08-09 — Harvey is finding
+stories a different way. If any of that gets rebuilt, the conventions in
+section 7 still apply.
 
 ---
 
 ## 5. The story production protocol
 
-Four stages. The spine of the whole thing is the **claim ledger** — every
-sentence that ships is tied to an ID, and every ID is typed as Reported,
-Background, or Inference.
+The spine of the whole thing is the **claim ledger** — every sentence that ships
+is tied to an ID, and every ID is typed as Reported, Background, or Inference.
+That discipline is source-agnostic: it holds no matter how a story is found.
 
-### Stage 1 — Pitch sheet (built, `scripts/pitch_sheet.py`)
-
-```
-py scripts/pitch_sheet.py
-py scripts/pitch_sheet.py --in leads/latest.json --min-sources 2 --max 12
-```
-
-Standard library only. Reads `candidates.json`, enriches each cluster with:
-
-- **Source diversity** — distinct outlets, discounting aggregators
-  (`WEAK_DOMAINS`: Google News, MSN, Yahoo, etc.). Single-outlet clusters get a
-  warning tag.
-- **Mappability** — GDELT country-level coordinates are centroids, not places,
-  and can't carry a map. Dropped by default (`--keep-unmappable` to override).
-  State/province precision gets a `weak geocode` tag.
-- **Novelty** — scans `src/stories/` and `docs/stories/` for coordinates within
-  60km of the pitch and flags follow-ons by story slug. Scored down slightly,
-  never dropped; sometimes the follow-on is the better story. Reads both
-  conventions: lon-first `[lon, lat]` from `data.geojson` and story front
-  matter, and lat-first `"lat": / "lon":` keys. **Sanity check when running it:**
-  the `Indexed N coordinates from published stories` line must be non-zero. A
-  zero there means the scan matched nothing and every pitch is being scored as
-  new — that failure is silent and looks exactly like a normal run.
-- **Spatial angle** — one line on why this needs a map rather than merely
-  having a location. Place-name features first (strait, corridor, dam, camp,
-  border), then event shape (displacement, seizure, blockade), then an honest
-  "angle needs finding" rather than an invented one.
-
-Re-ranks on those signals and writes `pitches/YYYY-MM-DD.html` + `latest.html`
-(the sheet Harvey ticks on his phone) and matching `.json` for Stage 2.
-The **Copy selections** button emits:
-
-```
-PITCH SET 2026-08-07
-SELECTED: 3, 7, 11
-```
+**Finding stories (was Stage 1, now open).** The old automated finder — GDELT
+scraper → phone-ranked pitch sheet — was removed on 2026-08-09. Harvey is
+sourcing stories a different way now; that step is deliberately undefined here
+until the new route settles. What it produced for the rest of the protocol was
+just: a place, a spatial angle, and a set of source URLs. However stories arrive
+now, the stages below still expect roughly that much before a dossier is built.
 
 ### Stage 2 — Dossier build (**not built yet**)
 
-`build_dossier.py <date> <selected numbers>` → `dossiers/<slug>.json`.
+`build_dossier.py <slug>` → `dossiers/<slug>.json`.
 
-Should gather, for the selected pitches only:
-- every GDELT record in the cluster (event codes, actors, dates, tone, exact
-  lat-lon, geo precision flag)
+Should gather, for a selected story:
 - every source URL with publisher, publication date, and fetched article text
 - an OSM/Nominatim reverse geocode of each coordinate, so place names are
   verified rather than assumed
@@ -213,7 +128,9 @@ Should gather, for the selected pitches only:
   population
 
 **Rule: nothing in the finished story may exist outside the dossier.** That
-constraint is what makes Stage 3 auditable.
+constraint is what makes Stage 3 auditable. (The dossier schema was originally
+sketched around GDELT event records; rederive it from whatever the new
+story-finding route actually hands over.)
 
 ### Stage 3 — Production (**stays a chat session for now, by Harvey's choice**)
 
@@ -256,17 +173,13 @@ remains**, and writes into `docs/stories/` for the normal commit flow.
 
 ## 6. Immediate next steps
 
-1. Run `pitch_sheet.py` against live GDELT output and see whether the sheet is
-   actually selectable — tune `MIN_DISTINCT_SOURCES`, `WEAK_DOMAINS`, and the
-   `GEO_FEATURES` angle phrasings from a week of real sheets.
-   *(First real run done 2026-08-08: 25 clusters in, 20 pitches out, 5 filtered.
-   Two Tehran clusters correctly flagged as follow-ons to `iran-strikes`. The
-   sheet has never been read on a phone yet — that's the actual open question.)*
+1. Settle the new story-finding route (replacing the removed GDELT/pitch-sheet
+   finder), then write down what it hands off — place, spatial angle, source
+   URLs — so Stage 2 has a defined input.
 2. Produce **one story by hand** through Stage 3 in a chat session, before
    writing `build_dossier.py`. The dossier schema should be derived from what a
    real story actually needed, not guessed at in advance.
 3. Then build `build_dossier.py`, then `finalize.py`.
-4. Separately: fix whatever RSS/ESPN endpoints are failing in `morning_paper.py`.
 
 ---
 
@@ -276,12 +189,11 @@ remains**, and writes into `docs/stories/` for the normal commit flow.
   cp1252 and dies on emoji and en-dashes.
 - Escape all user/source-derived text into HTML (`html.escape(..., quote=True)`).
   Article titles from the open web end up on these pages.
-- Every output written twice: dated file + `latest.*`.
 - New dependencies are a cost. Standard library unless there's a real reason.
 - External data sources fail silently and independently — one dead feed must
   never take down a run.
-- Coordinates from GDELT are machine-generated and occasionally pin the wrong
-  same-named town. Treat them as pointers to verify, never as published fact.
+- Machine-generated coordinates occasionally pin the wrong same-named town.
+  Treat them as pointers to verify, never as published fact.
 - Silent failure is the house style, and it has a cost: a script that swallows
   errors can produce a clean-looking run that did nothing. Every stage that can
   quietly find zero of something should **print the count**, so a zero is visible

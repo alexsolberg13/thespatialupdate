@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story Beat Reel — Strikes on Iran · The Spatial Update</title>
+
+<!--
+  Story Beat Reel — a 9:16, screen-recordable map reel of the "Strikes on Iran" story.
+  Standalone page: token-free MapLibre GL + Carto dark-matter tiles, so it renders
+  (and records) anywhere. No build step, no Mapbox token. Open it in a browser and
+  screen-record the phone screen at 9:16 while narrating.
+
+  Controls: tap/click the right ~2/3 of the screen (or press → / Space) to advance a
+  beat, the left ~1/3 (or ←) to go back. The prev/next buttons below do the same.
+
+  Beats and pins mirror src/stories/iran-strikes/ — keep them in sync if the story
+  data changes. Coordinates here are [lng, lat] to match MapLibre / the GeoJSON spec.
+-->
+
+<link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0b09; font-family:Georgia,serif; -webkit-font-smoothing:antialiased; }
+
+  @keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
+
+  .tsu-mk   { position:relative; width:0; height:0; }
+  .tsu-dot  { position:absolute; left:50%; top:50%; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%; background:currentColor; border:1.5px solid rgba(255,255,255,.22); }
+  .tsu-ring { position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:2px solid currentColor; animation:tsuPulse 1.9s ease-out infinite; }
+
+  .maplibregl-ctrl-logo,
+  .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-bottom-right,
+  .maplibregl-ctrl-bottom-left { display:none !important; }
+
+  .tsu-screen canvas:focus { outline:none; }
+
+  .tsu-page   { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:36px 20px; }
+  .tsu-cap    { display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; }
+  .tsu-cap-h  { font:600 12px system-ui,sans-serif; color:#e4e0da; }
+  .tsu-cap-p  { font:400 11px/1.4 system-ui,sans-serif; color:#8a8681; max-width:320px; }
+
+  .tsu-phone  { width:320px; padding:11px; background:linear-gradient(#26221d,#171310); border-radius:6px; box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06); }
+  .tsu-screen { position:relative; width:298px; height:530px; overflow:hidden; background:#0a0f18; }
+
+  .tsu-tap-l  { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
+  .tsu-tap-r  { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
+
+  .tsu-top-fade { position:absolute; left:0; right:0; top:0; height:120px; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
+  .tsu-bot-fade { position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
+
+  .tsu-date  { position:absolute; left:16px; top:15px; z-index:7; font:600 10px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:6px 9px; border-radius:4px; pointer-events:none; }
+  .tsu-dots  { position:absolute; left:0; right:0; top:44px; z-index:7; display:flex; justify-content:center; align-items:center; gap:5px; pointer-events:none; }
+
+  .tsu-caption { position:absolute; left:0; right:0; bottom:0; z-index:6; padding:0 20px 26px; pointer-events:none; }
+  .tsu-kicker  { font:700 10px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:10px; }
+  .tsu-title   { font:400 25px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:9px; }
+  .tsu-sub     { font:400 14px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
+
+  .tsu-controls { display:flex; align-items:center; gap:8px; width:320px; padding:0 4px; }
+  .tsu-btn      { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
+  .tsu-btn:hover{ background:#262220; }
+  .tsu-counter  { font:500 11px Arial,sans-serif; color:#8a8681; margin-left:auto; }
+  .tsu-full-btn { font:600 11px Arial,sans-serif; color:#c8a84e; background:none; border:1px solid #3a352b; border-radius:6px; padding:7px 10px; cursor:pointer; }
+  .tsu-full-btn:hover { background:#1e1b18; }
+
+  /* Exit affordance — invisible at rest so it stays out of the recording; appears on hover. */
+  .tsu-exit { position:absolute; right:12px; top:12px; z-index:9; width:26px; height:26px; display:none;
+              align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.2);
+              background:rgba(10,12,18,.5); color:#e4e0da; font:600 14px Arial,sans-serif; cursor:pointer;
+              opacity:0; transition:opacity .2s; }
+  .tsu-exit:hover { opacity:1; }
+
+  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox — no frame, no chrome. */
+  body.tsu-full { background:#000; }
+  body.tsu-full .tsu-page { padding:0; gap:0; }
+  body.tsu-full .tsu-cap,
+  body.tsu-full .tsu-controls { display:none; }
+  body.tsu-full .tsu-phone { width:auto; padding:0; background:none; box-shadow:none; border-radius:0; }
+  body.tsu-full .tsu-screen { width:auto; height:100vh; aspect-ratio:9 / 16; max-width:100vw; }
+  body.tsu-full .tsu-exit { display:flex; }
+</style>
+</head>
+<body>
+<section class="tsu-page">
+  <div class="tsu-cap">
+    <div class="tsu-cap-h">Story Beat Reel — Strikes on Iran</div>
+    <div class="tsu-cap-p">Tap the right half to advance, left half to go back, and narrate. Screen-record at 9:16.</div>
+  </div>
+
+  <div class="tsu-phone">
+    <div class="tsu-screen">
+      <div id="tsu-map" style="position:absolute;inset:0;"></div>
+
+      <div class="tsu-tap-l" id="tsu-prev-zone" title="Back"></div>
+      <div class="tsu-tap-r" id="tsu-next-zone" title="Next"></div>
+
+      <div class="tsu-top-fade"></div>
+      <div class="tsu-bot-fade"></div>
+
+      <div class="tsu-exit" id="tsu-exit" title="Exit full screen (Esc)">&#10005;</div>
+
+      <div class="tsu-date" id="tsu-date" hidden></div>
+
+      <div class="tsu-dots" id="tsu-dots"></div>
+
+      <div class="tsu-caption">
+        <div class="tsu-kicker" id="tsu-kicker"></div>
+        <div class="tsu-title"  id="tsu-title"></div>
+        <div class="tsu-sub"    id="tsu-sub"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tsu-controls">
+    <button class="tsu-btn" id="tsu-prev" aria-label="Previous beat">&#9664;</button>
+    <button class="tsu-btn" id="tsu-next" aria-label="Next beat">&#9654;</button>
+    <button class="tsu-full-btn" id="tsu-full" aria-label="Full screen recording mode">&#9974; Full screen</button>
+    <span class="tsu-counter" id="tsu-counter"></span>
+  </div>
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Story data (mirrors src/stories/iran-strikes/) -----------------------
+  var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
+  var COL = { gold:"#e8c87a", red:"#e05a4e", teal:"#3ecfb2", blue:"#5b9bd5" };
+
+  // Pins are [lng, lat] — GeoJSON / MapLibre order.
+  var PINS = {
+    natanz:  { lng:51.72, lat:33.72, color:"gold" },
+    tehran:  { lng:51.39, lat:35.69, color:"gold" },
+    fordow:  { lng:50.99, lat:34.88, color:"blue" },
+    isfahan: { lng:51.68, lat:32.65, color:"blue" },
+    west:    { lng:47.5,  lat:33.4,  color:"red"  }
+  };
+
+  // beat.c is the map center [lng, lat]; act is the pin that pulses this beat.
+  var BEATS = [
+    { c:[52.5,32.5], z:3.9,                       kicker:"The Spatial Update · Story", title:"Strikes on Iran",              sub:"From the Twelve-Day War to the 2026 conflict",             vis:["natanz"], act:"natanz" },
+    { c:[52.2,33.4], z:5.2, date:"Jun 13, 2025",  kicker:"Twelve-Day War",                  title:"Israel opens the campaign",   sub:"The first strikes hit the Natanz enrichment site",         vis:["natanz"], act:"natanz" },
+    { c:[51.5,34.6], z:5.0, date:"Jun 17, 2025",  kicker:"Twelve-Day War",                  title:"The campaign widens",         sub:"Air-defense and command sites around Tehran are struck",   vis:["natanz","tehran"], act:"tehran" },
+    { c:[51.2,33.7], z:5.1, date:"Jun 22, 2025",  kicker:"Twelve-Day War",                  title:"The United States enters",    sub:"Fordow, Natanz and Isfahan are hit in one night",          vis:["natanz","tehran","fordow","isfahan"], act:"fordow" },
+    { c:[51.0,33.2], z:4.7, date:"Jun 24, 2025",  kicker:"Twelve-Day War",                  title:"A ceasefire holds",           sub:"The guns fall quiet — for eight months",              vis:["natanz","tehran","fordow","isfahan"], act:null },
+    { c:[49.6,33.0], z:4.4, date:"Feb 28, 2026",  kicker:"The 2026 Conflict",               title:"The war reignites",           sub:"A new Israeli campaign draws Iranian strikes in reply",     vis:["natanz","tehran","fordow","isfahan","west"], act:"west" },
+    { c:[50.2,32.8], z:4.1, date:"Mar 31, 2026",  kicker:"The 2026 Conflict",               title:"Where the front stands today",sub:"Every documented major strike, mapped",                    vis:["natanz","tehran","fordow","isfahan","west"], act:null }
+  ];
+
+  // showDate can be turned off with ?date=off for a cleaner recording.
+  var params = new URLSearchParams(window.location.search);
+  var SHOW_DATE = params.get("date") !== "off";
+
+  // ---- State ----------------------------------------------------------------
+  var idx = 0;
+  var map = null;
+  var markers = {};
+
+  var el = {
+    date:    document.getElementById("tsu-date"),
+    dots:    document.getElementById("tsu-dots"),
+    kicker:  document.getElementById("tsu-kicker"),
+    title:   document.getElementById("tsu-title"),
+    sub:     document.getElementById("tsu-sub"),
+    counter: document.getElementById("tsu-counter")
+  };
+
+  // Build the beat-indicator dots once (one per beat).
+  var dotEls = BEATS.map(function () {
+    var s = document.createElement("span");
+    el.dots.appendChild(s);
+    return s;
+  });
+
+  // ---- Map ------------------------------------------------------------------
+  function initMap() {
+    if (!window.maplibregl) { setTimeout(initMap, 120); return; }
+    var div = document.getElementById("tsu-map");
+    if (!div || map) return;
+
+    var b0 = BEATS[0];
+    map = new maplibregl.Map({
+      container: div, style: STYLE, center: b0.c, zoom: b0.z,
+      interactive: false, attributionControl: false, fadeDuration: 0
+    });
+
+    map.on("style.load", function () {
+      try { map.setProjection({ type: "globe" }); } catch (e) {}
+      try {
+        map.setSky({
+          "sky-color":"#0a1019", "horizon-color":"#1a2436", "fog-color":"#0d1420",
+          "sky-horizon-blend":0.5, "horizon-fog-blend":0.6, "fog-ground-blend":0.4
+        });
+      } catch (e) {}
+      buildMarkers();
+      applyBeat(idx, false);
+    });
+  }
+
+  function buildMarkers() {
+    Object.keys(PINS).forEach(function (id) {
+      var p = PINS[id];
+      var wrap = document.createElement("div");
+      wrap.className = "tsu-mk";
+      wrap.style.color = COL[p.color] || COL.gold;
+
+      var ring = document.createElement("div");
+      ring.className = "tsu-ring";
+      ring.style.display = "none";
+
+      var dot = document.createElement("div");
+      dot.className = "tsu-dot";
+
+      wrap.appendChild(ring);
+      wrap.appendChild(dot);
+
+      var marker = new maplibregl.Marker({ element: wrap }).setLngLat([p.lng, p.lat]);
+      markers[id] = { ring: ring, marker: marker, added: false };
+    });
+  }
+
+  function applyBeat(i, fly) {
+    var b = BEATS[i];
+    if (map) {
+      if (fly) map.flyTo({ center: b.c, zoom: b.z, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: b.c, zoom: b.z });
+    }
+    Object.keys(markers).forEach(function (id) {
+      var m = markers[id];
+      var on = b.vis.indexOf(id) !== -1;
+      if (on && !m.added) { m.marker.addTo(map); m.added = true; }
+      else if (!on && m.added) { m.marker.remove(); m.added = false; }
+      m.ring.style.display = (on && b.act === id) ? "block" : "none";
+    });
+  }
+
+  // ---- Overlay --------------------------------------------------------------
+  function dotStyle(k, i) {
+    if (k === i) return "width:16px;height:5px;border-radius:3px;background:#c8a84e;transition:all .3s;";
+    if (k <  i)  return "width:5px;height:5px;border-radius:50%;background:rgba(200,168,78,.55);transition:all .3s;";
+    return "width:5px;height:5px;border-radius:50%;background:rgba(228,224,218,.22);transition:all .3s;";
+  }
+
+  function render() {
+    var b = BEATS[idx];
+    var last = BEATS.length - 1;
+
+    el.kicker.textContent = b.kicker || "";
+    el.title.textContent  = b.title || "";
+    el.sub.textContent    = b.sub || "";
+
+    var showDate = SHOW_DATE && !!b.date;
+    el.date.hidden = !showDate;
+    el.date.textContent = showDate ? b.date : "";
+
+    el.counter.textContent = idx === 0 ? "Cold open" : ("Beat " + idx + " / " + last);
+
+    dotEls.forEach(function (s, k) { s.setAttribute("style", dotStyle(k, idx)); });
+  }
+
+  function step(dir) {
+    var i = idx + dir;
+    if (i >= BEATS.length) i = 0;
+    if (i < 0) i = 0;
+    idx = i;
+    render();
+    applyBeat(idx, true);
+  }
+
+  // ---- Fullscreen recording mode -------------------------------------------
+  // Fills the viewport at 9:16 with a black letterbox, drops the frame and all
+  // page chrome. The map is re-sized to real pixels so it stays crisp.
+  function resizeMapSoon() {
+    if (!map) return;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { map.resize(); }); });
+  }
+
+  function setFull(on) {
+    document.body.classList.toggle("tsu-full", on);
+    resizeMapSoon();
+  }
+
+  function enterFull() {
+    setFull(true);
+    var r = document.documentElement.requestFullscreen;
+    if (r) { try { r.call(document.documentElement); } catch (e) {} }
+  }
+
+  function exitFull() {
+    setFull(false);
+    if (document.fullscreenElement && document.exitFullscreen) {
+      try { document.exitFullscreen(); } catch (e) {}
+    }
+  }
+
+  // Keep the layout in sync when the browser leaves fullscreen via Esc/native UI.
+  document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreenElement && document.body.classList.contains("tsu-full")) setFull(false);
+  });
+
+  // ---- Wiring ---------------------------------------------------------------
+  document.getElementById("tsu-prev-zone").addEventListener("click", function () { step(-1); });
+  document.getElementById("tsu-next-zone").addEventListener("click", function () { step(1); });
+  document.getElementById("tsu-prev").addEventListener("click", function () { step(-1); });
+  document.getElementById("tsu-next").addEventListener("click", function () { step(1); });
+  document.getElementById("tsu-full").addEventListener("click", enterFull);
+  document.getElementById("tsu-exit").addEventListener("click", exitFull);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { step(1); e.preventDefault(); }
+    else if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+    else if (e.key === "Escape" && document.body.classList.contains("tsu-full")) { exitFull(); }
+    else if ((e.key === "f" || e.key === "F") && !document.body.classList.contains("tsu-full")) { enterFull(); }
+  });
+
+  render();
+  initMap();
+
+  // ?mode=full starts straight in the recording layout (no gesture, so no native
+  // fullscreen — press F for that, or record the letterboxed area directly).
+  if (params.get("mode") === "full") setFull(true);
+})();
+</script>
+</body>
+</html>
