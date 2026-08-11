@@ -120,17 +120,16 @@ mapbox: true
     border-radius: 12px; overflow: hidden; min-height: 260px; cursor: pointer;
   }
   .feat-map:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .feat-sphere {
-    position: absolute; left: 55%; top: 50%; transform: translate(-50%, -50%);
-    width: 320px; height: 320px; border-radius: 50%;
-    background: radial-gradient(circle at 38% 30%, #243450, #0f1826 60%, #0a1019);
-    box-shadow: inset -22px -22px 55px rgba(0, 0, 0, 0.55);
+  #feat-map-canvas {
+    position: absolute; inset: 0; z-index: 1;
+    /* Live preview map is decorative here — clicks fall through to .feat-map. */
+    pointer-events: none;
   }
-  .feat-dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; }
   .explore {
     position: absolute; left: 18px; bottom: 16px; font-family: Arial, sans-serif; font-size: 12px;
     letter-spacing: 0.04em; color: #e4e0da; background: rgba(20, 18, 16, 0.72);
     padding: 8px 15px; border-radius: 22px; border: 1px solid #4a463f; transition: border-color 0.15s, color 0.15s;
+    z-index: 2;
   }
   .feat-map:hover .explore, .feat-map:focus-visible .explore { border-color: var(--accent); color: var(--accent); }
 
@@ -232,10 +231,7 @@ mapbox: true
           <a class="feat-readmore" href="{{ featured.url }}">Read the full story →</a>
         </div>
         <div class="feat-map" id="feat-map" role="button" tabindex="0" aria-label="Explore the interactive map">
-          <div class="feat-sphere"></div>
-          <span class="feat-dot" style="left:48%;top:42%;background:#e05a4e;box-shadow:0 0 0 5px rgba(224,90,78,.2);"></span>
-          <span class="feat-dot" style="left:54%;top:48%;background:#e8c87a;box-shadow:0 0 0 5px rgba(232,200,122,.2);"></span>
-          <span class="feat-dot" style="left:44%;top:52%;background:#3ecfb2;box-shadow:0 0 0 5px rgba(62,207,178,.2);"></span>
+          <div id="feat-map-canvas"></div>
           <span class="explore">Explore the interactive map →</span>
         </div>
       </div>
@@ -282,6 +278,16 @@ mapbox: true
     red:  '#e05a4e',
     teal: '#3ecfb2',
     blue: '#5b9bd5'
+  };
+
+  // Shared point source for both the full map and the landing preview map.
+  const storiesGeojson = {
+    type: 'FeatureCollection',
+    features: stories.map((s, i) => ({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: s.coordinates },
+      properties: { index: i, continent: s.continent, color: markerColors[s.color] || markerColors.gold }
+    }))
   };
 
   // Per-continent globe framing for the switcher pills + tiles.
@@ -491,16 +497,7 @@ mapbox: true
   map.on('style.load', () => {
     map.setFog(isDarkMode() ? fogDark : fogLight);
 
-    const geojson = {
-      type: 'FeatureCollection',
-      features: stories.map((s, i) => ({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: s.coordinates },
-        properties: { index: i, continent: s.continent, color: markerColors[s.color] || markerColors.gold }
-      }))
-    };
-
-    map.addSource('stories', { type: 'geojson', data: geojson, generateId: true });
+    map.addSource('stories', { type: 'geojson', data: storiesGeojson, generateId: true });
 
     map.addLayer({
       id: 'story-glow', type: 'circle', source: 'stories',
@@ -545,7 +542,57 @@ mapbox: true
 
   document.addEventListener('themechange', (e) => {
     map.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+    featMap.setStyle(e.detail.dark ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
   });
+
+  // ── Landing "explore the interactive map" preview ────────────
+  // A small, non-interactive globe standing in for the old static
+  // gradient-sphere graphic. Clicks fall through to the parent .feat-map
+  // button (see #feat-map-canvas { pointer-events: none }), which opens
+  // the real map view.
+  const featMap = new mapboxgl.Map({
+    container: 'feat-map-canvas',
+    style: isDarkMode() ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
+    center: homeCenter,
+    zoom: homeZoom - 0.4,
+    projection: 'globe',
+    attributionControl: false,
+    interactive: false
+  });
+
+  featMap.on('style.load', () => {
+    featMap.setFog(isDarkMode() ? fogDark : fogLight);
+    featMap.addSource('stories', { type: 'geojson', data: storiesGeojson });
+    featMap.addLayer({
+      id: 'story-glow', type: 'circle', source: 'stories',
+      paint: { 'circle-radius': 12, 'circle-color': ['get', 'color'], 'circle-opacity': 0.15 }
+    });
+    featMap.addLayer({
+      id: 'story-dots', type: 'circle', source: 'stories',
+      paint: {
+        'circle-radius': 5, 'circle-color': ['get', 'color'],
+        'circle-opacity': 0.9, 'circle-stroke-width': 1,
+        'circle-stroke-color': 'rgba(255,255,255,0.12)'
+      }
+    });
+  });
+
+  // Slow constant spin so the preview reads as "live" rather than static.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion) {
+    const spinStart = Date.now();
+    const degPerSecond = 360 / 240; // one full rotation every 4 minutes
+    (function spinFeatMap() {
+      const elapsed = (Date.now() - spinStart) / 1000;
+      featMap.jumpTo({ center: [homeCenter[0] - elapsed * degPerSecond, homeCenter[1]] });
+      requestAnimationFrame(spinFeatMap);
+    })();
+  }
+
+  // Guard against the container measuring 0×0 if this script runs before
+  // layout settles (mirrors the defensive resize used when the full map
+  // is unhidden — see setView()).
+  window.addEventListener('load', () => featMap.resize());
 
   // ── Wire landing + navigation ────────────────────────────────
   buildPills();
