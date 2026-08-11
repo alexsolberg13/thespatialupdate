@@ -1,3 +1,17 @@
+# What changed — August 10, 2026 (fresh start: trimmed stories + private ledgers)
+
+Cleaned house — cut the older stories down to a core three and made the claim ledgers private. Review in VS Code, then commit and push via the Source Control panel as usual.
+
+## Removed
+- **Four older stories** — `iran-strikes`, `strait-of-hormuz`, `gulf-state-relations`, and `venezuela` (folders, their sidebar includes, and their `src/_data/stories.json` entries). The site now carries three stories: the August 2026 eclipse, the Lobito Corridor, and the Red Sea Crisis. Removed stories are still recoverable from git history.
+
+## Changed — claim ledgers are now private
+- **`sources.html` ledgers are no longer published.** A new `.eleventyignore` skips them, so no `/stories/<slug>/sources/` page is built or served. The files stay in the repo (`src/stories/<slug>/sources.html`) for reference — open them locally.
+- **Story footnotes are now plain numbers.** The `[C#]`-derived superscripts remain visible in each story, but no longer link to the (now-private) ledger, so nothing 404s.
+- **The public "sourced claim ledger" link is removed** from the story sidebars.
+
+---
+
 # What changed — August 10, 2026 (August 2026 eclipse story + two reels)
 
 Added a new story and video reels, and tidied the Lobito map. Review in VS Code, then commit and push via the Source Control panel as usual.

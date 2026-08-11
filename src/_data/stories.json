@@ -1,83 +1,19 @@
 [
   {
-    "region": "Middle East",
-    "continent": "Middle East",
+    "region": "Europe",
+    "continent": "Europe",
     "coordinates": [
-      53.0,
-      32.5
+      -8.4,
+      43.4
     ],
-    "tag": "Iran · Military",
-    "type": "military",
-    "title": "Strikes on Iran: From the Twelve-Day War to the 2026 Conflict",
-    "description": "Mapping every documented major strike — who launched it, what was targeted, and when.",
-    "url": "/stories/iran-strikes/",
-    "color": "red",
-    "date": "Jul 2026",
-    "order": 202607
-  },
-  {
-    "region": "Middle East",
-    "continent": "Middle East",
-    "coordinates": [
-      56.4,
-      26.6
-    ],
-    "tag": "Gulf · Economics",
-    "type": "economy",
-    "title": "The Strait of Hormuz: Oil's Most Critical Passage",
-    "description": "21 million barrels of oil transit this 3km-wide chokepoint every day.",
-    "url": "/stories/strait-of-hormuz/",
+    "tag": "Europe · Geography",
+    "type": "geography",
+    "title": "The August 2026 Eclipse: A Shadow's Path From the Arctic to a Spanish Sunset",
+    "description": "A total eclipse crosses Greenland, Iceland and northern Spain on 12 August — and Madrid and Barcelona miss it by a sliver.",
+    "url": "/stories/august-2026-eclipse/",
     "color": "gold",
-    "date": "Jun 2026",
-    "order": 202606
-  },
-  {
-    "region": "Middle East",
-    "continent": "Middle East",
-    "coordinates": [
-      46.0,
-      28.0
-    ],
-    "tag": "Gulf · Geopolitics",
-    "type": "news",
-    "title": "Gulf State Relations: The Regional Power Balance",
-    "description": "How Iran, the Gulf states, and their proxies are aligned — and where US military power sits.",
-    "url": "/stories/gulf-state-relations/",
-    "color": "teal",
-    "date": "Jun 2026",
-    "order": 202606
-  },
-  {
-    "region": "Middle East",
-    "continent": "Middle East",
-    "coordinates": [
-      43.35,
-      12.6
-    ],
-    "tag": "Red Sea · Shipping",
-    "type": "economy",
-    "title": "The Red Sea Crisis: Trade Reroutes Around a War Zone",
-    "description": "Houthi attacks near the Bab-el-Mandeb strait pushed global shipping onto a 10-day detour around Africa.",
-    "url": "/stories/red-sea-shipping/",
-    "color": "gold",
-    "date": "May 2026",
-    "order": 202605
-  },
-  {
-    "region": "Americas",
-    "continent": "Americas",
-    "coordinates": [
-      -66.88,
-      10.49
-    ],
-    "tag": "Venezuela · Military",
-    "type": "military",
-    "title": "Operation Absolute Resolve: How the US Captured Nicolás Maduro",
-    "description": "From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.",
-    "url": "/stories/venezuela/",
-    "color": "red",
-    "date": "May 2026",
-    "order": 202605
+    "date": "Aug 2026",
+    "order": 202608
   },
   {
     "region": "Africa",
@@ -96,19 +32,19 @@
     "order": 202608
   },
   {
-    "region": "Europe",
-    "continent": "Europe",
+    "region": "Middle East",
+    "continent": "Middle East",
     "coordinates": [
-      -8.4,
-      43.4
+      43.35,
+      12.6
     ],
-    "tag": "Europe · Geography",
-    "type": "geography",
-    "title": "The August 2026 Eclipse: A Shadow's Path From the Arctic to a Spanish Sunset",
-    "description": "A total eclipse crosses Greenland, Iceland and northern Spain on 12 August — and Madrid and Barcelona miss it by a sliver.",
-    "url": "/stories/august-2026-eclipse/",
+    "tag": "Red Sea · Shipping",
+    "type": "economy",
+    "title": "The Red Sea Crisis: Trade Reroutes Around a War Zone",
+    "description": "Houthi attacks near the Bab-el-Mandeb strait pushed global shipping onto a 10-day detour around Africa.",
+    "url": "/stories/red-sea-shipping/",
     "color": "gold",
-    "date": "Aug 2026",
-    "order": 202608
+    "date": "May 2026",
+    "order": 202605
   }
 ]

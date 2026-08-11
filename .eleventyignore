@@ -1,0 +1,5 @@
+# Claim ledgers (sources.html) are kept in the repo for Harvey's own reference,
+# but are deliberately NOT published to the live site. Eleventy skips them here,
+# so no /stories/<slug>/sources/ page is ever built or served. Open the raw
+# src/stories/<slug>/sources.html file locally to read a ledger.
+src/stories/*/sources.html
