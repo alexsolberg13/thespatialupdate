@@ -1,3 +1,29 @@
+# What changed — August 10, 2026 (August 2026 eclipse story + two reels)
+
+Added a new story and video reels, and tidied the Lobito map. Review in VS Code, then commit and push via the Source Control panel as usual.
+
+## New
+- **New story, published: the August 2026 eclipse** (`src/stories/august-2026-eclipse/`) — a Europe story on the 12 Aug 2026 total solar eclipse, framed spatially: a ~294 km-wide shadow crossing Greenland, Iceland and northern Spain, and who falls inside the line versus just outside it (Madrid & Barcelona miss totality at 99.9%). The map's centerline **and** totality band are real NASA / Espenak ephemeris, and every city's in/out colour was checked by point-in-polygon against the band. Includes a footnoted claim ledger (`sources.html`) and a research packet (`dossiers/august-2026-eclipse.md`). Live on the homepage (Europe) and in `/stories/`. **This is the first Europe story on the site.**
+- **Story Beat Reels** (`docs/reels/`) — standalone 9:16, screen-recordable map reels (token-free MapLibre on a globe projection) plus narration scripts, for both `august-2026-eclipse` and `lobito-corridor`.
+
+## Changed
+- **Lobito map — the TAZARA route cleaned up.** Smoothed the eastern line through its real stations, anchored its western end at a new **Kapiri Mposhi junction** pin, and added the **Zambia Railways feeder** (Chingola → Ndola → junction). TAZARA does not itself reach the mines — the feeder is how Copperbelt ore gets to it — so the map now shows the ore connecting to the eastern route rather than the line dangling in space.
+
+---
+
+# What changed — August 9, 2026 (later: first story + finalize tool)
+
+Started the first by-hand story and built the Stage 4 tool. Review in VS Code, then commit and push via the Source Control panel as usual.
+
+## New
+- **New story, published: the Lobito Corridor** (`src/stories/lobito-corridor/`) — an Africa story on whether the Copperbelt's copper/cobalt exits west to the Atlantic (US/EU-backed Lobito rail) or east to the Indian Ocean (China-backed TAZARA). Includes the map (`data.geojson`), a footnoted claim ledger (`sources.html`), and a research packet (`dossiers/lobito-corridor.md`). It went through humanize → `finalize.py` (tags are now footnotes) → publish, so it's live on the homepage (Africa) and in `/stories/`. **This is the first Africa story on the site.**
+- **`scripts/finalize.py`** — the Stage 4 finisher. `py scripts\finalize.py lobito-corridor` converts the `[C#]` tags to footnotes linking the ledger, and refuses if any `[NEW]` tag remains. Use `--check` for a dry run first.
+
+## Note on the old Stage-4 spec
+CLAUDE.md used to say finalize "writes into docs/". It doesn't — `docs/` is the generated build. finalize edits the source `index.md`; `npm run build` then produces the published page. CLAUDE.md is updated to match.
+
+---
+
 # What changed — August 9, 2026
 
 Claude removed the automated story-finding stack — Harvey is finding stories a different way now. Review in VS Code, then commit and push via the Source Control panel as usual.

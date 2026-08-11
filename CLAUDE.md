@@ -52,9 +52,9 @@ get found" step is deliberately open.
 
 - **Site**: Eleventy (11ty) static site, Mapbox for interactive maps.
 - **Hosting**: GitHub Pages, served from the `/docs` folder.
-- **Automation**: none currently. The one remaining Python script is a local
-  story scaffolder; there is no GitHub Action. (See the note in section 1 — the
-  scraper/paper automation was removed 2026-08-09.)
+- **Automation**: no GitHub Action. Two local Python scripts remain, both for the
+  by-hand story workflow. (See the note in section 1 — the scraper/paper
+  automation was removed 2026-08-09.)
 
 ```
 CLAUDE.md         this file
@@ -65,7 +65,9 @@ CNAME             thespatialupdate.com
 
 scripts/          Python automation
   new_story.py            scaffolds a new src/stories/<slug>/ folder
+  finalize.py             strips a draft's [C#] claim tags into footnotes (Stage 4)
 
+dossiers/         research packets for stories in progress (e.g. lobito-corridor.md)
 src/              Eleventy source (stories live in src/stories/<slug>/)
 docs/             built site, served by GitHub Pages
 _site/            stale Eleventy default output — NOT served, safe to ignore
@@ -94,12 +96,22 @@ Scaffolds a new `src/stories/<slug>/` folder — front matter, starter
 `data.geojson`, sidebar include. Run this rather than hand-copying an existing
 story folder. See `STORY-GUIDE.md` for the manual process it automates.
 
-This is the only script left. The GDELT scraper (`gdelt_leads.py`), pitch sheet
-(`pitch_sheet.py`), morning paper (`morning_paper.py`), archive builder
-(`build_paper_index.py`), phone notifier (`mobile_notify.py`), and the daily
-GitHub Action that ran them were all removed on 2026-08-09 — Harvey is finding
-stories a different way. If any of that gets rebuilt, the conventions in
-section 7 still apply.
+### `finalize.py` *(Stage 4 — built 2026-08-09)*
+`finalize.py <slug>` takes a humanized draft and makes it publishable: it
+**refuses while any `[NEW]` tag remains**, then converts each inline claim tag
+`[C7]` in the body into a numbered footnote linking to that claim's row in the
+story's `sources.html` (`./sources/#C7`). It edits the **source**
+`src/stories/<slug>/index.md` in place (not `docs/` — that's generated; see the
+Stage 4 note in section 5), so a normal `npm run build` then produces the
+finished page. Flags: `--check` (dry run), `--strip` (remove tags, no
+footnotes), `--file <path>` (operate on an explicit file). Stdlib only.
+
+Those two — `new_story.py` and `finalize.py` — are the only scripts left. The
+GDELT scraper (`gdelt_leads.py`), pitch sheet (`pitch_sheet.py`), morning paper
+(`morning_paper.py`), archive builder (`build_paper_index.py`), phone notifier
+(`mobile_notify.py`), and the daily GitHub Action that ran them were all removed
+on 2026-08-09 — Harvey is finding stories a different way. If any of that gets
+rebuilt, the conventions in section 7 still apply.
 
 ---
 
@@ -165,9 +177,12 @@ Harvey rewrites `story.md` in his own voice with the claim tags in place. Cut a
 sentence and its ledger row greys out; write a new sentence and tag it `[NEW]`
 so it lands on a needs-sourcing list.
 
-`finalize.py <slug>` then strips inline tags, converts them to numbered
-footnotes on the published page, **refuses to build while any `[NEW]` tag
-remains**, and writes into `docs/stories/` for the normal commit flow.
+`finalize.py <slug>` (built 2026-08-09) then converts the inline tags to
+numbered footnotes linking the story's `sources.html`, and **refuses while any
+`[NEW]` tag remains**. Reconciled to the Eleventy architecture: it edits the
+**source** `src/stories/<slug>/index.md` (the old sketch said `docs/stories/`,
+but `docs/` is generated and would be overwritten), so a normal `npm run build`
+then produces the finished published page. See section 4 for its flags.
 
 ---
 
@@ -176,10 +191,15 @@ remains**, and writes into `docs/stories/` for the normal commit flow.
 1. Settle the new story-finding route (replacing the removed GDELT/pitch-sheet
    finder), then write down what it hands off — place, spatial angle, source
    URLs — so Stage 2 has a defined input.
-2. Produce **one story by hand** through Stage 3 in a chat session, before
-   writing `build_dossier.py`. The dossier schema should be derived from what a
-   real story actually needed, not guessed at in advance.
-3. Then build `build_dossier.py`, then `finalize.py`.
+2. **Done:** the first hand-built story, **`lobito-corridor`**, went through the
+   whole protocol — dossier (`dossiers/lobito-corridor.md`), Stage 3 draft,
+   Stage 4 humanize + `finalize.py`, and publish (it's in `src/_data/stories.json`
+   and live in the build). Use it as the worked example for the next story. A few
+   soft ledger items were shipped as flagged, worth tightening later: a single
+   citable source for the ~72% cobalt figure, the approximate Jimbe/Mbeya
+   coordinates, and the "G7 PGII flagship" phrasing.
+3. `finalize.py` is now built. The remaining tool is **`build_dossier.py`** (Stage 2),
+   whose schema should be derived from what the Lobito dossier actually needed.
 
 ---
 

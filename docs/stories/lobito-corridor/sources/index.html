@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claim ledger — The Lobito Corridor</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 1100px; margin: 40px auto; padding: 0 20px; color: #1a1816; background: #f5f4f0; line-height: 1.6; }
+  h1 { font-weight: normal; font-size: 24px; }
+  .meta { font-family: Arial, sans-serif; font-size: 13px; color: #666; margin-bottom: 8px; }
+  .key { font-family: Arial, sans-serif; font-size: 13px; background: #eeece8; border: 1px solid #e0ddd8; border-radius: 6px; padding: 12px 16px; margin: 18px 0; }
+  .key b { color: #1a1816; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; font-family: Arial, sans-serif; margin-top: 16px; }
+  th, td { border: 1px solid #d8d5d0; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eeece8; }
+  td.id { font-weight: bold; white-space: nowrap; }
+  .t-R { color: #2e7d32; font-weight: bold; }
+  .t-B { color: #8a6b20; font-weight: bold; }
+  .t-I { color: #c62828; font-weight: bold; }
+  .flag { color: #c62828; font-family: Arial, sans-serif; font-size: 12px; }
+  .ok { color: #2e7d32; }
+  a { color: #8a6b20; }
+</style>
+</head>
+<body>
+  <h1>Claim ledger — The Lobito Corridor</h1>
+  <div class="meta">Story: <code>src/stories/lobito-corridor/</code> · Ledger built 2026-08-09 · verification pass complete</div>
+  <div class="key">
+    <b>Type:</b>
+    <span class="t-R">Reported</span> traces to a source URL ·
+    <span class="t-B">Background</span> general knowledge ·
+    <span class="t-I">Inference</span> connecting dots the sources did not.
+    &nbsp;A story that comes out heavily Inference gets more reporting or gets killed.
+    This one is <b>1 of 19 Inference (~5%)</b>, and that one is the thesis, openly labelled.
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Claim as written</th><th>Type</th><th>Source</th><th>Date</th><th>Support / flags</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="id" id="C1">C1</td><td>Lobito Corridor connects the Atlantic port of Lobito to the DRC/Zambia Copperbelt.</td><td class="t-R">R</td><td>Wikipedia (Lobito Corridor); Engineering News</td><td>2026</td><td class="ok">Solid, multi-source.</td></tr>
+      <tr><td class="id" id="C2">C2</td><td>The Angola section runs ~1,300 km, Lobito to Luau on the DRC border.</td><td class="t-R">R</td><td>Trafigura press release</td><td>2025-12-17</td><td class="ok">Verified: 1,300 km = Angola section (not the full run).</td></tr>
+      <tr><td class="id" id="C3">C3</td><td>The DRC section is ~450 km (Luau to Kolwezi), under a track-access deal with SNCC.</td><td class="t-R">R</td><td>Engineering News</td><td>2026</td><td class="flag">Single-source — confirm the 450 km and SNCC terms.</td></tr>
+      <tr><td class="id" id="C5">C5</td><td>Route runs via Benguela, Huambo, Kuito, Luena, Luacano, Luau.</td><td class="t-R">R</td><td>Engineering News</td><td>2026</td><td class="flag">Confirm full station order against a primary map.</td></tr>
+      <tr><td class="id" id="C6">C6</td><td>LAR runs the line under a 30-year concession awarded 2022; took over operations 2024.</td><td class="t-R">R</td><td>Wikipedia (Lobito Atlantic Railway); Trafigura</td><td>2024–25</td><td class="ok">Confirmed.</td></tr>
+      <tr><td class="id" id="C7">C7</td><td>LAR is owned by a Trafigura / Mota-Engil / Vecturis consortium.</td><td class="t-R">R</td><td>Trafigura press release</td><td>2025-12-17</td><td class="ok">Vecturis confirmed in the release.</td></tr>
+      <tr><td class="id" id="C8">C8</td><td>The financing agreements were signed in December 2025; the package is $553m US DFC + $200m DBSA.</td><td class="t-R">R</td><td>Trafigura; US Embassy/DFC</td><td>2025-12-17</td><td class="ok">RECONCILED with C9: this is the signing; C9 is the close.</td></tr>
+      <tr><td class="id" id="C9">C9</td><td>Financial close was reached on 31 July 2026 at $786m (announced 4 Aug 2026), which includes the C8 tranches.</td><td class="t-R">R</td><td>DBSA; Engineering News; Infrastructure News</td><td>2026-07-31</td><td class="ok">RECONCILED: signing (C8) vs close (C9); the $786m total contains the $753m of named tranches. Use $786m as the current close figure.</td></tr>
+      <tr><td class="id" id="C10">C10</td><td>Rehab targets ~10× capacity (to 4.6 Mt/yr) and up to 30% lower mineral-logistics cost.</td><td class="t-R">R</td><td>US DFC press release</td><td>2025-12-17</td><td class="ok">Confirmed verbatim by DFC.</td></tr>
+      <tr><td class="id" id="C11">C11</td><td>Greenfield extension ~830 km, Luacano (Angola) to Chingola (Zambia); AFC-led (AFC $500m + AfDB $200m + Italy €300m; total committed &gt;$4bn).</td><td class="t-R">R</td><td>Intl Railway Journal; Ecofin; Energy Capital &amp; Power; FurtherAfrica</td><td>2026</td><td class="flag">830 km ≈ 280 km Angola + 515 km Zambia — confirm the split against an AFC primary.</td></tr>
+      <tr><td class="id" id="C12">C12</td><td>The greenfield line is in EPC bid evaluation; groundbreaking expected late 2026 / early 2027; its own financial close ~Q1 2027.</td><td class="t-R">R</td><td>ConstructAfrica; Energy Capital &amp; Power; Intl Railway Journal</td><td>2026</td><td class="ok">CORRECTED &amp; re-verified: the earlier "27 Jan 2026" groundbreaking did NOT happen. A scheduled date is not a fact — re-check at publish time.</td></tr>
+      <tr><td class="id" id="C13">C13</td><td>The corridor serves copper &amp; cobalt; Kolwezi is a major Copperbelt hub.</td><td class="t-R">R</td><td>Wikipedia (Kolwezi, Lobito Corridor)</td><td>2026</td><td class="ok">Confirmed.</td></tr>
+      <tr><td class="id" id="C14">C14</td><td>The DRC mines ~72% of the world's cobalt (2025).</td><td class="t-B">B→R</td><td>Statista / analyst summaries</td><td>2025</td><td class="flag">Now sourced (~72%). Pin to one citable source (e.g. USGS/Statista) before publishing the exact %.</td></tr>
+      <tr><td class="id" id="C15">C15</td><td>Copperbelt ore has historically exited east/south (e.g. Dar es Salaam); Lobito is the shorter Atlantic route.</td><td class="t-R">R</td><td>Wikipedia (Lobito Corridor)</td><td>2026</td><td class="flag">"Shorter/quicker" is Wikipedia's phrasing — attribute or independently source the comparison.</td></tr>
+      <tr><td class="id" id="C16">C16</td><td>China signed a ~$1.4bn deal to modernise TAZARA (Dar es Salaam–Kapiri Mposhi, ~1,860 km); foundation stone Nov 2025, Lusaka; contractor CCECC.</td><td class="t-R">R</td><td>Railway Gazette; TanzaniaInvest; The Chanzo</td><td>2025-11 / 12</td><td class="ok">Multi-source.</td></tr>
+      <tr><td class="id" id="C17">C17</td><td>TAZARA was built by China in the 1970s to bypass white-ruled Rhodesia and South Africa.</td><td class="t-B">B/R</td><td>TanzaniaInvest; general history</td><td>—</td><td class="ok">Well-established.</td></tr>
+      <tr><td class="id" id="C18">C18</td><td>The US frames its backing as "securing critical minerals for mutual U.S.–Africa benefit."</td><td class="t-R">R</td><td>US Embassy Angola / DFC</td><td>2025-12-17</td><td class="flag">Direct quote from the DFC release title. The separate "G7 PGII flagship" framing still needs its own source.</td></tr>
+      <tr><td class="id" id="C19">C19</td><td>The same landlocked ore can now be pulled to either coast — Atlantic (US/EU) or Indian Ocean (China) — making the Copperbelt a two-ocean, two-bloc contest.</td><td class="t-I">I</td><td>— (synthesis of C1, C15, C16, C18)</td><td>—</td><td class="flag">THESIS = Inference. Sources call the lines "competing"; the two-oceans/two-blocs framing is ours. Never let it read as Reported.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-weight:normal;font-size:18px;margin-top:28px;">Before publishing — open items</h2>
+  <p style="font-family:Arial,sans-serif;font-size:13px;"><span class="ok"><b>Resolved 2026-08-09:</b></span> financing (C8/C9 reconciled — close $786m, 31 Jul 2026) and the greenfield timeline (C12 — EPC bidding, break-ground late 2026/2027).</p>
+  <ul style="font-family:Arial,sans-serif;font-size:13px;">
+    <li>Pin the cobalt share (C14) to a single citable source (USGS or Statista).</li>
+    <li>Verify remaining coordinates (esp. <b>Jimbe</b> and the Mbeya waypoint on TAZARA) — only Lobito, Luau, Luacano, Kolwezi, Chingola, Kapiri Mposhi and Dar es Salaam are verified so far.</li>
+    <li>Source the "G7 PGII flagship" framing if kept (C18).</li>
+    <li>Humanize the prose into Harvey's voice (Stage 4), then run <code>finalize.py lobito-corridor</code> to convert the [C#] tags to footnotes.</li>
+  </ul>
+</body>
+</html>

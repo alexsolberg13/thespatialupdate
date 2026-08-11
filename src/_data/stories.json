@@ -78,5 +78,37 @@
     "color": "red",
     "date": "May 2026",
     "order": 202605
+  },
+  {
+    "region": "Africa",
+    "continent": "Africa",
+    "coordinates": [
+      13.5464,
+      -12.35
+    ],
+    "tag": "Copperbelt · Trade",
+    "type": "economy",
+    "title": "The Lobito Corridor: Which Ocean Africa's Copper Flows To",
+    "description": "A US- and EU-backed railway revives an Atlantic route for Central Africa's copper and cobalt — racing a China-backed line to the Indian Ocean.",
+    "url": "/stories/lobito-corridor/",
+    "color": "gold",
+    "date": "Aug 2026",
+    "order": 202608
+  },
+  {
+    "region": "Europe",
+    "continent": "Europe",
+    "coordinates": [
+      -8.4,
+      43.4
+    ],
+    "tag": "Europe · Geography",
+    "type": "geography",
+    "title": "The August 2026 Eclipse: A Shadow's Path From the Arctic to a Spanish Sunset",
+    "description": "A total eclipse crosses Greenland, Iceland and northern Spain on 12 August — and Madrid and Barcelona miss it by a sliver.",
+    "url": "/stories/august-2026-eclipse/",
+    "color": "gold",
+    "date": "Aug 2026",
+    "order": 202608
   }
 ]

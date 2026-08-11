@@ -108,7 +108,11 @@ mapbox: true
   }
   .kicker { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
   .feat-title { font-size: 30px; line-height: 1.22; color: var(--text-primary); margin-bottom: 14px; max-width: 560px; }
+  a.feat-title { display: block; text-decoration: none; transition: color 0.15s; }
+  a.feat-title:hover { color: var(--accent); }
   .feat-desc { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.65; color: var(--text-body); max-width: 520px; }
+  .feat-readmore { display: inline-block; margin-top: 16px; font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 0.04em; color: var(--accent); text-decoration: none; }
+  .feat-readmore:hover { text-decoration: underline; }
   .feat-meta { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
 
   .feat-map {
@@ -219,12 +223,13 @@ mapbox: true
       <div class="feat">
         <div class="feat-text">
           <div class="kicker">Featured · {{ featured.date }}</div>
-          <div class="feat-title">{{ featured.title }}</div>
+          <a class="feat-title" href="{{ featured.url }}">{{ featured.title }}</a>
           <div class="feat-desc">{{ featured.description }}</div>
           <div class="feat-meta">
             <span class="treg">{{ featured.tag }}</span>
             <span class="tbadge badge-{{ featured.type }}">{{ featured.type }}</span>
           </div>
+          <a class="feat-readmore" href="{{ featured.url }}">Read the full story →</a>
         </div>
         <div class="feat-map" id="feat-map" role="button" tabindex="0" aria-label="Explore the interactive map">
           <div class="feat-sphere"></div>

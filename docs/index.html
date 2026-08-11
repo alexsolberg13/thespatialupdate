@@ -245,7 +245,11 @@
   }
   .kicker { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
   .feat-title { font-size: 30px; line-height: 1.22; color: var(--text-primary); margin-bottom: 14px; max-width: 560px; }
+  a.feat-title { display: block; text-decoration: none; transition: color 0.15s; }
+  a.feat-title:hover { color: var(--accent); }
   .feat-desc { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.65; color: var(--text-body); max-width: 520px; }
+  .feat-readmore { display: inline-block; margin-top: 16px; font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 0.04em; color: var(--accent); text-decoration: none; }
+  .feat-readmore:hover { text-decoration: underline; }
   .feat-meta { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
 
   .feat-map {
@@ -355,13 +359,14 @@
     <div class="land-inner">
       <div class="feat">
         <div class="feat-text">
-          <div class="kicker">Featured · Jul 2026</div>
-          <div class="feat-title">Strikes on Iran: From the Twelve-Day War to the 2026 Conflict</div>
-          <div class="feat-desc">Mapping every documented major strike — who launched it, what was targeted, and when.</div>
+          <div class="kicker">Featured · Aug 2026</div>
+          <a class="feat-title" href="/stories/lobito-corridor/">The Lobito Corridor: Which Ocean Africa&#39;s Copper Flows To</a>
+          <div class="feat-desc">A US- and EU-backed railway revives an Atlantic route for Central Africa&#39;s copper and cobalt — racing a China-backed line to the Indian Ocean.</div>
           <div class="feat-meta">
-            <span class="treg">Iran · Military</span>
-            <span class="tbadge badge-military">military</span>
+            <span class="treg">Copperbelt · Trade</span>
+            <span class="tbadge badge-economy">economy</span>
           </div>
+          <a class="feat-readmore" href="/stories/lobito-corridor/">Read the full story →</a>
         </div>
         <div class="feat-map" id="feat-map" role="button" tabindex="0" aria-label="Explore the interactive map">
           <div class="feat-sphere"></div>
@@ -375,26 +380,26 @@
       <div>
         <div class="sec-head">
           <span class="sec-title">Latest</span>
-          <span class="sec-link" data-open-all role="button" tabindex="0">View all 5 on the map →</span>
+          <span class="sec-link" data-open-all role="button" tabindex="0">View all 7 on the map →</span>
         </div>
         <div class="latest-grid">
+          
+          <a class="lcard" href="/stories/august-2026-eclipse/" data-open-all>
+            <div class="lcard-tag">Europe · Geography</div>
+            <div class="lcard-title">The August 2026 Eclipse: A Shadow&#39;s Path From the Arctic to a Spanish Sunset</div>
+            <div class="lcard-date">Aug 2026</div>
+          </a>
+          
+          <a class="lcard" href="/stories/iran-strikes/" data-open-all>
+            <div class="lcard-tag">Iran · Military</div>
+            <div class="lcard-title">Strikes on Iran: From the Twelve-Day War to the 2026 Conflict</div>
+            <div class="lcard-date">Jul 2026</div>
+          </a>
           
           <a class="lcard" href="/stories/strait-of-hormuz/" data-open-all>
             <div class="lcard-tag">Gulf · Economics</div>
             <div class="lcard-title">The Strait of Hormuz: Oil&#39;s Most Critical Passage</div>
             <div class="lcard-date">Jun 2026</div>
-          </a>
-          
-          <a class="lcard" href="/stories/gulf-state-relations/" data-open-all>
-            <div class="lcard-tag">Gulf · Geopolitics</div>
-            <div class="lcard-title">Gulf State Relations: The Regional Power Balance</div>
-            <div class="lcard-date">Jun 2026</div>
-          </a>
-          
-          <a class="lcard" href="/stories/red-sea-shipping/" data-open-all>
-            <div class="lcard-tag">Red Sea · Shipping</div>
-            <div class="lcard-title">The Red Sea Crisis: Trade Reroutes Around a War Zone</div>
-            <div class="lcard-date">May 2026</div>
           </a>
           
         </div>
@@ -425,13 +430,13 @@
           
           <div class="tile" data-continent="Europe" role="button" tabindex="0">
             <div class="tile-name">Europe</div>
-            <div class="tile-count">0 stories</div>
+            <div class="tile-count">1 story</div>
           </div>
           
           
           <div class="tile" data-continent="Africa" role="button" tabindex="0">
             <div class="tile-name">Africa</div>
-            <div class="tile-count">0 stories</div>
+            <div class="tile-count">1 story</div>
           </div>
           
         </div>
@@ -443,7 +448,7 @@
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoidGhlc3BhdGlhbHVwZGF0ZSIsImEiOiJjbW5nem8zN3EwZmJuMnJweGZ3Nml2eTg0In0.tsLdE7ypzv9OYSvln-x5Sw';
 
-  const stories = [{"region":"Middle East","continent":"Middle East","coordinates":[53,32.5],"tag":"Iran · Military","type":"military","title":"Strikes on Iran: From the Twelve-Day War to the 2026 Conflict","description":"Mapping every documented major strike — who launched it, what was targeted, and when.","url":"/stories/iran-strikes/","color":"red","date":"Jul 2026","order":202607},{"region":"Middle East","continent":"Middle East","coordinates":[56.4,26.6],"tag":"Gulf · Economics","type":"economy","title":"The Strait of Hormuz: Oil's Most Critical Passage","description":"21 million barrels of oil transit this 3km-wide chokepoint every day.","url":"/stories/strait-of-hormuz/","color":"gold","date":"Jun 2026","order":202606},{"region":"Middle East","continent":"Middle East","coordinates":[46,28],"tag":"Gulf · Geopolitics","type":"news","title":"Gulf State Relations: The Regional Power Balance","description":"How Iran, the Gulf states, and their proxies are aligned — and where US military power sits.","url":"/stories/gulf-state-relations/","color":"teal","date":"Jun 2026","order":202606},{"region":"Middle East","continent":"Middle East","coordinates":[43.35,12.6],"tag":"Red Sea · Shipping","type":"economy","title":"The Red Sea Crisis: Trade Reroutes Around a War Zone","description":"Houthi attacks near the Bab-el-Mandeb strait pushed global shipping onto a 10-day detour around Africa.","url":"/stories/red-sea-shipping/","color":"gold","date":"May 2026","order":202605},{"region":"Americas","continent":"Americas","coordinates":[-66.88,10.49],"tag":"Venezuela · Military","type":"military","title":"Operation Absolute Resolve: How the US Captured Nicolás Maduro","description":"From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.","url":"/stories/venezuela/","color":"red","date":"May 2026","order":202605}];
+  const stories = [{"region":"Middle East","continent":"Middle East","coordinates":[53,32.5],"tag":"Iran · Military","type":"military","title":"Strikes on Iran: From the Twelve-Day War to the 2026 Conflict","description":"Mapping every documented major strike — who launched it, what was targeted, and when.","url":"/stories/iran-strikes/","color":"red","date":"Jul 2026","order":202607},{"region":"Middle East","continent":"Middle East","coordinates":[56.4,26.6],"tag":"Gulf · Economics","type":"economy","title":"The Strait of Hormuz: Oil's Most Critical Passage","description":"21 million barrels of oil transit this 3km-wide chokepoint every day.","url":"/stories/strait-of-hormuz/","color":"gold","date":"Jun 2026","order":202606},{"region":"Middle East","continent":"Middle East","coordinates":[46,28],"tag":"Gulf · Geopolitics","type":"news","title":"Gulf State Relations: The Regional Power Balance","description":"How Iran, the Gulf states, and their proxies are aligned — and where US military power sits.","url":"/stories/gulf-state-relations/","color":"teal","date":"Jun 2026","order":202606},{"region":"Middle East","continent":"Middle East","coordinates":[43.35,12.6],"tag":"Red Sea · Shipping","type":"economy","title":"The Red Sea Crisis: Trade Reroutes Around a War Zone","description":"Houthi attacks near the Bab-el-Mandeb strait pushed global shipping onto a 10-day detour around Africa.","url":"/stories/red-sea-shipping/","color":"gold","date":"May 2026","order":202605},{"region":"Americas","continent":"Americas","coordinates":[-66.88,10.49],"tag":"Venezuela · Military","type":"military","title":"Operation Absolute Resolve: How the US Captured Nicolás Maduro","description":"From the first boat strike in September 2025 to Delta Force storming Maduro's compound in Caracas — every key event mapped.","url":"/stories/venezuela/","color":"red","date":"May 2026","order":202605},{"region":"Africa","continent":"Africa","coordinates":[13.5464,-12.35],"tag":"Copperbelt · Trade","type":"economy","title":"The Lobito Corridor: Which Ocean Africa's Copper Flows To","description":"A US- and EU-backed railway revives an Atlantic route for Central Africa's copper and cobalt — racing a China-backed line to the Indian Ocean.","url":"/stories/lobito-corridor/","color":"gold","date":"Aug 2026","order":202608},{"region":"Europe","continent":"Europe","coordinates":[-8.4,43.4],"tag":"Europe · Geography","type":"geography","title":"The August 2026 Eclipse: A Shadow's Path From the Arctic to a Spanish Sunset","description":"A total eclipse crosses Greenland, Iceland and northern Spain on 12 August — and Madrid and Barcelona miss it by a sliver.","url":"/stories/august-2026-eclipse/","color":"gold","date":"Aug 2026","order":202608}];
 
   const markerColors = {
     gold: '#e8c87a',

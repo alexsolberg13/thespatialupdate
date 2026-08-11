@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story Beat Reel — The August 2026 Eclipse · The Spatial Update</title>
+
+<!--
+  Story Beat Reel — a 9:16, screen-recordable map reel of "The August 2026 Eclipse".
+  Standalone page: token-free MapLibre GL + Carto dark-matter tiles on a GLOBE
+  projection, so a shadow arcing from the Arctic to Spain reads the way it should.
+  No build step, no Mapbox token. Open it in a browser and screen-record at 9:16
+  while narrating (script: august-2026-eclipse-script.md).
+
+  Controls: tap/click the right ~2/3 of the screen (or press → / Space) to advance a
+  beat, the left ~1/3 (or ←) to go back. The prev/next buttons below do the same.
+
+  Beats, pins and the centerline mirror src/stories/august-2026-eclipse/ — keep them
+  in sync if the story data changes. Coordinates here are [lng, lat] to match
+  MapLibre / the GeoJSON spec.
+
+  The CENTERLINE is real NASA / Espenak ephemeris (central line, 2-min intervals).
+  Still flagged before recording (see the story ledger,
+  /stories/august-2026-eclipse/sources/): the 99.9% (miss cities) and "over a
+  century" figures in the captions rest on sources not yet primary-verified.
+-->
+
+<link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0b09; font-family:Georgia,serif; -webkit-font-smoothing:antialiased; }
+
+  @keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
+
+  .tsu-mk   { position:relative; width:0; height:0; }
+  .tsu-dot  { position:absolute; left:50%; top:50%; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%; background:currentColor; border:1.5px solid rgba(255,255,255,.22); }
+  .tsu-ring { position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:2px solid currentColor; animation:tsuPulse 1.9s ease-out infinite; }
+
+  .maplibregl-ctrl-logo,
+  .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-bottom-right,
+  .maplibregl-ctrl-bottom-left { display:none !important; }
+
+  .tsu-screen canvas:focus { outline:none; }
+
+  .tsu-page   { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:36px 20px; }
+  .tsu-cap    { display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; }
+  .tsu-cap-h  { font:600 12px system-ui,sans-serif; color:#e4e0da; }
+  .tsu-cap-p  { font:400 11px/1.4 system-ui,sans-serif; color:#8a8681; max-width:320px; }
+
+  .tsu-phone  { width:320px; padding:11px; background:linear-gradient(#26221d,#171310); border-radius:6px; box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06); }
+  .tsu-screen { position:relative; width:298px; height:530px; overflow:hidden; background:#0a0f18; }
+
+  .tsu-tap-l  { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
+  .tsu-tap-r  { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
+
+  .tsu-top-fade { position:absolute; left:0; right:0; top:0; height:120px; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
+  .tsu-bot-fade { position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
+
+  .tsu-date  { position:absolute; left:16px; top:15px; z-index:7; font:600 10px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:6px 9px; border-radius:4px; pointer-events:none; }
+  .tsu-dots  { position:absolute; left:0; right:0; top:44px; z-index:7; display:flex; justify-content:center; align-items:center; gap:5px; pointer-events:none; }
+
+  .tsu-caption { position:absolute; left:0; right:0; bottom:0; z-index:6; padding:0 20px 26px; pointer-events:none; }
+  .tsu-kicker  { font:700 10px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:10px; }
+  .tsu-title   { font:400 25px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:9px; }
+  .tsu-sub     { font:400 14px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
+
+  .tsu-controls { display:flex; align-items:center; gap:8px; width:320px; padding:0 4px; }
+  .tsu-btn      { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
+  .tsu-btn:hover{ background:#262220; }
+  .tsu-counter  { font:500 11px Arial,sans-serif; color:#8a8681; margin-left:auto; }
+  .tsu-full-btn { font:600 11px Arial,sans-serif; color:#c8a84e; background:none; border:1px solid #3a352b; border-radius:6px; padding:7px 10px; cursor:pointer; }
+  .tsu-full-btn:hover { background:#1e1b18; }
+
+  /* Legend — a small key so the path and the point categories read on their own. */
+  .tsu-legend { position:absolute; left:16px; bottom:150px; z-index:7; display:flex; flex-direction:column; gap:6px; pointer-events:none; }
+  .tsu-leg-row{ display:flex; align-items:center; gap:8px; font:600 10px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 1px 3px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
+  .tsu-leg-row.on { opacity:1; }
+  .tsu-leg-line { width:20px; height:0; border-top-width:3px; border-top-style:solid; flex-shrink:0; }
+  .tsu-leg-dot  { width:11px; height:11px; border-radius:50%; flex-shrink:0; border:1.5px solid rgba(255,255,255,.22); }
+
+  /* Exit affordance — invisible at rest so it stays out of the recording; appears on hover. */
+  .tsu-exit { position:absolute; right:12px; top:12px; z-index:9; width:26px; height:26px; display:none;
+              align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.2);
+              background:rgba(10,12,18,.5); color:#e4e0da; font:600 14px Arial,sans-serif; cursor:pointer;
+              opacity:0; transition:opacity .2s; }
+  .tsu-exit:hover { opacity:1; }
+
+  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox — no frame, no chrome. */
+  body.tsu-full { background:#000; }
+  body.tsu-full .tsu-page { padding:0; gap:0; }
+  body.tsu-full .tsu-cap,
+  body.tsu-full .tsu-controls { display:none; }
+  body.tsu-full .tsu-phone { width:auto; padding:0; background:none; box-shadow:none; border-radius:0; }
+  body.tsu-full .tsu-screen { width:auto; height:100vh; aspect-ratio:9 / 16; max-width:100vw; }
+  body.tsu-full .tsu-exit { display:flex; }
+</style>
+</head>
+<body>
+<section class="tsu-page">
+  <div class="tsu-cap">
+    <div class="tsu-cap-h">Story Beat Reel — The August 2026 Eclipse</div>
+    <div class="tsu-cap-p">Tap the right half to advance, left half to go back, and narrate. Screen-record at 9:16.</div>
+  </div>
+
+  <div class="tsu-phone">
+    <div class="tsu-screen">
+      <div id="tsu-map" style="position:absolute;inset:0;"></div>
+
+      <div class="tsu-tap-l" id="tsu-prev-zone" title="Back"></div>
+      <div class="tsu-tap-r" id="tsu-next-zone" title="Next"></div>
+
+      <div class="tsu-top-fade"></div>
+      <div class="tsu-bot-fade"></div>
+
+      <div class="tsu-exit" id="tsu-exit" title="Exit full screen (Esc)">&#10005;</div>
+
+      <div class="tsu-date" id="tsu-date" hidden></div>
+
+      <div class="tsu-dots" id="tsu-dots"></div>
+
+      <div class="tsu-legend" id="tsu-legend">
+        <div class="tsu-leg-row" data-key="path"><span class="tsu-leg-line" style="border-top-color:#e8c87a;border-top-style:dashed"></span>Path of totality</div>
+        <div class="tsu-leg-row" data-key="totality"><span class="tsu-leg-dot" style="background:#3ecfb2"></span>Inside totality</div>
+        <div class="tsu-leg-row" data-key="miss"><span class="tsu-leg-dot" style="background:#e05a4e"></span>Misses it — 99.9%</div>
+      </div>
+
+      <div class="tsu-caption">
+        <div class="tsu-kicker" id="tsu-kicker"></div>
+        <div class="tsu-title"  id="tsu-title"></div>
+        <div class="tsu-sub"    id="tsu-sub"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tsu-controls">
+    <button class="tsu-btn" id="tsu-prev" aria-label="Previous beat">&#9664;</button>
+    <button class="tsu-btn" id="tsu-next" aria-label="Next beat">&#9654;</button>
+    <button class="tsu-full-btn" id="tsu-full" aria-label="Full screen recording mode">&#9974; Full screen</button>
+    <span class="tsu-counter" id="tsu-counter"></span>
+  </div>
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Story data (mirrors src/stories/august-2026-eclipse/) ----------------
+  var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
+  var COL = { gold:"#e8c87a", red:"#e05a4e", teal:"#3ecfb2", blue:"#5b9bd5" };
+
+  // Pins are [lng, lat] — GeoJSON / MapLibre order.
+  // Colour codes the story: gold = greatest eclipse, teal = inside totality,
+  // blue = edge city (barely inside), red = misses totality (99.9% partial).
+  var PINS = {
+    greatest:  { lng:-25.205, lat:65.172, color:"gold" },
+    olafsvik:  { lng:-23.71, lat:64.90, color:"teal" },
+    reykjavik: { lng:-21.94, lat:64.15, color:"blue" },
+    acoruna:   { lng:-8.40,  lat:43.37, color:"teal" },
+    burgos:    { lng:-3.70,  lat:42.34, color:"teal" },
+    valencia:  { lng:-0.38,  lat:39.47, color:"teal" },
+    bilbao:    { lng:-2.93,  lat:43.26, color:"blue" },
+    madrid:    { lng:-3.70,  lat:40.42, color:"red"  },
+    barcelona: { lng:2.17,   lat:41.39, color:"red"  }
+  };
+
+  // The umbral centerline — real NASA / Espenak ephemeris (central line at
+  // 2-minute intervals, 17:20–18:32 UT), converted to [lng,lat]. Mirrors the
+  // centerline feature in src/stories/august-2026-eclipse/data.geojson.
+  var LINES = {
+    path: { color:COL.gold, width:3, dash:[4,2], op:0.9, coords:[
+      [-26.982,79.773],[-27.825,77.233],[-27.905,74.837],[-27.603,72.557],
+      [-27.078,70.365],[-26.410,68.247],[-25.630,66.185],[-25.205,65.172],
+      [-24.287,63.172],[-23.277,61.200],[-22.170,59.245],[-20.947,57.297],
+      [-19.588,55.343],[-18.057,53.372],[-16.303,51.360],[-14.238,49.285],
+      [-11.715,47.102],[-10.190,45.943],[-8.398,44.713],[-6.188,43.372],
+      [-3.185,41.817],[2.950,39.408],[5.415,38.680] ] }
+  };
+  var LINE_IDS = Object.keys(LINES);
+
+  // The totality band — northern + southern limits from the same NASA / Espenak
+  // path table (17:20–18:32 UT), as a closed ring. Mirrors the "band" feature in
+  // src/stories/august-2026-eclipse/data.geojson.
+  var BAND = { color:COL.gold, op:0.13, coords:[[
+    [-18.842,80.442],[-21.657,77.875],[-22.865,75.440],[-23.285,73.117],
+    [-23.258,70.885],[-22.948,68.727],[-22.437,66.627],[-21.768,64.572],
+    [-20.962,62.548],[-20.022,60.548],[-18.943,58.560],[-17.712,56.568],
+    [-16.295,54.562],[-14.647,52.520],[-12.685,50.417],[-10.267,48.208],
+    [-7.077,45.802],[-4.948,44.457],[-2.085,42.908],[3.295,40.665],[6.340,39.708],
+    [4.540,37.690],[-4.040,40.683],[-7.237,42.263],[-9.552,43.607],[-11.420,44.832],
+    [-13.008,45.983],[-15.638,48.147],[-17.798,50.195],[-19.647,52.177],
+    [-21.275,54.118],[-22.738,56.037],[-24.077,57.945],[-25.317,59.857],
+    [-26.477,61.780],[-27.577,63.727],[-28.625,65.703],[-29.632,67.723],
+    [-30.600,69.797],[-31.527,71.940],[-32.400,74.168],[-33.178,76.507],
+    [-33.760,78.987],[-18.842,80.442]
+  ]] };
+  var bandReady = false;
+
+  // Legend rows key off a beat's `legend` list (path / totality / miss).
+  // beat.c is the map center [lng, lat]; act is the pin (or pins) that pulse;
+  // lines lists which map lines are drawn.
+  var BEATS = [
+    { c:[-20.0,58.0], z:2.2,                          kicker:"The Spatial Update · Story", title:"The August 2026 Eclipse", sub:"A shadow's path from the Arctic to a Spanish sunset",                          vis:["greatest"], act:"greatest", lines:[], legend:[] },
+    { c:[-16.0,55.0], z:2.9,                          kicker:"A line across the Earth",    title:"A 294 km-wide strip",     sub:"Only from inside it does the Sun vanish completely — step outside and it is merely partial", vis:["greatest"], act:null, lines:["path","band"], legend:["path"] },
+    { c:[-24.0,64.5], z:3.6, date:"12 August · afternoon", kicker:"The Arctic",            title:"Greenland and Iceland",   sub:"The shadow lands first over the ice; Reykjavík barely makes it — about 59 seconds",          vis:["greatest","olafsvik","reykjavik"], act:"reykjavik", lines:["path","band"], legend:["path","totality"] },
+    { c:[-5.0,42.2],  z:4.4, date:"~20:26 · sunset",  kicker:"Landfall at sunset",         title:"Northern Spain",          sub:"First total eclipse over mainland Spain in over a century — the Sun just 11° off the horizon", vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia"], act:"acoruna", lines:["path","band"], legend:["path","totality"] },
+    { c:[-1.0,41.2],  z:4.7,                          kicker:"So close",                   title:"Madrid & Barcelona miss it", sub:"99.9% of the Sun covered — and still on the wrong side of the line",                       vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia","bilbao","madrid","barcelona"], act:["madrid","barcelona"], lines:["path","band"], legend:["totality","miss"] },
+    { c:[-16.0,55.0], z:2.4,                          kicker:"Which side are you on?",     title:"One line across the Earth", sub:"From the Arctic to a Spanish sunset, the whole show comes down to where you stand",         vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia","bilbao","madrid","barcelona"], act:null, lines:["path","band"], legend:["path","totality","miss"] }
+  ];
+
+  // showDate can be turned off with ?date=off for a cleaner recording.
+  var params = new URLSearchParams(window.location.search);
+  var SHOW_DATE = params.get("date") !== "off";
+
+  // ---- State ----------------------------------------------------------------
+  var idx = 0;
+  var map = null;
+  var markers = {};
+  var linesReady = false;
+
+  var el = {
+    date:    document.getElementById("tsu-date"),
+    dots:    document.getElementById("tsu-dots"),
+    kicker:  document.getElementById("tsu-kicker"),
+    title:   document.getElementById("tsu-title"),
+    sub:     document.getElementById("tsu-sub"),
+    counter: document.getElementById("tsu-counter"),
+    legRows: Array.prototype.slice.call(document.querySelectorAll(".tsu-leg-row"))
+  };
+
+  // Build the beat-indicator dots once (one per beat).
+  var dotEls = BEATS.map(function () {
+    var s = document.createElement("span");
+    el.dots.appendChild(s);
+    return s;
+  });
+
+  // ---- Map ------------------------------------------------------------------
+  function initMap() {
+    if (!window.maplibregl) { setTimeout(initMap, 120); return; }
+    var div = document.getElementById("tsu-map");
+    if (!div || map) return;
+
+    var b0 = BEATS[0];
+    map = new maplibregl.Map({
+      container: div, style: STYLE, center: b0.c, zoom: b0.z,
+      interactive: false, attributionControl: false, fadeDuration: 0
+    });
+
+    map.on("style.load", function () {
+      try { map.setProjection({ type: "globe" }); } catch (e) {}
+      try {
+        map.setSky({
+          "sky-color":"#0a1019", "horizon-color":"#1a2436", "fog-color":"#0d1420",
+          "sky-horizon-blend":0.5, "horizon-fog-blend":0.6, "fog-ground-blend":0.4
+        });
+      } catch (e) {}
+      buildBand();
+      buildLines();
+      buildMarkers();
+      applyBeat(idx, false);
+    });
+  }
+
+  // Totality band as a filled polygon, drawn first so it sits beneath the
+  // centerline and the pins. Starts hidden; faded in per beat.
+  function buildBand() {
+    map.addSource("band", {
+      type: "geojson",
+      data: { type:"Feature", geometry:{ type:"Polygon", coordinates:BAND.coords } }
+    });
+    map.addLayer({ id:"band-fill", type:"fill", source:"band",
+      paint:{ "fill-color":BAND.color, "fill-opacity":0 } });
+    map.addLayer({ id:"band-outline", type:"line", source:"band",
+      paint:{ "line-color":BAND.color, "line-width":1, "line-opacity":0 } });
+    bandReady = true;
+  }
+
+  // Centerline as a GeoJSON line layer, starting hidden (opacity 0) and faded
+  // in per beat. Drawn before the markers so pins sit on top of the track.
+  function buildLines() {
+    LINE_IDS.forEach(function (id) {
+      var L = LINES[id];
+      var src = "line-" + id;
+      map.addSource(src, {
+        type: "geojson",
+        data: { type:"Feature", geometry:{ type:"LineString", coordinates:L.coords } }
+      });
+      var paint = { "line-color":L.color, "line-width":L.width, "line-opacity":0 };
+      if (L.dash) paint["line-dasharray"] = L.dash;
+      map.addLayer({
+        id: src, type:"line", source:src,
+        layout:{ "line-cap":"round", "line-join":"round" },
+        paint: paint
+      });
+    });
+    linesReady = true;
+  }
+
+  function buildMarkers() {
+    Object.keys(PINS).forEach(function (id) {
+      var p = PINS[id];
+      var wrap = document.createElement("div");
+      wrap.className = "tsu-mk";
+      wrap.style.color = COL[p.color] || COL.gold;
+
+      var ring = document.createElement("div");
+      ring.className = "tsu-ring";
+      ring.style.display = "none";
+
+      var dot = document.createElement("div");
+      dot.className = "tsu-dot";
+
+      wrap.appendChild(ring);
+      wrap.appendChild(dot);
+
+      var marker = new maplibregl.Marker({ element: wrap }).setLngLat([p.lng, p.lat]);
+      markers[id] = { ring: ring, marker: marker, added: false };
+    });
+  }
+
+  function isActive(b, id) {
+    return Array.isArray(b.act) ? b.act.indexOf(id) !== -1 : b.act === id;
+  }
+
+  function applyBeat(i, fly) {
+    var b = BEATS[i];
+    if (map) {
+      if (fly) map.flyTo({ center: b.c, zoom: b.z, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: b.c, zoom: b.z });
+    }
+    // Pins.
+    Object.keys(markers).forEach(function (id) {
+      var m = markers[id];
+      var on = b.vis.indexOf(id) !== -1;
+      if (on && !m.added) { m.marker.addTo(map); m.added = true; }
+      else if (!on && m.added) { m.marker.remove(); m.added = false; }
+      m.ring.style.display = (on && isActive(b, id)) ? "block" : "none";
+    });
+    // Totality band (fade via fill-opacity transition).
+    if (bandReady) {
+      var bandOn = b.lines.indexOf("band") !== -1;
+      map.setPaintProperty("band-fill", "fill-opacity", bandOn ? BAND.op : 0);
+      map.setPaintProperty("band-outline", "line-opacity", bandOn ? 0.4 : 0);
+    }
+    // Centerline (fade via paint-property transition).
+    if (linesReady) {
+      LINE_IDS.forEach(function (id) {
+        var on = b.lines.indexOf(id) !== -1;
+        map.setPaintProperty("line-" + id, "line-opacity", on ? LINES[id].op : 0);
+      });
+    }
+    // Legend rows track whichever keys this beat lists.
+    el.legRows.forEach(function (row) {
+      row.classList.toggle("on", (b.legend || []).indexOf(row.getAttribute("data-key")) !== -1);
+    });
+  }
+
+  // ---- Overlay --------------------------------------------------------------
+  function dotStyle(k, i) {
+    if (k === i) return "width:16px;height:5px;border-radius:3px;background:#c8a84e;transition:all .3s;";
+    if (k <  i)  return "width:5px;height:5px;border-radius:50%;background:rgba(200,168,78,.55);transition:all .3s;";
+    return "width:5px;height:5px;border-radius:50%;background:rgba(228,224,218,.22);transition:all .3s;";
+  }
+
+  function render() {
+    var b = BEATS[idx];
+    var last = BEATS.length - 1;
+
+    el.kicker.textContent = b.kicker || "";
+    el.title.textContent  = b.title || "";
+    el.sub.textContent    = b.sub || "";
+
+    var showDate = SHOW_DATE && !!b.date;
+    el.date.hidden = !showDate;
+    el.date.textContent = showDate ? b.date : "";
+
+    el.counter.textContent = idx === 0 ? "Cold open" : ("Beat " + idx + " / " + last);
+
+    dotEls.forEach(function (s, k) { s.setAttribute("style", dotStyle(k, idx)); });
+  }
+
+  function step(dir) {
+    var i = idx + dir;
+    if (i >= BEATS.length) i = 0;
+    if (i < 0) i = 0;
+    idx = i;
+    render();
+    applyBeat(idx, true);
+  }
+
+  // ---- Fullscreen recording mode -------------------------------------------
+  // Fills the viewport at 9:16 with a black letterbox, drops the frame and all
+  // page chrome. The map is re-sized to real pixels so it stays crisp.
+  function resizeMapSoon() {
+    if (!map) return;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { map.resize(); }); });
+  }
+
+  function setFull(on) {
+    document.body.classList.toggle("tsu-full", on);
+    resizeMapSoon();
+  }
+
+  function enterFull() {
+    setFull(true);
+    var r = document.documentElement.requestFullscreen;
+    if (r) { try { r.call(document.documentElement); } catch (e) {} }
+  }
+
+  function exitFull() {
+    setFull(false);
+    if (document.fullscreenElement && document.exitFullscreen) {
+      try { document.exitFullscreen(); } catch (e) {}
+    }
+  }
+
+  // Keep the layout in sync when the browser leaves fullscreen via Esc/native UI.
+  document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreenElement && document.body.classList.contains("tsu-full")) setFull(false);
+  });
+
+  // ---- Wiring ---------------------------------------------------------------
+  document.getElementById("tsu-prev-zone").addEventListener("click", function () { step(-1); });
+  document.getElementById("tsu-next-zone").addEventListener("click", function () { step(1); });
+  document.getElementById("tsu-prev").addEventListener("click", function () { step(-1); });
+  document.getElementById("tsu-next").addEventListener("click", function () { step(1); });
+  document.getElementById("tsu-full").addEventListener("click", enterFull);
+  document.getElementById("tsu-exit").addEventListener("click", exitFull);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { step(1); e.preventDefault(); }
+    else if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+    else if (e.key === "Escape" && document.body.classList.contains("tsu-full")) { exitFull(); }
+    else if ((e.key === "f" || e.key === "F") && !document.body.classList.contains("tsu-full")) { enterFull(); }
+  });
+
+  render();
+  initMap();
+
+  // ?mode=full starts straight in the recording layout (no gesture, so no native
+  // fullscreen — press F for that, or record the letterboxed area directly).
+  if (params.get("mode") === "full") setFull(true);
+})();
+</script>
+</body>
+</html>

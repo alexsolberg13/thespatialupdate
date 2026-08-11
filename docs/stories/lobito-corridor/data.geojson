@@ -1,0 +1,133 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [13.5464, -12.35],
+          [13.407, -12.578],
+          [15.739, -12.776],
+          [16.933, -12.383],
+          [19.917, -11.783],
+          [21.65, -11.217],
+          [22.2247, -10.7073],
+          [22.335, -10.712],
+          [25.485, -10.73]
+        ]
+      },
+      "properties": {
+        "type": "corridor",
+        "title": "Lobito Corridor (Benguela Railway)",
+        "stat": "~1,300 km · to the Atlantic",
+        "description": "The rehabilitated 1970s line from the Atlantic port of Lobito east across Angola to Luau on the DRC border, and on to the copper-cobalt mines around Kolwezi. Operated by a Trafigura / Mota-Engil / Vecturis consortium under a 30-year Angolan concession."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [21.65, -11.217],
+          [24.25, -11.15],
+          [27.85, -12.533]
+        ]
+      },
+      "properties": {
+        "type": "extension",
+        "title": "Planned Zambia extension (greenfield)",
+        "stat": "~800 km new line · not yet built",
+        "description": "A proposed new railway branching south from Luacano across the Angola-Zambia border at Jimbe to the Zambian Copperbelt at Chingola. Groundbreaking has slipped to late 2026 / 2027. Jimbe's exact position is approximate and to be verified."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [28.685, -13.977],
+          [31.433, -11.850],
+          [32.758, -9.327],
+          [33.46, -8.9],
+          [34.83, -8.85],
+          [36.98, -7.70],
+          [39.28, -6.816]
+        ]
+      },
+      "properties": {
+        "type": "tazara",
+        "title": "TAZARA — the eastern rival",
+        "stat": "~1,860 km · to the Indian Ocean",
+        "description": "The Tanzania-Zambia Railway, built by China in the 1970s to route Zambian copper to Dar es Salaam. Its western terminus is the Kapiri Mposhi junction — it does not itself reach the Copperbelt. China signed a ~$1.4bn modernisation deal in late 2025. Intermediate stations (Mpika, Nakonde, Mbeya, Makambako, Kidatu) approximate."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [27.85, -12.533],
+          [28.633, -12.968],
+          [28.685, -13.977]
+        ]
+      },
+      "properties": {
+        "type": "feeder",
+        "title": "Zambia Railways — the Copperbelt feeder",
+        "stat": "How the ore reaches TAZARA",
+        "description": "TAZARA does not run to the mines. Copperbelt ore travels from Chingola via Ndola down to the Kapiri Mposhi junction on the separate Zambia Railways line, then transfers onto TAZARA for the run to the Indian Ocean. Intermediate point (Ndola) approximate."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [28.685, -13.977] },
+      "properties": {
+        "type": "junction",
+        "title": "Kapiri Mposhi, Zambia",
+        "stat": "TAZARA's western terminus",
+        "description": "The rail junction where Copperbelt ore, brought down the Zambia Railways line, transfers onto TAZARA for Dar es Salaam. TAZARA proper begins here, not at the mines."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [13.5464, -12.35] },
+      "properties": {
+        "type": "port",
+        "title": "Port of Lobito, Angola",
+        "stat": "Atlantic Ocean",
+        "description": "Western terminus of the corridor. Financing aims to raise its mineral-handling capacity roughly tenfold, to 4.6 million tonnes a year."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [39.28, -6.816] },
+      "properties": {
+        "type": "port",
+        "title": "Port of Dar es Salaam, Tanzania",
+        "stat": "Indian Ocean",
+        "description": "Eastern outlet, reached via TAZARA. The historic export route for Copperbelt ore heading off the continent."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [25.485, -10.73] },
+      "properties": {
+        "type": "mine",
+        "title": "Kolwezi, DR Congo",
+        "stat": "Copper & cobalt",
+        "description": "A hub of the Central African Copperbelt. The DRC mines roughly 72% of the world's cobalt (2025)."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [27.85, -12.533] },
+      "properties": {
+        "type": "mine",
+        "title": "Chingola, Zambia",
+        "stat": "Zambian Copperbelt",
+        "description": "Planned eastern anchor of the greenfield Zambia extension, in Zambia's copper-mining heartland."
+      }
+    }
+  ]
+}

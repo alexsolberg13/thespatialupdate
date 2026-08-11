@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claim ledger — The August 2026 Eclipse</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 1100px; margin: 40px auto; padding: 0 20px; color: #1a1816; background: #f5f4f0; line-height: 1.6; }
+  h1 { font-weight: normal; font-size: 24px; }
+  .meta { font-family: Arial, sans-serif; font-size: 13px; color: #666; margin-bottom: 8px; }
+  .key { font-family: Arial, sans-serif; font-size: 13px; background: #eeece8; border: 1px solid #e0ddd8; border-radius: 6px; padding: 12px 16px; margin: 18px 0; }
+  .key b { color: #1a1816; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; font-family: Arial, sans-serif; margin-top: 16px; }
+  th, td { border: 1px solid #d8d5d0; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eeece8; }
+  td.id { font-weight: bold; white-space: nowrap; }
+  .t-R { color: #2e7d32; font-weight: bold; }
+  .t-B { color: #8a6b20; font-weight: bold; }
+  .t-I { color: #c62828; font-weight: bold; }
+  .flag { color: #c62828; font-family: Arial, sans-serif; font-size: 12px; }
+  .ok { color: #2e7d32; }
+  a { color: #8a6b20; }
+</style>
+</head>
+<body>
+  <h1>Claim ledger — The August 2026 Eclipse</h1>
+  <div class="meta">Story: <code>src/stories/august-2026-eclipse/</code> · Ledger built 2026-08-09 · <b>preview piece — verification not yet complete</b></div>
+  <div class="key">
+    <b>Type:</b>
+    <span class="t-R">Reported</span> traces to a source URL ·
+    <span class="t-B">Background</span> general knowledge ·
+    <span class="t-I">Inference</span> connecting dots the sources did not.
+    &nbsp;A story that comes out heavily Inference gets more reporting or gets killed.
+    This one is <b>1 of 16 Inference (~6%)</b>, and that one is the thesis, openly labelled.
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Claim as written</th><th>Type</th><th>Source</th><th>Date</th><th>Support / flags</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="id" id="C1">C1</td><td>On 12 Aug 2026 a total solar eclipse crosses eastern Greenland, western Iceland, the North Atlantic and northern Spain (with a corner of Portugal).</td><td class="t-R">R</td><td>NASA; timeanddate; ESA</td><td>2026</td><td class="flag">Confirm the Portugal corner if it is kept in the story.</td></tr>
+      <tr><td class="id" id="C2">C2</td><td>Greatest eclipse is in the North Atlantic (~65.2°N, 25.2°W) with maximum totality of 2 min 18 s.</td><td class="t-R">R</td><td>Wikipedia (eclipse of 12 Aug 2026); EclipseWise</td><td>2026</td><td class="ok">Ephemeris-derived; consistent across sources.</td></tr>
+      <tr><td class="id" id="C3">C3</td><td>The path of totality is at most about 294 km (183 mi) wide.</td><td class="t-R">R</td><td>Wikipedia / EclipseWise data</td><td>2026</td><td class="flag">Confirm against a NASA figure before publishing.</td></tr>
+      <tr><td class="id" id="C4">C4</td><td>For most locations totality lasts under two minutes.</td><td class="t-R">R</td><td>NASA</td><td>2026</td><td class="ok">Stated directly by NASA.</td></tr>
+      <tr><td class="id" id="C5">C5</td><td>Greenland and Iceland see the eclipse in the late afternoon; in Spain it happens near sunset.</td><td class="t-R">R</td><td>NASA; timeanddate</td><td>2026</td><td class="ok">Confirmed.</td></tr>
+      <tr><td class="id" id="C6">C6</td><td>At the Spanish (Galicia) landfall the Sun is only ~11° above the western horizon, around 20:26 local time.</td><td class="t-R">R</td><td>ESA; BBC Sky at Night</td><td>2026</td><td class="flag">Pin the exact altitude and local time to a primary/ephemeris source.</td></tr>
+      <tr><td class="id" id="C7">C7</td><td>Reykjavík lies inside the path but near its edge (~59 s of totality); the centerline misses Icelandic land.</td><td class="t-R">R</td><td>nationaleclipse.com</td><td>2026</td><td class="flag">Single aggregator — confirm the ~59 s independently.</td></tr>
+      <tr><td class="id" id="C8">C8</td><td>Spanish totality cities include A Coruña, Oviedo, León, Burgos, Valladolid, Zaragoza, Valencia and Palma.</td><td class="t-R">R</td><td>nationaleclipse.com; BBC Sky at Night; timeanddate</td><td>2026</td><td class="flag">Confirm each city is genuinely inside the path (esp. the coastal/edge ones).</td></tr>
+      <tr><td class="id" id="C9">C9</td><td>Madrid and Barcelona see a 99.9% <i>partial</i> eclipse and remain outside the path of totality.</td><td class="t-R">R</td><td>BBC Sky at Night / timeanddate</td><td>2026</td><td class="flag">HEADLINE CLAIM — pin the exact 99.9% figure to a primary/ephemeris source, not an aggregator.</td></tr>
+      <tr><td class="id" id="C10">C10</td><td>This is the first total solar eclipse over mainland Spain since 1905.</td><td class="t-R">R</td><td>BBC Sky at Night; spain.info</td><td>2026</td><td class="flag">Verify the 1905 year against an eclipse-catalogue primary before publishing.</td></tr>
+      <tr><td class="id" id="C11">C11</td><td>Bilbao sits on the path edge with only ~29 s of totality.</td><td class="t-R">R</td><td>nationaleclipse.com</td><td>2026</td><td class="flag">Single aggregator — confirm independently.</td></tr>
+      <tr><td class="id" id="C12">C12</td><td>It is the first of three solar eclipses visible from Spain in 2026, 2027 and 2028.</td><td class="t-R">R</td><td>spain.info; eclipse262728.es</td><td>2026</td><td class="flag">Confirm the 2027 and 2028 events are visible from Spain (and their type).</td></tr>
+      <tr><td class="id" id="C13">C13</td><td>The eclipse belongs to Saros series 126 (member 48 of 72); magnitude 1.0386.</td><td class="t-R">R</td><td>Wikipedia; EclipseWise</td><td>2026</td><td class="ok">Background detail; only used if cited.</td></tr>
+      <tr><td class="id" id="C14">C14</td><td>Because totality is so low, clear sky to the northwest (toward the setting Sun) matters more than the sky overhead.</td><td class="t-B">B/I</td><td>BBC Sky at Night (framing)</td><td>2026</td><td class="flag">Part reported framing, part reasoning — attribute or soften.</td></tr>
+      <tr><td class="id" id="C15">C15</td><td>A 99.9% partial is categorically not "almost totality": the Sun is never fully covered, so it does not go dark and the corona is not visible.</td><td class="t-B">B</td><td>General eclipse science</td><td>—</td><td class="ok">Well-established; do not over-source.</td></tr>
+      <tr><td class="id" id="C16">C16</td><td>Whether a place sees totality is decided entirely by which side of a ~294 km line it sits on — a shadow and a boundary.</td><td class="t-I">I</td><td>— (synthesis of C3, C7, C9, C11)</td><td>—</td><td class="flag">THESIS = Inference. The framing is ours; never let it read as Reported fact.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-weight:normal;font-size:18px;margin-top:28px;">Before publishing — open items</h2>
+  <p style="font-family:Arial,sans-serif;font-size:13px;"><span class="flag"><b>This is a preview, published ahead of the 12 Aug 2026 eclipse.</b></span> The verification pass is not complete; the items below are still open.</p>
+  <ul style="font-family:Arial,sans-serif;font-size:13px;">
+    <li><span class="ok"><b>Resolved 2026-08-09:</b></span> the centerline <i>and</i> the shaded totality band (northern + southern limits) in <code>data.geojson</code> and the reel are now real NASA / Espenak ephemeris — central line and limits at 2-minute intervals (17:20–18:32 UT), converted to lon-first. Every city point was checked by point-in-polygon against the band: all 10 totality cities and both edge cities (Reykjavík, Bilbao) fall inside; Madrid and Barcelona fall just outside — colors confirmed accurate.</li>
+    <li><b>Headline split (C9).</b> Pin the Madrid / Barcelona 99.9% figures to a primary source, not an aggregator.</li>
+    <li><b>"First since 1905" (C10).</b> Confirm the exact prior mainland-Spain total against an eclipse catalogue.</li>
+    <li><b>City durations (C7, C8, C11).</b> Reykjavík ~59 s and Bilbao ~29 s currently rest on a single aggregator — confirm independently, and verify each named city is truly inside the path.</li>
+    <li><b>Sun altitude / times (C6).</b> Confirm ~11° and 20:26 for Galicia.</li>
+    <li><b>City coordinates.</b> All city points are approximate centroids — verify before treating any marker as precise (house rule: estimated coordinates are pointers, never published fact).</li>
+    <li><b>Stage 4.</b> Humanize the prose into Harvey's voice, then run <code>finalize.py august-2026-eclipse</code> to convert the [C#] tags to footnotes. It will refuse while any [NEW] tag remains.</li>
+  </ul>
+</body>
+</html>
