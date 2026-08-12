@@ -46,5 +46,21 @@
     "color": "gold",
     "date": "May 2026",
     "order": 202605
+  },
+  {
+    "region": "Americas",
+    "continent": "Americas",
+    "coordinates": [
+      -71.06998,
+      41.14994
+    ],
+    "tag": "Rhode Island Sound · Offshore Wind",
+    "type": "geography",
+    "title": "Revolution Wind: The Lease Line a Stop-Work Order Couldn't Erase",
+    "description": "A federal lease line off Rhode Island became 65 standing turbines - halted twice by executive order, reinstated twice by federal courts.",
+    "url": "/stories/revolution-wind/",
+    "color": "gold",
+    "date": "Aug 2026",
+    "order": 202608
   }
 ]
