@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Story Beat Reel — The August 2026 Eclipse · The Spatial Update</title>
+<title>Story Beat Reel: The August 2026 Eclipse · The Spatial Update</title>
 
 <!--
-  Story Beat Reel — a 9:16, screen-recordable map reel of "The August 2026 Eclipse".
+  Story Beat Reel: a 9:16, screen-recordable map reel of "The August 2026 Eclipse".
   Standalone page: token-free MapLibre GL + Carto dark-matter tiles on a GLOBE
   projection, so a shadow arcing from the Arctic to Spain reads the way it should.
   No build step, no Mapbox token. Open it in a browser and screen-record at 9:16
@@ -15,7 +15,7 @@
   Controls: tap/click the right ~2/3 of the screen (or press → / Space) to advance a
   beat, the left ~1/3 (or ←) to go back. The prev/next buttons below do the same.
 
-  Beats, pins and the centerline mirror src/stories/august-2026-eclipse/ — keep them
+  Beats, pins and the centerline mirror src/stories/august-2026-eclipse/: keep them
   in sync if the story data changes. Coordinates here are [lng, lat] to match
   MapLibre / the GeoJSON spec.
 
@@ -74,21 +74,21 @@
   .tsu-full-btn { font:600 11px Arial,sans-serif; color:#c8a84e; background:none; border:1px solid #3a352b; border-radius:6px; padding:7px 10px; cursor:pointer; }
   .tsu-full-btn:hover { background:#1e1b18; }
 
-  /* Legend — a small key so the path and the point categories read on their own. */
+  /* Legend: a small key so the path and the point categories read on their own. */
   .tsu-legend { position:absolute; left:16px; bottom:150px; z-index:7; display:flex; flex-direction:column; gap:6px; pointer-events:none; }
   .tsu-leg-row{ display:flex; align-items:center; gap:8px; font:600 10px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 1px 3px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
   .tsu-leg-row.on { opacity:1; }
   .tsu-leg-line { width:20px; height:0; border-top-width:3px; border-top-style:solid; flex-shrink:0; }
   .tsu-leg-dot  { width:11px; height:11px; border-radius:50%; flex-shrink:0; border:1.5px solid rgba(255,255,255,.22); }
 
-  /* Exit affordance — invisible at rest so it stays out of the recording; appears on hover. */
+  /* Exit affordance: invisible at rest so it stays out of the recording; appears on hover. */
   .tsu-exit { position:absolute; right:12px; top:12px; z-index:9; width:26px; height:26px; display:none;
               align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.2);
               background:rgba(10,12,18,.5); color:#e4e0da; font:600 14px Arial,sans-serif; cursor:pointer;
               opacity:0; transition:opacity .2s; }
   .tsu-exit:hover { opacity:1; }
 
-  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox — no frame, no chrome. */
+  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox, no frame, no chrome. */
   body.tsu-full { background:#000; }
   body.tsu-full .tsu-page { padding:0; gap:0; }
   body.tsu-full .tsu-cap,
@@ -101,7 +101,7 @@
 <body>
 <section class="tsu-page">
   <div class="tsu-cap">
-    <div class="tsu-cap-h">Story Beat Reel — The August 2026 Eclipse</div>
+    <div class="tsu-cap-h">Story Beat Reel: The August 2026 Eclipse</div>
     <div class="tsu-cap-p">Tap the right half to advance, left half to go back, and narrate. Screen-record at 9:16.</div>
   </div>
 
@@ -124,7 +124,7 @@
       <div class="tsu-legend" id="tsu-legend">
         <div class="tsu-leg-row" data-key="path"><span class="tsu-leg-line" style="border-top-color:#e8c87a;border-top-style:dashed"></span>Path of totality</div>
         <div class="tsu-leg-row" data-key="totality"><span class="tsu-leg-dot" style="background:#3ecfb2"></span>Inside totality</div>
-        <div class="tsu-leg-row" data-key="miss"><span class="tsu-leg-dot" style="background:#e05a4e"></span>Misses it — 99.9%</div>
+        <div class="tsu-leg-row" data-key="miss"><span class="tsu-leg-dot" style="background:#e05a4e"></span>Misses it: 99.9%</div>
       </div>
 
       <div class="tsu-caption">
@@ -151,7 +151,7 @@
   var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
   var COL = { gold:"#e8c87a", red:"#e05a4e", teal:"#3ecfb2", blue:"#5b9bd5" };
 
-  // Pins are [lng, lat] — GeoJSON / MapLibre order.
+  // Pins are [lng, lat]: GeoJSON / MapLibre order.
   // Colour codes the story: gold = greatest eclipse, teal = inside totality,
   // blue = edge city (barely inside), red = misses totality (99.9% partial).
   var PINS = {
@@ -166,7 +166,7 @@
     barcelona: { lng:2.17,   lat:41.39, color:"red"  }
   };
 
-  // The umbral centerline — real NASA / Espenak ephemeris (central line at
+  // The umbral centerline: real NASA / Espenak ephemeris (central line at
   // 2-minute intervals, 17:20–18:32 UT), converted to [lng,lat]. Mirrors the
   // centerline feature in src/stories/august-2026-eclipse/data.geojson.
   var LINES = {
@@ -180,7 +180,7 @@
   };
   var LINE_IDS = Object.keys(LINES);
 
-  // The totality band — northern + southern limits from the same NASA / Espenak
+  // The totality band: northern + southern limits from the same NASA / Espenak
   // path table (17:20–18:32 UT), as a closed ring. Mirrors the "band" feature in
   // src/stories/august-2026-eclipse/data.geojson.
   var BAND = { color:COL.gold, op:0.13, coords:[[
@@ -203,10 +203,10 @@
   // lines lists which map lines are drawn.
   var BEATS = [
     { c:[-20.0,58.0], z:2.2,                          kicker:"The Spatial Update · Story", title:"The August 2026 Eclipse", sub:"A shadow's path from the Arctic to a Spanish sunset",                          vis:["greatest"], act:"greatest", lines:[], legend:[] },
-    { c:[-16.0,55.0], z:2.9,                          kicker:"A line across the Earth",    title:"A 294 km-wide strip",     sub:"Only from inside it does the Sun vanish completely — step outside and it is merely partial", vis:["greatest"], act:null, lines:["path","band"], legend:["path"] },
-    { c:[-24.0,64.5], z:3.6, date:"12 August · afternoon", kicker:"The Arctic",            title:"Greenland and Iceland",   sub:"The shadow lands first over the ice; Reykjavík barely makes it — about 59 seconds",          vis:["greatest","olafsvik","reykjavik"], act:"reykjavik", lines:["path","band"], legend:["path","totality"] },
-    { c:[-5.0,42.2],  z:4.4, date:"~20:26 · sunset",  kicker:"Landfall at sunset",         title:"Northern Spain",          sub:"First total eclipse over mainland Spain in over a century — the Sun just 11° off the horizon", vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia"], act:"acoruna", lines:["path","band"], legend:["path","totality"] },
-    { c:[-1.0,41.2],  z:4.7,                          kicker:"So close",                   title:"Madrid & Barcelona miss it", sub:"99.9% of the Sun covered — and still on the wrong side of the line",                       vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia","bilbao","madrid","barcelona"], act:["madrid","barcelona"], lines:["path","band"], legend:["totality","miss"] },
+    { c:[-16.0,55.0], z:2.9,                          kicker:"A line across the Earth",    title:"A 294 km-wide strip",     sub:"Only from inside it does the Sun vanish completely: step outside and it is merely partial", vis:["greatest"], act:null, lines:["path","band"], legend:["path"] },
+    { c:[-24.0,64.5], z:3.6, date:"12 August · afternoon", kicker:"The Arctic",            title:"Greenland and Iceland",   sub:"The shadow lands first over the ice; Reykjavík barely makes it: about 59 seconds",          vis:["greatest","olafsvik","reykjavik"], act:"reykjavik", lines:["path","band"], legend:["path","totality"] },
+    { c:[-5.0,42.2],  z:4.4, date:"~20:26 · sunset",  kicker:"Landfall at sunset",         title:"Northern Spain",          sub:"First total eclipse over mainland Spain in over a century: the Sun just 11° off the horizon", vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia"], act:"acoruna", lines:["path","band"], legend:["path","totality"] },
+    { c:[-1.0,41.2],  z:4.7,                          kicker:"So close",                   title:"Madrid & Barcelona miss it", sub:"99.9% of the Sun covered, and still on the wrong side of the line",                       vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia","bilbao","madrid","barcelona"], act:["madrid","barcelona"], lines:["path","band"], legend:["totality","miss"] },
     { c:[-16.0,55.0], z:2.4,                          kicker:"Which side are you on?",     title:"One line across the Earth", sub:"From the Arctic to a Spanish sunset, the whole show comes down to where you stand",         vis:["greatest","olafsvik","reykjavik","acoruna","burgos","valencia","bilbao","madrid","barcelona"], act:null, lines:["path","band"], legend:["path","totality","miss"] }
   ];
 
@@ -441,7 +441,7 @@
   initMap();
 
   // ?mode=full starts straight in the recording layout (no gesture, so no native
-  // fullscreen — press F for that, or record the letterboxed area directly).
+  // fullscreen: press F for that, or record the letterboxed area directly).
   if (params.get("mode") === "full") setFull(true);
 })();
 </script>
