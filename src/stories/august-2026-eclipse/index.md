@@ -91,34 +91,34 @@ mapEvents: |
 ---
 
 On 12 August 2026 the Moon's shadow sweeps across the top of the world and down
-onto Europe <sup class="cite">1</sup> — and where it lands is a strip barely 294 kilometres
-wide. <sup class="cite">3</sup> Inside that band the Sun disappears completely; a step outside it and
+onto Europe — and where it lands is a strip barely 294 kilometres
+wide. Inside that band the Sun disappears completely; a step outside it and
 you get a partial eclipse and nothing more. Everything comes down to which side
-of the line you stand on. <sup class="cite">16</sup> The path crosses eastern Greenland, clips
+of the line you stand on. The path crosses eastern Greenland, clips
 western Iceland, runs down the North Atlantic, and makes landfall over northern
-Spain. <sup class="cite">1</sup>
+Spain.
 
 The shadow moves fast and totality is short. At the point of greatest eclipse,
-out in the Atlantic west of Iceland, it lasts 2 minutes and 18 seconds <sup class="cite">2</sup>;
-almost everywhere else in the path, under two minutes. <sup class="cite">4</sup> Greenland and
+out in the Atlantic west of Iceland, it lasts 2 minutes and 18 seconds;
+almost everywhere else in the path, under two minutes. Greenland and
 Iceland catch it in the late afternoon; by the time it reaches Spain the Sun is
-near setting. <sup class="cite">5</sup> A partial eclipse, however deep, is a different thing
+near setting. A partial eclipse, however deep, is a different thing
 entirely — the Sun is bitten into but never covered, so it never goes dark and
-the corona never shows. <sup class="cite">15</sup>
+the corona never shows.
 
 Spain is where the eclipse meets the most people, and it meets them at sunset.
 When the shadow reaches Galicia around 20:26 local time, the Sun sits just 11
-degrees above the western horizon <sup class="cite">6</sup> — low enough that clear air out toward
-the setting Sun matters more than the sky overhead. <sup class="cite">14</sup> It is the first total
-eclipse over mainland Spain since 1905 <sup class="cite">10</sup>, and the first of three in three
-years: 2026, 2027, 2028. <sup class="cite">12</sup>
+degrees above the western horizon — low enough that clear air out toward
+the setting Sun matters more than the sky overhead. It is the first total
+eclipse over mainland Spain since 1905, and the first of three in three
+years: 2026, 2027, 2028.
 
 The near-misses are the story. Bilbao, on the edge of the path, gets about 29
-seconds. <sup class="cite">11</sup> Reykjavík, also near the boundary, about 59 — and the centerline
-misses Icelandic land altogether. <sup class="cite">7</sup> Madrid and Barcelona, the country's two
+seconds. Reykjavík, also near the boundary, about 59 — and the centerline
+misses Icelandic land altogether. Madrid and Barcelona, the country's two
 biggest cities, will watch the Sun go 99.9% dark and still miss totality: 99.9%,
-and on the wrong side of the line. <sup class="cite">9</sup> A Coruña, Oviedo, León, Burgos,
-Zaragoza, Valencia and Palma fall inside it. <sup class="cite">8</sup>
+and on the wrong side of the line. A Coruña, Oviedo, León, Burgos,
+Zaragoza, Valencia and Palma fall inside it.
 
 The map traces the shadow from the Arctic to that Spanish sunset. The gold
 dashed line is the centerline and the gold dot marks greatest eclipse; teal

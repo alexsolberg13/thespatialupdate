@@ -93,40 +93,39 @@ mapEvents: |
 
 The Central African Copperbelt holds one of the world's densest concentrations
 of copper and cobalt, and the Democratic Republic of the Congo alone mines
-roughly 72% of the world's cobalt. <sup class="cite">13,14</sup> But the Copperbelt is landlocked,
+roughly 72% of the world's cobalt. But the Copperbelt is landlocked,
 and for decades its ore has left the continent mostly by heading east and south
-— toward ports like Dar es Salaam on the Indian Ocean. <sup class="cite">15</sup> The Lobito Corridor
-is a bet that it can go the other way. <sup class="cite">1</sup>
+— toward ports like Dar es Salaam on the Indian Ocean. The Lobito Corridor
+is a bet that it can go the other way.
 
 The corridor's spine is the Benguela Railway: a roughly 1,300-kilometre line
 from the Atlantic port of Lobito, in Angola, running east to Luau on the DRC
-border and on toward the mines around Kolwezi. <sup class="cite">2,3,5</sup> A consortium of
+border and on toward the mines around Kolwezi. A consortium of
 Trafigura, Mota-Engil and Vecturis operates it under a 30-year concession Angola
-awarded in 2022, taking the line over in 2024. <sup class="cite">6,7</sup>
+awarded in 2022, taking the line over in 2024.
 
 The financing agreements were signed in December 2025 and reached financial
 close on 31 July 2026 at $786 million — of which $553 million comes from the
 U.S. Development Finance Corporation and $200 million from the Development Bank
-of Southern Africa. <sup class="cite">8,9</sup> The money is meant to lift the port's
+of Southern Africa. The money is meant to lift the port's
 mineral-handling capacity roughly tenfold, to 4.6 million tonnes a year, and cut
-the cost of moving critical minerals by up to 30%. <sup class="cite">10</sup> Washington frames the
-investment as "securing critical minerals for mutual U.S.–Africa benefit." <sup class="cite">18</sup>
+the cost of moving critical minerals by up to 30%. Washington frames the
+investment as "securing critical minerals for mutual U.S.–Africa benefit."
 
 A second, harder project would extend the corridor with roughly 830 kilometres
 of new track — across Angola from Luacano to the Zambian border at Jimbe, then
-through Zambia to the Copperbelt town of Chingola. <sup class="cite">11</sup> It is further off: the
+through Zambia to the Copperbelt town of Chingola. It is further off: the
 line is still out to engineering-and-construction bidding, with groundbreaking
 expected in late 2026 or early 2027 and its own financing not due to close until
-2027. <sup class="cite">12</sup>
+2027.
 
 Running the other way is TAZARA, the 1,860-kilometre railway China built in the
 1970s to give Zambian copper an outlet at Dar es Salaam, bypassing white-ruled
-Rhodesia and South Africa. <sup class="cite">16,17</sup> In late 2025 China signed a roughly $1.4
-billion deal to modernise it. <sup class="cite">16</sup> The result is a map on which the same
+Rhodesia and South Africa. In late 2025 China signed a roughly $1.4
+billion deal to modernise it. The result is a map on which the same
 landlocked ore can now be pulled toward either coast — west to the Atlantic on a
 U.S.- and EU-backed line, or east to the Indian Ocean on a Chinese-backed one —
 turning a single mineral belt into a contest between two oceans and two blocs.
-<sup class="cite">19</sup>
 
 The map shows both pulls: the gold line is the Lobito Corridor and its planned
 Zambian extension; the blue line is TAZARA to Dar es Salaam. Toggle the layers
