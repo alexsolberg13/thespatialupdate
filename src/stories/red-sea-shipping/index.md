@@ -1,6 +1,6 @@
 ---
 layout: story.njk
-title: "The Red Sea Crisis: Trade Reroutes Around a War Zone"
+title: "Crisis in the Red Sea: War Zones and Trade Routes"
 region: "Middle East"
 type: "economy"
 byline: "Reference map · Updated July 2026"
@@ -104,8 +104,8 @@ mapEvents: |
   });
 ---
 
-At its southern end the Red Sea narrows to the Bab-el-Mandeb — the
-"Gate of Grief" — a strait barely 26 kilometres wide between Yemen and
+At its southern end the Red Sea narrows to the Bab-el-Mandeb, the
+"Gate of Grief," a strait barely 26 kilometres wide between Yemen and
 the Horn of Africa. Above it lies the Suez Canal. Together they form the
 shortest sea route between Asia and Europe, and in normal times carry
 close to 12% of all global trade.
@@ -115,7 +115,7 @@ small boats to attack merchant ships passing through the strait and the
 Gulf of Aden, framing the campaign as pressure over the war in Gaza. The
 result has been the largest disruption to global shipping since the
 pandemic: most container lines abandoned the Red Sea altogether and now
-send vessels the long way around the Cape of Good Hope — adding roughly
+send vessels the long way around the Cape of Good Hope, adding roughly
 ten days and thousands of kilometres to every Asia–Europe voyage.
 
 The map traces the geography of that decision. The blue line is the

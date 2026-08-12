@@ -74,7 +74,7 @@
       "properties": {
         "type": "port",
         "title": "Port Sudan",
-        "description": "Sudan's principal port on the Red Sea. With the country gripped by civil war, it has become a lifeline for aid and imports — and increasingly exposed to the wider instability of the corridor.",
+        "description": "Sudan's principal port on the Red Sea. With the country gripped by civil war, it has become a lifeline for aid and imports, and increasingly exposed to the wider instability of the corridor.",
         "stat": "Sudan's lifeline port"
       }
     },
@@ -139,7 +139,7 @@
       "properties": {
         "type": "threatzone",
         "title": "High-risk attack zone",
-        "description": "The southern Red Sea, Bab-el-Mandeb, and Gulf of Aden — the waters within range of Houthi anti-ship missiles, drones, and boats. War-risk insurance premiums here spiked and many operators declared the area off-limits."
+        "description": "The southern Red Sea, Bab-el-Mandeb, and Gulf of Aden: the waters within range of Houthi anti-ship missiles, drones, and boats. War-risk insurance premiums here spiked and many operators declared the area off-limits."
       }
     },
 
@@ -149,7 +149,7 @@
       "properties": {
         "type": "attack",
         "title": "Galaxy Leader seizure",
-        "description": "In November 2023, Houthi forces used a helicopter to seize the car carrier Galaxy Leader and its crew in the southern Red Sea — the opening move of the campaign and a signal that the group could board vessels at sea.",
+        "description": "In November 2023, Houthi forces used a helicopter to seize the car carrier Galaxy Leader and its crew in the southern Red Sea, the opening move of the campaign and a signal that the group could board vessels at sea.",
         "stat": "Nov 2023 · first seizure"
       }
     },
@@ -160,7 +160,7 @@
       "properties": {
         "type": "attack",
         "title": "Rubymar sinking",
-        "description": "Struck by missiles in February 2024, the bulk carrier Rubymar drifted and sank weeks later near Bab-el-Mandeb — the first ship lost in the campaign, leaving a fertiliser cargo and an oil slick in the strait.",
+        "description": "Struck by missiles in February 2024, the bulk carrier Rubymar drifted and sank weeks later near Bab-el-Mandeb, the first ship lost in the campaign, leaving a fertiliser cargo and an oil slick in the strait.",
         "stat": "2024 · first vessel sunk"
       }
     },

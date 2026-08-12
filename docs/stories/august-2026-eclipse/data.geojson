@@ -25,7 +25,7 @@
         "type": "band",
         "title": "Path of totality (the band)",
         "stat": "~294 km wide at most",
-        "description": "The full corridor swept by the Moon's umbra — its northern and southern limits, from NASA / Espenak ephemeris (17:20–18:32 UT). Only inside this band is the eclipse total; a step outside it and the Sun is only partly covered."
+        "description": "The full corridor swept by the Moon's umbra: its northern and southern limits, from NASA / Espenak ephemeris (17:20–18:32 UT). Only inside this band is the eclipse total; a step outside it and the Sun is only partly covered."
       }
     },
     {
@@ -62,7 +62,7 @@
         "type": "centerline",
         "title": "Path of totality (centerline)",
         "stat": "~294 km wide · Arctic → Spain",
-        "description": "The centerline of the Moon's umbral shadow, traced from NASA / Espenak ephemeris (central line at 2-minute intervals, 17:20–18:32 UT), from the high Arctic down across the North Atlantic — passing just west of Iceland — to landfall in northern Spain and out over the Balearic Sea."
+        "description": "The centerline of the Moon's umbral shadow, traced from NASA / Espenak ephemeris (central line at 2-minute intervals, 17:20–18:32 UT), from the high Arctic down across the North Atlantic, passing just west of Iceland, to landfall in northern Spain and out over the Balearic Sea."
       }
     },
     {
@@ -82,7 +82,7 @@
         "type": "totality",
         "title": "Ólafsvík, Iceland",
         "stat": "~2m03s totality",
-        "description": "On the Snæfellsnes peninsula, near the longest totality on Icelandic land. Coordinate approximate — verify."
+        "description": "On the Snæfellsnes peninsula, near the longest totality on Icelandic land. Coordinate approximate. Verify."
       }
     },
     {
@@ -92,7 +92,7 @@
         "type": "totality",
         "title": "Ísafjörður, Iceland",
         "stat": "~1m30s totality",
-        "description": "The main town of Iceland's Westfjords, inside the path of totality. Coordinate approximate — verify."
+        "description": "The main town of Iceland's Westfjords, inside the path of totality. Coordinate approximate. Verify."
       }
     },
     {
@@ -102,7 +102,7 @@
         "type": "totality",
         "title": "A Coruña, Spain",
         "stat": "~1m16s · Sun ~11° up",
-        "description": "In Galicia, near where the shadow makes landfall in Spain around 20:26 local time, with the Sun very low in the west. Coordinate approximate — verify."
+        "description": "In Galicia, near where the shadow makes landfall in Spain around 20:26 local time, with the Sun very low in the west. Coordinate approximate. Verify."
       }
     },
     {
@@ -112,7 +112,7 @@
         "type": "totality",
         "title": "Oviedo, Spain",
         "stat": "~1m48s totality",
-        "description": "Northern interior, well inside the path of totality. Coordinate approximate — verify."
+        "description": "Northern interior, well inside the path of totality. Coordinate approximate. Verify."
       }
     },
     {
@@ -122,7 +122,7 @@
         "type": "totality",
         "title": "León, Spain",
         "stat": "~1m45s totality",
-        "description": "Inland Castile-and-León, inside the path. Coordinate approximate — verify."
+        "description": "Inland Castile-and-León, inside the path. Coordinate approximate. Verify."
       }
     },
     {
@@ -132,7 +132,7 @@
         "type": "totality",
         "title": "Burgos, Spain",
         "stat": "~1m43s totality",
-        "description": "Northern interior, inside the path of totality. Coordinate approximate — verify."
+        "description": "Northern interior, inside the path of totality. Coordinate approximate. Verify."
       }
     },
     {
@@ -142,7 +142,7 @@
         "type": "totality",
         "title": "Valladolid, Spain",
         "stat": "~1m28s totality",
-        "description": "Interior Castile, inside the path. Coordinate approximate — verify."
+        "description": "Interior Castile, inside the path. Coordinate approximate. Verify."
       }
     },
     {
@@ -152,7 +152,7 @@
         "type": "totality",
         "title": "Zaragoza, Spain",
         "stat": "~1m24s totality",
-        "description": "Northeast interior, inside the path of totality. Coordinate approximate — verify."
+        "description": "Northeast interior, inside the path of totality. Coordinate approximate. Verify."
       }
     },
     {
@@ -162,7 +162,7 @@
         "type": "totality",
         "title": "Valencia, Spain",
         "stat": "~1m00s totality",
-        "description": "On the Mediterranean coast; totality here around 20:32 local time, with the Sun near the horizon. Coordinate approximate — verify."
+        "description": "On the Mediterranean coast; totality here around 20:32 local time, with the Sun near the horizon. Coordinate approximate. Verify."
       }
     },
     {
@@ -172,7 +172,7 @@
         "type": "totality",
         "title": "Palma de Mallorca, Spain",
         "stat": "~1m36s totality",
-        "description": "In the Balearic Islands, inside the path of totality. Coordinate approximate — verify."
+        "description": "In the Balearic Islands, inside the path of totality. Coordinate approximate. Verify."
       }
     },
     {
@@ -182,7 +182,7 @@
         "type": "edge",
         "title": "Reykjavík, Iceland",
         "stat": "~59s · near the edge",
-        "description": "Iceland's capital lies inside the path but close to its boundary, so totality is brief. The centerline misses Icelandic land entirely. Coordinate approximate — verify."
+        "description": "Iceland's capital lies inside the path but close to its boundary, so totality is brief. The centerline misses Icelandic land entirely. Coordinate approximate. Verify."
       }
     },
     {
@@ -192,7 +192,7 @@
         "type": "edge",
         "title": "Bilbao, Spain",
         "stat": "~29s · on the edge",
-        "description": "Sits right on the southern edge of the path, so totality lasts only seconds. A few kilometres out and it would be a partial. Coordinate approximate — verify."
+        "description": "Sits right on the southern edge of the path, so totality lasts only seconds. A few kilometres out and it would be a partial. Coordinate approximate. Verify."
       }
     },
     {
@@ -200,9 +200,9 @@
       "geometry": { "type": "Point", "coordinates": [-3.70, 40.42] },
       "properties": {
         "type": "miss",
-        "title": "Madrid — misses totality",
+        "title": "Madrid: misses totality",
         "stat": "99.9% · partial only",
-        "description": "Spain's capital lies just outside the path. A 99.9% partial is not “almost totality”: the Sun is never fully covered, it does not go dark, and the corona never appears. Coordinate approximate — verify."
+        "description": "Spain's capital lies just outside the path. A 99.9% partial is not “almost totality”: the Sun is never fully covered, it does not go dark, and the corona never appears. Coordinate approximate. Verify."
       }
     },
     {
@@ -210,9 +210,9 @@
       "geometry": { "type": "Point", "coordinates": [2.17, 41.39] },
       "properties": {
         "type": "miss",
-        "title": "Barcelona — misses totality",
+        "title": "Barcelona: misses totality",
         "stat": "99.9% · partial only",
-        "description": "Also just outside the path of totality, at 99.9% partial. So close, and still on the wrong side of the line. Coordinate approximate — verify."
+        "description": "Also just outside the path of totality, at 99.9% partial. So close, and still on the wrong side of the line. Coordinate approximate. Verify."
       }
     }
   ]

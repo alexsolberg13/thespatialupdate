@@ -57,9 +57,9 @@
       },
       "properties": {
         "type": "tazara",
-        "title": "TAZARA — the eastern rival",
+        "title": "TAZARA: the eastern rival",
         "stat": "~1,860 km · to the Indian Ocean",
-        "description": "The Tanzania-Zambia Railway, built by China in the 1970s to route Zambian copper to Dar es Salaam. Its western terminus is the Kapiri Mposhi junction — it does not itself reach the Copperbelt. China signed a ~$1.4bn modernisation deal in late 2025. Intermediate stations (Mpika, Nakonde, Mbeya, Makambako, Kidatu) approximate."
+        "description": "The Tanzania-Zambia Railway, built by China in the 1970s to route Zambian copper to Dar es Salaam. Its western terminus is the Kapiri Mposhi junction; it does not itself reach the Copperbelt. China signed a ~$1.4bn modernisation deal in late 2025. Intermediate stations (Mpika, Nakonde, Mbeya, Makambako, Kidatu) approximate."
       }
     },
     {
@@ -74,7 +74,7 @@
       },
       "properties": {
         "type": "feeder",
-        "title": "Zambia Railways — the Copperbelt feeder",
+        "title": "Zambia Railways: the Copperbelt feeder",
         "stat": "How the ore reaches TAZARA",
         "description": "TAZARA does not run to the mines. Copperbelt ore travels from Chingola via Ndola down to the Kapiri Mposhi junction on the separate Zambia Railways line, then transfers onto TAZARA for the run to the Indian Ocean. Intermediate point (Ndola) approximate."
       }

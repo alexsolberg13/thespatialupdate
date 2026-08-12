@@ -222,13 +222,13 @@ mapbox: true
       <div class="feat">
         <div class="feat-text">
           <div class="kicker">Featured · {{ featured.date }}</div>
-          <a class="feat-title" href="{{ featured.url }}">{{ featured.title }}</a>
+          <a class="feat-title" href="{{ featured.url }}" data-story-url="{{ featured.url }}">{{ featured.title }}</a>
           <div class="feat-desc">{{ featured.description }}</div>
           <div class="feat-meta">
             <span class="treg">{{ featured.tag }}</span>
             <span class="tbadge badge-{{ featured.type }}">{{ featured.type }}</span>
           </div>
-          <a class="feat-readmore" href="{{ featured.url }}">Read the full story →</a>
+          <a class="feat-readmore" href="{{ featured.url }}" data-story-url="{{ featured.url }}">Read the full story →</a>
         </div>
         <div class="feat-map" id="feat-map" role="button" tabindex="0" aria-label="Explore the interactive map">
           <div id="feat-map-canvas"></div>
@@ -243,7 +243,7 @@ mapbox: true
         </div>
         <div class="latest-grid">
           {% for s in sorted %}{% if loop.index0 >= 1 and loop.index0 <= 3 %}
-          <a class="lcard" href="{{ s.url }}" data-open-all>
+          <a class="lcard" href="{{ s.url }}" data-story-url="{{ s.url }}">
             <div class="lcard-tag">{{ s.tag }}</div>
             <div class="lcard-title">{{ s.title }}</div>
             <div class="lcard-date">{{ s.date }}</div>
@@ -362,6 +362,17 @@ mapbox: true
     applyContinent(true);
   }
 
+  // Opens the interactive map (staying on the "all" continent view) with
+  // a given story's popup showing — used by the editorial cards (featured
+  // panel, Latest grid) so clicking an article takes you to the map
+  // instead of the separate story page.
+  function openStory(s) {
+    setContinent('all', false);
+    setView('map');
+    applyContinent(true);
+    setTimeout(() => showPopup(s), 60);
+  }
+
   function goHome() {
     setView('landing');
   }
@@ -393,8 +404,9 @@ mapbox: true
 
   function showPopup(s) {
     const coords = s.coordinates.slice();
-    map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), 4.5), duration: 900, essential: true });
-    map.once('moveend', () => {
+    const targetZoom = Math.max(map.getZoom(), 4.5);
+
+    const openPopup = () => {
       popup.setLngLat(coords).setHTML(`
         <div class="popup-inner">
           <div class="popup-tag">${escapeHtml(s.tag)}</div>
@@ -403,7 +415,25 @@ mapbox: true
           <a class="popup-link" href="${escapeHtml(s.url)}">Open the full story →</a>
         </div>
       `).addTo(map);
-    });
+    };
+
+    // If a prior hover (flyToStory) already parked the camera at this exact
+    // spot, flyTo below is a zero-distance move and Mapbox never fires
+    // 'moveend' for it — so the popup would silently never open. Detect
+    // that case and open immediately instead of waiting on an event that
+    // won't come.
+    const current = map.getCenter();
+    const alreadyThere = Math.abs(current.lng - coords[0]) < 0.01
+      && Math.abs(current.lat - coords[1]) < 0.01
+      && Math.abs(map.getZoom() - targetZoom) < 0.01;
+
+    if (alreadyThere) {
+      openPopup();
+      return;
+    }
+
+    map.flyTo({ center: coords, zoom: targetZoom, duration: 900, essential: true });
+    map.once('moveend', openPopup);
   }
 
   // ── Continent switcher pills ─────────────────────────────────
@@ -486,7 +516,7 @@ mapbox: true
           </div>
         `;
         item.addEventListener('mouseenter', () => { item.classList.add('active'); flyToStory(s); });
-        item.addEventListener('mouseleave', () => { item.classList.remove('active'); flyToContinent(); });
+        item.addEventListener('mouseleave', () => { item.classList.remove('active'); });
         item.addEventListener('click', (e) => { e.preventDefault(); showPopup(s); });
         timelineEl.appendChild(item);
       });
@@ -601,6 +631,14 @@ mapbox: true
   document.getElementById('feat-map').addEventListener('click', () => openMap('all'));
   document.querySelectorAll('[data-open-all]').forEach(el => {
     el.addEventListener('click', (e) => { e.preventDefault(); openMap('all'); });
+  });
+  document.querySelectorAll('[data-story-url]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const story = stories.find(s => s.url === el.dataset.storyUrl);
+      if (!story) return;
+      e.preventDefault();
+      openStory(story);
+    });
   });
   document.querySelectorAll('.tile[data-continent]').forEach(el => {
     el.addEventListener('click', () => openMap(el.dataset.continent));
