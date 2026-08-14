@@ -3,18 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Story Beat Reel — The Lobito Corridor · The Spatial Update</title>
+<title>Story Beat Reel: The Lobito Corridor · The Spatial Update</title>
 
 <!--
-  Story Beat Reel — a 9:16, screen-recordable map reel of "The Lobito Corridor" story.
+  Story Beat Reel: a 9:16, screen-recordable map reel of "The Lobito Corridor" story.
   Standalone page: token-free MapLibre GL + Carto dark-matter tiles, so it renders
   (and records) anywhere. No build step, no Mapbox token. Open it in a browser and
   screen-record the phone screen at 9:16 while narrating.
 
   Controls: tap/click the right ~2/3 of the screen (or press → / Space) to advance a
   beat, the left ~1/3 (or ←) to go back. The prev/next buttons below do the same.
+  Press G (or the "Safe zones" button) to preview where the Instagram Reels UI
+  (username/caption/audio + nav bar along the bottom, the like/comment/share/
+  save icons on the right) will sit once posted, so beats can be checked
+  against it before recording. The guide never appears in the recording itself.
 
-  Beats, pins and rail lines mirror src/stories/lobito-corridor/ — keep them in sync
+  Beats, pins and rail lines mirror src/stories/lobito-corridor/: keep them in sync
   if the story data changes. Coordinates here are [lng, lat] to match MapLibre / the
   GeoJSON spec. (This story's spine is the RAIL LINES, so this reel adds line layers
   to the pin-only format used by iran-strikes.html.)
@@ -46,56 +50,101 @@
   .tsu-cap-p  { font:400 11px/1.4 system-ui,sans-serif; color:#8a8681; max-width:320px; }
 
   .tsu-phone  { width:320px; padding:11px; background:linear-gradient(#26221d,#171310); border-radius:6px; box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06); }
-  .tsu-screen { position:relative; width:298px; height:530px; overflow:hidden; background:#0a0f18; }
+  .tsu-screen {
+    position:relative; width:298px; height:530px; overflow:hidden; background:#0a0f18;
+    /* Reserved space to keep our own text/legend out of where the Instagram
+       Reels viewer draws its own UI: username/caption/audio-track + nav bar
+       along the bottom, and the like/comment/share/save icon column on the
+       right. Numbers are scaled for this 298x530 preview; full-screen
+       recording mode is what actually matters (that's what gets recorded)
+       and overrides them to real 1080x1920 pixel values below. */
+    --ig-top-safe: 10px;
+    --ig-bottom-safe: 36px;
+    --ig-right-safe: 14px;
+  }
 
   .tsu-tap-l  { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
   .tsu-tap-r  { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
 
   .tsu-top-fade { position:absolute; left:0; right:0; top:0; height:120px; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
-  .tsu-bot-fade { position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
+  /* Extends down under the reserved Instagram zone so the map stays dark
+     enough for Instagram's own (white) username/caption/icon text to read
+     against it, even though our captions sit above that line. */
+  .tsu-bot-fade { position:absolute; left:0; right:0; bottom:0; height:calc(var(--ig-bottom-safe) + 90px); background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
 
   .tsu-date  { position:absolute; left:16px; top:15px; z-index:7; font:600 10px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:6px 9px; border-radius:4px; pointer-events:none; }
   .tsu-dots  { position:absolute; left:0; right:0; top:44px; z-index:7; display:flex; justify-content:center; align-items:center; gap:5px; pointer-events:none; }
 
-  .tsu-caption { position:absolute; left:0; right:0; bottom:0; z-index:6; padding:0 20px 26px; pointer-events:none; }
+  /* Everything that used to sit flush at the bottom (legend + caption) now
+     stacks inside this wrapper, which stays clear of the reserved
+     Instagram zone (username/caption/audio + nav bar) instead of using
+     independent magic-number offsets that could drift into it. */
+  .tsu-bottom-safe { position:absolute; left:0; right:0; bottom:var(--ig-bottom-safe); z-index:6; display:flex; flex-direction:column; gap:14px; padding:0 20px; pointer-events:none; }
+
   .tsu-kicker  { font:700 10px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:10px; }
   .tsu-title   { font:400 25px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:9px; }
   .tsu-sub     { font:400 14px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
 
-  .tsu-controls { display:flex; align-items:center; gap:8px; width:320px; padding:0 4px; }
+  .tsu-controls { display:flex; align-items:center; gap:8px; width:320px; padding:0 4px; flex-wrap:wrap; }
   .tsu-btn      { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
   .tsu-btn:hover{ background:#262220; }
   .tsu-counter  { font:500 11px Arial,sans-serif; color:#8a8681; margin-left:auto; }
   .tsu-full-btn { font:600 11px Arial,sans-serif; color:#c8a84e; background:none; border:1px solid #3a352b; border-radius:6px; padding:7px 10px; cursor:pointer; }
   .tsu-full-btn:hover { background:#1e1b18; }
+  .tsu-full-btn.on { background:#c8a84e; color:#141210; }
 
-  /* Legend — a small key so the two rail lines read on their own in a recording. */
-  .tsu-legend { position:absolute; left:16px; bottom:150px; z-index:7; display:flex; flex-direction:column; gap:6px; pointer-events:none; }
+  /* Legend: a small key so the two rail lines read on their own in a recording. */
+  .tsu-legend { display:flex; flex-direction:column; gap:6px; pointer-events:none; }
   .tsu-leg-row{ display:flex; align-items:center; gap:8px; font:600 10px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 1px 3px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
   .tsu-leg-row.on { opacity:1; }
   .tsu-leg-line { width:20px; height:0; border-top-width:3px; border-top-style:solid; flex-shrink:0; }
 
-  /* Exit affordance — invisible at rest so it stays out of the recording; appears on hover. */
+  /* Compose-time only: a toggle-able overlay marking where the Instagram
+     Reels UI (username/caption/audio + nav bar along the bottom, the
+     like/comment/share/save icon column on the right) will sit once this
+     is posted, so beats can be checked against it before recording. Forced
+     off in recording mode below, regardless of toggle state. */
+  .tsu-guides { position:absolute; inset:0; z-index:8; pointer-events:none; display:none; }
+  .tsu-guides.on { display:block; }
+  .tsu-guide-top,
+  .tsu-guide-bottom,
+  .tsu-guide-right { position:absolute; background:rgba(224,90,78,.10); }
+  .tsu-guide-top    { left:0; right:0; top:0; height:var(--ig-top-safe); border-bottom:1px dashed rgba(224,90,78,.65); }
+  .tsu-guide-bottom { left:0; right:0; bottom:0; height:var(--ig-bottom-safe); border-top:1px dashed rgba(224,90,78,.65); }
+  .tsu-guide-right  { right:0; top:35%; bottom:var(--ig-bottom-safe); width:var(--ig-right-safe); border-left:1px dashed rgba(224,90,78,.65); }
+
+  /* Exit affordance: invisible at rest so it stays out of the recording; appears on hover. */
   .tsu-exit { position:absolute; right:12px; top:12px; z-index:9; width:26px; height:26px; display:none;
               align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.2);
               background:rgba(10,12,18,.5); color:#e4e0da; font:600 14px Arial,sans-serif; cursor:pointer;
               opacity:0; transition:opacity .2s; }
   .tsu-exit:hover { opacity:1; }
 
-  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox — no frame, no chrome. */
+  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox, no frame, no chrome. */
   body.tsu-full { background:#000; }
   body.tsu-full .tsu-page { padding:0; gap:0; }
   body.tsu-full .tsu-cap,
   body.tsu-full .tsu-controls { display:none; }
   body.tsu-full .tsu-phone { width:auto; padding:0; background:none; box-shadow:none; border-radius:0; }
-  body.tsu-full .tsu-screen { width:auto; height:100vh; aspect-ratio:9 / 16; max-width:100vw; }
+  body.tsu-full .tsu-screen {
+    width:auto; height:100vh; aspect-ratio:9 / 16; max-width:100vw;
+    /* Same Instagram-safe reserve as above, at real 1080x1920 recording
+       pixels: this is what actually gets recorded, so these are the
+       numbers that matter (roughly top ~2%, bottom ~6.5%, right ~4%). */
+    --ig-top-safe: 36px;
+    --ig-bottom-safe: 126px;
+    --ig-right-safe: 44px;
+  }
   body.tsu-full .tsu-exit { display:flex; }
+  /* Belt-and-suspenders: the safe-zone guide must never end up in a
+     recording, even if it was left toggled on. */
+  body.tsu-full .tsu-guides { display:none !important; }
 </style>
 </head>
 <body>
 <section class="tsu-page">
   <div class="tsu-cap">
-    <div class="tsu-cap-h">Story Beat Reel — The Lobito Corridor</div>
+    <div class="tsu-cap-h">Story Beat Reel: The Lobito Corridor</div>
     <div class="tsu-cap-p">Tap the right half to advance, left half to go back, and narrate. Screen-record at 9:16.</div>
   </div>
 
@@ -115,17 +164,25 @@
 
       <div class="tsu-dots" id="tsu-dots"></div>
 
-      <div class="tsu-legend" id="tsu-legend">
-        <div class="tsu-leg-row" data-line="corridor"><span class="tsu-leg-line" style="border-top-color:#e8c87a"></span>Lobito → Atlantic</div>
-        <div class="tsu-leg-row" data-line="extension"><span class="tsu-leg-line" style="border-top-color:#e8c87a;border-top-style:dashed"></span>Planned Zambia link</div>
-        <div class="tsu-leg-row" data-line="tazara"><span class="tsu-leg-line" style="border-top-color:#5b9bd5;border-top-style:dashed"></span>TAZARA → Indian Ocean</div>
-        <div class="tsu-leg-row" data-line="feeder"><span class="tsu-leg-line" style="border-top-color:#9a958c;border-top-style:dashed"></span>Copperbelt feeder → junction</div>
+      <div class="tsu-guides" id="tsu-guides">
+        <div class="tsu-guide-top"></div>
+        <div class="tsu-guide-bottom"></div>
+        <div class="tsu-guide-right"></div>
       </div>
 
-      <div class="tsu-caption">
-        <div class="tsu-kicker" id="tsu-kicker"></div>
-        <div class="tsu-title"  id="tsu-title"></div>
-        <div class="tsu-sub"    id="tsu-sub"></div>
+      <div class="tsu-bottom-safe">
+        <div class="tsu-legend" id="tsu-legend">
+          <div class="tsu-leg-row" data-line="corridor"><span class="tsu-leg-line" style="border-top-color:#e8c87a"></span>Lobito → Atlantic</div>
+          <div class="tsu-leg-row" data-line="extension"><span class="tsu-leg-line" style="border-top-color:#e8c87a;border-top-style:dashed"></span>Planned Zambia link</div>
+          <div class="tsu-leg-row" data-line="tazara"><span class="tsu-leg-line" style="border-top-color:#5b9bd5;border-top-style:dashed"></span>TAZARA → Indian Ocean</div>
+          <div class="tsu-leg-row" data-line="feeder"><span class="tsu-leg-line" style="border-top-color:#9a958c;border-top-style:dashed"></span>Copperbelt feeder → junction</div>
+        </div>
+
+        <div class="tsu-caption">
+          <div class="tsu-kicker" id="tsu-kicker"></div>
+          <div class="tsu-title"  id="tsu-title"></div>
+          <div class="tsu-sub"    id="tsu-sub"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -134,6 +191,7 @@
     <button class="tsu-btn" id="tsu-prev" aria-label="Previous beat">&#9664;</button>
     <button class="tsu-btn" id="tsu-next" aria-label="Next beat">&#9654;</button>
     <button class="tsu-full-btn" id="tsu-full" aria-label="Full screen recording mode">&#9974; Full screen</button>
+    <button class="tsu-full-btn" id="tsu-guides-btn" aria-label="Toggle Instagram safe-zone guides">Safe zones</button>
     <span class="tsu-counter" id="tsu-counter"></span>
   </div>
 </section>
@@ -146,7 +204,7 @@
   var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
   var COL = { gold:"#e8c87a", red:"#e05a4e", teal:"#3ecfb2", blue:"#5b9bd5", slate:"#9a958c" };
 
-  // Pins are [lng, lat] — GeoJSON / MapLibre order.
+  // Pins are [lng, lat]: GeoJSON / MapLibre order.
   // Colour codes the narrative: gold = west/Atlantic/Lobito, blue = east/Indian
   // Ocean/TAZARA, red = the ore itself (the Copperbelt), slate = the Kapiri
   // Mposhi junction where the ore transfers onto TAZARA.
@@ -158,7 +216,7 @@
     dar:      { lng:39.28,   lat:-6.816,   color:"blue"  }
   };
 
-  // Rail lines — coordinates lifted from src/stories/lobito-corridor/data.geojson.
+  // Rail lines: coordinates lifted from src/stories/lobito-corridor/data.geojson.
   // TAZARA begins at the Kapiri Mposhi junction, not at the mines; the "feeder"
   // is the separate Zambia Railways link that brings Copperbelt ore down to it.
   var LINES = {
@@ -178,10 +236,10 @@
   // beat.c is the map center [lng, lat]; act is the pin that pulses this beat;
   // lines lists which rail lines are drawn.
   var BEATS = [
-    { c:[24.0,-11.0], z:3.3,                     kicker:"The Spatial Update · Story", title:"The Lobito Corridor",        sub:"Which ocean Africa's copper flows to",                                       vis:["kolwezi","chingola"], act:"kolwezi", lines:[] },
-    { c:[26.5,-11.4], z:4.5,                     kicker:"The Copperbelt",             title:"A landlocked treasure",       sub:"Central Africa holds the world's richest copper and cobalt — the DRC alone mines about 72% of it", vis:["kolwezi","chingola"], act:"chingola", lines:[] },
-    { c:[33.0,-9.4],  z:3.4, date:"Since the 1970s", kicker:"The old way — east",      title:"Out to the Indian Ocean",     sub:"For fifty years the ore has ridden China's TAZARA railway to Dar es Salaam",  vis:["kolwezi","chingola","dar","kapiri"], act:"dar", lines:["tazara","feeder"] },
-    { c:[19.5,-11.6], z:4.0, date:"2024–26",     kicker:"The new bet — west",         title:"Back to the Atlantic",        sub:"A US- and EU-backed railway now pulls it the other way, to the port of Lobito", vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"lobito", lines:["tazara","feeder","corridor"] },
+    { c:[24.0,-11.0], z:3.3,                     kicker:"The Spatial Update",         title:"The Lobito Corridor",        sub:"Which ocean Africa's copper flows to",                                       vis:["kolwezi","chingola"], act:"kolwezi", lines:[] },
+    { c:[26.5,-11.4], z:4.5,                     kicker:"The Copperbelt",             title:"A landlocked treasure",       sub:"Central Africa holds the world's richest copper and cobalt: the DRC alone mines about 72% of it", vis:["kolwezi","chingola"], act:"chingola", lines:[] },
+    { c:[33.0,-9.4],  z:3.4, date:"Since the 1970s", kicker:"The old way: east",       title:"Out to the Indian Ocean",     sub:"For fifty years the ore has ridden China's TAZARA railway to Dar es Salaam",  vis:["kolwezi","chingola","dar","kapiri"], act:"dar", lines:["tazara","feeder"] },
+    { c:[19.5,-11.6], z:4.0, date:"2024–26",     kicker:"The new bet: west",          title:"Back to the Atlantic",        sub:"A US- and EU-backed railway now pulls it the other way, to the port of Lobito", vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"lobito", lines:["tazara","feeder","corridor"] },
     { c:[24.0,-11.7], z:4.2,                     kicker:"The missing link",           title:"A new line for Zambia",       sub:"A planned greenfield extension would wire the Copperbelt straight into the corridor", vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"chingola", lines:["tazara","feeder","corridor","extension"] },
     { c:[26.0,-10.3], z:3.1,                     kicker:"Two oceans, two blocs",      title:"One belt, pulled both ways",  sub:"The same ore can now flow west to the Atlantic or east to the Indian Ocean",  vis:["kolwezi","chingola","dar","kapiri","lobito"], act:null, lines:["tazara","feeder","corridor","extension"] }
   ];
@@ -381,18 +439,26 @@
   document.getElementById("tsu-full").addEventListener("click", enterFull);
   document.getElementById("tsu-exit").addEventListener("click", exitFull);
 
+  var guides = document.getElementById("tsu-guides");
+  var guidesBtn = document.getElementById("tsu-guides-btn");
+  guidesBtn.addEventListener("click", function () {
+    guides.classList.toggle("on");
+    guidesBtn.classList.toggle("on", guides.classList.contains("on"));
+  });
+
   document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { step(1); e.preventDefault(); }
     else if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
     else if (e.key === "Escape" && document.body.classList.contains("tsu-full")) { exitFull(); }
     else if ((e.key === "f" || e.key === "F") && !document.body.classList.contains("tsu-full")) { enterFull(); }
+    else if ((e.key === "g" || e.key === "G") && !document.body.classList.contains("tsu-full")) { guidesBtn.click(); }
   });
 
   render();
   initMap();
 
   // ?mode=full starts straight in the recording layout (no gesture, so no native
-  // fullscreen — press F for that, or record the letterboxed area directly).
+  // fullscreen: press F for that, or record the letterboxed area directly).
   if (params.get("mode") === "full") setFull(true);
 })();
 </script>
