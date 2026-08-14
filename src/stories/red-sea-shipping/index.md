@@ -8,13 +8,6 @@ coordinates: [43.4, 14.5]
 zoom: 4.3
 projection: "mercator"
 sidebarInclude: "sidebar-red-sea.njk"
-related:
-  - tag: "Gulf · Economics"
-    title: "The Strait of Hormuz: Oil's Most Critical Passage"
-    url: "/stories/strait-of-hormuz/"
-  - tag: "Iran · Military"
-    title: "Strikes on Iran: From the Twelve-Day War to the 2026 Conflict"
-    url: "/stories/iran-strikes/"
 mapLayers: |
   map.addLayer({ id:'threatzone-fill', type:'fill', source:'story-data',
     filter:['==',['get','type'],'threatzone'],
@@ -105,7 +98,7 @@ mapEvents: |
 ---
 
 At its southern end the Red Sea narrows to the Bab-el-Mandeb, the
-"Gate of Grief," a strait barely 26 kilometres wide between Yemen and
+"Gate of Grief," a strait barely 26 kilometers wide between Yemen and
 the Horn of Africa. Above it lies the Suez Canal. Together they form the
 shortest sea route between Asia and Europe, and in normal times carry
 close to 12% of all global trade.
@@ -113,10 +106,10 @@ close to 12% of all global trade.
 Since late 2023, Yemen's Houthi movement has used missiles, drones, and
 small boats to attack merchant ships passing through the strait and the
 Gulf of Aden, framing the campaign as pressure over the war in Gaza. The
-result has been the largest disruption to global shipping since the
-pandemic: most container lines abandoned the Red Sea altogether and now
+result was the largest shipping diversion since the pandemic.
+Most container lines abandoned the Red Sea altogether and now
 send vessels the long way around the Cape of Good Hope, adding roughly
-ten days and thousands of kilometres to every Asia–Europe voyage.
+ten days and thousands of kilometers to every Asia–Europe voyage.
 
 The map traces the geography of that decision. The blue line is the
 route ships are avoiding; the gold line is the detour they take instead.

@@ -95,9 +95,9 @@ mapEvents: |
   }
 ---
 
-The federal government drew a line on a nautical chart, about 13 miles off the Rhode Island coast, and called it lease OCS-A 0486. Sixty-five wind turbines stand inside that line now, most of them already up. The project, Revolution Wind, is rated at 704 megawatts, split 400 to Rhode Island and 304 to Connecticut: enough for more than 350,000 homes.
+The federal government drew a line on a nautical chart, about 13 miles off the Rhode Island coast, and called it lease OCS-A 0486. 65 wind turbines stand inside that line now, most of them already up. The project, Revolution Wind, is rated at 704 megawatts, split 400 to Rhode Island and 304 to Connecticut: enough energy for more than 350,000 homes.
 
-Ørsted and Global Infrastructure Partners' Skyborn Renewables are building it, a 50/50 joint venture. Eversource, an original partner, sold out its stake in 2024. The cables come ashore at Quonset Point in North Kingstown and run underground about a mile to a new substation.
+Ørsted and Global Infrastructure Partners' Skyborn Renewables are building it as a 50/50 joint venture. Eversource, an original partner, sold out its stake in 2024. The cables come ashore at Quonset Point in North Kingstown and run underground about a mile to a new substation.
 
 Last August, with the farm roughly 80 percent built, the Department of the Interior ordered it stopped: national security, the agency said. A federal court let work resume within weeks. Four months later Interior tried again, this time folding Revolution Wind into a halt on every large offshore wind project still under construction, citing a classified Pentagon assessment that the turbines could interfere with military radar. Interior Secretary Doug Burgum framed it plainly: "The prime duty of the United States government is to protect the American people."
 
@@ -105,4 +105,4 @@ It wasn't the only project caught in that order: Coastal Virginia Offshore Wind,
 
 Construction picked back up, and by March Revolution Wind was sending power into the New England grid for the first time. Full commercial operation is expected later this year. Eversource, no longer an owner but still on the hook for the history, has taken tens of millions of dollars in charges tied to the two stop-work fights.
 
-What the map is really showing is the gap between two versions of the same project: a lease boundary that exists on paper, and, inside it, a wind farm that exists in steel. For five months, one federal agency tried to erase the second by rewriting the first. Twice, the courts said no.
+What the map is really showing is the gap between two versions of the same project: a lease boundary that exists on paper, and, inside it, a wind farm that is on its way to completely existing in steel. For five months, one federal agency tried to erase the second by rewriting the first. Twice, the courts said no.

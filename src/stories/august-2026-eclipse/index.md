@@ -90,24 +90,23 @@ mapEvents: |
   });
 ---
 
-On 12 August 2026 the Moon's shadow sweeps across the top of the world and down
-onto Europe, and where it lands is a strip barely 294 kilometres
-wide. Inside that band the Sun disappears completely; a step outside it and
-you get a partial eclipse and nothing more. Everything comes down to which side
-of the line you stand on. The path crosses eastern Greenland, clips
+On 12 August 2026 the Moon's shadow will sweep across the top of the world and down
+onto Europe, where it lands as a strip less than 300 kilometers
+wide. Inside that band the Sun disappears completely. A step outside of it and
+you only get a partial eclipse. The path crosses eastern Greenland, clips
 western Iceland, runs down the North Atlantic, and makes landfall over northern
 Spain.
 
 The shadow moves fast and totality is short. At the point of greatest eclipse,
-out in the Atlantic west of Iceland, it lasts 2 minutes and 18 seconds;
-almost everywhere else in the path, under two minutes. Greenland and
-Iceland catch it in the late afternoon; by the time it reaches Spain the Sun is
-near setting. A partial eclipse, however deep, is a different thing
+out in the Atlantic west of Iceland, it lasts 2 minutes and 18 seconds.
+Almost everywhere else in the path will be dark for under two minutes. Greenland and
+Iceland catch it in the late afternoon; by the time it reaches Spain the Sun will be
+near setting. A partial eclipse is a different thing
 entirely: the Sun is bitten into but never covered, so it never goes dark and
 the corona never shows.
 
-Spain is where the eclipse meets the most people, and it meets them at sunset.
-When the shadow reaches Galicia around 20:26 local time, the Sun sits just 11
+Spain is where the eclipse meets the most people.
+When the shadow reaches Galicia around 8:26 pm local time, the Sun sits just 11
 degrees above the western horizon, low enough that clear air out toward
 the setting Sun matters more than the sky overhead. It is the first total
 eclipse over mainland Spain since 1905, and the first of three in three
@@ -116,12 +115,10 @@ years: 2026, 2027, 2028.
 The near-misses are the story. Bilbao, on the edge of the path, gets about 29
 seconds. Reykjavík, also near the boundary, about 59; the centerline
 misses Icelandic land altogether. Madrid and Barcelona, the country's two
-biggest cities, will watch the Sun go 99.9% dark and still miss totality: 99.9%,
-and on the wrong side of the line. A Coruña, Oviedo, León, Burgos,
+biggest cities, will watch the Sun go 99.9% dark and still miss totality: 99.9%. A Coruña, Oviedo, León, Burgos,
 Zaragoza, Valencia and Palma fall inside it.
 
 The map traces the shadow from the Arctic to that Spanish sunset. The gold
 dashed line is the centerline and the gold dot marks greatest eclipse; teal
 points are cities inside totality, blue are the edge towns that barely make it,
-and red are Madrid and Barcelona, just outside. Toggle the layers to see how
-narrow the margin really is.
+and red are Madrid and Barcelona, just outside.
