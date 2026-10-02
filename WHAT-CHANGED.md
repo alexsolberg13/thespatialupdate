@@ -1,3 +1,9 @@
+# What changed — reel layout fix (`claude/reel-frame`)
+
+All three reels now render inside one fixed 1080x1920 stage that is scaled to fit any screen. The safe zone (top 14%, bottom 35%, left 6%, right 6%) is defined once in `src/reels/reel-frame.css`. Add `?guides=1` to a reel to see it. `npm run check-reels` (run by `npm run build`) fails if any text leaves the safe area. `src/reels/calibrate.html` is the ruler page. Reel content is unchanged. Details are in the "Reel layout" section of CLAUDE.md.
+
+---
+
 # What changed — October 2, 2026 (repo cleanup)
 
 Tidied the repo so the live site can always be rebuilt from `src/`, and brought the docs up to date. Done on the branch `claude/repo-cleanup`, not `main`. Review it, then merge when you're happy.

@@ -13,7 +13,10 @@ module.exports = function(eleventyConfig) {
   // Story Beat Reels: standalone pages, copied as-is to /reels/<slug>.html.
   // Their narration scripts (*-script.md) stay in src/reels/ unpublished;
   // .eleventyignore keeps Eleventy from turning them into pages.
+  // reel-frame.css / reel-frame.js are the shared frame every reel loads.
   eleventyConfig.addPassthroughCopy({ "src/reels/*.html": "reels" });
+  eleventyConfig.addPassthroughCopy({ "src/reels/*.css": "reels" });
+  eleventyConfig.addPassthroughCopy({ "src/reels/*.js": "reels" });
 
   return {
     dir: {

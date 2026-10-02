@@ -1,0 +1,121 @@
+/* The Spatial Update: shared reel frame.
+ *
+ * Every Story Beat Reel loads this file (and reel-frame.js). Do not copy these
+ * rules into a reel; change them here so all reels move together.
+ *
+ * THE STAGE. Every reel renders inside one fixed 1080 x 1920 stage. reel-frame.js
+ * scales the stage as a whole to fit the screen and centres it, so all text,
+ * labels, legends and map framing are positioned in stage pixels / stage
+ * percentages and look identical on any screen.
+ *
+ * THE SAFE ZONE. The four numbers below are the ONLY place the safe zone is
+ * defined (reel-frame.js and the reel check read them from here). They are
+ * percentages of the stage. All text, labels, legends and logos stay inside the
+ * safe zone; the map fills the whole stage.
+ */
+
+:root {
+  --safe-top: 14;      /* % blocked at the top    */
+  --safe-bottom: 35;   /* % blocked at the bottom */
+  --safe-left: 6;      /* % blocked at the left   */
+  --safe-right: 6;     /* % blocked at the right  */
+
+  --reel-w: 1080px;
+  --reel-h: 1920px;
+  --reel-scale: 0.3;   /* overwritten by reel-frame.js to fit the screen */
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; }
+body { background:#000; font-family:Georgia,serif; -webkit-font-smoothing:antialiased; }
+
+/* ---- The stage ------------------------------------------------------------ */
+.reel-stage {
+  position:absolute; left:50%; top:50%;
+  width:var(--reel-w); height:var(--reel-h);
+  transform:translate(-50%,-50%) scale(var(--reel-scale));
+  transform-origin:center center;
+  overflow:hidden; background:#0a0f18;
+}
+
+/* The map fills the whole stage. reel-frame.js sizes it to the stage divided by
+   the map scale and scales it back up, so zoom levels mean the same thing on
+   every screen. */
+.reel-map { position:absolute; left:0; top:0; transform-origin:0 0; }
+.reel-map canvas:focus { outline:none; }
+
+.maplibregl-ctrl-logo,
+.maplibregl-ctrl-attrib,
+.maplibregl-ctrl-bottom-right,
+.maplibregl-ctrl-bottom-left { display:none !important; }
+
+/* Tap zones (page behaviour; injected by reel-frame.js). */
+.reel-tap-l { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
+.reel-tap-r { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
+
+/* Decorative darkening, not text: it may run past the safe zone. */
+.reel-fade-top    { position:absolute; left:0; right:0; top:0;    height:24%; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
+.reel-fade-bottom { position:absolute; left:0; right:0; bottom:0; height:55%; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
+
+/* ---- The safe zone: everything readable lives in here --------------------- */
+.reel-safe {
+  position:absolute; z-index:7; pointer-events:none;
+  top:calc(var(--safe-top) * 1%);
+  bottom:calc(var(--safe-bottom) * 1%);
+  left:calc(var(--safe-left) * 1%);
+  right:calc(var(--safe-right) * 1%);
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.reel-header { display:flex; flex-direction:column; gap:18px; }
+.reel-bottom { display:flex; flex-direction:column; gap:51px; }
+
+/* ---- Text styles ---------------------------------------------------------- */
+.reel-date   { align-self:flex-start; font:600 36px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:22px 33px; border-radius:14px; }
+/* A beat without a date keeps its space, so the dots never jump. */
+.reel-date[hidden] { display:block; visibility:hidden; }
+.reel-dots   { display:flex; justify-content:center; align-items:center; gap:18px; }
+
+.reel-kicker { font:700 36px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:36px; }
+.reel-title  { font:400 90px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:33px; }
+.reel-sub    { font:400 51px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
+
+/* Legend: a small key so lines, bands and dots read on their own in a recording. */
+.reel-legend  { display:flex; flex-direction:column; gap:22px; }
+.reel-leg-row { display:flex; align-items:center; gap:29px; font:600 36px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 4px 11px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
+.reel-leg-row.on { opacity:1; }
+.reel-leg-line { width:72px; height:0; border-top-width:11px; border-top-style:solid; flex-shrink:0; }
+.reel-leg-fill { width:58px; height:36px; border-radius:7px; flex-shrink:0; }
+.reel-leg-dot  { width:29px; height:29px; border-radius:50%; flex-shrink:0; border:5px solid rgba(255,255,255,.22); }
+
+/* ---- Map markers (live inside the scaled map, so these are map pixels) ---- */
+@keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
+.tsu-mk   { position:relative; width:0; height:0; }
+.tsu-dot  { position:absolute; left:50%; top:50%; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%; background:currentColor; border:1.5px solid rgba(255,255,255,.22); }
+.tsu-ring { position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:2px solid currentColor; animation:tsuPulse 1.9s ease-out infinite; }
+
+/* ---- Guides: ?guides=1 (or press G). Off by default; never in a recording -- */
+.reel-guides { position:absolute; inset:0; z-index:20; pointer-events:none; display:none; }
+body.reel-guides-on .reel-guides { display:block; }
+.reel-guide-block { position:absolute; background:rgba(224,90,78,.30); }
+.reel-guide-top    { left:0; right:0; top:0;    height:calc(var(--safe-top) * 1%); }
+.reel-guide-bottom { left:0; right:0; bottom:0; height:calc(var(--safe-bottom) * 1%); }
+.reel-guide-left   { left:0;  top:calc(var(--safe-top) * 1%); bottom:calc(var(--safe-bottom) * 1%); width:calc(var(--safe-left) * 1%); }
+.reel-guide-right  { right:0; top:calc(var(--safe-top) * 1%); bottom:calc(var(--safe-bottom) * 1%); width:calc(var(--safe-right) * 1%); }
+.reel-guide-outline {
+  position:absolute;
+  top:calc(var(--safe-top) * 1%); bottom:calc(var(--safe-bottom) * 1%);
+  left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%);
+  border:4px dashed #3ecfb2;
+}
+.reel-guide-label { position:absolute; font:700 30px/1 Arial,sans-serif; color:#fff; background:rgba(0,0,0,.55); padding:8px 14px; border-radius:8px; }
+
+/* ---- Page chrome (outside the stage; invisible until hovered) ------------- */
+.reel-hud { position:fixed; left:10px; top:10px; z-index:100; display:flex; align-items:center; gap:8px; opacity:0; transition:opacity .2s; font:600 13px Arial,sans-serif; color:#e4e0da; }
+.reel-hud:hover, .reel-hud:focus-within { opacity:1; }
+.reel-hud button { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
+.reel-hud button:hover { background:#262220; }
+.reel-hud button.on { background:#c8a84e; color:#141210; }
+
+/* The automatic check (npm run check-reels) opens reels with ?check=1: freeze
+   every transition and animation so measurements are of the settled layout. */
+body.reel-check *, body.reel-check *::before, body.reel-check *::after { transition:none !important; animation:none !important; }
