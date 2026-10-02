@@ -22,9 +22,12 @@
   screen-record the phone screen at 9:16 while narrating.
 
   Layout: this reel uses the shared frame (reel-frame.css + reel-frame.js): one
-  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone defined
-  once in reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas
-  and outline the safe area. `npm run check-reels` fails if any text leaves it.
+  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone and the
+  layout bands (header row, map window, legend, text block) defined once in
+  reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas, outline
+  the safe area and mark the bands. `npm run check-reels` fails if any beat breaks
+  the layout rules. Each beat's `fit` lists the points of its subject; the frame
+  zooms and positions the map so they sit inside the map window.
 
   Controls: tap/click the right ~2/3 of the screen (or press -> / Space) to
   advance a beat, the left ~1/3 (or <-) to go back. Hold a finger down for a second
@@ -46,29 +49,24 @@
 <div class="reel-stage" id="reel-stage">
   <div id="tsu-map"></div>
 
-  <div class="reel-fade-top"></div>
-  <div class="reel-fade-bottom"></div>
+  <div class="reel-scrim"></div>
 
-  <div class="reel-safe">
-    <div class="reel-header">
-      <div class="reel-date" id="tsu-date" hidden></div>
-      <div class="reel-dots" id="tsu-dots"></div>
-    </div>
+  <div class="reel-header">
+    <div class="reel-date" id="tsu-date" hidden></div>
+    <div class="reel-dots" id="tsu-dots"></div>
+  </div>
 
-    <div class="reel-bottom">
-      <div class="reel-legend" id="tsu-legend">
-        <div class="reel-leg-row" data-line="corridor"><span class="reel-leg-line" style="border-top-color:#e8c87a"></span>Lobito → Atlantic</div>
-        <div class="reel-leg-row" data-line="extension"><span class="reel-leg-line" style="border-top-color:#e8c87a;border-top-style:dashed"></span>Planned Zambia link</div>
-        <div class="reel-leg-row" data-line="tazara"><span class="reel-leg-line" style="border-top-color:#5b9bd5;border-top-style:dashed"></span>TAZARA → Indian Ocean</div>
-        <div class="reel-leg-row" data-line="feeder"><span class="reel-leg-line" style="border-top-color:#9a958c;border-top-style:dashed"></span>Copperbelt feeder → junction</div>
-      </div>
+  <div class="reel-legend" id="tsu-legend">
+    <div class="reel-leg-row" data-line="corridor"><span class="reel-leg-line" style="border-top-color:#e8c87a"></span>Lobito Corridor</div>
+    <div class="reel-leg-row" data-line="extension"><span class="reel-leg-line" style="border-top-color:#e8c87a;border-top-style:dashed"></span>Planned Zambia link</div>
+    <div class="reel-leg-row" data-line="tazara"><span class="reel-leg-line" style="border-top-color:#5b9bd5;border-top-style:dashed"></span>TAZARA</div>
+    <div class="reel-leg-row" data-line="feeder"><span class="reel-leg-line" style="border-top-color:#9a958c;border-top-style:dashed"></span>Copperbelt feeder</div>
+  </div>
 
-      <div class="reel-caption">
-        <div class="reel-kicker" id="tsu-kicker"></div>
-        <div class="reel-title"  id="tsu-title"></div>
-        <div class="reel-sub"    id="tsu-sub"></div>
-      </div>
-    </div>
+  <div class="reel-caption">
+    <div class="reel-kicker" id="tsu-kicker"></div>
+    <div class="reel-title"  id="tsu-title"></div>
+    <div class="reel-sub"    id="tsu-sub"></div>
   </div>
 </div>
 
@@ -110,15 +108,36 @@
   };
   var LINE_IDS = Object.keys(LINES);
 
-  // beat.c is the map center [lng, lat]; act is the pin that pulses this beat;
-  // lines lists which rail lines are drawn.
+  // Each beat: c / z = the map centre [lng, lat] and the closest zoom it may use;
+  // fit = the points of the beat's subject, which the frame fits inside the map
+  // window (it zooms out below z if it has to); act = the pin that pulses; lines =
+  // the rail lines drawn, and the legend shows one row for each (never more than 3).
+  // On-screen text: a kicker, a headline (7 words), one supporting line (10 words).
+  // fit points: Kolwezi, Chingola, Kapiri Mposhi, Dar es Salaam, Lobito, and a point on the planned Zambia link.
   var BEATS = [
-    { c:[24.0,-11.0], z:3.3,                     kicker:"The Spatial Update",         title:"The Lobito Corridor",        sub:"Which ocean Africa's copper flows to",                                       vis:["kolwezi","chingola"], act:"kolwezi", lines:[] },
-    { c:[26.5,-11.4], z:4.5,                     kicker:"The Copperbelt",             title:"A landlocked treasure",       sub:"Central Africa holds the world's richest copper and cobalt: the DRC alone mines about 72% of it", vis:["kolwezi","chingola"], act:"chingola", lines:[] },
-    { c:[33.0,-9.4],  z:3.4, date:"Since the 1970s", kicker:"The old way: east",       title:"Out to the Indian Ocean",     sub:"For fifty years the ore has ridden China's TAZARA railway to Dar es Salaam",  vis:["kolwezi","chingola","dar","kapiri"], act:"dar", lines:["tazara","feeder"] },
-    { c:[19.5,-11.6], z:4.0, date:"2024–26",     kicker:"The new bet: west",          title:"Back to the Atlantic",        sub:"A US- and EU-backed railway now pulls it the other way, to the port of Lobito", vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"lobito", lines:["tazara","feeder","corridor"] },
-    { c:[24.0,-11.7], z:4.2,                     kicker:"The missing link",           title:"A new line for Zambia",       sub:"A planned greenfield extension would wire the Copperbelt straight into the corridor", vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"chingola", lines:["tazara","feeder","corridor","extension"] },
-    { c:[26.0,-10.3], z:3.1,                     kicker:"Two oceans, two blocs",      title:"One belt, pulled both ways",  sub:"The same ore can now flow west to the Atlantic or east to the Indian Ocean",  vis:["kolwezi","chingola","dar","kapiri","lobito"], act:null, lines:["tazara","feeder","corridor","extension"] }
+    { c:[24.0,-11.0], z:3.3, fit:[[25.485,-10.73],[27.85,-12.533]],
+      kicker:"The Spatial Update", title:"The Lobito Corridor", sub:"Which ocean Africa's copper flows to",
+      vis:["kolwezi","chingola"], act:"kolwezi", lines:[] },
+
+    { c:[26.5,-11.4], z:4.5, fit:[[25.485,-10.73],[27.85,-12.533]],
+      kicker:"The Copperbelt", title:"A landlocked treasure", sub:"The DRC alone mines about 72% of the world's cobalt",
+      vis:["kolwezi","chingola"], act:"chingola", lines:[] },
+
+    { c:[33.0,-9.4], z:3.4, fit:[[25.485,-10.73],[27.85,-12.533],[28.685,-13.977],[39.28,-6.816]], date:"Since the 1970s",
+      kicker:"The old way: east", title:"Out to the Indian Ocean", sub:"Ore has ridden China's TAZARA railway to Dar es Salaam",
+      vis:["kolwezi","chingola","dar","kapiri"], act:"dar", lines:["tazara","feeder"] },
+
+    { c:[19.5,-11.6], z:4.0, fit:[[13.5464,-12.35],[25.485,-10.73],[27.85,-12.533],[28.685,-13.977]], date:"2024–26",
+      kicker:"The new bet: west", title:"Back to the Atlantic", sub:"A US- and EU-backed railway now pulls it to Lobito",
+      vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"lobito", lines:["tazara","feeder","corridor"] },
+
+    { c:[24.0,-11.7], z:4.2, fit:[[13.5464,-12.35],[25.485,-10.73],[24.25,-11.15],[27.85,-12.533]],
+      kicker:"The missing link", title:"A new line for Zambia", sub:"A planned extension would wire the Copperbelt into the corridor",
+      vis:["kolwezi","chingola","dar","kapiri","lobito"], act:"chingola", lines:["tazara","corridor","extension"] },
+
+    { c:[26.0,-10.3], z:3.1, fit:[[13.5464,-12.35],[39.28,-6.816],[28.685,-13.977],[27.85,-12.533]],
+      kicker:"Two oceans, two blocs", title:"One belt, pulled both ways", sub:"West to the Atlantic or east to the Indian Ocean",
+      vis:["kolwezi","chingola","dar","kapiri","lobito"], act:null, lines:["tazara","feeder","corridor"] }
   ];
 
   // showDate can be turned off with ?date=off for a cleaner recording.
@@ -162,6 +181,8 @@
       } catch (e) {}
       buildLines();
       buildMarkers();
+      TSUReel.attachMap(map);
+      TSUReel.solveAll(map, BEATS);
       applyBeat(idx, false);
     });
   }
@@ -212,8 +233,9 @@
   function applyBeat(i, fly) {
     var b = BEATS[i];
     if (map) {
-      if (fly) map.flyTo({ center: b.c, zoom: b.z, duration: 1600, essential: true, curve: 1.3 });
-      else     map.jumpTo({ center: b.c, zoom: b.z });
+      var cam = b.cam || { center: b.c, zoom: b.z };   // solved by the frame so the subject sits in the map window
+      if (fly) map.flyTo({ center: cam.center, zoom: cam.zoom, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: cam.center, zoom: cam.zoom });
     }
     // Pins.
     Object.keys(markers).forEach(function (id) {
@@ -270,7 +292,9 @@
     count: BEATS.length,
     step: step,
     jump: function (i) { idx = i; render(); applyBeat(idx, false); },
-    mapReady: function () { return !!map && map.loaded(); }
+    mapReady: function () { return !!map && map.loaded(); },
+    map: function () { return map; },
+    beat: function () { return BEATS[idx]; }
   });
 })();
 </script>

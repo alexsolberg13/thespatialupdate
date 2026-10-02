@@ -2,8 +2,12 @@
 //
 // Opens every reel in src/reels/ in a headless browser at 1080x1920, steps
 // through every beat, and fails (exit code 1) with a plain-English message
-// naming the reel, the beat and the element if any text, label, legend or logo
-// crosses outside the safe area defined in src/reels/reel-frame.css.
+// naming the reel, the beat and the element if:
+//   - any text, label, legend or logo crosses outside the safe area, or
+//   - the beat breaks one of the layout rules 1 to 6 (header row, map window, text
+//     block, legend, type sizes, map labels). Those rules are listed in
+//     scripts/reel_audit.js; their numbers (zones, sizes, word limits) are defined
+//     once in src/reels/reel-frame.css.
 //
 // Uses the Chromium that Playwright installed if there is one, otherwise the
 // Microsoft Edge or Google Chrome already on the machine.
@@ -13,7 +17,10 @@ const path = require("path");
 const { pathToFileURL } = require("url");
 const { chromium } = require("playwright-core");
 
+const auditBeat = require("./reel_audit.js");
+
 const REELS_DIR = path.join(__dirname, "..", "src", "reels");
+const RULES = { 1: "header row", 2: "map window", 3: "text block", 4: "legend", 5: "type sizes", 6: "map labels" };
 // calibrate.html (rulers) is not a reel. index.html is built, not stored here.
 const NOT_REELS = ["calibrate.html", "index.html"];
 
@@ -64,20 +71,30 @@ async function checkReel(browser, file) {
   }
   const beats = await page.evaluate("window.TSUReel.count");
 
-  // Give the map a moment to load, but never hang on it: the text layout under
-  // test does not depend on the map.
-  await page.waitForFunction("window.TSUReel.mapReady()", null, { timeout: 8000 }).catch(() => {});
+  // The map has to load: rules 2 and 6 are about where the map's subject and its place
+  // names fall, and cannot be checked without it. (Never pass quietly without it.)
+  let mapLoaded = true;
+  await page.waitForFunction("window.TSUReel.mapReady()", null, { timeout: 30000 }).catch(() => { mapLoaded = false; });
+  const stats0 = mapLoaded ? await page.evaluate("window.TSUReel.labelStats()") : null;
+  if (!mapLoaded || !stats0 || !stats0.layers) {
+    problems.push(`Reel "${name}": the map did not load (the basemap tiles come from the internet), so the map window (rule 2) and map labels (rule 6) could not be checked. Check the connection and run again.`);
+  }
 
+  let hiddenLabels = 0;
   for (let i = 0; i < beats; i++) {
+    const label = i === 0 ? "beat 1 of " + beats + " (the cold open)" : "beat " + (i + 1) + " of " + beats;
     await page.evaluate((n) => window.TSUReel.jump(n), i);
+    await page.evaluate("window.TSUReel.settle()");   // wait for the map and its labels to settle
     await page.waitForTimeout(60);
     const found = await page.evaluate("window.TSUReel.measure()");
     for (const f of found) {
-      const label = i === 0 ? "beat 1 of " + beats + " (the cold open)" : "beat " + (i + 1) + " of " + beats;
       problems.push(f.side === "corner"
         ? `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px into the blocked bottom-right corner (where Instagram puts its buttons).`
         : `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px past the ${f.side} edge of the safe area.`);
     }
+    const audit = await page.evaluate(auditBeat);
+    for (const p of audit.problems) problems.push(`Reel "${name}", ${label}: ${p.text} (rule ${p.rule}, ${RULES[p.rule]})`);
+    hiddenLabels = audit.stats.hidden;
   }
   // On an iPhone 15 (1179x2556, taller than 9:16) the stage must sit centred on
   // the whole screen and the map must run on into the strips above and below.
@@ -110,7 +127,7 @@ async function checkReel(browser, file) {
   await page.evaluate(() => window.TSUReel.jump(0));
   await page.evaluate(() => window.TSUReel.step(1));
   await page.close();
-  return { name, beats, problems, pageErrors };
+  return { name, beats, problems, pageErrors, hiddenLabels };
 }
 
 (async () => {
@@ -132,7 +149,8 @@ async function checkReel(browser, file) {
   const browser = await launch();
   for (const f of files) {
     const r = await checkReel(browser, f);
-    console.log(`  ${r.problems.length ? "FAIL" : "ok  "}  ${r.name}: ${r.beats} beats checked`);
+    console.log(`  ${r.problems.length ? "FAIL" : "ok  "}  ${r.name}: ${r.beats} beats checked against rules 1-6` +
+      (r.beats ? `; ${r.hiddenLabels} basemap labels hidden under the header, legend or text` : ""));
     all.push(...r.problems);
   }
   await browser.close();
@@ -141,7 +159,7 @@ async function checkReel(browser, file) {
   if (all.length) {
     console.error("\nProblems found:\n");
     all.forEach((p) => console.error("  - " + p));
-    console.error("\nFix these (shorten on-screen wording that runs outside the safe area; never move the safe area), then run again.");
+    console.error("\nFix these (shorten on-screen wording, reframe the beat or trim the legend; never move the safe area or the layout zones), then run again.");
     process.exit(1);
   }
 })().catch((e) => { console.error("check-reels failed to run: " + e.message); process.exit(1); });

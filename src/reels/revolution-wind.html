@@ -22,9 +22,12 @@
   screen-record the phone screen at 9:16 while narrating.
 
   Layout: this reel uses the shared frame (reel-frame.css + reel-frame.js): one
-  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone defined
-  once in reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas
-  and outline the safe area. `npm run check-reels` fails if any text leaves it.
+  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone and the
+  layout bands (header row, map window, legend, text block) defined once in
+  reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas, outline
+  the safe area and mark the bands. `npm run check-reels` fails if any beat breaks
+  the layout rules. Each beat's `fit` lists the points of its subject; the frame
+  zooms and positions the map so they sit inside the map window.
 
   Controls: tap/click the right ~2/3 of the screen (or press -> / Space) to
   advance a beat, the left ~1/3 (or <-) to go back. Hold a finger down for a second
@@ -53,27 +56,22 @@
 <div class="reel-stage" id="reel-stage">
   <div id="tsu-map"></div>
 
-  <div class="reel-fade-top"></div>
-  <div class="reel-fade-bottom"></div>
+  <div class="reel-scrim"></div>
 
-  <div class="reel-safe">
-    <div class="reel-header">
-      <div class="reel-date" id="tsu-date" hidden></div>
-      <div class="reel-dots" id="tsu-dots"></div>
-    </div>
+  <div class="reel-header">
+    <div class="reel-date" id="tsu-date" hidden></div>
+    <div class="reel-dots" id="tsu-dots"></div>
+  </div>
 
-    <div class="reel-bottom">
-      <div class="reel-legend" id="tsu-legend">
-        <div class="reel-leg-row" data-line="band"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Federal lease OCS-A 0486</div>
-        <div class="reel-leg-row" data-line="turbines"><span class="reel-leg-dot" style="background:#e8c87a"></span>Turbines (65)</div>
-      </div>
+  <div class="reel-legend" id="tsu-legend">
+    <div class="reel-leg-row" data-line="band"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Federal lease OCS-A 0486</div>
+    <div class="reel-leg-row" data-line="turbines"><span class="reel-leg-dot" style="background:#e8c87a"></span>Turbines (65)</div>
+  </div>
 
-      <div class="reel-caption">
-        <div class="reel-kicker" id="tsu-kicker"></div>
-        <div class="reel-title"  id="tsu-title"></div>
-        <div class="reel-sub"    id="tsu-sub"></div>
-      </div>
-    </div>
+  <div class="reel-caption">
+    <div class="reel-kicker" id="tsu-kicker"></div>
+    <div class="reel-title"  id="tsu-title"></div>
+    <div class="reel-sub"    id="tsu-sub"></div>
   </div>
 </div>
 
@@ -134,42 +132,47 @@
   var params = new URLSearchParams(window.location.search);
   var SHOW_DATE = params.get("date") !== "off";
 
-  // beat.c is the map center [lng, lat]; act is the pin that pulses this beat;
-  // lines lists which of "band" / "turbines" / pin ids are drawn/faded in.
+  // Each beat: c / z = the map centre [lng, lat] and the closest zoom it may use;
+  // fit = the points of the beat's subject, which the frame fits inside the map
+  // window (it zooms out below z if it has to); act = the pin that pulses; lines =
+  // which of "band" / "turbines" are drawn, and the legend shows a row for each.
+  // On-screen text: a kicker, a headline (7 words), one supporting line (10 words).
+  // fit points: the lease's bounding box [W,S] to [E,N]; for the coastwide beats,
+  // the five projects' pins.
   var BEATS = [
-    { c:[-71.25,41.30], z:7.6,
+    { c:[-71.25,41.30], z:7.6, fit:[[-71.2598,41.0652],[-70.8294,41.2797]],
       kicker:"The Spatial Update · Story", title:"Revolution Wind",
-      sub:"A federal lease line the government tried to erase — twice",
+      sub:"A federal lease line the government tried to erase, twice",
       vis:["revwind"], act:"revwind", lines:[] },
 
-    { c:[-71.07,41.16], z:9.0, date:"Leased 10/1/2013",
+    { c:[-71.07,41.16], z:9.0, fit:[[-71.2598,41.0652],[-70.8294,41.2797]], date:"Leased 10/1/2013",
       kicker:"The law", title:"A line drawn on water",
-      sub:"In 2013, BOEM leased 83,789 acres of ocean off Rhode Island — federal authority, marked as a polygon",
+      sub:"2013: BOEM leased 83,789 acres off Rhode Island",
       vis:["revwind"], act:"revwind", lines:["band"] },
 
-    { c:[-71.07,41.16], z:9.0,
+    { c:[-71.07,41.16], z:9.0, fit:[[-71.2598,41.0652],[-70.8294,41.2797]],
       kicker:"The built object", title:"65 turbines, standing",
-      sub:"Inside that line, turbines rose — 704 megawatts, enough for more than 350,000 homes",
+      sub:"704 megawatts, enough for more than 350,000 homes",
       vis:["revwind"], act:null, lines:["band","turbines"] },
 
-    { c:[-71.07,41.16], z:9.0, date:"Aug 22, 2025",
+    { c:[-71.07,41.16], z:9.0, fit:[[-71.2598,41.0652],[-70.8294,41.2797]], date:"Aug 22, 2025",
       kicker:"First halt", title:"Stop-work, 80% built",
-      sub:"The Department of the Interior ordered construction to stop, citing national security",
+      sub:"Interior ordered construction stopped, citing national security",
       vis:["revwind"], act:"revwind", lines:["band","turbines"] },
 
-    { c:[-73.1,39.2], z:5.3, date:"Dec 22, 2025",
+    { c:[-73.1,39.2], z:5.3, fit:[[-75.559,36.901],[-70.499,41.25]], date:"Dec 22, 2025",
       kicker:"A coastwide halt", title:"One of five",
-      sub:"A second, broader order hit Revolution Wind alongside four sibling projects up and down the East Coast",
+      sub:"A second, broader order also hit four sibling projects",
       vis:["revwind","coastalva","empire","sunrise","vineyard"], act:null, lines:[] },
 
-    { c:[-73.1,39.2], z:5.3,
+    { c:[-73.1,39.2], z:5.3, fit:[[-75.559,36.901],[-70.499,41.25]],
       kicker:"Jan–Feb 2026", title:"Courts said no. Twice.",
-      sub:"Federal judges called the security rationale likely pretextual and reinstated every one of the five",
+      sub:"Judges called the security rationale likely pretextual; reinstated all five",
       vis:["revwind","coastalva","empire","sunrise","vineyard"], act:"revwind", lines:[] },
 
-    { c:[-71.10,41.18], z:8.6, date:"March 2026 →",
+    { c:[-71.10,41.18], z:8.6, fit:[[-71.2598,41.0652],[-70.8294,41.2797]], date:"March 2026 →",
       kicker:"Steel outlasted the order", title:"Delivering power",
-      sub:"Revolution Wind now feeds the New England grid; full commercial operation is expected later this year",
+      sub:"Feeding New England's grid; full commercial operation expected this year",
       vis:["revwind"], act:"revwind", lines:["band","turbines"] }
   ];
 
@@ -211,6 +214,8 @@
       buildBand();
       buildDots();
       buildMarkers();
+      TSUReel.attachMap(map);
+      TSUReel.solveAll(map, BEATS);
       applyBeat(idx, false);
     });
   }
@@ -239,7 +244,7 @@
     map.addSource("dots-turbines", { type:"geojson", data: fc });
     map.addLayer({ id:"dots-turbines", type:"circle", source:"dots-turbines",
       paint:{ "circle-radius":D.radius, "circle-color":D.color, "circle-opacity":0,
-        "circle-stroke-width":0.5, "circle-stroke-color":"rgba(255,255,255,.3)" } });
+        "circle-stroke-width":0.5, "circle-stroke-color":"rgba(255,255,255,.3)", "circle-stroke-opacity":0 } });
     linesReady = true;
   }
 
@@ -268,8 +273,9 @@
   function applyBeat(i, fly) {
     var b = BEATS[i];
     if (map) {
-      if (fly) map.flyTo({ center: b.c, zoom: b.z, duration: 1600, essential: true, curve: 1.3 });
-      else     map.jumpTo({ center: b.c, zoom: b.z });
+      var cam = b.cam || { center: b.c, zoom: b.z };   // solved by the frame so the subject sits in the map window
+      if (fly) map.flyTo({ center: cam.center, zoom: cam.zoom, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: cam.center, zoom: cam.zoom });
     }
     // Pins.
     Object.keys(markers).forEach(function (id) {
@@ -286,6 +292,7 @@
       map.setPaintProperty("band-outline", "line-opacity", bandOn ? 0.55 : 0);
       var dotsOn = b.lines.indexOf("turbines") !== -1;
       map.setPaintProperty("dots-turbines", "circle-opacity", dotsOn ? DOTS.turbines.op : 0);
+      map.setPaintProperty("dots-turbines", "circle-stroke-opacity", dotsOn ? 1 : 0);   // the ring fades with the dot
     }
     // Legend rows track whichever layers are showing.
     el.legRows.forEach(function (row) {
@@ -327,7 +334,9 @@
     count: BEATS.length,
     step: step,
     jump: function (i) { idx = i; render(); applyBeat(idx, false); },
-    mapReady: function () { return !!map && map.loaded(); }
+    mapReady: function () { return !!map && map.loaded(); },
+    map: function () { return map; },
+    beat: function () { return BEATS[idx]; }
   });
 })();
 </script>
