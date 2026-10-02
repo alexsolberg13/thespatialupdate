@@ -15,22 +15,39 @@
  * All text, labels, legends and logos stay inside it; the map fills the whole
  * stage.
  *
- * THE LAYOUT ZONES. Inside the safe area every beat uses the same four bands,
- * top to bottom (percent of the stage, from the top). Like the safe zone, the
- * numbers are defined once, here, and `npm run check-reels` enforces them on
- * every beat of every reel:
+ * THE LAYOUT. Inside the safe area every beat uses the same four bands, top to
+ * bottom (percent of the stage, from the top). The text block is ANCHORED to the
+ * bottom of the safe area and grows upward; the legend sits directly above it and
+ * the map window takes whatever is left. So the bottom three bands move from beat
+ * to beat with the amount of text. Their numbers are defined once, here, and
+ * `npm run check-reels` (and the on-device ?check=1 panel) enforce them on every
+ * beat of every reel:
  *
  *    15% - 19%   HEADER ROW   the date tag and the progress dots, one line, small
- *    19% - 58%   MAP WINDOW   the map, map labels and at most ONE small graphic.
- *                             Each beat's subject is framed inside this band.
- *    58% - 60%   LEGEND       only on beats that need it: one row, at most 3 items
- *    60% - 80%   TEXT BLOCK   left-aligned, clear of the blocked corner: a kicker,
- *                             a headline (2 lines, 7 words) and one supporting
- *                             line (10 words). No paragraphs. The map is darkened
- *                             behind this block and nowhere else.
+ *    19% - ...   MAP WINDOW   the map, map labels and at most ONE small graphic. It
+ *                             runs from 19% down to just above the legend on that
+ *                             beat (or just above the text block when there is no
+ *                             legend). Each beat's subject, and every map label
+ *                             shown on that beat, sits fully inside it and inside
+ *                             the left and right margins.
+ *    LEGEND       only on beats that need it: one row, at most 3 items, directly
+ *                 above the kicker.
+ *    TEXT BLOCK   its last line ends at 83% of the stage (100 - --safe-bottom).
+ *                 Top to bottom: kicker, headline (2 lines, 7 words), one
+ *                 supporting line (10 words). Left-aligned, clear of the blocked
+ *                 corner. No paragraphs.
+ *    SCRIM        a gradient, not a band: fully transparent a little above the
+ *                 legend, fully dark by the kicker, dark all the way to the bottom
+ *                 of the stage. It follows the text on each beat.
  *
- * Map labels (the basemap's place names and a reel's own state/city labels) that
- * fall under the header row, the legend or the text block are hidden.
+ * reel-frame.js measures the text block on every beat and sets --cap-top (the top
+ * of the text block, % of the stage); the legend, the scrim, the map window and
+ * the camera all follow from it.
+ *
+ * Map labels (the basemap's place names and a reel's own state/city labels) must
+ * sit fully inside the map window and the side margins. The frame fits a reel's own
+ * labels into the camera and hides any basemap place name that would cross out of
+ * that area.
  *
  * TYPE SIZES (stage pixels, set once, here): headline 64, supporting line 36,
  * kicker / legend / date 28. Nothing on screen is smaller than 28.
@@ -38,17 +55,22 @@
 
 :root {
   --safe-top: 15;      /* % blocked at the top    */
-  --safe-bottom: 20;   /* % blocked at the bottom */
+  --safe-bottom: 17;   /* % blocked at the bottom: the text block ends here (83%) */
   --safe-left: 8;      /* % blocked at the left   */
   --safe-right: 8;     /* % blocked at the right  */
   --corner-w: 17;      /* blocked corner: the right 17% of the width ...   */
   --corner-h: 40;      /* ... for the bottom 40% of the height             */
 
-  /* Layout zones: % of the stage, from the top. */
+  /* Layout: % of the stage, from the top. The window bottom, the legend and the
+     text block's top are not numbers here: they follow from the text (see above). */
   --header-top: 15;    --header-bottom: 19;
-  --window-top: 19;    --window-bottom: 58;
-  --legend-top: 58;    --legend-bottom: 60;
-  --text-top: 60;      --text-bottom: 80;
+  --window-top: 19;
+  --text-bottom: 83;   /* the last line of text ends here: 100 - --safe-bottom */
+  --legend-h: 2.5;     /* height of the legend row; its bottom is the top of the text block */
+  --scrim-lead: 3;     /* the gradient starts this far (%) above the legend */
+  --window-min: 35;    /* the map window is never shorter than this (%) */
+  --cap-top: 66;       /* top of the text block (%); reel-frame.js overwrites it per beat */
+  --stage-pct: 19.2px; /* 1% of the stage height */
 
   /* Type sizes: stage pixels. */
   --type-headline: 64;
@@ -105,13 +127,24 @@ body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; bac
 .reel-tap-l { position:fixed; left:0; top:0; bottom:0; width:38%; z-index:50; }
 .reel-tap-r { position:fixed; right:0; top:0; bottom:0; width:62%; z-index:50; }
 
-/* The ONLY darkening of the map: a band exactly behind the text block, its edges
-   feathered inside the band. Decorative, not text. */
+/* The ONLY darkening of the map: a gradient behind the text. Fully transparent
+   --scrim-lead % above the legend, fully dark (.88) by the top of the text block,
+   and dark all the way down: it runs on below the stage so the strips on a tall
+   screen have no lower edge either. It starts where the text starts, so it follows
+   the text on each beat (--cap-top). Decorative, not text. The stops ease in so there
+   is no visible edge. */
 .reel-scrim {
   position:absolute; left:0; right:0; z-index:6; pointer-events:none;
-  top:calc(var(--text-top) * 1%);
-  height:calc((var(--text-bottom) - var(--text-top)) * 1%);
-  background:linear-gradient(rgba(8,10,16,0), rgba(8,10,16,.84) 12%, rgba(8,10,16,.84) 88%, rgba(8,10,16,0));
+  top:calc((var(--cap-top) - var(--legend-h) - var(--scrim-lead)) * 1%);
+  bottom:-50%;
+  --scrim-fade: calc((var(--legend-h) + var(--scrim-lead)) * var(--stage-pct));
+  background:linear-gradient(to bottom,
+    rgba(8,10,16,0) 0,
+    rgba(8,10,16,.05) calc(var(--scrim-fade) * .2),
+    rgba(8,10,16,.22) calc(var(--scrim-fade) * .45),
+    rgba(8,10,16,.55) calc(var(--scrim-fade) * .72),
+    rgba(8,10,16,.88) var(--scrim-fade),
+    rgba(8,10,16,.88) 100%);
 }
 
 /* ---- 1. Header row: date tag and progress dots, one line ------------------- */
@@ -128,47 +161,55 @@ body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; bac
 .reel-dots   { display:flex; align-items:center; gap:14px; margin-left:auto; filter:drop-shadow(0 2px 6px rgba(0,0,0,.7)); }
 
 /* ---- 3. Text block: a kicker, a headline, one supporting line -------------- */
+/* Anchored to the bottom: the last line ends at --text-bottom (83%) and the block
+   grows upward from there, so its top moves with the amount of text. */
 .reel-caption {
   position:absolute; z-index:7; pointer-events:none;
   left:calc(var(--safe-left) * 1%);
   /* Stop at the blocked corner: its left edge is at (100 - --corner-w)%. */
   right:calc(var(--corner-w) * 1%);
-  top:calc(var(--text-top) * 1%);
-  height:calc((var(--text-bottom) - var(--text-top)) * 1%);
-  display:flex; flex-direction:column; justify-content:flex-start; align-items:flex-start;
+  bottom:calc((100 - var(--text-bottom)) * 1%);
+  display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start;
   text-align:left;
 }
 .reel-kicker { font:700 calc(var(--type-small) * 1px)/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:10px 0 12px; white-space:nowrap; }
 .reel-title  { font:400 calc(var(--type-headline) * 1px)/1.15 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:balance; margin-bottom:14px; }
 .reel-sub    { font:400 calc(var(--type-support) * 1px)/1.35 Arial,sans-serif; color:#c9c5be; text-wrap:pretty; }
+/* The last line of the block is what sits on the 83% line: no space under it. */
+.reel-sub:empty { display:none; }
+.reel-title:has(+ .reel-sub:empty) { margin-bottom:0; }
 
-/* ---- 4. Legend: one compact row directly above the text block --------------- */
+/* ---- 4. Legend: one compact row directly above the kicker ------------------ */
 .reel-legend {
   position:absolute; z-index:7; pointer-events:none;
-  left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%);
-  top:calc(var(--legend-top) * 1%);
-  height:calc((var(--legend-bottom) - var(--legend-top)) * 1%);
-  display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:36px;
+  /* Like the text block, it stops at the blocked corner: it sits below 60% of the
+     stage, where the corner (Instagram's button column) is. */
+  left:calc(var(--safe-left) * 1%); right:calc(var(--corner-w) * 1%);
+  /* Directly above the kicker: the legend's bottom edge is the top of the text block. */
+  top:calc((var(--cap-top) - var(--legend-h)) * 1%);
+  height:calc(var(--legend-h) * 1%);
+  display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:24px;
 }
-.reel-leg-row { display:none; align-items:center; gap:12px; font:600 calc(var(--type-small) * 1px)/1 Arial,sans-serif; letter-spacing:.03em; color:#e4e0da; text-shadow:0 2px 8px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); white-space:nowrap; }
+.reel-leg-row { display:none; align-items:center; gap:10px; font:600 calc(var(--type-small) * 1px)/1 Arial,sans-serif; letter-spacing:.03em; color:#e4e0da; text-shadow:0 2px 8px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); white-space:nowrap; }
 .reel-leg-row.on { display:flex; animation:reelLegIn .4s; }
 @keyframes reelLegIn { from { opacity:0 } to { opacity:1 } }
-.reel-leg-line { width:44px; height:0; border-top-width:8px; border-top-style:solid; flex-shrink:0; }
+.reel-leg-line { width:32px; height:0; border-top-width:8px; border-top-style:solid; flex-shrink:0; }
 .reel-leg-fill { width:36px; height:22px; border-radius:5px; flex-shrink:0; }
 .reel-leg-dot  { width:22px; height:22px; border-radius:50%; flex-shrink:0; border:3px solid rgba(255,255,255,.25); }
 
 /* ---- 2. Map window: the one small graphic a beat may have ------------------- */
-/* A reel positions its graphic (in percent of the stage) inside the map window
+/* The window runs from --window-top to just above the legend (or the text block). A
+   reel positions its graphic (in percent of the stage) inside it
    and sizes it; this class only carries the shared behaviour. Text in it is
    still at least --type-small. */
 .reel-graphic { position:absolute; z-index:7; pointer-events:none; }
 
 /* ---- Map labels a reel draws itself (live inside the scaled map: map pixels) ---- */
-/* 9 map px x 3.62 map scale = 33 stage px, above the 28 minimum. reel-frame.js
-   adds .reel-label-hidden to any that fall under the header, legend or text block. */
+/* 9 map px x 3.62 map scale = 33 stage px, above the 28 minimum. The camera fits every
+   label showing on a beat inside the map window and the side margins (they are part of
+   what the beat frames); `npm run check-reels` fails if one is not. */
 .reel-maplabel { font:700 9px/1.25 Arial,sans-serif; color:#f2efe9; text-align:center; text-shadow:0 1px 4px rgba(0,0,0,.95); white-space:nowrap; transform:translate(-50%,-50%); pointer-events:none; }
 .reel-maplabel small { display:block; font:600 9px Arial,sans-serif; color:#e8b4ac; }
-.reel-maplabel.reel-label-hidden { opacity:0 !important; }
 
 /* ---- Map markers (live inside the scaled map, so these are map pixels) ---- */
 @keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
@@ -195,8 +236,11 @@ body.reel-guides-on .reel-guides { display:block; }
 .reel-guide-zone span { position:absolute; right:14px; top:6px; font:700 26px/1 Arial,sans-serif; color:#e8c87a; background:rgba(0,0,0,.55); padding:6px 12px; border-radius:8px; white-space:nowrap; }
 
 /* The automatic check (npm run check-reels) opens reels with ?audit=1: freeze
-   every transition and animation so measurements are of the settled layout. */
-body.reel-check *, body.reel-check *::before, body.reel-check *::after { transition:none !important; animation:none !important; }
+   every transition and animation so measurements are of the settled layout. The frame
+   does the same (reel-solving) while it solves each beat's camera, so labels and
+   legend rows are at their final state when they are measured. */
+body.reel-check *, body.reel-check *::before, body.reel-check *::after,
+body.reel-solving *, body.reel-solving *::before, body.reel-solving *::after { transition:none !important; animation:none !important; }
 
 /* ---- On-device check: ?check=1 (see reel-frame.js). Diagnostic only; never in a recording. ---- */
 .reel-checkpanel { position:absolute; z-index:40; pointer-events:none;

@@ -2,12 +2,14 @@
  *
  * Loaded by every reel after reel-frame.css. Handles: fitting the 1080x1920
  * stage to the screen, the map's fixed scale, tap/keyboard navigation, the
- * ?guides=1 overlay, fullscreen, hold-to-exit, the camera that frames each beat's
- * subject inside the map window, the hiding of map labels that fall under the
- * header / legend / text block, and the measurements `npm run check-reels` uses.
- * The safe zone and the layout zones are NOT defined here; they are read from the
- * --safe-*, --corner-*, --header-*, --window-*, --legend-* and --text-* numbers
- * in reel-frame.css.
+ * ?guides=1 overlay, fullscreen, hold-to-exit, the text-block layout (the block is
+ * anchored to the bottom, so its top, the legend, the scrim and the bottom of the
+ * map window are measured per beat and published as --cap-top), the camera that
+ * frames each beat's subject and labels inside the map window, the hiding of
+ * basemap place names that would cross out of the map window, and the measurements
+ * `npm run check-reels` uses. The safe zone and the layout numbers are NOT defined
+ * here; they are read from the --safe-*, --corner-*, --header-*, --window-top,
+ * --text-bottom, --legend-h and --scrim-* numbers in reel-frame.css.
  *
  * A reel calls TSUReel.bind({ count, step, jump, map, beat }) once it is ready,
  * and, once its map style has loaded, TSUReel.attachMap(map) and
@@ -39,15 +41,58 @@
              corner: { w: cssNum("--corner-w"), h: cssNum("--corner-h") } };
   }
 
-  // The layout zones, in stage pixels from the top, read from reel-frame.css.
+  // ---- The layout: anchored text block, legend, map window ----------------------
+  // The text block ends at --text-bottom and grows upward, so its top depends on the
+  // beat's text. layout() measures it (stage px from the top) and derives the rest:
+  // the legend is the row directly above it (only when a legend row is showing), and
+  // the map window runs from --window-top down to just above the legend, or just above
+  // the text block on a beat with no legend.
+  function layout() {
+    var H = STAGE_H / 100, sr = stage.getBoundingClientRect(), k = sr.width / STAGE_W || 1;
+    var textBottom = cssNum("--text-bottom") * H, capTop = textBottom;
+    var cap = stage.querySelector(".reel-caption");
+    if (cap) {
+      var r = cap.getBoundingClientRect();
+      if (r.width || r.height) capTop = (r.top - sr.top) / k;
+    }
+    var legendH = cssNum("--legend-h") * H;
+    var legendOn = !!stage.querySelector(".reel-legend .reel-leg-row.on");
+    return { capTop: capTop, textBottom: textBottom, legendH: legendH, legendOn: legendOn,
+             winTop: cssNum("--window-top") * H,
+             winBottom: legendOn ? capTop - legendH : capTop };
+  }
+
+  // The layout zones, in stage pixels from the top. win.bottom, legend and text.top
+  // follow the text of the beat on screen.
   function zones() {
-    var H = STAGE_H / 100;
+    var H = STAGE_H / 100, L = layout();
     return {
       header: { top: cssNum("--header-top") * H, bottom: cssNum("--header-bottom") * H },
-      win:    { top: cssNum("--window-top") * H, bottom: cssNum("--window-bottom") * H },
-      legend: { top: cssNum("--legend-top") * H, bottom: cssNum("--legend-bottom") * H },
-      text:   { top: cssNum("--text-top") * H,   bottom: cssNum("--text-bottom") * H }
+      win:    { top: L.winTop, bottom: L.winBottom },
+      legend: { top: L.capTop - L.legendH, bottom: L.capTop, on: L.legendOn },
+      text:   { top: L.capTop, bottom: L.textBottom }
     };
+  }
+
+  // The map window as a rectangle (stage px): 19% to just above the legend, inside the
+  // left and right margins. Everything a beat is about, and every map label it shows,
+  // must sit inside it.
+  function windowRect() {
+    var s = safe(), Z = zones();
+    return { x0: STAGE_W * s.left / 100, x1: STAGE_W * (1 - s.right / 100), y0: Z.win.top, y1: Z.win.bottom };
+  }
+
+  // Publish the top of the text block (% of the stage): the legend, the scrim and the
+  // guides are positioned from it in CSS. Cheap, and safe to call as often as needed.
+  var lastCapTop = null;
+  function syncLayout() {
+    var L = layout(), pct = L.capTop / (STAGE_H / 100);
+    if (lastCapTop === null || Math.abs(pct - lastCapTop) > 0.001) {
+      root.style.setProperty("--cap-top", String(pct));
+      lastCapTop = pct;
+    }
+    drawBands();
+    return L;
   }
 
   // ---- The physical screen -----------------------------------------------------
@@ -100,6 +145,7 @@
     document.body.style.top = (-sc.top) + "px";
     document.body.style.height = sc.h + "px";                 // draw all the way to the bottom
     layoutMap(s, sc);
+    syncLayout();
     if (window.TSUReel && TSUReel.onFit) TSUReel.onFit();
   }
   // The map covers the whole screen (stage plus any strips), centred on the stage.
@@ -170,23 +216,35 @@
     var c = el("div", "reel-guide-label", guides, "IG buttons");
     c.style.left = cx + "px"; c.style.top = (cy + 20) + "px";
 
-    // The layout bands: a dashed line at the top of each, and one at the very bottom
-    // of the text block.
-    var z = zones();
-    function band(name, a, b) { return name + " " + cssNum(a) + "-" + cssNum(b) + "%"; }
-    [[z.header.top, band("Header row", "--header-top", "--header-bottom")],
-     [z.win.top, band("Map window", "--window-top", "--window-bottom")],
-     [z.legend.top, band("Legend", "--legend-top", "--legend-bottom")],
-     [z.text.top, band("Text block", "--text-top", "--text-bottom")], [z.text.bottom, ""]
-    ].forEach(function (b) {
+    drawBands();
+  }
+
+  // The layout bands: a dashed line at the top of each, and one at the very bottom of
+  // the text block. They move with the text, so they are redrawn whenever the layout is
+  // measured (only while the guides are showing).
+  var bandLines = [], bandKey = "";
+  function drawBands() {
+    if (!guides || !document.body.classList.contains("reel-guides-on")) return;
+    var z = zones(), P = function (n) { return Math.round(n / STAGE_H * 1000) / 10; };
+    var lines = [[z.header.top, "Header row " + P(z.header.top) + "-" + P(z.header.bottom) + "%"],
+                 [z.win.top, "Map window " + P(z.win.top) + "-" + P(z.win.bottom) + "%"]];
+    if (z.win.bottom > z.win.top) lines.push([z.win.bottom, z.legend.on ? "Legend " + P(z.legend.top) + "-" + P(z.legend.bottom) + "%" : "(no legend)"]);
+    lines.push([z.text.top, "Text block " + P(z.text.top) + "-" + P(z.text.bottom) + "%"], [z.text.bottom, ""]);
+    var key = JSON.stringify(lines.map(function (l) { return [Math.round(l[0]), l[1]]; }));
+    if (key === bandKey) return;
+    bandKey = key;
+    bandLines.forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); });
+    bandLines = lines.map(function (b) {
       var line = el("div", "reel-guide-zone", guides);
       line.style.top = b[0] + "px";
       if (b[1]) el("span", "", line, b[1]);
+      return line;
     });
   }
 
   function setGuides(on) {
     document.body.classList.toggle("reel-guides-on", on);
+    drawBands();
   }
 
   function buildChrome() {
@@ -240,11 +298,15 @@
 
   // ---- The camera: frame each beat's subject inside the map window ------------------
   // A beat gives `fit` (the points that make up its subject, [lng, lat]) and `z` (the
-  // closest zoom it may use). solveCamera finds the largest zoom <= z at which the
-  // subject fits inside the map window (19% to 58% down, inside the side margins,
-  // minus FIT_MARGIN all round and any padL / padR stage pixels the reel reserves for
-  // its graphic), and centres the subject in the window, not on the screen. The result
-  // is stored on the beat as beat.cam = { center, zoom }; the reel flies to it.
+  // closest zoom it may use). solveCamera finds the largest zoom <= z at which
+  //   - the subject, AND
+  //   - every label of the reel's own that shows on that beat (.reel-maplabel)
+  // fit inside the map window (19% down to just above the legend, or the text block when
+  // there is no legend), inside the side margins, minus FIT_MARGIN all round and any
+  // padL / padR stage pixels the reel reserves for its graphic, and centres all of it in
+  // the window, not on the screen. The window depends on the beat's text, so each beat
+  // is solved with its own text and legend on screen (solveAll steps through them).
+  // The result is stored on the beat as beat.cam = { center, zoom }; the reel flies to it.
   var FIT_MARGIN = 60;     // stage px kept clear above and below the subject inside the window
   var FIT_MARGIN_X = 40;   // ... and beside it, inside the side margins
 
@@ -273,31 +335,58 @@
     return b;
   }
 
+  // The reel's own map labels (.reel-maplabel) showing right now, as [{ text, x0, y0,
+  // x1, y1 }] in stage px. A label is showing when it and its parents are displayed
+  // and not faded out.
+  function ownLabels() {
+    var sr = stage.getBoundingClientRect(), k = sr.width / STAGE_W || 1, out = [];
+    var els = stage.querySelectorAll(".reel-maplabel");
+    for (var i = 0; i < els.length; i++) {
+      if (!shown(els[i])) continue;
+      var r = els[i].getBoundingClientRect();
+      if (!r.width && !r.height) continue;
+      out.push({ text: (els[i].textContent || "").replace(/\s+/g, " ").trim(),
+                 x0: (r.left - sr.left) / k, y0: (r.top - sr.top) / k,
+                 x1: (r.right - sr.left) / k, y1: (r.bottom - sr.top) / k });
+    }
+    return out;
+  }
+
+  // The subject's points plus every label showing, as one box (stage px).
+  function framedOf(map, pts) {
+    var b = pointsBox(map, pts);
+    ownLabels().forEach(function (l) {
+      b.x0 = Math.min(b.x0, l.x0); b.x1 = Math.max(b.x1, l.x1);
+      b.y0 = Math.min(b.y0, l.y0); b.y1 = Math.max(b.y1, l.y1);
+    });
+    return b;
+  }
+
   function solveCamera(map, beat) {
     var pts = beat.fit && beat.fit.length ? beat.fit : [beat.c];
-    var s = safe(), Z = zones();
-    var x0 = STAGE_W * s.left / 100 + FIT_MARGIN_X + (beat.padL || 0);
-    var x1 = STAGE_W * (1 - s.right / 100) - FIT_MARGIN_X - (beat.padR || 0);
-    var y0 = Z.win.top + FIT_MARGIN, y1 = Z.win.bottom - FIT_MARGIN;
-    var tx = (x0 + x1) / 2, ty = (y0 + y1) / 2;      // where the subject's centre should land
+    var W = windowRect();
+    var x0 = W.x0 + FIT_MARGIN_X + (beat.padL || 0);
+    var x1 = W.x1 - FIT_MARGIN_X - (beat.padR || 0);
+    var y0 = W.y0 + FIT_MARGIN, y1 = W.y1 - FIT_MARGIN;
+    var tx = (x0 + x1) / 2, ty = (y0 + y1) / 2;      // where the framed area's centre should land
 
     var lngs = pts.map(function (p) { return p[0]; }), lats = pts.map(function (p) { return p[1]; });
     var mid = [(Math.min.apply(null, lngs) + Math.max.apply(null, lngs)) / 2,
                mercLat((mercY(Math.min.apply(null, lats)) + mercY(Math.max.apply(null, lats))) / 2)];
 
-    // Put the subject's centre on (tx, ty) at zoom z; return the camera and the box.
+    // Put the framed area's centre on (tx, ty) at zoom z; return the camera and the box.
     function place(z) {
       var center = mid;
-      for (var k = 0; k < 5; k++) {
+      for (var k = 0; k < 6; k++) {
         map.jumpTo({ center: center, zoom: z });
-        var b = pointsBox(map, pts);
+        var b = framedOf(map, pts);
         var dx = tx - (b.x0 + b.x1) / 2, dy = ty - (b.y0 + b.y1) / 2;
         if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) break;
         var ll = map.unproject(toMap(map, STAGE_W / 2 - dx, STAGE_H / 2 - dy));
         center = [ll.lng, ll.lat];
       }
       map.jumpTo({ center: center, zoom: z });
-      return { center: center, zoom: z, box: pointsBox(map, pts) };
+      return { center: center, zoom: z, box: framedOf(map, pts) };
     }
     function fits(r) { return r.box.x1 - r.box.x0 <= x1 - x0 + 0.5 && r.box.y1 - r.box.y0 <= y1 - y0 + 0.5; }
 
@@ -313,12 +402,23 @@
     return { center: best.center, zoom: best.zoom };
   }
 
-  // Solve every beat once the style is loaded; leaves the camera where it was.
+  // Solve every beat once the style is loaded. Each beat is put on screen first (the
+  // reel's own jump(i), which sets its text, legend and labels), because the map window
+  // and the labels to fit depend on them. Leaves the camera and the beat where they were.
   function solveAll(map, beats) {
     var keep = { center: map.getCenter(), zoom: map.getZoom() };
+    var back = hooks && hooks.beat ? beats.indexOf(hooks.beat()) : -1;
     LB.suspended = true;
-    beats.forEach(function (b) { b.cam = solveCamera(map, b); });
+    document.body.classList.add("reel-solving");   // no fades: labels and legend rows are at their final state
+    beats.forEach(function (b, i) {
+      if (hooks && hooks.jump) hooks.jump(i);
+      syncLayout();
+      b.cam = solveCamera(map, b);
+    });
+    if (hooks && hooks.jump && back >= 0) hooks.jump(back);
     map.jumpTo(keep);
+    syncLayout();
+    document.body.classList.remove("reel-solving");
     LB.suspended = false;
   }
 
@@ -328,33 +428,32 @@
     if (!m || !b || !b.fit || !b.fit.length) return null;
     return pointsBox(m, b.fit);
   }
+  // The subject plus every label showing: what the camera centres in the map window.
+  function framedBox() {
+    var m = hooks && hooks.map && hooks.map(), b = hooks && hooks.beat && hooks.beat();
+    if (!m || !b || !b.fit || !b.fit.length) return null;
+    return framedOf(m, b.fit);
+  }
 
-  // ---- Map labels under the header row, the legend or the text block -----------------
-  // Two kinds of label: ones a reel draws itself (HTML, class .reel-maplabel) and the
-  // basemap's own place names (drawn inside the map canvas). Both are hidden wherever
-  // they fall under a band that holds text. The basemap's are found with
-  // queryRenderedFeatures and filtered out by name once the camera has settled; they
-  // are faded out while the camera moves so none slide under the text.
+  // ---- Basemap labels outside the map window --------------------------------------------
+  // Every map label shown on a beat must sit fully inside the map window and the side
+  // margins. A reel's own labels are fitted into the camera (above). The basemap's place
+  // names (drawn inside the map canvas) cannot be moved, so any that touch the ground the
+  // map window does not own are hidden: the header row and everything above the window,
+  // the legend and the text block below it, and the left and right margins. They are
+  // found with queryRenderedFeatures and filtered out by name once the camera has
+  // settled; they are faded out while the camera moves so none slide into view.
   var LB = { map: null, layers: [], hidden: {}, touched: {}, token: 0, busy: null,
              suspended: false, hiddenCount: 0, unnamed: 0, passes: 0 };
 
-  // The bands (stage px from the top) that hold text this beat.
-  function uiBands() {
-    var Z = zones(), bands = [Z.header, Z.text];
-    if (document.querySelector(".reel-legend .reel-leg-row.on")) bands.push(Z.legend);
-    return bands;
-  }
-
-  function hideHtmlLabels() {
-    var bands = uiBands(), sr = stage.getBoundingClientRect(), k = sr.width / STAGE_W;
-    var labels = stage.querySelectorAll(".reel-maplabel");
-    for (var i = 0; i < labels.length; i++) {
-      var r = labels[i].getBoundingClientRect();
-      if (!r.width && !r.height) continue;
-      var top = (r.top - sr.top) / k, bottom = (r.bottom - sr.top) / k;
-      var under = bands.some(function (b) { return bottom > b.top && top < b.bottom; });
-      labels[i].classList.toggle("reel-label-hidden", under);
-    }
+  // The four pieces of the stage (stage px, running on past the stage) that are not map
+  // window: above it, below it, left of it, right of it.
+  function outsideWindow() {
+    var W = windowRect(), big = 100000;
+    return [{ x0: -big, y0: -big, x1: big, y1: W.y0 },
+            { x0: -big, y0: W.y1, x1: big, y1: big },
+            { x0: -big, y0: -big, x1: W.x0, y1: big },
+            { x0: W.x1, y0: -big, x1: big, y1: big }];
   }
 
   function labelIds() { return LB.layers.map(function (l) { return l.id; }); }
@@ -386,13 +485,17 @@
     LB.touched = {};
   }
 
-  // Basemap labels now showing inside the bands. Returns [{ layer, name, key }].
+  // Basemap labels now showing outside the map window. Returns [{ layer, props }].
   function basemapUnder() {
     var m = LB.map, out = [];
     if (!m || !LB.layers.length) return out;
-    var cw = m.getContainer().clientWidth;
-    uiBands().forEach(function (b) {
-      var feats = m.queryRenderedFeatures([[0, toMap(m, 0, b.top)[1]], [cw, toMap(m, 0, b.bottom)[1]]], { layers: labelIds() });
+    var c = m.getContainer(), cw = c.clientWidth, ch = c.clientHeight;
+    var clamp = function (v, hi) { return Math.max(0, Math.min(hi, v)); };
+    outsideWindow().forEach(function (r) {
+      var a = toMap(m, r.x0, r.y0), b = toMap(m, r.x1, r.y1);
+      var x0 = clamp(a[0], cw), y0 = clamp(a[1], ch), x1 = clamp(b[0], cw), y1 = clamp(b[1], ch);
+      if (x1 <= x0 || y1 <= y0) return;
+      var feats = m.queryRenderedFeatures([[x0, y0], [x1, y1]], { layers: labelIds() });
       feats.forEach(function (f) { out.push({ layer: f.layer.id, props: f.properties || {} }); });
     });
     return out;
@@ -432,9 +535,8 @@
       return whenIdle().then(function () {
         if (token !== LB.token) return;                      // the camera moved again
         LB.passes++;
-        if (hidePass() && ++n < 6) return pass();              // hiding one can reveal another
+        if (hidePass() && ++n < 8) return pass();              // hiding one can reveal another
         fadeBasemapLabels(false);
-        hideHtmlLabels();
       });
     }
     return pass();
@@ -450,7 +552,8 @@
   // Resolves once the labels for the current camera have settled (used by the check).
   function settle() {
     if (!LB.map) return Promise.resolve();
-    return startSettle().then(function () { hideHtmlLabels(); });
+    syncLayout();
+    return startSettle();
   }
 
   function attachMap(map) {
@@ -468,7 +571,6 @@
       resetFilters();
     });
     map.on("moveend", startSettle);
-    map.on("render", hideHtmlLabels);
     startSettle();
   }
 
@@ -496,7 +598,7 @@
   var NAMES = [
     ["reel-kicker", "kicker line"], ["reel-title", "title"], ["reel-sub", "subtitle"],
     ["reel-date", "date badge"], ["reel-dots", "beat dots"], ["reel-leg-row", "legend row"],
-    ["reel-legend", "legend"], ["reel-graphic", "graphic"], ["reel-caption", "caption"], ["reel-logo", "logo"]
+    ["reel-legend", "legend"], ["reel-graphic", "graphic"], ["reel-maplabel", "map label"], ["reel-caption", "caption"], ["reel-logo", "logo"]
   ];
 
   function describe(node) {
@@ -576,16 +678,51 @@
     return found;
   }
 
+  // ---- Framing helpers (shared by the on-device check and npm run check-reels) -------
+  // How far a box (stage px) sticks out of the map window or the side margins:
+  // { side, by } for the worst side, or null when it sits fully inside. tol is in px.
+  function overflow(box, W, tol) {
+    if (!box) return null;
+    tol = tol == null ? 1 : tol;
+    var c = [["top", W.y0 - box.y0], ["bottom", box.y1 - W.y1], ["left", W.x0 - box.x0], ["right", box.x1 - W.x1]]
+      .filter(function (x) { return x[1] > tol; })
+      .sort(function (a, b) { return b[1] - a[1]; });
+    return c.length ? { side: c[0][0], by: Math.round(c[0][1]) } : null;
+  }
+
+  // The gradient: where the scrim sits (stage px) and where it first reaches full
+  // darkness, read from the gradient the browser actually computed.
+  function scrimInfo() {
+    var sc = stage.querySelector(".reel-scrim");
+    if (!sc) return null;
+    var sr = stage.getBoundingClientRect(), k = sr.width / STAGE_W || 1, r = sc.getBoundingClientRect();
+    var info = { top: (r.top - sr.top) / k, bottom: (r.bottom - sr.top) / k, darkAt: null, startAlpha: null, endAlpha: null };
+    var bg = getComputedStyle(sc).backgroundImage, re = /rgba?\(([^)]+)\)\s*([\d.]+)(px|%)/g, m, stops = [];
+    while ((m = re.exec(bg))) {
+      var parts = m[1].split(",").map(parseFloat);
+      stops.push({ a: parts.length > 3 ? parts[3] : 1, pos: m[3] === "px" ? parseFloat(m[2]) : parseFloat(m[2]) / 100 * (r.height / k) });
+    }
+    if (stops.length) {
+      info.startAlpha = stops[0].a;
+      info.endAlpha = stops[stops.length - 1].a;
+      var maxA = Math.max.apply(null, stops.map(function (x) { return x.a; }));
+      for (var i = 0; i < stops.length; i++) if (stops[i].a >= maxA - 0.005) { info.darkAt = info.top + stops[i].pos; break; }
+      info.maxAlpha = maxA;
+    }
+    return info;
+  }
+
   // ---- On-device check: ?check=1 ---------------------------------------------------
-  // For the phone. Measures the header row, the map subject, the legend and the text
-  // block as a percent of the stage, compares them with the rules in reel-frame.css,
-  // and shows PASS or FAIL with expected and actual numbers in a panel inside the
-  // safe area. Also reports where the stage sits on the physical screen (the strip
-  // above and below should be equal) and draws a mock of Instagram's interface
-  // (header, right-hand button column, username and caption) over the reel at the
-  // blocked zones, so you can see by eye what Instagram will cover. ?ig=0 hides the
-  // mock. (The automatic check-reels run uses ?audit=1, which only freezes motion.)
-  var CHECK_TOL = 1.0, CHECK_CENTRE_TOL = 2.5;
+  // For the phone. Measures the header row, the map window and what is framed in it, the
+  // legend, the text block and the gradient as a percent of the stage, compares them
+  // with the rules in reel-frame.css, and shows PASS or FAIL with expected and actual
+  // numbers in a panel inside the safe area. Also reports where the stage sits on the
+  // physical screen (the strip above and below should be equal) and draws a mock of
+  // Instagram's interface (header, right-hand button column, username and caption) over
+  // the reel at the blocked zones, so you can see by eye what Instagram will cover.
+  // ?ig=0 hides the mock. (The automatic check-reels run uses ?audit=1, which only
+  // freezes motion; it runs this same report in its iPhone simulation.)
+  var CHECK_TOL = 1.0, CHECK_CENTRE_TOL = 2.5, CHECK_FRAME_PX = 2, CHECK_TEXT_TOL = 0.5;
 
   function stageBox(nodes, sr) {
     var t = Infinity, b = -Infinity, any = false;
@@ -601,27 +738,54 @@
 
   // Returns [{ name, want, got, pass }], percent of the stage from the top.
   function deviceReport() {
-    var sr = stage.getBoundingClientRect(), Z = zones(), rows = [];
+    syncLayout();
+    var sr = stage.getBoundingClientRect(), Z = zones(), W = windowRect(), rows = [];
+    var H = STAGE_H / 100;
     var P = function (n) { return Math.round(n / STAGE_H * 1000) / 10; };
     var f = function (n) { return n.toFixed(1); };
     function q(sel) { return Array.prototype.slice.call(stage.querySelectorAll(sel)); }
-    function band(name, nodes, z) {
-      var lo = P(z.top), hi = P(z.bottom), b = stageBox(nodes, sr);
-      if (!b) { rows.push({ name: name, want: lo + "-" + hi + "%", got: "not shown", pass: true }); return; }
-      rows.push({ name: name, want: lo + "-" + hi + "%", got: f(b.top) + "-" + f(b.bottom) + "%",
-                  pass: b.top >= lo - CHECK_TOL && b.bottom <= hi + CHECK_TOL });
+    function band(name, nodes, lo, hi, tol) {
+      var b = stageBox(nodes, sr);
+      if (!b) { rows.push({ name: name, want: f(lo) + "-" + f(hi) + "%", got: "not shown", pass: true }); return; }
+      rows.push({ name: name, want: f(lo) + "-" + f(hi) + "%", got: f(b.top) + "-" + f(b.bottom) + "%",
+                  pass: b.top >= lo - tol && b.bottom <= hi + tol });
     }
-    band("Header row", q(".reel-date, .reel-dots"), Z.header);
-    var sb = subjectBox();
+    band("Header row", q(".reel-date, .reel-dots"), P(Z.header.top), P(Z.header.bottom), CHECK_TOL);
+
+    // The map window: 19% down to just above the legend (or the text block).
+    var minWin = cssNum("--window-min");
+    rows.push({ name: "Map window", want: f(P(Z.win.top)) + "% to just above the " + (Z.legend.on ? "legend" : "text") + ", at least " + minWin + "% tall",
+                got: f(P(Z.win.top)) + "-" + f(P(Z.win.bottom)) + "%", pass: P(Z.win.bottom) - P(Z.win.top) >= minWin - 0.05 });
+    var sb = subjectBox(), fb = framedBox();
     if (sb) {
-      var lo = P(Z.win.top), hi = P(Z.win.bottom), mid = (lo + hi) / 2;
-      var t = sb.y0 / STAGE_H * 100, bt = sb.y1 / STAGE_H * 100, c = (t + bt) / 2;
-      rows.push({ name: "Map subject", want: "centre " + f(mid) + "%, in " + lo + "-" + hi + "%",
-                  got: "centre " + f(c) + "%, " + f(t) + "-" + f(bt) + "%",
-                  pass: Math.abs(c - mid) <= CHECK_CENTRE_TOL && t >= lo - CHECK_TOL && bt <= hi + CHECK_TOL });
+      var o = overflow(sb, W, CHECK_FRAME_PX), c = (fb.y0 + fb.y1) / 2, mid = (W.y0 + W.y1) / 2;
+      rows.push({ name: "Map subject", want: "inside " + f(P(W.y0)) + "-" + f(P(W.y1)) + "% and the side margins",
+                  got: f(sb.y0 / H) + "-" + f(sb.y1 / H) + "% down, " + Math.round(sb.x0) + "-" + Math.round(sb.x1) + "px across" + (o ? ", " + o.by + "px past the " + o.side : ""),
+                  pass: !o });
+      rows.push({ name: "Framing centred", want: "centre " + f(P(mid)) + "%", got: "centre " + f(P(c)) + "%",
+                  pass: Math.abs(c - mid) / H <= CHECK_CENTRE_TOL });
     }
-    band("Legend", q(".reel-leg-row.on"), Z.legend);
-    band("Text block", q(".reel-kicker, .reel-title, .reel-sub"), Z.text);
+    var labels = ownLabels(), bad = labels.map(function (l) { return { l: l, o: overflow(l, W, CHECK_FRAME_PX) }; }).filter(function (x) { return x.o; });
+    rows.push({ name: "Map labels", want: "all inside the window and margins",
+                got: !labels.length ? "none showing" : bad.length ? '"' + bad[0].l.text + '" ' + bad[0].o.by + "px past the " + bad[0].o.side : labels.length + " showing, all inside",
+                pass: !bad.length });
+
+    // The legend sits directly above the kicker.
+    band("Legend", q(".reel-leg-row.on"), P(Z.legend.top), P(Z.legend.bottom), 0.3);
+    // The text block is anchored: its last line ends at 83% and it grows upward.
+    var tb = stageBox(q(".reel-kicker, .reel-title, .reel-sub"), sr), end = P(Z.text.bottom);
+    if (tb) rows.push({ name: "Text block", want: "last line ends at " + f(end) + "%", got: f(tb.top) + "-" + f(tb.bottom) + "%",
+                        pass: Math.abs(tb.bottom - end) <= CHECK_TEXT_TOL });
+    // The gradient follows the text: transparent a little above the legend, dark by the
+    // kicker, dark to the bottom of the stage.
+    var sc = scrimInfo();
+    if (sc) {
+      var wantTop = Z.legend.top - cssNum("--scrim-lead") * H;
+      var ok = Math.abs(sc.top - wantTop) <= 0.3 * H && sc.darkAt != null && sc.darkAt <= Z.text.top + 0.3 * H &&
+               sc.startAlpha === 0 && sc.endAlpha >= 0.85 && sc.bottom >= STAGE_H - 1;
+      rows.push({ name: "Gradient", want: "from " + f(P(wantTop)) + "%, dark by " + f(P(Z.text.top)) + "%, to the bottom",
+                  got: "from " + f(P(sc.top)) + "%, dark by " + (sc.darkAt == null ? "?" : f(P(sc.darkAt))) + "%, to " + f(P(sc.bottom)) + "%", pass: ok });
+    }
     var m = metrics();
     rows.push({ name: "Stage on screen", want: "equal strips", got: f(m.above) + " / " + f(m.below) + " pt",
                 pass: Math.abs(m.above - m.below) <= 1 });
@@ -669,7 +833,11 @@
     // Camera and labels (see the sections above). A reel calls attachMap(map) and
     // solveAll(map, BEATS) once its style has loaded; the rest is for the check.
     attachMap: attachMap, solveAll: solveAll, solveCamera: solveCamera, settle: settle,
-    subjectBox: subjectBox, labelsUnderUI: labelsUnderUI, labelStats: labelStats,
+    subjectBox: subjectBox, framedBox: framedBox, ownLabels: ownLabels, labelsUnderUI: labelsUnderUI, labelStats: labelStats,
+    // Layout (see the layout section): sync() re-measures the text block, windowRect() is
+    // the map window, overflow() says how far a box sticks out of it, scrimInfo() reads
+    // the gradient, deviceReport() is the on-device PASS/FAIL list.
+    sync: syncLayout, windowRect: windowRect, overflow: overflow, scrimInfo: scrimInfo, deviceReport: deviceReport,
     SHOW_DATE: params.get("date") !== "off",
     // A reel calls this once. count = number of beats; step(dir) moves with the
     // map animation; jump(i) goes straight to beat i; mapReady() is optional;
@@ -687,6 +855,13 @@
 
   if (params.get("audit") === "1") document.body.classList.add("reel-check");
   buildChrome();
+  // The text block is anchored to the bottom, so its top moves when the text changes:
+  // re-measure whenever it resizes, and once fonts and the page have loaded.
+  var capEl = stage.querySelector(".reel-caption");
+  if (capEl && typeof ResizeObserver !== "undefined") new ResizeObserver(syncLayout).observe(capEl);
+  window.addEventListener("load", syncLayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncLayout);
+  syncLayout();
   if (params.get("check") === "1") buildCheck();
   setGuides(params.get("guides") === "1");
 })();

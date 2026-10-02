@@ -112,43 +112,56 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   centre and zoom) looks identical on any screen.
 - **One safe area, defined once** (the `--safe-*` and `--corner-*` numbers at the
   top of `reel-frame.css`), as a percent of the stage: top 15%, left 8%, right 8%,
-  bottom 20%, **plus a blocked corner** — the right 17% of the width for the bottom
+  bottom 17%, **plus a blocked corner** — the right 17% of the width for the bottom
   40% of the height (Instagram's button column). The safe area is that rectangle
   with the bottom-right corner cut out. All text, labels, legends and logos stay
   inside it. The map fills the whole stage.
-- **Four bands inside the safe area, defined once** (the `--header-*`, `--window-*`,
-  `--legend-*` and `--text-*` numbers in `reel-frame.css`). Percent of the stage,
-  from the top. Keep text off the map: the map is the picture.
+- **Four bands inside the safe area, defined once** (the `--header-*`, `--window-top`,
+  `--text-bottom`, `--legend-h` and `--scrim-*` numbers in `reel-frame.css`). Percent
+  of the stage, from the top. Keep text off the map: the map is the picture. **The text
+  block is anchored to the bottom and grows upward**, so the lower bands move from
+  beat to beat with the amount of text (`reel-frame.js` measures the text block and
+  publishes its top as `--cap-top`; the legend, the gradient and the camera follow).
   1. **Header row, 15% to 19%.** The date tag and the progress dots on one line,
      small.
-  2. **Map window, 19% to 58%.** Only the map, map labels and at most **one small
-     graphic** per beat. Each beat's subject is framed inside this window, not at
-     the centre of the screen: a beat lists `fit` (the lng/lat points of its
-     subject) and `z` (the closest zoom it may use), and the frame zooms out as far
-     as needed and centres the subject in the window. A graphic is a
-     `.reel-graphic` inside the window that does not cover the beat's subject (the
-     Lake Powell threshold ladder sits at the left; the beat reserves its width
-     with `padL` so the lake and dam sit to the right of it).
-  3. **Text block, 60% to 80%,** left-aligned and clear of the blocked corner: a
-     kicker, a headline of at most **2 lines and 7 words**, and one supporting line
-     of at most **10 words** (it may wrap to a second line at this size; never a
-     third). No paragraphs. The map is darkened behind this block (`.reel-scrim`)
-     and nowhere else.
-  4. **Legend, 58% to 60%,** directly above the text block, only on beats that need
-     it: one compact row of at most **3 items**.
+  2. **Map window, 19% down to just above the legend** (or just above the text block
+     on a beat with no legend; never shorter than `--window-min`, 35%). Only the map,
+     map labels and at most **one small graphic** per beat. Everything a beat is
+     about (its `fit` points), **and every map label shown on that beat, sits fully
+     inside the window and inside the 8% side margins**. A beat lists `fit` (the
+     lng/lat points of its subject) and `z` (the closest zoom it may use); the frame
+     solves each beat with its own text on screen, zooms out as far as needed and
+     centres the subject *and the reel's own labels* (`.reel-maplabel`) in the window.
+     Basemap place names that would cross out of the window or the margins are hidden.
+     A graphic is a `.reel-graphic` inside the window that does not cover the beat's
+     subject (the Lake Powell threshold ladder sits at the left; the beat reserves its
+     width with `padL` so the lake and dam sit to the right of it).
+  3. **Legend,** directly above the kicker, only on beats that need it: one compact
+     row of at most **3 items**, clear of the blocked corner (so it ends at 83% across).
+  4. **Text block, ending at 83%** (100 minus the bottom margin), left-aligned and
+     clear of the blocked corner. Top to bottom: a kicker, a headline of at most
+     **2 lines and 7 words**, and one supporting line of at most **10 words** (it may
+     wrap to a second line at this size; never a third). No paragraphs. The last line
+     always ends on the 83% line.
+  - **The gradient (`.reel-scrim`)** is the only darkening: fully transparent
+    `--scrim-lead` (3%) above the legend, fully dark (.88) by the top of the text
+    block, and dark all the way to the bottom of the stage. No visible lower edge. It
+    follows the actual text on each beat, not a fixed zone.
 - **Type sizes, set once** in `reel-frame.css` (`--type-*`), in stage pixels:
   headline 64, supporting line 36, kicker / legend / date 28. Nothing on screen is
   smaller than 28. Reels never set their own sizes.
-- **Map labels.** Any label that falls under the header row, the legend or the text
-  block is hidden: the basemap's place names (found with `queryRenderedFeatures` and
-  filtered out once the camera has settled; they fade out while it moves) and a
-  reel's own labels (give them the class `reel-maplabel`).
+- **Map labels.** Every label shown must sit fully inside the map window and the side
+  margins. A reel's own labels (give them the class `reel-maplabel`) are fitted into
+  the camera with the subject; the basemap's place names that would touch the
+  header row, legend, text block or margins are hidden (found with
+  `queryRenderedFeatures` and filtered out once the camera has settled; they fade
+  out while it moves).
 - **Cutting on-screen text.** When a beat's wording is too long, cut words, not
   facts: keep every number and date exact, and say in the commit or PR what was
   cut from which beat. The narration scripts (`*-script.md`) are not touched.
 - **Guides.** Add `?guides=1` to a reel's address (or press G) to shade the
   blocked areas (margins and corner), outline the safe area and mark the four
-  bands. Off by default.
+  bands (the lower three move with the text on each beat). Off by default.
 - **Check.** `npm run check-reels` opens every reel in a headless browser at
   1080x1920, steps through every beat, and fails with a plain-English message
   naming the reel, the beat and the element if any text crosses outside the safe
@@ -159,7 +172,7 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   a comment does not count), if the map did not load (rules 2 and 6 cannot be
   checked without it, so it never passes quietly), and if the built reels index is stale. It also checks that the stage is centred on the
   physical screen when the viewport is 59pt shorter than the screen. `npm run build` runs it after the Eleventy build.
-- **On-device check and iPhone simulation.** Open a reel with `?check=1` (the reels index has a "check" button beside "play") to get a PASS/FAIL panel of the band measurements and an Instagram interface mock. `npm run check-reels` also runs every reel in an iPhone 15 Home Screen simulation (393x852 screen, 793pt viewport starting at the 59pt top inset, 34pt bottom inset) and fails if the stage or any band is off. Each reel must have exactly one viewport meta tag, with `viewport-fit=cover`. The automatic check opens reels with `?audit=1`.
+- **On-device check and iPhone simulation.** Open a reel with `?check=1` (the reels index has a "check" button beside "play") to get a PASS/FAIL panel of the band measurements and an Instagram interface mock. `npm run check-reels` also runs every beat of every reel in an iPhone 15 Home Screen simulation (393x852 screen, 793pt viewport starting at the 59pt top inset, 34pt bottom inset), runs the same report there, and fails if the stage, a band, the framing or the gradient is off. The panel also shows the map window, whether the subject and every label are inside it, and the gradient. Each reel must have exactly one viewport meta tag, with `viewport-fit=cover`. The automatic check opens reels with `?audit=1`.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
   and ticks every 1%, the exact top and bottom "stage edge", the "crop" strips
   outside it, and the centring readout.
