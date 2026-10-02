@@ -120,7 +120,9 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
 - **Check.** `npm run check-reels` opens every reel in a headless browser at
   1080x1920, steps through every beat, and fails with a plain-English message
   naming the reel, the beat and the element if any text crosses outside the safe
-  area or into the blocked corner. It also checks that the stage is centred on the
+  area or into the blocked corner. It also fails if a reel does not load the shared
+  frame (`reel-frame.css`, `reel-frame.js` and the `reel-stage` markup; a mention in
+  a comment does not count), and if the built reels index is stale. It also checks that the stage is centred on the
   physical screen when the viewport is 59pt shorter than the screen. `npm run build` runs it after the Eleventy build.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
   and ticks every 1%, the exact top and bottom "stage edge", the "crop" strips
@@ -135,9 +137,13 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   strips above and below, which hold no text or controls and are cropped off.
   `manifest.webmanifest` plus the Apple meta tags make the reels run full screen
   (no browser bars, under the status bar and home indicator) when opened from a
-  Home Screen icon. The web app starts at `src/reels/index.html`, which lists every
-  reel newest first plus the calibration page. A new reel needs a row there (the
-  check enforces it) and the same head tags.
+  Home Screen icon. The web app starts at `reels/index.html`, which **builds itself**
+  (`scripts/reels_index.js`, run by `.eleventy.js` after every build) from the reels
+  in `src/reels/`, newest first, plus the calibration page. Nothing to edit when you
+  add a reel: give it the same head tags and a
+  `<meta name="tsu-published" content="YYYY-MM-DD">` (the index orders by it, and the
+  build stops with a plain message if it is missing). The page layout lives in
+  `scripts/reels-index-template.html`.
 - **Nothing on screen but the reel.** Tap right to advance, left to go back; no
   buttons or counters. Holding a finger down for a second returns to the index.
 - **New reels must use the shared frame and pass the check.** Copy an existing

@@ -2,15 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<!-- Home Screen web app: opened from the icon it runs full screen, with no browser bars. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Reels">
+<meta name="theme-color" content="#0a0f18">
+<!-- Shown on the reels index, which lists reels newest first. -->
+<meta name="tsu-published" content="2026-10-02">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Story Beat Reel — Lake Powell · The Spatial Update</title>
 
 <!--
   Story Beat Reel — a 9:16, screen-recordable map reel of "How close is Lake Powell
   to the line?" Standalone page: token-free MapLibre GL + Carto dark-matter tiles, so
-  it renders (and records) anywhere. Same controls and layout as the other reels:
-  tap/click the right ~2/3 of the screen (or press → / Space) to advance a beat, the
-  left ~1/3 (or ←) to go back.
+  it renders (and records) anywhere.
+
+  Layout: this reel uses the shared frame (reel-frame.css + reel-frame.js): one
+  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone defined
+  once in reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas
+  and outline the safe area. `npm run check-reels` fails if any text leaves it.
+
+  Controls: tap/click the right ~2/3 of the screen (or press -> / Space) to
+  advance a beat, the left ~1/3 (or <-) to go back. Hold a finger down for a second
+  to go back to the reels index. Nothing else is ever drawn on screen.
 
   DRAFT — trial of the new production process. Not linked from anywhere, not listed in
   stories.json. Every number and place here traces to dossiers/lake-powell.md (the
@@ -29,145 +47,64 @@
 <link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
 <script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
 
+<link href="reel-frame.css" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#0d0b09; font-family:Georgia,serif; -webkit-font-smoothing:antialiased; }
-
-  @keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
-
-  .tsu-mk   { position:relative; width:0; height:0; }
-  .tsu-dot  { position:absolute; left:50%; top:50%; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%; background:currentColor; border:1.5px solid rgba(255,255,255,.22); }
-  .tsu-ring { position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:2px solid currentColor; animation:tsuPulse 1.9s ease-out infinite; }
-
-  .maplibregl-ctrl-logo,
-  .maplibregl-ctrl-attrib,
-  .maplibregl-ctrl-bottom-right,
-  .maplibregl-ctrl-bottom-left { display:none !important; }
-
-  .tsu-screen canvas:focus { outline:none; }
-
-  .tsu-page   { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:36px 20px; }
-  .tsu-cap    { display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; }
-  .tsu-cap-h  { font:600 12px system-ui,sans-serif; color:#e4e0da; }
-  .tsu-cap-p  { font:400 11px/1.4 system-ui,sans-serif; color:#8a8681; max-width:320px; }
-
-  .tsu-phone  { width:320px; padding:11px; background:linear-gradient(#26221d,#171310); border-radius:6px; box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06); }
-  .tsu-screen { position:relative; width:298px; height:530px; overflow:hidden; background:#0a0f18; }
-
-  .tsu-tap-l  { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
-  .tsu-tap-r  { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
-
-  .tsu-top-fade { position:absolute; left:0; right:0; top:0; height:120px; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
-  .tsu-bot-fade { position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
-
-  .tsu-date  { position:absolute; left:16px; top:15px; z-index:7; font:600 10px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:6px 9px; border-radius:4px; pointer-events:none; }
-  .tsu-dots  { position:absolute; left:0; right:0; top:44px; z-index:7; display:flex; justify-content:center; align-items:center; gap:5px; pointer-events:none; }
-
-  .tsu-caption { position:absolute; left:0; right:0; bottom:0; z-index:6; padding:0 20px 26px; pointer-events:none; }
-  .tsu-kicker  { font:700 10px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:10px; }
-  .tsu-title   { font:400 25px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:9px; }
-  .tsu-sub     { font:400 14px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
-
-  .tsu-controls { display:flex; align-items:center; gap:8px; width:320px; padding:0 4px; }
-  .tsu-btn      { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
-  .tsu-btn:hover{ background:#262220; }
-  .tsu-counter  { font:500 11px Arial,sans-serif; color:#8a8681; margin-left:auto; }
-  .tsu-full-btn { font:600 11px Arial,sans-serif; color:#c8a84e; background:none; border:1px solid #3a352b; border-radius:6px; padding:7px 10px; cursor:pointer; }
-  .tsu-full-btn:hover { background:#1e1b18; }
-
-  /* Legend — a small key so the lease polygon and turbine field read on their own. */
-  .tsu-legend { position:absolute; left:16px; bottom:176px; z-index:7; display:flex; flex-direction:column; gap:6px; pointer-events:none; }
-  .tsu-leg-row{ display:flex; align-items:center; gap:8px; font:600 10px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 1px 3px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
-  .tsu-leg-row.on { opacity:1; }
-  .tsu-leg-line { width:20px; height:0; border-top-width:3px; border-top-style:solid; flex-shrink:0; }
-  .tsu-leg-fill { width:16px; height:10px; border-radius:2px; flex-shrink:0; }
-  .tsu-leg-dot  { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-
-  /* Exit affordance — invisible at rest so it stays out of the recording; appears on hover. */
-  .tsu-exit { position:absolute; right:12px; top:12px; z-index:9; width:26px; height:26px; display:none;
-              align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.2);
-              background:rgba(10,12,18,.5); color:#e4e0da; font:600 14px Arial,sans-serif; cursor:pointer;
-              opacity:0; transition:opacity .2s; }
-  .tsu-exit:hover { opacity:1; }
-
-  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox — no frame, no chrome. */
-  body.tsu-full { background:#000; }
-  body.tsu-full .tsu-page { padding:0; gap:0; }
-  body.tsu-full .tsu-cap,
-  body.tsu-full .tsu-controls { display:none; }
-  body.tsu-full .tsu-phone { width:auto; padding:0; background:none; box-shadow:none; border-radius:0; }
-  body.tsu-full .tsu-screen { width:auto; height:100vh; aspect-ratio:9 / 16; max-width:100vw; }
-  body.tsu-full .tsu-exit { display:flex; }
-
-  /* Elevation gauge (Lake Powell beats). Left edge, below the date chip / progress dots. */
-  .tsu-gauge { position:absolute; left:16px; top:78px; width:150px; height:196px; z-index:7; pointer-events:none; opacity:0; transition:opacity .4s; }
+  /* Lake Powell only: the elevation gauge and the state labels that sit on the map.
+     Everything else (stage, safe zone, caption, legend, dots) comes from reel-frame.css.
+     The gauge sits inside .reel-safe, so it is positioned within the safe zone. */
+  .tsu-gauge { position:absolute; left:0; top:150px; width:544px; height:370px; z-index:7; pointer-events:none; opacity:0; transition:opacity .4s; }
   .tsu-gauge.on { opacity:1; }
-  .tsu-g-rail { position:absolute; left:6px; top:0; bottom:0; width:2px; background:rgba(228,224,218,.28); }
-  .tsu-g-row  { position:absolute; left:0; display:flex; align-items:center; gap:7px; transform:translateY(-50%); font:600 10px/1.15 Arial,sans-serif; color:#cfcac2; text-shadow:0 1px 3px rgba(0,0,0,.85); white-space:nowrap; }
-  .tsu-g-tick { width:14px; height:0; border-top:2px solid currentColor; flex-shrink:0; }
+  .tsu-g-rail { position:absolute; left:22px; top:0; bottom:0; width:7px; background:rgba(228,224,218,.28); }
+  .tsu-g-row  { position:absolute; left:0; display:flex; align-items:center; gap:25px; transform:translateY(-50%); font:600 36px/1.15 Arial,sans-serif; color:#cfcac2; text-shadow:0 4px 11px rgba(0,0,0,.85); white-space:nowrap; }
+  .tsu-g-tick { width:51px; height:0; border-top:7px solid currentColor; flex-shrink:0; }
   .tsu-g-row b { font-weight:700; }
   .tsu-g-row.late { opacity:0; transition:opacity .5s; }
   .tsu-gauge.full .tsu-g-row.late { opacity:1; }
-  .tsu-g-row.lake { color:#e8c87a; font-size:11px; }
+  .tsu-g-row.lake { color:#e8c87a; font-size:40px; }
   .tsu-g-row.t510 { color:#5b9bd5; }
   .tsu-g-row.t500 { color:#e8955a; }
   .tsu-g-row.t490 { color:#e05a4e; }
 
-  /* State labels (cuts). */
+  /* State labels (cuts). They live inside the map, so these are map pixels. */
   .tsu-lbl { font:700 11px/1.25 Arial,sans-serif; color:#f2efe9; text-align:center; text-shadow:0 1px 4px rgba(0,0,0,.95); white-space:nowrap; transform:translate(-50%,-50%); opacity:0; transition:opacity .4s; pointer-events:none; }
   .tsu-lbl.on { opacity:1; }
   .tsu-lbl small { display:block; font:600 10px Arial,sans-serif; color:#e8b4ac; }
 </style>
 </head>
 <body>
-<section class="tsu-page">
-  <div class="tsu-cap">
-    <div class="tsu-cap-h">Story Beat Reel — Lake Powell</div>
-    <div class="tsu-cap-p">Tap the right half to advance, left half to go back, and narrate. Screen-record at 9:16.</div>
-  </div>
+<div class="reel-stage" id="reel-stage">
+  <div id="tsu-map"></div>
 
-  <div class="tsu-phone">
-    <div class="tsu-screen">
-      <div id="tsu-map" style="position:absolute;inset:0;"></div>
+  <div class="reel-fade-top"></div>
+  <div class="reel-fade-bottom"></div>
 
-      <div class="tsu-tap-l" id="tsu-prev-zone" title="Back"></div>
-      <div class="tsu-tap-r" id="tsu-next-zone" title="Next"></div>
+  <div class="reel-safe">
+    <div class="reel-header">
+      <div class="reel-date" id="tsu-date" hidden></div>
+      <div class="reel-dots" id="tsu-dots"></div>
+    </div>
 
-      <div class="tsu-top-fade"></div>
-      <div class="tsu-bot-fade"></div>
+    <div class="tsu-gauge" id="tsu-gauge"></div>
 
-      <div class="tsu-exit" id="tsu-exit" title="Exit full screen (Esc)">&#10005;</div>
-
-      <div class="tsu-date" id="tsu-date" hidden></div>
-
-      <div class="tsu-dots" id="tsu-dots"></div>
-
-      <div class="tsu-gauge" id="tsu-gauge"></div>
-
-      <div class="tsu-legend" id="tsu-legend">
-        <div class="tsu-leg-row" data-line="states"><span class="tsu-leg-fill" style="background:#9a958c"></span>The seven basin states</div>
-        <div class="tsu-leg-row" data-line="cut"><span class="tsu-leg-fill" style="background:#e05a4e"></span>Lower Division states: 2027&#8211;28 reduction</div>
-        <div class="tsu-leg-row" data-line="upper"><span class="tsu-leg-fill" style="background:#5b7a96"></span>Upper Division states: voluntary only</div>
-        <div class="tsu-leg-row" data-line="res"><span class="tsu-leg-fill" style="background:#5b9bd5"></span>Reservoirs</div>
-        <div class="tsu-leg-row" data-line="dams"><span class="tsu-leg-dot" style="background:#e8c87a"></span>Dams</div>
+    <div class="reel-bottom">
+      <div class="reel-legend" id="tsu-legend">
+          <div class="reel-leg-row" data-line="states"><span class="reel-leg-fill" style="background:#9a958c"></span>The seven basin states</div>
+          <div class="reel-leg-row" data-line="cut"><span class="reel-leg-fill" style="background:#e05a4e"></span>Lower Division states: 2027&#8211;28 reduction</div>
+          <div class="reel-leg-row" data-line="upper"><span class="reel-leg-fill" style="background:#5b7a96"></span>Upper Division states: voluntary only</div>
+          <div class="reel-leg-row" data-line="res"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Reservoirs</div>
+          <div class="reel-leg-row" data-line="dams"><span class="reel-leg-dot" style="background:#e8c87a"></span>Dams</div>
       </div>
 
-      <div class="tsu-caption">
-        <div class="tsu-kicker" id="tsu-kicker"></div>
-        <div class="tsu-title"  id="tsu-title"></div>
-        <div class="tsu-sub"    id="tsu-sub"></div>
+      <div class="reel-caption">
+        <div class="reel-kicker" id="tsu-kicker"></div>
+        <div class="reel-title"  id="tsu-title"></div>
+        <div class="reel-sub"    id="tsu-sub"></div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="tsu-controls">
-    <button class="tsu-btn" id="tsu-prev" aria-label="Previous beat">&#9664;</button>
-    <button class="tsu-btn" id="tsu-next" aria-label="Next beat">&#9654;</button>
-    <button class="tsu-full-btn" id="tsu-full" aria-label="Full screen recording mode">&#9974; Full screen</button>
-    <span class="tsu-counter" id="tsu-counter"></span>
-  </div>
-</section>
-
+<script src="reel-frame.js"></script>
 <script>
 (function () {
   "use strict";
@@ -257,20 +194,16 @@
     kicker:  document.getElementById("tsu-kicker"),
     title:   document.getElementById("tsu-title"),
     sub:     document.getElementById("tsu-sub"),
-    counter: document.getElementById("tsu-counter"),
     gauge:   document.getElementById("tsu-gauge"),
-    legRows: Array.prototype.slice.call(document.querySelectorAll(".tsu-leg-row"))
+    legRows: Array.prototype.slice.call(document.querySelectorAll(".reel-leg-row"))
   };
-
-  var dotEls = BEATS.map(function () {
-    var s = document.createElement("span");
-    el.dots.appendChild(s);
-    return s;
-  });
+  // Beat-indicator dots (one per beat), styled by the shared frame.
+  var dotsUI = TSUReel.dots(el.dots, BEATS.length);
 
   // ---- Elevation gauge ------------------------------------------------------
+  var GH = 370;                          // gauge height, stage px
   var G_TOP = 3525, G_BOT = 3486;           // feet shown top to bottom
-  function gy(ft) { return ((G_TOP - ft) / (G_TOP - G_BOT)) * 196; }
+  function gy(ft) { return ((G_TOP - ft) / (G_TOP - G_BOT)) * GH; }
   (function buildGauge() {
     var rail = document.createElement("div"); rail.className = "tsu-g-rail"; el.gauge.appendChild(rail);
     function row(cls, ft, html) {
@@ -305,10 +238,7 @@
     if (!div || map) return;
 
     var b0 = BEATS[0];
-    map = new maplibregl.Map({
-      container: div, style: STYLE, center: frameCenter(b0), zoom: b0.z,
-      interactive: false, attributionControl: false, fadeDuration: 0
-    });
+    map = new maplibregl.Map(TSUReel.mapOptions(div, { style: STYLE, center: frameCenter(b0), zoom: b0.z }));
 
     map.on("style.load", function () {
       try { map.setProjection({ type: "globe" }); } catch (e) {}
@@ -421,12 +351,6 @@
   }
 
   // ---- Overlay --------------------------------------------------------------
-  function dotStyle(k, i) {
-    if (k === i) return "width:16px;height:5px;border-radius:3px;background:#c8a84e;transition:all .3s;";
-    if (k <  i)  return "width:5px;height:5px;border-radius:50%;background:rgba(200,168,78,.55);transition:all .3s;";
-    return "width:5px;height:5px;border-radius:50%;background:rgba(228,224,218,.22);transition:all .3s;";
-  }
-
   function render() {
     var b = BEATS[idx];
     var last = BEATS.length - 1;
@@ -439,9 +363,9 @@
     el.date.hidden = !showDate;
     el.date.textContent = showDate ? b.date : "";
 
-    el.counter.textContent = idx === 0 ? "Cold open" : ("Beat " + idx + " / " + last);
+    TSUReel.setCounter(idx === 0 ? "Cold open" : ("Beat " + idx + " / " + last));
 
-    dotEls.forEach(function (s, k) { s.setAttribute("style", dotStyle(k, idx)); });
+    dotsUI.set(idx);
   }
 
   function step(dir) {
@@ -453,55 +377,15 @@
     applyBeat(idx, true);
   }
 
-  // ---- Fullscreen recording mode -------------------------------------------
-  function resizeMapSoon() {
-    if (!map) return;
-    requestAnimationFrame(function () { requestAnimationFrame(function () { map.resize(); }); });
-  }
-
-  function setFull(on) {
-    document.body.classList.toggle("tsu-full", on);
-    resizeMapSoon();
-  }
-
-  function enterFull() {
-    setFull(true);
-    var r = document.documentElement.requestFullscreen;
-    if (r) { try { r.call(document.documentElement); } catch (e) {} }
-  }
-
-  function exitFull() {
-    setFull(false);
-    if (document.fullscreenElement && document.exitFullscreen) {
-      try { document.exitFullscreen(); } catch (e) {}
-    }
-  }
-
-  document.addEventListener("fullscreenchange", function () {
-    if (!document.fullscreenElement && document.body.classList.contains("tsu-full")) setFull(false);
-  });
-
-  // ---- Wiring ---------------------------------------------------------------
-  document.getElementById("tsu-prev-zone").addEventListener("click", function () { step(-1); });
-  document.getElementById("tsu-next-zone").addEventListener("click", function () { step(1); });
-  document.getElementById("tsu-prev").addEventListener("click", function () { step(-1); });
-  document.getElementById("tsu-next").addEventListener("click", function () { step(1); });
-  document.getElementById("tsu-full").addEventListener("click", enterFull);
-  document.getElementById("tsu-exit").addEventListener("click", exitFull);
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { step(1); e.preventDefault(); }
-    else if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
-    else if (e.key === "Escape" && document.body.classList.contains("tsu-full")) { exitFull(); }
-    else if ((e.key === "f" || e.key === "F") && !document.body.classList.contains("tsu-full")) { enterFull(); }
-  });
-
   render();
   initMap();
 
-  if (params.get("mode") === "full") setFull(true);
-  var startBeat = parseInt(params.get("beat"), 10);
-  if (startBeat >= 0 && startBeat < BEATS.length) { idx = startBeat; render(); }
+  TSUReel.bind({
+    count: BEATS.length,
+    step: step,
+    jump: function (i) { idx = i; render(); applyBeat(idx, false); },
+    mapReady: function () { return !!map && map.loaded(); }
+  });
 })();
 </script>
 </body>
