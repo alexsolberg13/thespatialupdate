@@ -1,3 +1,15 @@
+# What changed — text block moved down (`claude/reel-text-87`)
+
+- **Text block** now ends at **87%** of the stage (it was 83%), and still grows upward with the legend directly above the kicker. The bottom margin is 13% (`--safe-bottom`), `--text-bottom` is 87.
+- **Headline limit.** The headline's last line must end at or above **84%** (`--headline-bottom`). On a beat with no supporting line the headline is the last line and ends at 84%. With a one-line supporting line the headline ends at about 83.7%.
+- **Map window** grows down to just above the legend's new position; each beat's subject is re-framed in the larger window automatically (no beat's `fit`, `z` or wording was changed, so no on-screen text was cut).
+- **`check-reels`** and the shared files enforce all of it: bottom margin 13%, text end 87%, headline limit 84%, and a new rule 3 message if a headline ends below 84%. The `?check=1` panel has a new "Headline" row.
+- **`?check=1` Instagram mock** now draws both versions of the bottom stack: three rows (username, caption, audio) from 84% and two rows (username, caption) from 89% (`--ig-stack-top`, `--ig-stack2-top`), side by side with a dashed line at each start.
+- `CLAUDE.md` updated to match (it also still said the blocked corner was the bottom 40% of the height; it is from 45% down).
+- `check-reels` on all four reels: 0 problems.
+
+---
+
 # What changed — viewer zones (`claude/reel-viewer-zones`)
 
 Measured from a viewer's screen on Instagram.

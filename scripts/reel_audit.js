@@ -10,8 +10,9 @@
 //   rule 2  map window    from 19% down to just above the legend (or the text block, on a beat
 //                         with no legend), at least --window-min tall. The beat's subject sits
 //                         fully inside it and inside the side margins; at most one small graphic
-//   rule 3  text block    anchored to the bottom: its last line ends at 83% and it grows upward:
-//                         kicker, headline (2 lines, 7 words), one supporting line (10 words),
+//   rule 3  text block    anchored to the bottom: its last line ends at 87% (the headline ends at
+//                         84% on a beat with no supporting line; the headline always ends at or above
+//                         84%) and it grows upward: kicker, headline (2 lines, 7 words), one supporting line (10 words),
 //                         left-aligned. The only darkening is one gradient behind it: fully
 //                         transparent a little above the legend, fully dark by the kicker, dark
 //                         to the bottom of the stage, no lower edge
@@ -156,6 +157,9 @@ module.exports = function auditBeat() {
       // Anchored: the last line ends on the bottom line, whatever the amount of text.
       const boxBottom = rectOf(cap).y1;   // the block's own box: its last line box ends here (the glyphs sit a few px higher)
       if (Math.abs(boxBottom - Z.text.bottom) > 1) add(3, `the text block ends ${pc(boxBottom)} down the screen; its last line must end at ${pc(Z.text.bottom)} (the block is anchored to the bottom and grows upward).`);
+      const titleEl = cap.querySelector(".reel-title"), headLim = H1(num("--headline-bottom"));
+      if (titleEl && shown(titleEl) && rectOf(titleEl).y1 > headLim + 1)
+        add(3, `the headline ends ${pc(rectOf(titleEl).y1)} down the screen; its last line must end at or above ${pc(headLim)}${Z.text.hasSub === false ? " (this beat has no supporting line, so the headline is the last line)" : ""}.`);
       if (top < Z.win.top + H1(winMin) - 1) add(3, `the text block starts ${pc(top)} down the screen, which leaves the map window less than ${winMin}% of the screen; shorten the text.`);
       const align = getComputedStyle(cap).textAlign;
       const left = W * safe.left / 100;

@@ -32,10 +32,12 @@
  *                             the left and right margins.
  *    LEGEND       only on beats that need it: one row, at most 3 items, directly
  *                 above the kicker.
- *    TEXT BLOCK   its last line ends at 83% of the stage (100 - --safe-bottom).
+ *    TEXT BLOCK   its last line ends at 87% of the stage (100 - --safe-bottom).
  *                 Top to bottom: kicker, headline (2 lines, 7 words), one
  *                 supporting line (10 words). Left-aligned, clear of the blocked
- *                 corner. No paragraphs.
+ *                 corner. No paragraphs. The headline's last line always ends at
+ *                 or above 84%; on a beat with no supporting line the headline is
+ *                 the last line and ends at 84%.
  *    SCRIM        a gradient, not a band: fully transparent a little above the
  *                 legend, fully dark by the kicker, dark all the way to the bottom
  *                 of the stage. It follows the text on each beat.
@@ -55,23 +57,25 @@
 
 :root {
   --safe-top: 15;      /* % blocked at the top    */
-  --safe-bottom: 17;   /* % blocked at the bottom: the text block ends here (83%) */
+  --safe-bottom: 13;   /* % blocked at the bottom: the text block ends here (87%) */
   --safe-left: 8;      /* % blocked at the left   */
   --safe-right: 8;     /* % blocked at the right  */
   --corner-w: 17;      /* blocked corner: the right 17% of the width ...   */
   --corner-h: 55;      /* ... from 45% of the height down to the bottom    */
   --ig-col-top: 47;    /* check-mode mock: the viewer's button column starts at 47% */
-  --ig-stack-top: 84;  /* check-mode mock: username/caption stack starts at 84%     */
+  --ig-stack-top: 84;  /* check-mode mock: the three-row stack (username, caption, audio) starts at 84% */
+  --ig-stack2-top: 89; /* check-mode mock: the two-row stack (username, caption) starts at 89%          */
 
   /* Layout: % of the stage, from the top. The window bottom, the legend and the
      text block's top are not numbers here: they follow from the text (see above). */
   --header-top: 15;    --header-bottom: 19;
   --window-top: 19;
-  --text-bottom: 83;   /* the last line of text ends here: 100 - --safe-bottom */
+  --text-bottom: 87;   /* the last line of text ends here: 100 - --safe-bottom */
+  --headline-bottom: 84; /* the headline's last line ends at or above this; with no supporting line it ends exactly here */
   --legend-h: 2.5;     /* height of the legend row; its bottom is the top of the text block */
   --scrim-lead: 3;     /* the gradient starts this far (%) above the legend */
   --window-min: 35;    /* the map window is never shorter than this (%) */
-  --cap-top: 66;       /* top of the text block (%); reel-frame.js overwrites it per beat */
+  --cap-top: 72;       /* top of the text block (%); reel-frame.js overwrites it per beat */
   --stage-pct: 19.2px; /* 1% of the stage height */
 
   /* Type sizes: stage pixels. */
@@ -163,8 +167,9 @@ body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; bac
 .reel-dots   { display:flex; align-items:center; gap:14px; margin-left:auto; filter:drop-shadow(0 2px 6px rgba(0,0,0,.7)); }
 
 /* ---- 3. Text block: a kicker, a headline, one supporting line -------------- */
-/* Anchored to the bottom: the last line ends at --text-bottom (83%) and the block
-   grows upward from there, so its top moves with the amount of text. */
+/* Anchored to the bottom: the last line ends at --text-bottom (87%) and the block
+   grows upward from there, so its top moves with the amount of text. On a beat with
+   no supporting line the headline is the last line and ends at --headline-bottom (84%). */
 .reel-caption {
   position:absolute; z-index:7; pointer-events:none;
   left:calc(var(--safe-left) * 1%);
@@ -177,7 +182,8 @@ body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; bac
 .reel-kicker { font:700 calc(var(--type-small) * 1px)/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:10px 0 12px; white-space:nowrap; }
 .reel-title  { font:400 calc(var(--type-headline) * 1px)/1.15 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:balance; margin-bottom:14px; }
 .reel-sub    { font:400 calc(var(--type-support) * 1px)/1.35 Arial,sans-serif; color:#c9c5be; text-wrap:pretty; }
-/* The last line of the block is what sits on the 83% line: no space under it. */
+/* The last line of the block is what sits on the bottom line: no space under it. */
+.reel-caption:not(:has(.reel-sub:not(:empty))) { bottom:calc((100 - var(--headline-bottom)) * 1%); }
 .reel-sub:empty { display:none; }
 .reel-title:has(+ .reel-sub:empty) { margin-bottom:0; }
 
@@ -263,8 +269,13 @@ body.reel-solving *, body.reel-solving *::before, body.reel-solving *::after { t
 .reel-ig .ig-btn i { display:block; font:normal 52px/1 Arial,sans-serif; }
 .reel-ig .ig-btn small { font:600 24px/1.2 Arial,sans-serif; }
 .reel-ig .ig-audio { width:56px; height:56px; border-radius:10px; border:4px solid #fff; background:#444; margin-top:6px; }
-.reel-ig .ig-cap { position:absolute; left:calc(var(--safe-left) * 1%); right:calc(var(--corner-w) * 1%); top:calc(var(--ig-stack-top) * 1%);
-  padding:0; text-shadow:0 2px 6px rgba(0,0,0,.85); }
+/* Both versions of Instagram's bottom stack, side by side so each can be read: the
+   three-row one (username, caption, audio) starts at 84%, the two-row one (username,
+   caption) at 89%. A dashed line across the reel marks each start. */
+.reel-ig .ig-cap { position:absolute; padding:0; text-shadow:0 2px 6px rgba(0,0,0,.85); border-top:3px dashed #ff9f43; }
+.reel-ig .ig-cap.three { left:calc(var(--safe-left) * 1%); width:36%; top:calc(var(--ig-stack-top) * 1%); }
+.reel-ig .ig-cap.two   { left:46%; right:calc(var(--corner-w) * 1%); top:calc(var(--ig-stack2-top) * 1%); border-top-color:#5ac8fa; }
+.reel-ig .ig-cap em { position:absolute; right:0; bottom:100%; font:700 24px/1 Arial,sans-serif; font-style:normal; background:rgba(0,0,0,.6); padding:4px 8px; border-radius:6px; white-space:nowrap; }
 .reel-ig .ig-cap b { display:block; font:700 34px/1.3 Arial,sans-serif; }
 .reel-ig .ig-cap span { display:block; font:400 32px/1.3 Arial,sans-serif; margin:6px 0; }
 .reel-ig .ig-cap small { display:block; font:400 28px/1.3 Arial,sans-serif; opacity:.85; }
