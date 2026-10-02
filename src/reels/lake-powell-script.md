@@ -19,7 +19,7 @@ argue for or against the policy.
 
 **Beat 1 — cold open**
 *(on screen: "28 feet")*
-> Twenty-eight feet. [C3, C4, C7] That's how far Lake Powell sits above 3,490 feet, the minimum power pool at Glen Canyon Dam. [C3, C4, C7]
+> Twenty-eight feet. [C3, C4, C7] That's how far Lake Powell sits above 3,490 feet, the "minimum power pool" at Glen Canyon Dam, below which water can only pass through the river outlet works. [C3, C4, C7] The new rules aim to stay well above that, at 3,510. [C5]
 
 **Beat 2 — the map**
 *(on screen: "Seven states, two lakes")*
@@ -27,23 +27,23 @@ argue for or against the policy.
 
 **Beat 3 — Lake Powell**
 *(on screen: "3,518 feet")*
-> On September 30, Powell stood at 3,518 feet. [C3] The new rules try to hold it at 3,510 or higher, to protect a 3,500-foot minimum. [C5] That's about eight feet of room above the target. [C7]
+> By Reclamation's September 30 numbers, Powell stood at 3,518 feet. [C3] The new rules try to hold it at 3,510 or higher, to protect a 3,500-foot minimum. [C5] That's about eight feet of room above the target. [C7]
 
 **Beat 4 — Lake Mead**
 *(on screen: "1,038 feet")*
-> That same day, Lake Mead stood at about 1,038 feet. [C15] If it's projected to fall below 1,000, the record calls for steps to protect the dam. [C17]
+> That same day, Lake Mead stood at about 1,038 feet. [C15] If it's projected to fall below 1,010, Interior consults the states. [C23] Below 1,000, the Record of Decision, Interior's formal decision document, calls for steps to manage risks to infrastructure. [C17]
 
 **Beat 5 — who gets cut**
 *(on screen: "1.25 million acre-feet a year")*
-> In 2027 and 2028, deliveries to Arizona, California and Nevada drop by 1.25 million acre-feet a year. [C9] If the states follow their own sharing plan, Arizona gives up 760,000 acre-feet, California 440,000, and Nevada 50,000. [C10]
+> In 2027 and 2028, deliveries to the three Lower Basin states, Arizona, California and Nevada, drop by 1.25 million acre-feet a year. [C9] If the states follow their own sharing plan, Arizona gives up 760,000 acre-feet, California 440,000, and Nevada 50,000. [C10]
 
 **Beat 6 — by how much**
 *(on screen: "27%, 10%, 17%")*
-> Measured against what each state was apportioned before, that's about 27 percent for Arizona, 10 for California, and 17 for Nevada. [C12] The four Upper Basin states aren't part of that cut. The framework only provides for voluntary contributions from them. [C14, C21]
+> By our calculation, against each state's earlier share, that's about 27 percent for Arizona, 10 for California, and 17 for Nevada. [C12, C22] These documents don't require a cut from the four Upper Basin states. They can contribute voluntarily, up to 200,000 acre-feet a year. [C14, C21]
 
 **Beat 7 — closer**
 *(on screen: "Eight feet above the target")*
-> The seven states didn't reach a deal, so Interior set the rules. [C19] Powell is expected to start the water year between 3,540 and 3,510 feet. [C8] Releases will be adjusted through April to try to keep it at 3,510 or above. [C8]
+> The seven states didn't reach a deal, so Interior set the rules. [C19, C1] In August, Reclamation projected Powell would start the water year, October 1, between 3,540 and 3,510 feet. [C8] It says it will adjust releases through April to try to keep the lake at 3,510 or above. [C8]
 
 ---
 
@@ -51,7 +51,7 @@ argue for or against the policy.
 Roughly 8–10 seconds per beat. Beat 1 is short on purpose: "Twenty-eight feet."
 should land in the first two seconds, with the number already on screen. Let the
 map settle after each tap before starting the next line. Total ≈ 60–70 sec
-(about 215 spoken words).
+(about 250 spoken words; use the tighter cut if it runs long).
 
 ### Tighter cut (~45 sec)
 Drop Beat 4 (Lake Mead) and fold Beat 6's second half into Beat 5. The Lake
@@ -77,5 +77,7 @@ Powell question still stands without Mead; Mead is on the map for context.
   agreement". If they don't, the Secretary decides the split under existing law.
 - **The percentages (C12) are computed by us**, from the new apportionments
   plus the reductions. The documents don't state them.
+- **Terms to explain in your own words:** acre-foot (a unit of water volume), Lower/Upper Basin (the sources' term; the map colours whole states, but Arizona and New Mexico each lie partly in both basins), apportioned, water year (starts Oct 1).
+- **Mead's nearer trigger.** The Operating Guidelines have Interior consult the states if Mead is projected below 1,010 ft (C23); the Record of Decision's risk-management trigger is 1,000 ft (C17).
 - **Reservoir outlines are full-pool shapes** from a generalized public-domain
-  dataset, not today's shoreline. The dam points are Wikipedia coordinates.
+  dataset, not today's shoreline. The dam points are Wikipedia coordinates; the Glen Canyon Dam point sits about 1 km outside the generalized Powell outline, so the dot may look slightly detached from the lake.
