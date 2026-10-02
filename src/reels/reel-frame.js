@@ -2,7 +2,7 @@
  *
  * Loaded by every reel after reel-frame.css. Handles: fitting the 1080x1920
  * stage to the screen, the map's fixed scale, tap/keyboard navigation, the
- * ?guides=1 overlay, fullscreen, and the layout measurement that
+ * ?guides=1 overlay, fullscreen, hold-to-exit, and the layout measurement that
  * `npm run check-reels` uses. The safe zone is NOT defined here; it is read from
  * the four --safe-* numbers in reel-frame.css.
  *
@@ -32,11 +32,23 @@
   }
 
   // ---- Fit the stage to the screen, centred -----------------------------------
+  var mapBox = null;
   function fit() {
     var s = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
     root.style.setProperty("--reel-scale", String(s));
+    layoutMap(s);
+  }
+  // The map covers the whole screen (stage plus any strips), centred on the stage.
+  function layoutMap(s) {
+    if (!mapBox) return;
+    var w = Math.max(STAGE_W, window.innerWidth / s), h = Math.max(STAGE_H, window.innerHeight / s);
+    mapBox.style.width = (w / MAP_SCALE) + "px";
+    mapBox.style.height = (h / MAP_SCALE) + "px";
+    mapBox.style.left = ((STAGE_W - w) / 2) + "px";
+    mapBox.style.top = ((STAGE_H - h) / 2) + "px";
   }
   window.addEventListener("resize", fit);
+  window.addEventListener("orientationchange", fit);
   fit();
 
   // ---- Chrome injected into the stage ------------------------------------------
@@ -56,6 +68,8 @@
     el("div", "reel-guide-block reel-guide-left", guides);
     el("div", "reel-guide-block reel-guide-right", guides);
     el("div", "reel-guide-outline", guides);
+    el("div", "reel-guide-crop reel-guide-crop-top", guides);
+    el("div", "reel-guide-crop reel-guide-crop-bottom", guides);
     var s = safe();
     var t = el("div", "reel-guide-label", guides, "Blocked " + s.top + "%");
     t.style.left = "50%"; t.style.top = "20px"; t.style.transform = "translateX(-50%)";
@@ -65,28 +79,24 @@
 
   function setGuides(on) {
     document.body.classList.toggle("reel-guides-on", on);
-    if (guidesBtn) guidesBtn.classList.toggle("on", on);
   }
 
-  var guidesBtn = null, counterEl = null;
   function buildChrome() {
     buildGuides();
-    var left = el("div", "reel-tap-l", stage); left.title = "Back";
-    var right = el("div", "reel-tap-r", stage); right.title = "Next";
+    // Invisible tap zones over the whole screen. Nothing else is ever drawn.
+    var left = el("div", "reel-tap-l", document.body);
+    var right = el("div", "reel-tap-r", document.body);
     left.addEventListener("click", function () { go(-1); });
     right.addEventListener("click", function () { go(1); });
 
-    var hud = el("div", "reel-hud", document.body);
-    var prev = el("button", "", hud, "◀"); prev.setAttribute("aria-label", "Previous beat");
-    var next = el("button", "", hud, "▶"); next.setAttribute("aria-label", "Next beat");
-    var full = el("button", "", hud, "Full screen");
-    guidesBtn = el("button", "", hud, "Guides");
-    counterEl = el("span", "", hud);
-    prev.addEventListener("click", function () { go(-1); });
-    next.addEventListener("click", function () { go(1); });
-    full.addEventListener("click", enterFull);
-    guidesBtn.addEventListener("click", function () {
-      setGuides(!document.body.classList.contains("reel-guides-on"));
+    // Hold a finger down for a second (anywhere) to go back to the reels index.
+    var timer = null;
+    function arm() { disarm(); timer = setTimeout(function () { window.location.href = "index.html"; }, 1000); }
+    function disarm() { if (timer) { clearTimeout(timer); timer = null; } }
+    [left, right].forEach(function (z) {
+      z.addEventListener("touchstart", arm, { passive: true });
+      ["touchend", "touchmove", "touchcancel"].forEach(function (ev) { z.addEventListener(ev, disarm, { passive: true }); });
+      z.addEventListener("contextmenu", function (e) { e.preventDefault(); });
     });
   }
 
@@ -101,6 +111,7 @@
     if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { go(1); e.preventDefault(); }
     else if (e.key === "ArrowLeft") { go(-1); e.preventDefault(); }
     else if (e.key === "f" || e.key === "F") { enterFull(); }
+    else if (e.key === "Escape" || e.key === "Backspace") { window.location.href = "index.html"; }
     else if (e.key === "g" || e.key === "G") { setGuides(!document.body.classList.contains("reel-guides-on")); }
   });
 
@@ -110,9 +121,9 @@
   // centre and zoom frame the same area on every screen and stay crisp.
   function mapOptions(container, extra) {
     container.classList.add("reel-map");
-    container.style.width = (STAGE_W / MAP_SCALE) + "px";
-    container.style.height = (STAGE_H / MAP_SCALE) + "px";
     container.style.transform = "scale(" + MAP_SCALE + ")";
+    mapBox = container;
+    layoutMap(Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H));
     var o = { container: container, interactive: false, attributionControl: false,
               fadeDuration: 0, pixelRatio: MAP_SCALE };
     for (var k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) o[k] = extra[k];
@@ -226,7 +237,7 @@
       this.mapReady = h.mapReady || function () { return true; };
       this.ready = true;
     },
-    setCounter: function (t) { if (counterEl) counterEl.textContent = t; }
+    setCounter: function () {}   // nothing is shown during playback
   };
 
   if (params.get("check") === "1") document.body.classList.add("reel-check");

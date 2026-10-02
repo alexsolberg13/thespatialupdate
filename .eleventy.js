@@ -17,6 +17,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/reels/*.html": "reels" });
   eleventyConfig.addPassthroughCopy({ "src/reels/*.css": "reels" });
   eleventyConfig.addPassthroughCopy({ "src/reels/*.js": "reels" });
+  // Home Screen web app: manifest and icons.
+  eleventyConfig.addPassthroughCopy({ "src/reels/*.webmanifest": "reels" });
+  eleventyConfig.addPassthroughCopy({ "src/reels/*.png": "reels" });
 
   return {
     dir: {

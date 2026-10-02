@@ -64,7 +64,7 @@ get found" step is deliberately open.
 CLAUDE.md         this file
 STORY-GUIDE.md    how to write a story folder by hand
 WHAT-CHANGED.md   running changelog
-.eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html, *.css and *.js into docs/)
+.eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html, *.css, *.js, *.png and *.webmanifest into docs/)
 .eleventyignore   keeps claim ledgers and reel narration scripts off the live site
 .gitignore        node_modules/ and _site/
 package.json      npm scripts: `npm start` (preview), `npm run build`
@@ -119,7 +119,18 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   naming the reel, the beat and the element if any text crosses outside the safe
   area. `npm run build` runs it after the Eleventy build.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
-  and ticks every 1%.
+  and ticks every 1%, the exact top and bottom "stage edge", and the "crop" strips
+  outside it.
+- **iPhone full screen.** I record on an iPhone 15 (1179x2556, taller than 9:16).
+  The stage is centred vertically on the whole screen; the map continues into the
+  strips above and below, which hold no text or controls and are cropped off.
+  `manifest.webmanifest` plus the Apple meta tags make the reels run full screen
+  (no browser bars, under the status bar and home indicator) when opened from a
+  Home Screen icon. The web app starts at `src/reels/index.html`, which lists every
+  reel newest first plus the calibration page. A new reel needs a row there (the
+  check enforces it) and the same head tags.
+- **Nothing on screen but the reel.** Tap right to advance, left to go back; no
+  buttons or counters. Holding a finger down for a second returns to the index.
 - **New reels must use the shared frame and pass the check.** Copy an existing
   reel, keep the `reel-stage` markup, and don't add per-reel layout CSS.
 

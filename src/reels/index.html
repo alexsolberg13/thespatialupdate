@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Story Beat Reels · The Spatial Update</title>
+
+<!--
+  Reels index: the start page of the Home Screen web app (see manifest.webmanifest).
+  Lists every reel, newest first, then the calibration page. When you add a reel,
+  add a row at the top; `npm run check-reels` fails if a reel is missing from here.
+  Not a reel itself, so the reel check skips it.
+-->
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Reels">
+<meta name="theme-color" content="#0a0f18">
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#0a0f18; }
+  body { min-height:100vh; background:#0a0f18; color:#f2efe9; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
+         -webkit-tap-highlight-color:transparent;
+         padding:calc(env(safe-area-inset-top) + 28px) 20px calc(env(safe-area-inset-bottom) + 28px); }
+  main { max-width:520px; margin:0 auto; }
+  h1 { font:400 28px/1.2 Georgia,serif; margin-bottom:6px; }
+  .lede { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; margin-bottom:26px; }
+  h2 { font:700 11px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:26px 0 12px; }
+  a.row { display:block; text-decoration:none; color:inherit; background:#141a26; border:1px solid #232b3a; border-radius:12px; padding:16px 18px; margin-bottom:10px; }
+  a.row:active { background:#1c2535; }
+  .row b { display:block; font:400 20px/1.25 Georgia,serif; margin-bottom:5px; }
+  .row span { font:400 13px/1.4 Arial,sans-serif; color:#8a8681; }
+  .hint { font:400 12px/1.5 Arial,sans-serif; color:#6f6b66; margin-top:30px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Story Beat Reels</h1>
+  <p class="lede">Tap a reel to play it full screen. Tap the right side to advance, the left side to go back.</p>
+
+  <h2>Reels, newest first</h2>
+  <a class="row" href="revolution-wind.html"><b>Revolution Wind</b><span>Published 11 Aug 2026 · 7 beats</span></a>
+  <a class="row" href="august-2026-eclipse.html"><b>The August 2026 Eclipse</b><span>Published 10 Aug 2026 · 6 beats</span></a>
+  <a class="row" href="lobito-corridor.html"><b>The Lobito Corridor</b><span>Published 9 Aug 2026 · 6 beats</span></a>
+
+  <h2>Tools</h2>
+  <a class="row" href="calibrate.html"><b>Calibration</b><span>Rulers, safe area, stage edges and crop strips</span></a>
+
+  <p class="hint">While a reel plays, nothing is drawn but the reel. Hold a finger down for a second to come back here.</p>
+</main>
+</body>
+</html>

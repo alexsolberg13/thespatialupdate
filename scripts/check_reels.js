@@ -14,8 +14,8 @@ const { pathToFileURL } = require("url");
 const { chromium } = require("playwright-core");
 
 const REELS_DIR = path.join(__dirname, "..", "src", "reels");
-// calibrate.html is the ruler page, not a reel.
-const NOT_REELS = ["calibrate.html"];
+// calibrate.html (rulers) and index.html (the list of reels) are not reels.
+const NOT_REELS = ["calibrate.html", "index.html"];
 
 async function launch() {
   const tries = [{}, { channel: "msedge" }, { channel: "chrome" }];
@@ -35,8 +35,14 @@ async function checkReel(browser, file) {
   const name = file.replace(/\.html$/, "");
   const problems = [];
   const html = fs.readFileSync(path.join(REELS_DIR, file), "utf-8");
+  const missing = [];
+  if (!/rel="manifest"/.test(html)) missing.push("the web app manifest link");
+  if (!/apple-mobile-web-app-capable/.test(html)) missing.push("the Apple full-screen meta tags");
+  if (missing.length) problems.push(`Reel "${name}" is missing ${missing.join(" and ")} (copy them from another reel), so it won't run full screen from the Home Screen.`);
+  const index = fs.existsSync(path.join(REELS_DIR, "index.html")) ? fs.readFileSync(path.join(REELS_DIR, "index.html"), "utf-8") : "";
+  if (!index.includes('href="' + file + '"')) problems.push(`Reel "${name}" is not listed in src/reels/index.html. Add a row for it, newest first.`);
   if (!/reel-frame\.css/.test(html) || !/reel-frame\.js/.test(html)) {
-    return { name, beats: 0, problems: [`Reel "${name}" does not load the shared frame (reel-frame.css and reel-frame.js). Every reel must use it.`] };
+    return { name, beats: 0, problems: problems.concat([`Reel "${name}" does not load the shared frame (reel-frame.css and reel-frame.js). Every reel must use it.`]) };
   }
 
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
@@ -65,6 +71,21 @@ async function checkReel(browser, file) {
       problems.push(`Reel "${name}", ${label}: the ${f.what} runs ${f.by}px past the ${f.side} edge of the safe area.`);
     }
   }
+  // On an iPhone 15 (1179x2556, taller than 9:16) the stage must sit centred on
+  // the whole screen and the map must run on into the strips above and below.
+  await page.setViewportSize({ width: 1179, height: 2556 });
+  await page.waitForTimeout(100);
+  const geo = await page.evaluate(() => {
+    const st = document.getElementById("reel-stage").getBoundingClientRect();
+    const m = document.querySelector(".reel-map");
+    const mr = m ? m.getBoundingClientRect() : null;
+    return { stageMid: (st.top + st.bottom) / 2, stageH: st.height, vh: innerHeight,
+             mapTop: mr && mr.top, mapBottom: mr && mr.bottom, vw: innerWidth, mapL: mr && mr.left, mapR: mr && mr.right };
+  });
+  if (Math.abs(geo.stageMid - geo.vh / 2) > 2) problems.push(`Reel "${name}": on an iPhone-sized screen (1179x2556) the stage is not centred vertically.`);
+  if (geo.mapTop !== null && (geo.mapTop > 1 || geo.mapBottom < geo.vh - 1 || geo.mapL > 1 || geo.mapR < geo.vw - 1))
+    problems.push(`Reel "${name}": on an iPhone-sized screen the map does not reach the top and bottom of the screen.`);
+  await page.setViewportSize({ width: 1080, height: 1920 });
   // Also exercise the real Next control once, so a broken step() is caught.
   await page.evaluate(() => window.TSUReel.jump(0));
   await page.evaluate(() => window.TSUReel.step(1));

@@ -26,8 +26,12 @@
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; overflow:hidden; }
-body { background:#000; font-family:Georgia,serif; -webkit-font-smoothing:antialiased; }
+html { width:100%; height:100%; overflow:hidden; background:#0a0f18; }
+/* The body is the whole screen (under the status bar and home indicator on an
+   iPhone). Nothing but the reel is ever drawn on it during playback. */
+body { position:fixed; inset:0; overflow:hidden; background:#0a0f18; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
+       -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
+       touch-action:manipulation; cursor:none; }
 
 /* ---- The stage ------------------------------------------------------------ */
 .reel-stage {
@@ -35,12 +39,15 @@ body { background:#000; font-family:Georgia,serif; -webkit-font-smoothing:antial
   width:var(--reel-w); height:var(--reel-h);
   transform:translate(-50%,-50%) scale(var(--reel-scale));
   transform-origin:center center;
-  overflow:hidden; background:#0a0f18;
+  /* No overflow clipping: on a screen taller than 9:16 the map runs on into the
+     strips above and below the stage. Those strips get no text and no controls;
+     they are cropped off in the recording. */
 }
 
-/* The map fills the whole stage. reel-frame.js sizes it to the stage divided by
-   the map scale and scales it back up, so zoom levels mean the same thing on
-   every screen. */
+/* The map fills the whole stage and keeps going to the edges of the screen.
+   reel-frame.js sizes it (in map pixels = stage pixels / map scale), centres it on
+   the stage and scales it up, so the centre and zoom frame the same area on every
+   screen. */
 .reel-map { position:absolute; left:0; top:0; transform-origin:0 0; }
 .reel-map canvas:focus { outline:none; }
 
@@ -49,9 +56,10 @@ body { background:#000; font-family:Georgia,serif; -webkit-font-smoothing:antial
 .maplibregl-ctrl-bottom-right,
 .maplibregl-ctrl-bottom-left { display:none !important; }
 
-/* Tap zones (page behaviour; injected by reel-frame.js). */
-.reel-tap-l { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
-.reel-tap-r { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
+/* Tap zones cover the whole screen, strips included (invisible; injected by
+   reel-frame.js). Left 38% goes back, right 62% advances. */
+.reel-tap-l { position:fixed; left:0; top:0; bottom:0; width:38%; z-index:50; }
+.reel-tap-r { position:fixed; right:0; top:0; bottom:0; width:62%; z-index:50; }
 
 /* Decorative darkening, not text: it may run past the safe zone. */
 .reel-fade-top    { position:absolute; left:0; right:0; top:0;    height:24%; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
@@ -107,14 +115,10 @@ body.reel-guides-on .reel-guides { display:block; }
   left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%);
   border:4px dashed #3ecfb2;
 }
+.reel-guide-crop { position:absolute; left:-3000px; right:-3000px; height:3000px; background:repeating-linear-gradient(45deg,rgba(0,0,0,.55) 0 24px,rgba(60,60,60,.55) 24px 48px); }
+.reel-guide-crop-top    { bottom:100%; }
+.reel-guide-crop-bottom { top:100%; }
 .reel-guide-label { position:absolute; font:700 30px/1 Arial,sans-serif; color:#fff; background:rgba(0,0,0,.55); padding:8px 14px; border-radius:8px; }
-
-/* ---- Page chrome (outside the stage; invisible until hovered) ------------- */
-.reel-hud { position:fixed; left:10px; top:10px; z-index:100; display:flex; align-items:center; gap:8px; opacity:0; transition:opacity .2s; font:600 13px Arial,sans-serif; color:#e4e0da; }
-.reel-hud:hover, .reel-hud:focus-within { opacity:1; }
-.reel-hud button { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
-.reel-hud button:hover { background:#262220; }
-.reel-hud button.on { background:#c8a84e; color:#141210; }
 
 /* The automatic check (npm run check-reels) opens reels with ?check=1: freeze
    every transition and animation so measurements are of the settled layout. */

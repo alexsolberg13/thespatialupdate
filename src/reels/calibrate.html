@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<!-- Home Screen web app: opened from the icon it runs full screen, with no browser bars. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Reels">
+<meta name="theme-color" content="#0a0f18">
 <title>Reel calibration · The Spatial Update</title>
 
 <!--
@@ -11,6 +19,11 @@
   labelled with its percentage, and a small tick every 1%. Use it to line up a
   screen recording or an Instagram screenshot against the stage, and to see where
   the safe zone (teal dashed box, from reel-frame.css) sits against the rulers.
+
+  The cyan lines are the exact top and bottom edges of the 9:16 stage ("stage edge").
+  On a screen taller than 9:16 (an iPhone 15 is 1179x2556) the hatched strips
+  above and below are marked "crop": the map runs on into them, but no text or
+  controls ever go there, and they are cropped off the recording.
 
   Top and left labels read "% from the top / left edge"; bottom and right labels
   read "% from the bottom / right edge".
@@ -32,6 +45,9 @@
   .cal-tick.big.v { height:44px; }
   .cal-note  { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:4; text-align:center; font:700 44px/1.4 Arial,sans-serif; color:#fff; text-shadow:0 2px 8px #000; }
   .cal-note small { display:block; font-weight:400; font-size:34px; color:#cfcac2; }
+  .cal-edge  { position:absolute; left:-3000px; right:-3000px; height:8px; background:#00e5ff; z-index:30; box-shadow:0 0 0 3px #000; }
+  .cal-edge-lab { position:absolute; left:50%; transform:translateX(-50%); z-index:31; font:800 48px/1 Arial,sans-serif; color:#000; background:#00e5ff; padding:10px 22px; border-radius:8px; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+  .cal-crop-lab { position:absolute; left:50%; transform:translateX(-50%); z-index:31; font:800 64px/1 Arial,sans-serif; color:#fff; letter-spacing:.2em; text-transform:uppercase; text-shadow:0 3px 10px #000; }
 </style>
 </head>
 <body>
@@ -80,6 +96,14 @@
     add("cal-tick v" + big, { left: "calc(" + t + "% - 1px)", top: "0" });
     add("cal-tick v" + big, { left: "calc(" + t + "% - 1px)", bottom: "0" });
   }
+
+  // The exact top and bottom edges of the 9:16 stage, and the strips outside it.
+  add("cal-edge", { top: "-4px" });
+  add("cal-edge", { top: (H - 4) + "px" });
+  add("cal-edge-lab", { top: "26px", marginTop: "0" }, "stage edge");
+  add("cal-edge-lab", { top: (H - 90) + "px" }, "stage edge");
+  add("cal-crop-lab", { top: "-110px" }, "crop");
+  add("cal-crop-lab", { top: (H + 46) + "px" }, "crop");
 
   TSUReel.bind({ count: 1, step: function () {}, jump: function () {} });
 })();
