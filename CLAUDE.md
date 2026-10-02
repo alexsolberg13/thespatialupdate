@@ -109,19 +109,28 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   as a whole to fit the screen and centred. Text, labels, legends and map framing
   are positioned relative to the stage, never the screen, so a reel (and its map
   centre and zoom) looks identical on any screen.
-- **One safe zone, defined once** (the four `--safe-*` numbers at the top of
-  `reel-frame.css`): top 14%, bottom 35%, left 6%, right 6%. All text, labels,
-  legends and logos stay inside it. The map fills the whole stage.
+- **One safe area, defined once** (the `--safe-*` and `--corner-*` numbers at the
+  top of `reel-frame.css`), as a percent of the stage: top 15%, left 8%, right 8%,
+  bottom 20%, **plus a blocked corner** — the right 17% of the width for the bottom
+  40% of the height (Instagram's button column). The safe area is that rectangle
+  with the bottom-right corner cut out. All text, labels, legends and logos stay
+  inside it. The map fills the whole stage.
 - **Guides.** Add `?guides=1` to a reel's address (or press G) to shade the
-  blocked areas and outline the safe area. Off by default.
+  blocked areas (margins and corner) and outline the safe area. Off by default.
 - **Check.** `npm run check-reels` opens every reel in a headless browser at
   1080x1920, steps through every beat, and fails with a plain-English message
   naming the reel, the beat and the element if any text crosses outside the safe
-  area. `npm run build` runs it after the Eleventy build.
+  area or into the blocked corner. It also checks that the stage is centred on the
+  physical screen when the viewport is 59pt shorter than the screen. `npm run build` runs it after the Eleventy build.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
-  and ticks every 1%, the exact top and bottom "stage edge", and the "crop" strips
-  outside it.
+  and ticks every 1%, the exact top and bottom "stage edge", the "crop" strips
+  outside it, and the centring readout.
 - **iPhone full screen.** I record on an iPhone 15 (1179x2556, taller than 9:16).
+  The stage is centred vertically on the *physical* screen (`screen.height`), not
+  on `100vh`/`innerHeight`: in Home Screen mode iOS reports a viewport about 59pt
+  shorter than the screen, which left the stage too high (48pt of strip above, 105pt
+  below). The calibration page's readout shows screen height, viewport height and
+  both strips in points, and should read equal strips (about 76.7pt each).
   The stage is centred vertically on the whole screen; the map continues into the
   strips above and below, which hold no text or controls and are cropped off.
   `manifest.webmanifest` plus the Apple meta tags make the reels run full screen

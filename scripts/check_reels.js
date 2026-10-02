@@ -68,7 +68,9 @@ async function checkReel(browser, file) {
     const found = await page.evaluate("window.TSUReel.measure()");
     for (const f of found) {
       const label = i === 0 ? "beat 1 of " + beats + " (the cold open)" : "beat " + (i + 1) + " of " + beats;
-      problems.push(`Reel "${name}", ${label}: the ${f.what} runs ${f.by}px past the ${f.side} edge of the safe area.`);
+      problems.push(f.side === "corner"
+        ? `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px into the blocked bottom-right corner (where Instagram puts its buttons).`
+        : `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px past the ${f.side} edge of the safe area.`);
     }
   }
   // On an iPhone 15 (1179x2556, taller than 9:16) the stage must sit centred on
@@ -86,6 +88,18 @@ async function checkReel(browser, file) {
   if (geo.mapTop !== null && (geo.mapTop > 1 || geo.mapBottom < geo.vh - 1 || geo.mapL > 1 || geo.mapR < geo.vw - 1))
     problems.push(`Reel "${name}": on an iPhone-sized screen the map does not reach the top and bottom of the screen.`);
   await page.setViewportSize({ width: 1080, height: 1920 });
+  // Home Screen mode on an iPhone 15: iOS reports a viewport ~59pt shorter than the
+  // 393x852pt screen. The stage must be centred on the physical screen anyway, so
+  // the strip above it equals the strip below it.
+  const ph = await browser.newPage({ viewport: { width: 393, height: 793 } });
+  await ph.goto(pathToFileURL(path.join(REELS_DIR, file)).href + "?check=1&screen=393x852", { waitUntil: "domcontentloaded" });
+  await ph.waitForFunction("window.TSUReel && window.TSUReel.ready", null, { timeout: 15000 }).catch(() => {});
+  const mt = await ph.evaluate("window.TSUReel && window.TSUReel.metrics && window.TSUReel.metrics()");
+  await ph.close();
+  if (!mt || Math.abs(mt.above - mt.below) > 1)
+    problems.push(`Reel "${name}": with a viewport 59pt shorter than the screen (as in iPhone Home Screen mode) the stage is not centred on the physical screen` +
+      (mt ? ` (strip above ${mt.above.toFixed(1)}pt, below ${mt.below.toFixed(1)}pt).` : "."));
+
   // Also exercise the real Next control once, so a broken step() is caught.
   await page.evaluate(() => window.TSUReel.jump(0));
   await page.evaluate(() => window.TSUReel.step(1));

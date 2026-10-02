@@ -1,3 +1,10 @@
+# What changed — reel frame calibration (from iPhone 15 results)
+
+- **Centring.** The stage is now centred on the physical screen (`screen.height`) in Home Screen mode, not on the viewport iOS reports (about 59pt short). The strips above and below should now be equal (about 76.7pt each). The calibration page has a readout (screen height, viewport height, strip above, strip below, in points) so you can confirm on the phone.
+- **Safe area.** Now top 15%, left 8%, right 8%, bottom 20%, with the bottom-right corner cut out (right 17% of the width, bottom 40% of the height). The shared CSS, the guides, `npm run check-reels` (which now flags text running into the corner), the calibration page and CLAUDE.md are updated.
+
+---
+
 # What changed — reel layout fix (`claude/reel-frame`)
 
 All three reels now render inside one fixed 1080x1920 stage that is scaled to fit any screen. The safe zone (top 14%, bottom 35%, left 6%, right 6%) is defined once in `src/reels/reel-frame.css`. Add `?guides=1` to a reel to see it. `npm run check-reels` (run by `npm run build`) fails if any text leaves the safe area. `src/reels/calibrate.html` is the ruler page. Reel content is unchanged.
