@@ -1,3 +1,11 @@
+# What changed — Lake Powell on the shared frame (`claude/lake-powell-frame`)
+
+- **Lake Powell reel** now uses the shared reel frame (stage, safe zone, hold-to-exit, Home Screen tags), like the other three. Its content, script, numbers and map data are unchanged. The elevation gauge is drawn smaller (370px tall instead of a straight scale-up) so it fits between the date dots and the legend; the numbers on it are the same. `check-reels` flagged nothing in any beat, so no on-screen text was shortened.
+- **Reels index builds itself.** `src/reels/index.html` is gone; `docs/reels/index.html` is generated from the reels in `src/reels/` (newest first, calibration page last) by `scripts/reels_index.js` on every build. Each reel carries a `<meta name="tsu-published" content="YYYY-MM-DD">` tag that the index sorts by.
+- **`npm run check-reels`** now fails with a plain-English message if a reel does not load the shared frame (`reel-frame.css`, `reel-frame.js`, the `reel-stage` markup), if a reel has no published date, or if the built index is stale.
+
+---
+
 # What changed — reel frame calibration (from iPhone 15 results)
 
 - **Centring.** The stage is now centred on the physical screen (`screen.height`) in Home Screen mode, not on the viewport iOS reports (about 59pt short). The strips above and below should now be equal (about 76.7pt each). The calibration page has a readout (screen height, viewport height, strip above, strip below, in points) so you can confirm on the phone.

@@ -14,7 +14,7 @@ const { pathToFileURL } = require("url");
 const { chromium } = require("playwright-core");
 
 const REELS_DIR = path.join(__dirname, "..", "src", "reels");
-// calibrate.html (rulers) and index.html (the list of reels) are not reels.
+// calibrate.html (rulers) is not a reel. index.html is built, not stored here.
 const NOT_REELS = ["calibrate.html", "index.html"];
 
 async function launch() {
@@ -39,10 +39,16 @@ async function checkReel(browser, file) {
   if (!/rel="manifest"/.test(html)) missing.push("the web app manifest link");
   if (!/apple-mobile-web-app-capable/.test(html)) missing.push("the Apple full-screen meta tags");
   if (missing.length) problems.push(`Reel "${name}" is missing ${missing.join(" and ")} (copy them from another reel), so it won't run full screen from the Home Screen.`);
-  const index = fs.existsSync(path.join(REELS_DIR, "index.html")) ? fs.readFileSync(path.join(REELS_DIR, "index.html"), "utf-8") : "";
-  if (!index.includes('href="' + file + '"')) problems.push(`Reel "${name}" is not listed in src/reels/index.html. Add a row for it, newest first.`);
-  if (!/reel-frame\.css/.test(html) || !/reel-frame\.js/.test(html)) {
-    return { name, beats: 0, problems: problems.concat([`Reel "${name}" does not load the shared frame (reel-frame.css and reel-frame.js). Every reel must use it.`]) };
+  // The shared frame: reel-frame.css and reel-frame.js must really be loaded by
+  // the page (a mention in a comment does not count), and the reel must use the
+  // frame's stage. Checked first, because without it nothing below means anything.
+  const live = html.replace(/<!--[\s\S]*?-->/g, "");
+  const frameProblems = [];
+  if (!/<link\b[^>]*href=["']reel-frame\.css["']/i.test(live)) frameProblems.push('<link href="reel-frame.css" rel="stylesheet"> in its <head>');
+  if (!/<script\b[^>]*src=["']reel-frame\.js["']/i.test(live)) frameProblems.push('<script src="reel-frame.js"></script> after its markup');
+  if (!/id=["']reel-stage["']/.test(live)) frameProblems.push('the <div class="reel-stage" id="reel-stage"> that holds everything on screen');
+  if (frameProblems.length) {
+    return { name, beats: 0, problems: problems.concat([`Reel "${name}" does not use the shared reel frame. It is missing ${frameProblems.join("; ")}. Every reel must load the frame (copy the markup from revolution-wind.html) so its text stays inside the safe area.`]) };
   }
 
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
@@ -113,8 +119,17 @@ async function checkReel(browser, file) {
     console.error("check-reels: found 0 reels in src/reels/. That is not expected.");
     process.exit(1);
   }
-  const browser = await launch();
   const all = [];
+  // The reels index is built from the reels in src/reels/ (scripts/reels_index.js).
+  // Make sure it builds, and that the built copy in docs/ is not stale.
+  try {
+    const built = require("./reels_index.js").render();
+    const out = path.join(__dirname, "..", "docs", "reels", "index.html");
+    if (fs.existsSync(out) && fs.readFileSync(out, "utf-8") !== built.html)
+      all.push("docs/reels/index.html is out of date with the reels in src/reels/. Run npm run build.");
+    console.log(`  ok    reels index: lists all ${built.reels.length} reels, newest first`);
+  } catch (e) { all.push(e.message); }
+  const browser = await launch();
   for (const f of files) {
     const r = await checkReel(browser, f);
     console.log(`  ${r.problems.length ? "FAIL" : "ok  "}  ${r.name}: ${r.beats} beats checked`);
@@ -124,9 +139,9 @@ async function checkReel(browser, file) {
 
   console.log(`check-reels: ${files.length} reels, ${all.length} problem${all.length === 1 ? "" : "s"}.`);
   if (all.length) {
-    console.error("\nText is outside the safe area:\n");
+    console.error("\nProblems found:\n");
     all.forEach((p) => console.error("  - " + p));
-    console.error("\nShorten the wording or fix the layout in src/reels/reel-frame.css, then run again.");
+    console.error("\nFix these (shorten on-screen wording that runs outside the safe area; never move the safe area), then run again.");
     process.exit(1);
   }
 })().catch((e) => { console.error("check-reels failed to run: " + e.message); process.exit(1); });

@@ -7,9 +7,11 @@
 
 <!--
   Reels index: the start page of the Home Screen web app (see manifest.webmanifest).
-  Lists every reel, newest first, then the calibration page. When you add a reel,
-  add a row at the top; `npm run check-reels` fails if a reel is missing from here.
-  Not a reel itself, so the reel check skips it.
+  Lists every reel, newest first, then the calibration page.
+  THIS IS A TEMPLATE. The real page (docs/reels/index.html) is built from it by
+  scripts/reels_index.js every time Eleventy builds, from the reels that exist in
+  src/reels/. Nothing to edit when you add a reel; give the new reel a
+  <meta name="tsu-published" content="YYYY-MM-DD"> tag and it appears on its own.
 -->
 
 <link rel="manifest" href="manifest.webmanifest">
@@ -43,6 +45,7 @@
   <p class="lede">Tap a reel to play it full screen. Tap the right side to advance, the left side to go back.</p>
 
   <h2>Reels, newest first</h2>
+  <a class="row" href="lake-powell.html"><b>Lake Powell</b><span>Published 2 Oct 2026 · 6 beats</span></a>
   <a class="row" href="revolution-wind.html"><b>Revolution Wind</b><span>Published 11 Aug 2026 · 7 beats</span></a>
   <a class="row" href="august-2026-eclipse.html"><b>The August 2026 Eclipse</b><span>Published 10 Aug 2026 · 6 beats</span></a>
   <a class="row" href="lobito-corridor.html"><b>The Lobito Corridor</b><span>Published 9 Aug 2026 · 6 beats</span></a>

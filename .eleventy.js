@@ -21,6 +21,15 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/reels/*.webmanifest": "reels" });
   eleventyConfig.addPassthroughCopy({ "src/reels/*.png": "reels" });
 
+  // The reels index is built from the reels that exist in src/reels/, newest
+  // first (scripts/reels_index.js), so a new reel can never be left off it.
+  eleventyConfig.on("eleventy.after", () => {
+    const { render, reelFiles } = require("./scripts/reels_index.js");
+    const { html, reels } = render();
+    require("fs").writeFileSync("docs/reels/index.html", html, "utf-8");
+    console.log(`[reels index] listed ${reels.length} of ${reelFiles().length} reels, newest first: ` + reels.map((r) => r.name).join(", "));
+  });
+
   return {
     dir: {
       input: "src",       // Eleventy reads from this folder
