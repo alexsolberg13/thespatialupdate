@@ -32,8 +32,12 @@
   h1 { font:400 28px/1.2 Georgia,serif; margin-bottom:6px; }
   .lede { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; margin-bottom:26px; }
   h2 { font:700 11px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:26px 0 12px; }
-  a.row { display:block; text-decoration:none; color:inherit; background:#141a26; border:1px solid #232b3a; border-radius:12px; padding:16px 18px; margin-bottom:10px; }
+  .row { display:block; text-decoration:none; color:inherit; background:#141a26; border:1px solid #232b3a; border-radius:12px; padding:16px 18px; margin-bottom:10px; }
   a.row:active { background:#1c2535; }
+  .links { display:flex; gap:10px; margin-top:14px; }
+  .links a { flex:1; text-align:center; text-decoration:none; font:700 15px/1 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; padding:13px 0; border-radius:10px; }
+  .links .play { background:#c8a84e; color:#141210; }
+  .links .check { border:1px solid #3ecfb2; color:#3ecfb2; }
   .row b { display:block; font:400 20px/1.25 Georgia,serif; margin-bottom:5px; }
   .row span { font:400 13px/1.4 Arial,sans-serif; color:#8a8681; }
   .hint { font:400 12px/1.5 Arial,sans-serif; color:#6f6b66; margin-top:30px; }
@@ -42,7 +46,7 @@
 <body>
 <main>
   <h1>Story Beat Reels</h1>
-  <p class="lede">Tap a reel to play it full screen. Tap the right side to advance, the left side to go back.</p>
+  <p class="lede">Tap "play" to run a reel full screen, or "check" to run it with the on-device layout check and an Instagram mock. Tap the right side to advance, the left side to go back.</p>
 
   <h2>Reels, newest first</h2>
   <!--REEL_ROWS-->

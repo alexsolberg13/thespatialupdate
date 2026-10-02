@@ -194,6 +194,32 @@ body.reel-guides-on .reel-guides { display:block; }
 .reel-guide-zone { position:absolute; left:0; right:0; height:0; border-top:3px dashed rgba(200,168,78,.85); }
 .reel-guide-zone span { position:absolute; right:14px; top:6px; font:700 26px/1 Arial,sans-serif; color:#e8c87a; background:rgba(0,0,0,.55); padding:6px 12px; border-radius:8px; white-space:nowrap; }
 
-/* The automatic check (npm run check-reels) opens reels with ?check=1: freeze
+/* The automatic check (npm run check-reels) opens reels with ?audit=1: freeze
    every transition and animation so measurements are of the settled layout. */
 body.reel-check *, body.reel-check *::before, body.reel-check *::after { transition:none !important; animation:none !important; }
+
+/* ---- On-device check: ?check=1 (see reel-frame.js). Diagnostic only; never in a recording. ---- */
+.reel-checkpanel { position:absolute; z-index:40; pointer-events:none;
+  left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%); top:calc((var(--window-top) + .6) * 1%);
+  background:rgba(8,10,16,.88); border:3px solid #3ecfb2; border-radius:14px; padding:16px 20px;
+  font:600 calc(var(--type-small) * 1px)/1.3 Arial,sans-serif; color:#f2efe9; }
+.rcp-head { font-size:56px; font-weight:800; line-height:1.1; margin-bottom:8px; }
+.rcp-row span { display:block; font-weight:400; color:#c9c5be; margin:0 0 8px 0; }
+.rcp-dev { color:#c9c5be; font-weight:400; margin-top:4px; }
+.reel-checkpanel .ok b, .rcp-head.ok { color:#3ecf7a; }
+.reel-checkpanel .bad b, .rcp-head.bad { color:#ff6b5e; }
+.reel-ig { position:absolute; inset:0; z-index:30; pointer-events:none; font-family:Arial,sans-serif; color:#fff; }
+.reel-ig .ig-top { position:absolute; left:0; right:0; top:0; height:calc(var(--safe-top) * 1%); background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.2));
+  display:flex; align-items:flex-end; justify-content:space-between; padding:0 6% 28px; font:700 44px/1 Arial,sans-serif; }
+.reel-ig .ig-col { position:absolute; right:calc(var(--safe-right) * 1%); width:calc((var(--corner-w) - var(--safe-right)) * 1% + 60px);
+  top:calc((100 - var(--corner-h)) * 1%); bottom:calc(var(--safe-bottom) * 1%); display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px; }
+.reel-ig .ig-btn { text-align:center; text-shadow:0 2px 6px rgba(0,0,0,.8); }
+.reel-ig .ig-btn i { display:block; font:normal 52px/1 Arial,sans-serif; }
+.reel-ig .ig-btn small { font:600 24px/1.2 Arial,sans-serif; }
+.reel-ig .ig-audio { width:56px; height:56px; border-radius:10px; border:4px solid #fff; background:#444; margin-top:6px; }
+.reel-ig .ig-cap { position:absolute; left:calc(var(--safe-left) * 1%); right:calc(var(--corner-w) * 1%); bottom:calc((var(--safe-bottom) - 12) * 1%);
+  padding:20px 0; text-shadow:0 2px 6px rgba(0,0,0,.85); }
+.reel-ig .ig-cap b { display:block; font:700 34px/1.3 Arial,sans-serif; }
+.reel-ig .ig-cap span { display:block; font:400 32px/1.3 Arial,sans-serif; margin:6px 0; }
+.reel-ig .ig-cap small { display:block; font:400 28px/1.3 Arial,sans-serif; opacity:.85; }
+.reel-ig .ig-nav { position:absolute; left:0; right:0; bottom:0; height:6%; background:rgba(0,0,0,.7); border-top:2px solid rgba(255,255,255,.2); }

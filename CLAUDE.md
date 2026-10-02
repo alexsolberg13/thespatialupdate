@@ -159,6 +159,7 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   a comment does not count), if the map did not load (rules 2 and 6 cannot be
   checked without it, so it never passes quietly), and if the built reels index is stale. It also checks that the stage is centred on the
   physical screen when the viewport is 59pt shorter than the screen. `npm run build` runs it after the Eleventy build.
+- **On-device check and iPhone simulation.** Open a reel with `?check=1` (the reels index has a "check" button beside "play") to get a PASS/FAIL panel of the band measurements and an Instagram interface mock. `npm run check-reels` also runs every reel in an iPhone 15 Home Screen simulation (393x852 screen, 793pt viewport starting at the 59pt top inset, 34pt bottom inset) and fails if the stage or any band is off. Each reel must have exactly one viewport meta tag, with `viewport-fit=cover`. The automatic check opens reels with `?audit=1`.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
   and ticks every 1%, the exact top and bottom "stage edge", the "crop" strips
   outside it, and the centring readout.

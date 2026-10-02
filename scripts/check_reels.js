@@ -13,6 +13,7 @@
 // Microsoft Edge or Google Chrome already on the machine.
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const { pathToFileURL } = require("url");
 const { chromium } = require("playwright-core");
@@ -38,6 +39,115 @@ async function launch() {
   );
 }
 
+// ---- iPhone 15 Home Screen simulation -------------------------------------------
+// The reel is loaded in an iframe that stands in for the viewport iOS gives a Home
+// Screen web app: a 393x852pt screen, with the page's viewport starting under the
+// 59pt status-bar inset and 793pt tall (852 - 59), and a 34pt home-indicator inset
+// at the bottom. Inside the frame the page sees what it sees on the phone:
+// innerHeight 793, screen.height 852, navigator.standalone true, no safe-area
+// env() values. Every measurement is then taken in SCREEN points (frame offset +
+// position inside the frame) and compared with the rules as percent of the stage
+// where the stage should be: centred on the physical screen. A reel that assumes
+// the viewport starts at the top of the screen lands 59pt too low and fails here.
+const PHONE = { screenW: 393, screenH: 852, viewportH: 793, topInset: 59, bottomInset: 34 };
+const TOL = 1.0;        // percent of the stage a band edge may be off by
+const CENTRE_TOL = 2.5; // percent of the stage the subject's centre may be off the window centre
+
+function inPhoneFrame() {
+  const stage = document.getElementById("reel-stage");
+  const R = TSUReel;
+  const sr = stage.getBoundingClientRect(), k = sr.width / R.STAGE_W;
+  const z = R.zones();
+  const box = (nodes) => {
+    let t = Infinity, b = -Infinity, any = false;
+    for (const n of nodes) {
+      const cs = getComputedStyle(n);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      const r = n.getBoundingClientRect();
+      if (!r.width && !r.height) continue;
+      any = true; t = Math.min(t, r.top); b = Math.max(b, r.bottom);
+    }
+    return any ? { top: t, bottom: b } : null;
+  };
+  const q = (sel) => Array.from(stage.querySelectorAll(sel));
+  const sb = R.subjectBox();
+  return {
+    k, stageTop: sr.top, stageBottom: sr.bottom, stageH: sr.height, zones: z, STAGE_H: R.STAGE_H,
+    header: box(q(".reel-date, .reel-dots")),
+    legend: box(q(".reel-leg-row.on")),
+    text: box(q(".reel-kicker, .reel-title, .reel-sub")),
+    subject: sb ? { top: sr.top + sb.y0 * k, bottom: sr.top + sb.y1 * k } : null
+  };
+}
+
+async function deviceProblems(browser, file, name) {
+  const out = [];
+  const ctx = await browser.newContext({ viewport: { width: PHONE.screenW, height: PHONE.screenH }, deviceScaleFactor: 1 });
+  await ctx.addInitScript((p) => {
+    if (window === window.top) return;
+    Object.defineProperty(navigator, "standalone", { get: () => true });
+    Object.defineProperty(window.screen, "width", { get: () => p.screenW });
+    Object.defineProperty(window.screen, "height", { get: () => p.screenH });
+  }, PHONE);
+  const page = await ctx.newPage();
+  const harness = path.join(os.tmpdir(), "tsu-iphone-" + name + ".html");
+  fs.writeFileSync(harness,
+    '<!doctype html><meta charset="utf-8"><body style="margin:0;background:#000">' +
+    `<iframe id="f" src="${pathToFileURL(path.join(REELS_DIR, file)).href}?audit=1" ` +
+    `style="position:absolute;left:0;top:${PHONE.topInset}px;width:${PHONE.screenW}px;height:${PHONE.viewportH}px;border:0"></iframe>`, "utf-8");
+  await page.goto(pathToFileURL(harness).href);
+  const frame = page.frames().find((f) => f !== page.mainFrame());
+  try {
+    await frame.waitForFunction("window.TSUReel && window.TSUReel.ready", null, { timeout: 15000 });
+    await frame.waitForFunction("window.TSUReel.mapReady()", null, { timeout: 30000 });
+  } catch (e) {
+    await ctx.close(); fs.unlinkSync(harness);
+    return [`Reel "${name}": did not start in the iPhone Home Screen simulation.`];
+  }
+  const beats = await frame.evaluate("window.TSUReel.count");
+  const picks = Array.from(new Set([0, Math.min(1, beats - 1), beats - 1]));
+  const off = PHONE.topInset;      // where the frame's top sits on the screen
+  for (const i of picks) {
+    const label = `beat ${i + 1} of ${beats}`;
+    await frame.evaluate((n) => window.TSUReel.jump(n), i);
+    await frame.evaluate("window.TSUReel.settle()");
+    await page.waitForTimeout(60);
+    const m = await frame.evaluate(inPhoneFrame);
+    // Where the stage should be on the physical screen, and where it is.
+    const wantTop = (PHONE.screenH - m.stageH) / 2, haveTop = off + m.stageTop;
+    const pct = (screenY) => (screenY - wantTop) / m.stageH * 100;
+    const Z = (n) => Math.round(n / m.STAGE_H * 1000) / 10;
+    const fail = (t) => out.push(`Reel "${name}", ${label}, iPhone Home Screen simulation: ${t}`);
+    const f1 = (n) => n.toFixed(1) + "%";
+    if (Math.abs(haveTop - wantTop) > 1)
+      fail(`the stage is ${(haveTop - wantTop).toFixed(1)}pt ${haveTop > wantTop ? "too low" : "too high"} on the screen (strip above ${haveTop.toFixed(1)}pt, below ${(PHONE.screenH - off - m.stageBottom).toFixed(1)}pt; they should be equal).`);
+    const band = (what, b, lo, hi) => {
+      if (!b) return;
+      const t = pct(off + b.top), bt = pct(off + b.bottom);
+      if (t < lo - TOL || bt > hi + TOL)
+        fail(`the ${what} sits at ${f1(t)} to ${f1(bt)} of the stage; the rule is ${lo}% to ${hi}%.`);
+    };
+    band("header row (date tag and dots)", m.header, Z(m.zones.header.top), Z(m.zones.header.bottom));
+    band("legend", m.legend, Z(m.zones.legend.top), Z(m.zones.legend.bottom));
+    band("text block", m.text, Z(m.zones.text.top), Z(m.zones.text.bottom));
+    if (m.subject) {
+      const lo = Z(m.zones.win.top), hi = Z(m.zones.win.bottom), mid = (lo + hi) / 2;
+      const t = pct(off + m.subject.top), bt = pct(off + m.subject.bottom), c = (t + bt) / 2;
+      if (Math.abs(c - mid) > CENTRE_TOL || t < lo - TOL || bt > hi + TOL)
+        fail(`the map subject is centred at ${f1(c)} of the stage (${f1(t)} to ${f1(bt)}); the map window is ${lo}% to ${hi}%, centre ${f1(mid)}.`);
+    }
+    // Nothing may reach the status-bar or home-indicator insets.
+    [["header row", m.header], ["text block", m.text], ["legend", m.legend]].forEach(([what, b]) => {
+      if (!b) return;
+      if (off + b.top < PHONE.topInset) fail(`the ${what} runs under the status bar (top ${(off + b.top).toFixed(1)}pt, inset ${PHONE.topInset}pt).`);
+      if (off + b.bottom > PHONE.screenH - PHONE.bottomInset) fail(`the ${what} runs into the home indicator area (bottom ${(off + b.bottom).toFixed(1)}pt, limit ${PHONE.screenH - PHONE.bottomInset}pt).`);
+    });
+  }
+  await ctx.close();
+  try { fs.unlinkSync(harness); } catch (e) {}
+  return out;
+}
+
 async function checkReel(browser, file) {
   const name = file.replace(/\.html$/, "");
   const problems = [];
@@ -45,6 +155,12 @@ async function checkReel(browser, file) {
   const missing = [];
   if (!/rel="manifest"/.test(html)) missing.push("the web app manifest link");
   if (!/apple-mobile-web-app-capable/.test(html)) missing.push("the Apple full-screen meta tags");
+  // One viewport meta tag, and it has viewport-fit=cover. A second tag without it
+  // (lake-powell once had one) can drop a Home Screen page out of cover mode, so the
+  // viewport starts under the status bar.
+  const vps = html.replace(/<!--[\s\S]*?-->/g, "").match(/<meta\b[^>]*name=["']viewport["'][^>]*>/gi) || [];
+  if (vps.length !== 1 || !/viewport-fit=cover/.test(vps[0]))
+    problems.push(`Reel "${name}" must have exactly one <meta name="viewport"> and it must include viewport-fit=cover (found ${vps.length}); otherwise an iPhone in Home Screen mode can lay the page out below the status bar.`);
   if (missing.length) problems.push(`Reel "${name}" is missing ${missing.join(" and ")} (copy them from another reel), so it won't run full screen from the Home Screen.`);
   // The shared frame: reel-frame.css and reel-frame.js must really be loaded by
   // the page (a mention in a comment does not count), and the reel must use the
@@ -61,7 +177,7 @@ async function checkReel(browser, file) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
   const pageErrors = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
-  await page.goto(pathToFileURL(path.join(REELS_DIR, file)).href + "?check=1", { waitUntil: "domcontentloaded" });
+  await page.goto(pathToFileURL(path.join(REELS_DIR, file)).href + "?audit=1", { waitUntil: "domcontentloaded" });
 
   try {
     await page.waitForFunction("window.TSUReel && window.TSUReel.ready", null, { timeout: 15000 });
@@ -111,17 +227,8 @@ async function checkReel(browser, file) {
   if (geo.mapTop !== null && (geo.mapTop > 1 || geo.mapBottom < geo.vh - 1 || geo.mapL > 1 || geo.mapR < geo.vw - 1))
     problems.push(`Reel "${name}": on an iPhone-sized screen the map does not reach the top and bottom of the screen.`);
   await page.setViewportSize({ width: 1080, height: 1920 });
-  // Home Screen mode on an iPhone 15: iOS reports a viewport ~59pt shorter than the
-  // 393x852pt screen. The stage must be centred on the physical screen anyway, so
-  // the strip above it equals the strip below it.
-  const ph = await browser.newPage({ viewport: { width: 393, height: 793 } });
-  await ph.goto(pathToFileURL(path.join(REELS_DIR, file)).href + "?check=1&screen=393x852", { waitUntil: "domcontentloaded" });
-  await ph.waitForFunction("window.TSUReel && window.TSUReel.ready", null, { timeout: 15000 }).catch(() => {});
-  const mt = await ph.evaluate("window.TSUReel && window.TSUReel.metrics && window.TSUReel.metrics()");
-  await ph.close();
-  if (!mt || Math.abs(mt.above - mt.below) > 1)
-    problems.push(`Reel "${name}": with a viewport 59pt shorter than the screen (as in iPhone Home Screen mode) the stage is not centred on the physical screen` +
-      (mt ? ` (strip above ${mt.above.toFixed(1)}pt, below ${mt.below.toFixed(1)}pt).` : "."));
+  // iPhone 15 Home Screen simulation (see deviceProblems below).
+  problems.push(...(await deviceProblems(browser, file, name)));
 
   // Also exercise the real Next control once, so a broken step() is caught.
   await page.evaluate(() => window.TSUReel.jump(0));

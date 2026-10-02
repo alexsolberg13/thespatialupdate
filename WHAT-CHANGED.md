@@ -1,3 +1,21 @@
+# What changed — iPhone offset fix and on-device check (`claude/reel-device-check`)
+
+**The bug.** In Home Screen mode on an iPhone 15 the whole stage sat about 59 points too low (date tag at ~24% instead of 15%, map subject at ~47% instead of 38.5%). `reel-frame.js` centred the stage on the physical screen (852pt) but assumed the page's viewport starts at the top of the screen. When the page is not in `viewport-fit=cover` mode, iOS lays it out *below* the status bar: the viewport is 793pt tall and starts 59pt down, so everything drawn "from the top" lands 59pt low. `lake-powell.html` had a second `<meta name="viewport">` without `viewport-fit=cover` (the other three reels had one correct tag).
+
+**The fix.**
+- `reel-frame.js` now works out where the viewport really starts on the screen (`viewportTop`) and places the body, and so the stage and map, in physical-screen coordinates. Nothing inside the stage uses insets or the viewport height; the one probe for the inset lives outside the stage.
+- The duplicate viewport tag is gone from `lake-powell.html`, and `check-reels` now fails any reel without exactly one viewport tag that includes `viewport-fit=cover`.
+
+**On-device check, `?check=1`.** A panel inside the safe area shows PASS / FAIL with expected and actual percent-of-stage for the header row, map subject, legend and text block, plus the strips above and below the stage in points and the screen / viewport / top numbers. It also draws a mock of Instagram's interface (header, right-hand button column, username and caption) at the blocked zones; `&ig=0` hides the mock. The automatic check now uses `?audit=1` for freezing motion (it used `?check=1` before).
+
+**Reels index.** Every reel has two buttons: play and check.
+
+**check-reels iPhone simulation.** Each reel is loaded in a frame that reproduces the Home Screen layout (393x852 screen, 793pt viewport starting at the 59pt top inset, 34pt bottom inset; `navigator.standalone` true, `screen.height` 852). Header, legend, text block and map subject are measured in screen points against the rules for beats first, second and last, and nothing may reach the status bar or home indicator.
+- Before the fix: 51 simulation failures across all four reels ("the stage is 59.0pt too low", "header row sits at 24.1% to 26.8%; the rule is 15% to 19%", "map subject centred at 46.9%; window centre 38.5%").
+- After the fix: 0 problems.
+
+---
+
 # What changed — reel layout rules (`claude/reel-layout`)
 
 Every reel now follows the same four bands, set once in `src/reels/reel-frame.css` and enforced by `npm run check-reels` on every beat of every reel. Percent of the 1080x1920 stage, from the top:
