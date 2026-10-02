@@ -7,12 +7,18 @@
 // numbers defined there, never repeated here):
 //
 //   rule 1  header row    date tag and progress dots, one line, inside 15% to 19%
-//   rule 2  map window    the beat's subject, and at most one small graphic, inside 19% to 58%
-//   rule 3  text block    inside 60% to 80%, left-aligned: a kicker, a headline (2 lines,
-//                         7 words) and one supporting line (10 words); the only darkening
-//   rule 4  legend        one row of at most 3 items directly above the text block
+//   rule 2  map window    from 19% down to just above the legend (or the text block, on a beat
+//                         with no legend), at least --window-min tall. The beat's subject sits
+//                         fully inside it and inside the side margins; at most one small graphic
+//   rule 3  text block    anchored to the bottom: its last line ends at 83% and it grows upward:
+//                         kicker, headline (2 lines, 7 words), one supporting line (10 words),
+//                         left-aligned. The only darkening is one gradient behind it: fully
+//                         transparent a little above the legend, fully dark by the kicker, dark
+//                         to the bottom of the stage, no lower edge
+//   rule 4  legend        one row of at most 3 items directly above the kicker
 //   rule 5  type sizes    headline 64, supporting line 36, kicker / legend / date 28; nothing under 28
-//   rule 6  map labels    none showing under the header row, legend or text block
+//   rule 6  map labels    every label showing (the reel's own, and the basemap's place names) sits
+//                         fully inside the map window and the side margins
 //
 // (The safe zone itself, including the blocked corner, is measured by TSUReel.measure().)
 
@@ -29,8 +35,12 @@ module.exports = function auditBeat() {
   const box = (r) => ({ x0: (r.left - sr.left) / k, y0: (r.top - sr.top) / k, x1: (r.right - sr.left) / k, y1: (r.bottom - sr.top) / k });
   const rectOf = (el) => box(el.getBoundingClientRect());
   const pc = (y) => (Math.round(y / H * 1000) / 10) + "%";
+  window.TSUReel.sync();                       // re-measure the text block for the beat on screen
   const Z = window.TSUReel.zones();
   const safe = window.TSUReel.safe();
+  const WIN = window.TSUReel.windowRect();
+  const H1 = (v) => v / 100 * H;               // percent of the stage -> stage px
+  const side = (o) => o.by + "px past the " + o.side;
   const clip = (t) => (t.length > 40 ? t.slice(0, 37) + "..." : t);
   const textOf = (el) => (el.textContent || "").replace(/\s+/g, " ").trim();
   const nameOf = (el) => {
@@ -92,13 +102,16 @@ module.exports = function auditBeat() {
   }
 
   // ---- Rule 2: map window ---------------------------------------------------------
+  const winMin = num("--window-min");
+  if ((Z.win.bottom - Z.win.top) / H * 100 < winMin - 0.05)
+    add(2, `the map window is only ${pc(Z.win.top)} to ${pc(Z.win.bottom)} (${Math.round((Z.win.bottom - Z.win.top) / H * 1000) / 10}% of the screen) because the text${Z.legend.on ? " and legend take" : " takes"} so much room; it must be at least ${winMin}% tall. Shorten the text.`);
   const subject = window.TSUReel.subjectBox();
   if (!subject) {
     add(2, "the beat does not say what its subject is (no `fit` points), so the check cannot confirm it is framed inside the map window.");
   } else {
-    const L = W * safe.left / 100, R = W * (1 - safe.right / 100);
-    if (subject.y0 < Z.win.top - 1 || subject.y1 > Z.win.bottom + 1 || subject.x0 < L - 1 || subject.x1 > R + 1)
-      add(2, `the subject of the beat is framed from ${pc(subject.y0)} to ${pc(subject.y1)} down the screen (${Math.round(subject.x0)} to ${Math.round(subject.x1)}px across); it must sit inside the map window, ${pc(Z.win.top)} to ${pc(Z.win.bottom)}, and inside the side margins.`);
+    const o = window.TSUReel.overflow(subject, WIN, 1);
+    if (o)
+      add(2, `the subject of the beat is framed from ${pc(subject.y0)} to ${pc(subject.y1)} down the screen (${Math.round(subject.x0)} to ${Math.round(subject.x1)}px across); it runs ${side(o)} of the map window, which is ${pc(WIN.y0)} to ${pc(WIN.y1)} down the screen (just above the ${Z.legend.on ? "legend" : "text block"}) and inside the side margins (${Math.round(WIN.x0)} to ${Math.round(WIN.x1)}px).`);
   }
   const graphics = Array.from(stage.querySelectorAll(".reel-graphic, img, svg"))
     .filter((e) => !e.closest(".reel-map, .reel-guides, .cal-ignore") && !(e.parentElement && e.parentElement.closest(".reel-graphic")) && shown(e));
@@ -110,7 +123,7 @@ module.exports = function auditBeat() {
     if (!g.classList.contains("reel-graphic"))
       add(2, `an image or drawing (${name}) is on screen but is not marked as the beat's graphic (class "reel-graphic"), so it cannot be placed in the map window.`);
     if (r.y0 < Z.win.top - 1 || r.y1 > Z.win.bottom + 1)
-      add(2, `the graphic (${name}) runs from ${pc(r.y0)} to ${pc(r.y1)} down the screen; it must sit inside the map window, ${pc(Z.win.top)} to ${pc(Z.win.bottom)}.`);
+      add(2, `the graphic (${name}) runs from ${pc(r.y0)} to ${pc(r.y1)} down the screen; it must sit inside the map window, ${pc(Z.win.top)} to ${pc(Z.win.bottom)} on this beat.`);
     const share = (r.x1 - r.x0) * (r.y1 - r.y0) / winArea * 100;
     if (share > maxArea) add(2, `the graphic (${name}) covers ${Math.round(share)}% of the map window; a small graphic is at most ${maxArea}%.`);
     if (subject && overlaps(r, subject)) add(2, `the graphic (${name}) covers the subject of the beat; move it so it does not sit over what the map is showing.`);
@@ -140,8 +153,10 @@ module.exports = function auditBeat() {
     if (mine.length) {
       const top = Math.min(...mine.flatMap((t) => t.rects.map((r) => r.y0)));
       const bottom = Math.max(...mine.flatMap((t) => t.rects.map((r) => r.y1)));
-      if (bottom > Z.text.bottom + 1) add(3, `the text block ends ${pc(bottom)} down the screen; it must finish by ${pc(Z.text.bottom)}.`);
-      if (top < Z.text.top - 1) add(3, `the text block starts ${pc(top)} down the screen; it must start at ${pc(Z.text.top)} or lower.`);
+      // Anchored: the last line ends on the bottom line, whatever the amount of text.
+      const boxBottom = rectOf(cap).y1;   // the block's own box: its last line box ends here (the glyphs sit a few px higher)
+      if (Math.abs(boxBottom - Z.text.bottom) > 1) add(3, `the text block ends ${pc(boxBottom)} down the screen; its last line must end at ${pc(Z.text.bottom)} (the block is anchored to the bottom and grows upward).`);
+      if (top < Z.win.top + H1(winMin) - 1) add(3, `the text block starts ${pc(top)} down the screen, which leaves the map window less than ${winMin}% of the screen; shorten the text.`);
       const align = getComputedStyle(cap).textAlign;
       const left = W * safe.left / 100;
       if (!["left", "start"].includes(align) || mine.some((t) => t.rects.some((r) => r.x0 > left + 8)))
@@ -161,14 +176,24 @@ module.exports = function auditBeat() {
       if (l > maxL) add(3, `the supporting line ("${clip(textOf(sub))}") runs to ${l} lines, which makes it a paragraph; the limit is ${maxL}.`);
     }
   }
-  // The darkening: one scrim, only behind the text block, and nothing else that darkens.
+  // The darkening: one gradient (.reel-scrim) that follows the text on this beat, and nothing
+  // else that darkens.
   const scrims = stage.querySelectorAll(".reel-scrim");
   if (scrims.length !== 1) {
     add(3, `the text block needs exactly one .reel-scrim darkening the map behind it; found ${scrims.length}.`);
   } else {
-    const r = rectOf(scrims[0]);
-    if (r.y0 < Z.text.top - 1 || r.y1 > Z.text.bottom + 1)
-      add(3, `the darkening runs from ${pc(r.y0)} to ${pc(r.y1)} down the screen; the map may be darkened only behind the text block, ${pc(Z.text.top)} to ${pc(Z.text.bottom)}.`);
+    const sc = window.TSUReel.scrimInfo(), lead = H1(num("--scrim-lead"));
+    const legendTop = Z.text.top - H1(num("--legend-h"));   // where the legend is, or would be
+    if (Math.abs(sc.top - (legendTop - lead)) > H1(0.3))
+      add(3, `the gradient starts ${pc(sc.top)} down the screen; it must start fully transparent ${num("--scrim-lead")}% above the legend, at ${pc(legendTop - lead)} on this beat.`);
+    if (sc.darkAt === null || sc.startAlpha === null)
+      add(3, "the check could not read the gradient's colour stops, so it cannot confirm the darkening is fully transparent at the top and fully dark by the kicker.");
+    else {
+      if (sc.startAlpha !== 0) add(3, `the gradient does not start fully transparent (it starts at ${sc.startAlpha} opacity), so its upper edge would show.`);
+      if (sc.darkAt > Z.text.top + H1(0.3)) add(3, `the gradient is not fully dark until ${pc(sc.darkAt)} down the screen; it must be fully dark by the top of the text block, ${pc(Z.text.top)}.`);
+      if (sc.endAlpha < sc.maxAlpha - 0.005) add(3, "the gradient gets lighter again towards the bottom; it must stay dark all the way down.");
+    }
+    if (sc.bottom < H - 1) add(3, `the gradient ends ${pc(sc.bottom)} down the screen; it must stay dark all the way to the bottom of the stage (so no lower edge shows).`);
   }
   Array.from(stage.querySelectorAll("*")).forEach((e) => {
     if (e === stage || e.closest(".reel-map, .reel-guides, .reel-scrim, .cal-ignore") || !shown(e)) return;
@@ -189,7 +214,7 @@ module.exports = function auditBeat() {
     if (Math.max(...mids) - Math.min(...mids) > 8) add(4, "the legend runs over more than one row; it must be one compact row.");
     rr.forEach((r, i) => {
       if (r.y0 < Z.legend.top - 1 || r.y1 > Z.legend.bottom + 1)
-        add(4, `the legend item "${clip(textOf(rows[i]))}" sits from ${pc(r.y0)} to ${pc(r.y1)} down the screen; the legend belongs directly above the text block, ${pc(Z.legend.top)} to ${pc(Z.legend.bottom)}.`);
+        add(4, `the legend item "${clip(textOf(rows[i]))}" sits from ${pc(r.y0)} to ${pc(r.y1)} down the screen; the legend belongs directly above the kicker, ${pc(Z.legend.top)} to ${pc(Z.legend.bottom)} on this beat.`);
     });
   }
 
@@ -217,29 +242,27 @@ module.exports = function auditBeat() {
       add(5, `some text ("${clip(t.text)}") is ${Math.round(size * 10) / 10}px; nothing may be smaller than ${T.small}px.`);
   });
 
-  // ---- Rule 6: map labels under the header row, legend or text block -----------------------
-  const bands = [["header row", Z.header], ["text block", Z.text]];
-  if (rows.length) bands.push(["legend", Z.legend]);
+  // ---- Rule 6: map labels inside the map window and the side margins --------------------
+  // The reel's own labels are fitted into the camera, so they must all be inside; the
+  // basemap's place names are hidden by the frame when they would cross out of the window.
   const seenLabel = {};
   mapText.forEach((t) => {
     if (!t.el.closest(".reel-maplabel")) {
-      if (!seenLabel[t.text]) add(6, `a map label ("${clip(t.text)}") is not marked class "reel-maplabel", so the frame cannot hide it when it falls under the text.`);
+      if (!seenLabel[t.text]) add(6, `a map label ("${clip(t.text)}") is not marked class "reel-maplabel", so the frame cannot fit it into the map window.`);
       seenLabel[t.text] = true;
-      return;
     }
-    const lab = t.el.closest(".reel-maplabel"), r = rectOf(lab);
-    bands.forEach(([name, b]) => {
-      const key = textOf(lab) + "|" + name;
-      if (r.y1 > b.top && r.y0 < b.bottom && !seenLabel[key]) {
-        seenLabel[key] = true;
-        add(6, `the map label "${clip(textOf(lab))}" is showing under the ${name} (${pc(r.y0)} to ${pc(r.y1)} down the screen); it should be hidden.`);
-      }
-    });
+  });
+  window.TSUReel.ownLabels().forEach((l) => {
+    const o = window.TSUReel.overflow(l, WIN, 1);
+    if (o && !seenLabel[l.text]) {
+      seenLabel[l.text] = true;
+      add(6, `the map label "${clip(l.text)}" is showing from ${pc(l.y0)} to ${pc(l.y1)} down the screen and ${Math.round(l.x0)} to ${Math.round(l.x1)}px across; it runs ${side(o)} of the map window (${pc(WIN.y0)} to ${pc(WIN.y1)}, ${Math.round(WIN.x0)} to ${Math.round(WIN.x1)}px across).`);
+    }
   });
   const basemap = window.TSUReel.labelsUnderUI();
   const names = Array.from(new Set(basemap)).map((n) => `"${clip(String(n))}"`);
   if (names.length)
-    add(6, `${names.length} basemap place name${names.length === 1 ? " is" : "s are"} still showing under the header row, legend or text block (${names.slice(0, 4).join(", ")}${names.length > 4 ? ", and " + (names.length - 4) + " more" : ""}); they should be hidden.`);
+    add(6, `${names.length} basemap place name${names.length === 1 ? " is" : "s are"} still showing outside the map window or the side margins (${names.slice(0, 4).join(", ")}${names.length > 4 ? ", and " + (names.length - 4) + " more" : ""}); they should be hidden.`);
 
   return { problems: out, stats: window.TSUReel.labelStats() };
 };

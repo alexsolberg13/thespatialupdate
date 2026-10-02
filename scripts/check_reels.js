@@ -7,7 +7,11 @@
 //   - the beat breaks one of the layout rules 1 to 6 (header row, map window, text
 //     block, legend, type sizes, map labels). Those rules are listed in
 //     scripts/reel_audit.js; their numbers (zones, sizes, word limits) are defined
-//     once in src/reels/reel-frame.css.
+//     once in src/reels/reel-frame.css. In short: the text block ends at 83% and
+//     grows upward, the legend sits directly above it, the darkening is a gradient
+//     that follows the text, and the beat's subject and every map label showing sit
+//     fully inside the map window (19% down to just above the legend) and the side
+//     margins.
 //
 // Uses the Chromium that Playwright installed if there is one, otherwise the
 // Microsoft Edge or Google Chrome already on the machine.
@@ -50,14 +54,11 @@ async function launch() {
 // where the stage should be: centred on the physical screen. A reel that assumes
 // the viewport starts at the top of the screen lands 59pt too low and fails here.
 const PHONE = { screenW: 393, screenH: 852, viewportH: 793, topInset: 59, bottomInset: 34 };
-const TOL = 1.0;        // percent of the stage a band edge may be off by
-const CENTRE_TOL = 2.5; // percent of the stage the subject's centre may be off the window centre
 
 function inPhoneFrame() {
   const stage = document.getElementById("reel-stage");
   const R = TSUReel;
   const sr = stage.getBoundingClientRect(), k = sr.width / R.STAGE_W;
-  const z = R.zones();
   const box = (nodes) => {
     let t = Infinity, b = -Infinity, any = false;
     for (const n of nodes) {
@@ -70,13 +71,14 @@ function inPhoneFrame() {
     return any ? { top: t, bottom: b } : null;
   };
   const q = (sel) => Array.from(stage.querySelectorAll(sel));
-  const sb = R.subjectBox();
+  // The same report the on-device ?check=1 panel shows (header row, map window, subject,
+  // labels, legend, text block, gradient), measured relative to the stage.
   return {
-    k, stageTop: sr.top, stageBottom: sr.bottom, stageH: sr.height, zones: z, STAGE_H: R.STAGE_H,
+    k, stageTop: sr.top, stageBottom: sr.bottom, stageH: sr.height,
+    rows: R.deviceReport(),
     header: box(q(".reel-date, .reel-dots")),
     legend: box(q(".reel-leg-row.on")),
-    text: box(q(".reel-kicker, .reel-title, .reel-sub")),
-    subject: sb ? { top: sr.top + sb.y0 * k, bottom: sr.top + sb.y1 * k } : null
+    text: box(q(".reel-kicker, .reel-title, .reel-sub"))
   };
 }
 
@@ -105,7 +107,7 @@ async function deviceProblems(browser, file, name) {
     return [`Reel "${name}": did not start in the iPhone Home Screen simulation.`];
   }
   const beats = await frame.evaluate("window.TSUReel.count");
-  const picks = Array.from(new Set([0, Math.min(1, beats - 1), beats - 1]));
+  const picks = Array.from({ length: beats }, (_, i) => i);   // every beat: the text, legend and framing change on each
   const off = PHONE.topInset;      // where the frame's top sits on the screen
   for (const i of picks) {
     const label = `beat ${i + 1} of ${beats}`;
@@ -115,27 +117,14 @@ async function deviceProblems(browser, file, name) {
     const m = await frame.evaluate(inPhoneFrame);
     // Where the stage should be on the physical screen, and where it is.
     const wantTop = (PHONE.screenH - m.stageH) / 2, haveTop = off + m.stageTop;
-    const pct = (screenY) => (screenY - wantTop) / m.stageH * 100;
-    const Z = (n) => Math.round(n / m.STAGE_H * 1000) / 10;
     const fail = (t) => out.push(`Reel "${name}", ${label}, iPhone Home Screen simulation: ${t}`);
-    const f1 = (n) => n.toFixed(1) + "%";
     if (Math.abs(haveTop - wantTop) > 1)
       fail(`the stage is ${(haveTop - wantTop).toFixed(1)}pt ${haveTop > wantTop ? "too low" : "too high"} on the screen (strip above ${haveTop.toFixed(1)}pt, below ${(PHONE.screenH - off - m.stageBottom).toFixed(1)}pt; they should be equal).`);
-    const band = (what, b, lo, hi) => {
-      if (!b) return;
-      const t = pct(off + b.top), bt = pct(off + b.bottom);
-      if (t < lo - TOL || bt > hi + TOL)
-        fail(`the ${what} sits at ${f1(t)} to ${f1(bt)} of the stage; the rule is ${lo}% to ${hi}%.`);
-    };
-    band("header row (date tag and dots)", m.header, Z(m.zones.header.top), Z(m.zones.header.bottom));
-    band("legend", m.legend, Z(m.zones.legend.top), Z(m.zones.legend.bottom));
-    band("text block", m.text, Z(m.zones.text.top), Z(m.zones.text.bottom));
-    if (m.subject) {
-      const lo = Z(m.zones.win.top), hi = Z(m.zones.win.bottom), mid = (lo + hi) / 2;
-      const t = pct(off + m.subject.top), bt = pct(off + m.subject.bottom), c = (t + bt) / 2;
-      if (Math.abs(c - mid) > CENTRE_TOL || t < lo - TOL || bt > hi + TOL)
-        fail(`the map subject is centred at ${f1(c)} of the stage (${f1(t)} to ${f1(bt)}); the map window is ${lo}% to ${hi}%, centre ${f1(mid)}.`);
-    }
+    // The on-device report (percent of the stage, so the same on every screen): header
+    // row, map window, subject, labels, legend, text block, gradient. The stage's place on
+    // the screen is checked just above.
+    m.rows.filter((r) => !r.pass && r.name !== "Stage on screen").forEach((r) =>
+      fail(`${r.name}: wanted ${r.want}, got ${r.got}.`));
     // Nothing may reach the status-bar or home-indicator insets.
     [["header row", m.header], ["text block", m.text], ["legend", m.legend]].forEach(([what, b]) => {
       if (!b) return;

@@ -52,8 +52,8 @@
 <link href="reel-frame.css" rel="stylesheet">
 <style>
   /* Lake Powell only: the threshold ladder (3,518 / 3,510 / 3,500 / 3,490), the one
-     graphic on the beats that show it. It sits in the map window (19% to 58% down),
-     at the left; those beats reserve its width with padL so the frame puts the lake
+     graphic on the beats that show it. It sits in the map window (19% down to just
+     above the legend), at the left; those beats reserve its width with padL so the frame puts the lake
      and the dam to the right of it. Everything else (stage, header, legend, text
      block, type sizes, map labels) comes from reel-frame.css. */
   .tsu-gauge { left:calc(var(--safe-left) * 1%); top:27%; width:480px; height:360px; opacity:0; transition:opacity .4s; }
@@ -153,8 +153,9 @@
   // ladder on (1 = target line only, 2 = all three lines); lbl is "cut" | "all" | "".
   // On-screen text: a kicker, a headline (7 words), one supporting line (10 words).
   // fit points: Lake Powell's bounding box (with Glen Canyon Dam); the seven states;
-  // the three Lower Division states; the Upper Division states plus the AZ/CA/NV
-  // label positions.
+  // the three Lower Division states; the four Upper Division states. Map labels are
+  // not listed: the frame fits every label showing on a beat (the state labels, and
+  // "Upper Division states" on beat 5) inside the map window and the side margins.
   var BEATS = [
     { c:[-111.0,37.3], z:6.1, fit:[[-111.555,36.932],[-110.363,37.913]], padL:480, date:"As of Sep 30, 2026",
       kicker:"Lake Powell", title:"8 feet above the target",
@@ -176,7 +177,7 @@
       sub:"Lower Basin states\u2019 proposed agreement splits it this way",
       vis:[], act:null, lines:["cut","upper","res"], legend:["cut","upper"], mode:"cut", gauge:0, lbl:"cut" },
 
-    { c:[-113.2,38.0], z:3.0, fit:[[-120.3,31.332],[-102.042,45.001]],
+    { c:[-113.2,38.0], z:3.0, fit:[[-114.053,31.332],[-102.042,45.001]],
       kicker:"Upper Division states", title:"Voluntary only",
       sub:"No cut required; up to 200,000 acre-feet a year, voluntarily",
       vis:[], act:null, lines:["cut","upper","res"], legend:["cut","upper"], mode:"cut", gauge:0, lbl:"all" },
