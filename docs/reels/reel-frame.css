@@ -8,34 +8,41 @@
  * labels, legends and map framing are positioned in stage pixels / stage
  * percentages and look identical on any screen.
  *
- * THE SAFE ZONE. The four numbers below are the ONLY place the safe zone is
- * defined (reel-frame.js and the reel check read them from here). They are
- * percentages of the stage. All text, labels, legends and logos stay inside the
- * safe zone; the map fills the whole stage.
+ * THE SAFE ZONE. The numbers below are the ONLY place the safe zone is defined
+ * (reel-frame.js, the guides and the reel check read them from here). They are
+ * percentages of the stage. The safe area is the rectangle left after the four
+ * margins, with the bottom-right corner cut out (Instagram's button column).
+ * All text, labels, legends and logos stay inside it; the map fills the whole
+ * stage.
  */
 
 :root {
-  --safe-top: 14;      /* % blocked at the top    */
-  --safe-bottom: 35;   /* % blocked at the bottom */
-  --safe-left: 6;      /* % blocked at the left   */
-  --safe-right: 6;     /* % blocked at the right  */
+  --safe-top: 15;      /* % blocked at the top    */
+  --safe-bottom: 20;   /* % blocked at the bottom */
+  --safe-left: 8;      /* % blocked at the left   */
+  --safe-right: 8;     /* % blocked at the right  */
+  --corner-w: 17;      /* blocked corner: the right 17% of the width ...   */
+  --corner-h: 40;      /* ... for the bottom 40% of the height             */
 
   --reel-w: 1080px;
   --reel-h: 1920px;
   --reel-scale: 0.3;   /* overwritten by reel-frame.js to fit the screen */
+  --reel-cy: 50%;      /* stage centre, from the top: the middle of the physical screen */
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html { width:100%; height:100%; overflow:hidden; background:#0a0f18; }
 /* The body is the whole screen (under the status bar and home indicator on an
-   iPhone). Nothing but the reel is ever drawn on it during playback. */
-body { position:fixed; inset:0; overflow:hidden; background:#0a0f18; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
+   iPhone). Nothing but the reel is ever drawn on it during playback.
+   reel-frame.js sets its height to the physical screen, which on an iPhone in
+   Home Screen mode is taller than the viewport iOS reports. */
+body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; background:#0a0f18; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
        -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
        touch-action:manipulation; cursor:none; }
 
 /* ---- The stage ------------------------------------------------------------ */
 .reel-stage {
-  position:absolute; left:50%; top:50%;
+  position:absolute; left:50%; top:var(--reel-cy);
   width:var(--reel-w); height:var(--reel-h);
   transform:translate(-50%,-50%) scale(var(--reel-scale));
   transform-origin:center center;
@@ -75,7 +82,11 @@ body { position:fixed; inset:0; overflow:hidden; background:#0a0f18; font-family
   display:flex; flex-direction:column; justify-content:space-between;
 }
 .reel-header { display:flex; flex-direction:column; gap:18px; }
-.reel-bottom { display:flex; flex-direction:column; gap:51px; }
+.reel-bottom { display:flex; flex-direction:column; gap:51px;
+  /* Keep clear of the blocked bottom-right corner (the right --corner-w % of the
+     stage). The safe box already stops --safe-right % in, so only the difference
+     is added here. */
+  padding-right:calc(var(--reel-w) * (var(--corner-w) - var(--safe-right)) / 100); }
 
 /* ---- Text styles ---------------------------------------------------------- */
 .reel-date   { align-self:flex-start; font:600 36px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:22px 33px; border-radius:14px; }
@@ -109,12 +120,8 @@ body.reel-guides-on .reel-guides { display:block; }
 .reel-guide-bottom { left:0; right:0; bottom:0; height:calc(var(--safe-bottom) * 1%); }
 .reel-guide-left   { left:0;  top:calc(var(--safe-top) * 1%); bottom:calc(var(--safe-bottom) * 1%); width:calc(var(--safe-left) * 1%); }
 .reel-guide-right  { right:0; top:calc(var(--safe-top) * 1%); bottom:calc(var(--safe-bottom) * 1%); width:calc(var(--safe-right) * 1%); }
-.reel-guide-outline {
-  position:absolute;
-  top:calc(var(--safe-top) * 1%); bottom:calc(var(--safe-bottom) * 1%);
-  left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%);
-  border:4px dashed #3ecfb2;
-}
+.reel-guide-corner { right:calc(var(--safe-right) * 1%); left:calc((100 - var(--corner-w)) * 1%); top:calc((100 - var(--corner-h)) * 1%); bottom:calc(var(--safe-bottom) * 1%); }
+.reel-guide-outline { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
 .reel-guide-crop { position:absolute; left:-3000px; right:-3000px; height:3000px; background:repeating-linear-gradient(45deg,rgba(0,0,0,.55) 0 24px,rgba(60,60,60,.55) 24px 48px); }
 .reel-guide-crop-top    { bottom:100%; }
 .reel-guide-crop-bottom { top:100%; }

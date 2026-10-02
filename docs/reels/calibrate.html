@@ -18,12 +18,17 @@
   1080x1920 stage with ruler lines every 5% measured from each edge, each
   labelled with its percentage, and a small tick every 1%. Use it to line up a
   screen recording or an Instagram screenshot against the stage, and to see where
-  the safe zone (teal dashed box, from reel-frame.css) sits against the rulers.
+  the safe area (teal dashed outline, from reel-frame.css: a rectangle with the bottom-right corner cut out) sits against the rulers.
 
   The cyan lines are the exact top and bottom edges of the 9:16 stage ("stage edge").
   On a screen taller than 9:16 (an iPhone 15 is 1179x2556) the hatched strips
   above and below are marked "crop": the map runs on into them, but no text or
   controls ever go there, and they are cropped off the recording.
+
+  The readout inside the safe area gives, in points, the screen height, the
+  viewport height, and the strip above and below the stage. In Home Screen mode
+  on an iPhone the viewport is shorter than the screen; the stage is centred on the
+  physical screen, so the two strips should be equal.
 
   Top and left labels read "% from the top / left edge"; bottom and right labels
   read "% from the bottom / right edge".
@@ -43,6 +48,7 @@
   .cal-tick.v { width:3px; height:22px; }
   .cal-tick.big.h { width:44px; }
   .cal-tick.big.v { height:44px; }
+  .cal-read  { position:absolute; left:calc(var(--safe-left) * 1% + 24px); top:calc(var(--safe-top) * 1% + 40px); z-index:31; font:700 40px/1.45 "Courier New",monospace; color:#fff; background:rgba(0,0,0,.7); border:3px solid #3ecfb2; border-radius:12px; padding:14px 22px; white-space:pre; }
   .cal-note  { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:4; text-align:center; font:700 44px/1.4 Arial,sans-serif; color:#fff; text-shadow:0 2px 8px #000; }
   .cal-note small { display:block; font-weight:400; font-size:34px; color:#cfcac2; }
   .cal-edge  { position:absolute; left:-3000px; right:-3000px; height:8px; background:#00e5ff; z-index:30; box-shadow:0 0 0 3px #000; }
@@ -53,7 +59,7 @@
 <body>
 <div class="reel-stage" id="reel-stage" style="background:#10151f">
   <div class="reel-guides" style="display:block"></div>
-  <div class="cal-note">1080 &times; 1920 stage<small>Teal box = safe area. Red = blocked.<br>Lines every 5%, ticks every 1%.<br>Top/left labels count from the top/left edge;<br>bottom/right labels from the bottom/right.</small></div>
+  <div class="cal-note">1080 &times; 1920 stage<small>Teal outline = safe area (corner cut out).<br>Red = blocked.<br>Lines every 5%, ticks every 1%.<br>Top/left labels count from the top/left edge;<br>bottom/right labels from the bottom/right.</small></div>
 </div>
 
 <script src="reel-frame.js"></script>
@@ -104,6 +110,21 @@
   add("cal-edge-lab", { top: (H - 90) + "px" }, "stage edge");
   add("cal-crop-lab", { top: "-110px" }, "crop");
   add("cal-crop-lab", { top: (H + 46) + "px" }, "crop");
+
+  // Readout, in points (CSS px): where the stage sits on the physical screen.
+  var read = add("cal-read", {});
+  function showMetrics() {
+    var m = TSUReel.metrics();
+    function f(v) { return (Math.round(v * 10) / 10).toFixed(1); }
+    read.textContent =
+      "Screen height   " + f(m.screenH) + " pt\n" +
+      "Viewport height " + f(m.viewportH) + " pt\n" +
+      "Strip above     " + f(m.above) + " pt\n" +
+      "Strip below     " + f(m.below) + " pt\n" +
+      "Centred on      " + (m.source === "window" ? "the window" : "the physical screen");
+  }
+  TSUReel.onFit = showMetrics;
+  showMetrics();
 
   TSUReel.bind({ count: 1, step: function () {}, jump: function () {} });
 })();

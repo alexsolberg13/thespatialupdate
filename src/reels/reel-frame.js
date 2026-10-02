@@ -4,7 +4,7 @@
  * stage to the screen, the map's fixed scale, tap/keyboard navigation, the
  * ?guides=1 overlay, fullscreen, hold-to-exit, and the layout measurement that
  * `npm run check-reels` uses. The safe zone is NOT defined here; it is read from
- * the four --safe-* numbers in reel-frame.css.
+ * the --safe-* and --corner-* numbers in reel-frame.css.
  *
  * A reel calls TSUReel.bind({ count, step, jump }) once it is ready.
  */
@@ -25,23 +25,50 @@
     return parseFloat(getComputedStyle(root).getPropertyValue(name)) || 0;
   }
 
-  // The safe zone, in percent of the stage, read from reel-frame.css.
+  // The safe zone, in percent of the stage, read from reel-frame.css: four
+  // margins, plus a blocked corner at the bottom right (corner.w % of the width,
+  // corner.h % of the height).
   function safe() {
     return { top: cssNum("--safe-top"), bottom: cssNum("--safe-bottom"),
-             left: cssNum("--safe-left"), right: cssNum("--safe-right") };
+             left: cssNum("--safe-left"), right: cssNum("--safe-right"),
+             corner: { w: cssNum("--corner-w"), h: cssNum("--corner-h") } };
   }
 
-  // ---- Fit the stage to the screen, centred -----------------------------------
-  var mapBox = null;
+  // ---- The physical screen -----------------------------------------------------
+  // In full-screen Home Screen mode iOS reports a viewport (innerHeight / 100vh)
+  // about 59 points shorter than the screen, so centring on the viewport leaves
+  // the stage too high. When running as a Home Screen app we therefore centre on
+  // the physical screen (screen.height, in points) instead. In a normal browser
+  // window screen.height is the monitor, not the window, so there we use the
+  // window. ?screen=393x852 forces a screen size (used by the reel check).
+  function screenSize() {
+    var w = window.innerWidth, h = window.innerHeight, source = "window";
+    var forced = /^(\d+)x(\d+)$/.exec(params.get("screen") || "");
+    var standalone = window.navigator.standalone === true ||
+      (window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches));
+    var sw = (window.screen && window.screen.width) || 0, sh = (window.screen && window.screen.height) || 0;
+    var pw = Math.min(sw, sh), ph = Math.max(sw, sh);   // portrait order, whatever the rotation
+    if (forced) { pw = +forced[1]; ph = +forced[2]; }
+    if ((forced || standalone) && Math.abs(pw - w) <= 2 && ph >= h) { h = ph; source = forced ? "forced" : "screen"; }
+    return { w: w, h: h, source: source, standalone: !!standalone, viewportH: window.innerHeight, screenH: ph };
+  }
+
+  // ---- Fit the stage to the screen, centred on the whole screen -----------------
+  var mapBox = null, lastScreen = null;
   function fit() {
-    var s = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+    var sc = screenSize();
+    lastScreen = sc;
+    var s = Math.min(sc.w / STAGE_W, sc.h / STAGE_H);
     root.style.setProperty("--reel-scale", String(s));
-    layoutMap(s);
+    root.style.setProperty("--reel-cy", (sc.h / 2) + "px");   // centre of the physical screen
+    document.body.style.height = sc.h + "px";                 // draw all the way to the bottom
+    layoutMap(s, sc);
+    if (window.TSUReel && TSUReel.onFit) TSUReel.onFit();
   }
   // The map covers the whole screen (stage plus any strips), centred on the stage.
-  function layoutMap(s) {
+  function layoutMap(s, sc) {
     if (!mapBox) return;
-    var w = Math.max(STAGE_W, window.innerWidth / s), h = Math.max(STAGE_H, window.innerHeight / s);
+    var w = Math.max(STAGE_W, sc.w / s), h = Math.max(STAGE_H, sc.h / s);
     mapBox.style.width = (w / MAP_SCALE) + "px";
     mapBox.style.height = (h / MAP_SCALE) + "px";
     mapBox.style.left = ((STAGE_W - w) / 2) + "px";
@@ -49,7 +76,19 @@
   }
   window.addEventListener("resize", fit);
   window.addEventListener("orientationchange", fit);
+  window.addEventListener("load", fit);
+  // iOS can report the viewport late or change it after launch: re-fit shortly after.
+  setTimeout(fit, 300); setTimeout(fit, 1200);
   fit();
+
+  // Where the stage actually sits, in points: screen height, viewport height, and
+  // the strip above and below the stage (for the calibration readout).
+  function metrics() {
+    var sc = lastScreen || screenSize();
+    var r = stage.getBoundingClientRect();
+    return { screenH: sc.screenH, viewportH: sc.viewportH, usedH: sc.h, source: sc.source, standalone: sc.standalone,
+             above: r.top, below: sc.h - r.bottom };
+  }
 
   // ---- Chrome injected into the stage ------------------------------------------
   function el(tag, cls, parent, text) {
@@ -61,20 +100,38 @@
   }
 
   var guides = null;
+  var SVGNS = "http://www.w3.org/2000/svg";
   function buildGuides() {
     guides = el("div", "reel-guides", stage);
     el("div", "reel-guide-block reel-guide-top", guides);
     el("div", "reel-guide-block reel-guide-bottom", guides);
     el("div", "reel-guide-block reel-guide-left", guides);
     el("div", "reel-guide-block reel-guide-right", guides);
-    el("div", "reel-guide-outline", guides);
+    el("div", "reel-guide-block reel-guide-corner", guides);
     el("div", "reel-guide-crop reel-guide-crop-top", guides);
     el("div", "reel-guide-crop reel-guide-crop-bottom", guides);
+
+    // The safe area outline: a rectangle with the bottom-right corner cut out.
     var s = safe();
+    var L = STAGE_W * s.left / 100, R = STAGE_W * (1 - s.right / 100);
+    var T = STAGE_H * s.top / 100, B = STAGE_H * (1 - s.bottom / 100);
+    var cx = STAGE_W * (1 - s.corner.w / 100), cy = STAGE_H * (1 - s.corner.h / 100);
+    var svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("class", "reel-guide-outline");
+    svg.setAttribute("viewBox", "0 0 " + STAGE_W + " " + STAGE_H);
+    var poly = document.createElementNS(SVGNS, "polygon");
+    poly.setAttribute("points", [[L, T], [R, T], [R, cy], [cx, cy], [cx, B], [L, B]].map(function (p) { return p[0] + "," + p[1]; }).join(" "));
+    poly.setAttribute("fill", "none"); poly.setAttribute("stroke", "#3ecfb2");
+    poly.setAttribute("stroke-width", "4"); poly.setAttribute("stroke-dasharray", "18 12");
+    svg.appendChild(poly);
+    guides.appendChild(svg);
+
     var t = el("div", "reel-guide-label", guides, "Blocked " + s.top + "%");
     t.style.left = "50%"; t.style.top = "20px"; t.style.transform = "translateX(-50%)";
     var b = el("div", "reel-guide-label", guides, "Blocked " + s.bottom + "%");
     b.style.left = "50%"; b.style.bottom = "20px"; b.style.transform = "translateX(-50%)";
+    var c = el("div", "reel-guide-label", guides, "IG buttons");
+    c.style.left = cx + "px"; c.style.top = (cy + 20) + "px";
   }
 
   function setGuides(on) {
@@ -123,7 +180,7 @@
     container.classList.add("reel-map");
     container.style.transform = "scale(" + MAP_SCALE + ")";
     mapBox = container;
-    layoutMap(Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H));
+    fit();
     var o = { container: container, interactive: false, attributionControl: false,
               fadeDuration: 0, pixelRatio: MAP_SCALE };
     for (var k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) o[k] = extra[k];
@@ -180,25 +237,29 @@
     var s = safe();
     var lim = { top: STAGE_H * s.top / 100, bottom: STAGE_H * (1 - s.bottom / 100),
                 left: STAGE_W * s.left / 100, right: STAGE_W * (1 - s.right / 100) };
+    // The blocked corner: x beyond cornerX AND y beyond cornerY.
+    var cornerX = STAGE_W * (1 - s.corner.w / 100), cornerY = STAGE_H * (1 - s.corner.h / 100);
     var sr = stage.getBoundingClientRect();
     var k = sr.width / STAGE_W;
     var found = [], seen = {};
+
+    function add(label, side, by) {
+      var key = label + "|" + side;
+      if (seen[key]) return;
+      seen[key] = true;
+      found.push({ what: label, side: side, by: Math.round(by) });
+    }
 
     function test(node, r) {
       if (!r.width && !r.height) return;
       var box = { top: (r.top - sr.top) / k, bottom: (r.bottom - sr.top) / k,
                   left: (r.left - sr.left) / k, right: (r.right - sr.left) / k };
       var tol = 1, label = describe(node);
-      [["top", lim.top - box.top, "top"], ["bottom", box.bottom - lim.bottom, "bottom"],
-       ["left", lim.left - box.left, "left"], ["right", box.right - lim.right, "right"]]
-        .forEach(function (c) {
-          if (c[1] > tol) {
-            var key = label + "|" + c[0];
-            if (seen[key]) return;
-            seen[key] = true;
-            found.push({ what: label, side: c[2], by: Math.round(c[1]) });
-          }
-        });
+      [["top", lim.top - box.top], ["bottom", box.bottom - lim.bottom],
+       ["left", lim.left - box.left], ["right", box.right - lim.right]]
+        .forEach(function (c) { if (c[1] > tol) add(label, c[0], c[1]); });
+      // Into the blocked bottom-right corner (the Instagram button column).
+      if (box.right > cornerX + tol && box.bottom > cornerY + tol) add(label, "corner", box.right - cornerX);
     }
 
     // Every text line, wherever it is in the stage (map and guides excepted).
@@ -206,7 +267,7 @@
     for (var n = w.nextNode(); n; n = w.nextNode()) {
       if (!n.nodeValue.trim()) continue;
       var p = n.parentNode;
-      if (p.closest(".reel-map, .reel-guides")) continue;
+      if (p.closest(".reel-map, .reel-guides, .cal-ignore")) continue;
       if (!shown(n)) continue;
       var range = document.createRange();
       range.selectNodeContents(n);
@@ -216,7 +277,7 @@
     // Boxes: date badge, dots, legend, logos and images (not the map).
     var boxes = stage.querySelectorAll(".reel-date, .reel-dots, .reel-legend, .reel-caption, .reel-logo, img, svg");
     Array.prototype.forEach.call(boxes, function (b) {
-      if (b.closest(".reel-map, .reel-guides") || !shown(b)) return;
+      if (b.closest(".reel-map, .reel-guides, .cal-ignore") || !shown(b)) return;
       test(b, b.getBoundingClientRect());
     });
     return found;
@@ -225,7 +286,7 @@
   // ---- Public API ---------------------------------------------------------------
   window.TSUReel = {
     STAGE_W: STAGE_W, STAGE_H: STAGE_H, MAP_SCALE: MAP_SCALE,
-    safe: safe, mapOptions: mapOptions, dots: dots, measure: measure,
+    safe: safe, metrics: metrics, mapOptions: mapOptions, dots: dots, measure: measure,
     SHOW_DATE: params.get("date") !== "off",
     // A reel calls this once. count = number of beats; step(dir) moves with the
     // map animation; jump(i) goes straight to beat i; mapReady() is optional.
