@@ -1,3 +1,47 @@
+# What changed — October 2, 2026 (repo cleanup)
+
+Tidied the repo so the live site can always be rebuilt from `src/`, and brought the docs up to date. Done on the branch `claude/repo-cleanup`, not `main`. Review it, then merge when you're happy.
+
+## Moved
+- **`CNAME` now lives in `src/CNAME`.** The build copies it to `docs/CNAME`, same content (`thespatialupdate.com`). Before this, `docs/CNAME` was hand-placed. Wiping `docs/` would have disconnected the domain. The duplicate `CNAME` at the repo root, which GitHub Pages ignored, is **deleted**.
+- **Story Beat Reels now live in `src/reels/`.** The build copies the three reel pages to the same addresses as before (`/reels/august-2026-eclipse.html`, `/reels/lobito-corridor.html`, `/reels/revolution-wind.html`).
+- **Reel narration scripts are no longer published.** The `*-script.md` files stay in `src/reels/` for you to read locally. They're no longer served at `/reels/<slug>-script.md`.
+
+## Changed
+- **`finalize.py` now strips claim tags by default, with no footnotes.** The ledgers are private, so footnote links would have been broken. The `[NEW]` gate is unchanged: it still refuses while any `[NEW]` tag remains. The old footnote behaviour is still there behind `--footnotes`. `--strip` still works but is now the same as the default.
+- **`new_story.py` now also creates an empty claim ledger**, `src/stories/<slug>/sources.html`, laid out like the existing ones. It's private: never published.
+- **Typo:** the eclipse story is now titled "From the **Arctic** to Spain" (was "Artic"), on the story page, the homepage, `/stories/` and the RSS feed.
+- **Reel scripts for the eclipse and Lobito** no longer point at `/stories/<slug>/sources/`, a page that doesn't exist. They now say the ledger is private and where to find it locally.
+- **CLAUDE.md** is brought in line with the repo. It now covers private ledgers, removed footnotes, the reels, `src/CNAME`, the three stories that went through the protocol (and Red Sea, which predates it), `_site/` being gone, the real file names (`index.md` / `data.geojson`), and GitHub's built-in Pages publisher.
+- Site rebuilt. Only the typo changed in the story pages.
+
+---
+
+# What changed — August 13, 2026 (homepage feature, reels, repo hygiene)
+
+## Changed
+- **Lobito Corridor is the homepage feature.** Its `order` in `src/_data/stories.json` is set to `202609` so it sorts above the eclipse story. The number is a sort key, not a date.
+- **Prose revised across all four stories**, including a wording fix in the Red Sea piece ("The result was the largest shipping diversion").
+- **Reels:** the eclipse reel builder gained an Instagram safe-zone guide (G key or the Safe zones button; hidden in full-screen recording mode). The Lobito reel was brought into the same format.
+- **`node_modules/` and `_site/` are no longer tracked in git** (new `.gitignore`). Both are rebuildable. `_site/` was a stale build nothing served.
+
+---
+
+# What changed — August 11, 2026 (Revolution Wind + citation cleanup)
+
+## New
+- **New story, published: Revolution Wind** (`src/stories/revolution-wind/`), an Americas story on the offshore wind lease off Rhode Island halted twice by executive order and reinstated twice by the courts. It includes a dossier (`dossiers/revolution-wind.md`), a private claim ledger (`sources.html`), and a reel plus narration script. It went through the full protocol, `finalize.py` included. **The site now carries four stories.**
+
+## Changed
+- **Footnotes removed from every story.** The `<sup>` citation markers were stripped from the published prose of Revolution Wind, Lobito and the eclipse. This supersedes the August 10 note below that said the superscripts "remain visible". The audit trail lives only in each story's private `sources.html`.
+- **Stories retitled** and homepage popup copy revised. Em-dashes removed from site prose, story bodies, ledgers and the eclipse reel.
+- **Homepage map fixes:** clicking an article panel opens the map with that story's popup showing. Hovering the sidebar rail no longer snaps the camera back.
+
+## Removed
+- The leftover **iran-strikes reel** (its story was removed August 10).
+
+---
+
 # What changed — August 10, 2026 (fresh start: trimmed stories + private ledgers)
 
 Cleaned house — cut the older stories down to a core three and made the claim ledgers private. Review in VS Code, then commit and push via the Source Control panel as usual.

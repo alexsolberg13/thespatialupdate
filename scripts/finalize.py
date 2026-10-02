@@ -13,10 +13,15 @@ Once Harvey has rewritten the draft in his own voice (Stage 4), this script:
   1. REFUSES to run while any ``[NEW]`` tag remains in the body -- those mark
      sentences Harvey added that still need a source. This is the gate that
      stops an unsourced claim from ever reaching the published page.
-  2. Converts each inline claim tag ``[C7]`` into a small numbered footnote
-     that links to that claim's row in the story's ledger
-     (``./sources/#C7``), so the published page keeps its audit trail.
+  2. Strips every inline claim tag ``[C7]`` out of the body, leaving clean
+     prose. This is the DEFAULT. The ledger (sources.html) is private -- it is
+     not published to the live site (see .eleventyignore) -- so the published
+     story carries no footnotes. The tags' audit trail lives on in the ledger.
   3. Writes the result back to the story's SOURCE file.
+
+  Optional: ``--footnotes`` instead turns each tag into a small numbered
+  footnote linking ``./sources/#C7``. Only use it if the ledgers are ever made
+  public again; while they're private those links would be broken.
 
 WHY IT EDITS THE SOURCE (reconciling the old CLAUDE.md spec):
 The original section-5 sketch said finalize "writes into docs/stories/". That
@@ -30,9 +35,9 @@ produces the finished published page. (Section 3 already flags that Stage 3's
 
 USAGE (Windows / VS Code PowerShell terminal, from the repo root):
 
-    py scripts\\finalize.py <slug>              # finalize src/stories/<slug>/index.md in place
+    py scripts\\finalize.py <slug>              # strip tags from src/stories/<slug>/index.md in place
     py scripts\\finalize.py <slug> --check       # dry run: report tags, don't write
-    py scripts\\finalize.py <slug> --strip       # just remove tags (no footnotes)
+    py scripts\\finalize.py <slug> --footnotes   # footnote tags instead (only if ledgers go public)
     py scripts\\finalize.py --file <path>        # operate on an explicit file (testing/one-offs)
 
 Exit codes: 0 = clean/done, 1 = refused (a [NEW] tag remains, or a bad path).
@@ -146,9 +151,17 @@ def main():
     parser.add_argument("--file", help="operate on this exact file instead of a slug")
     parser.add_argument("--check", action="store_true",
                         help="dry run: report tags and [NEW] gate, write nothing")
+    parser.add_argument("--footnotes", action="store_true",
+                        help="turn claim tags into footnotes linking ./sources/#C# "
+                             "(only useful if the ledgers are published again)")
     parser.add_argument("--strip", action="store_true",
-                        help="remove claim tags entirely instead of footnoting them")
+                        help="remove claim tags with no footnotes (the default; "
+                             "kept so older instructions still work)")
     args = parser.parse_args()
+    if args.footnotes and args.strip:
+        print("ERROR: --footnotes and --strip contradict each other. Pick one.")
+        sys.exit(1)
+    strip = not args.footnotes
 
     path = resolve_target(args)
     text = path.read_text(encoding="utf-8")
@@ -179,13 +192,13 @@ def main():
 
     if args.check:
         print("  [--check] Clean: no [NEW] tags. %d tag(s) would be %s."
-              % (total_tags, "stripped" if args.strip else "footnoted"))
+              % (total_tags, "stripped" if strip else "footnoted"))
         return
 
-    new_body, _ = convert_body(body, strip=args.strip)
+    new_body, _ = convert_body(body, strip=strip)
     path.write_text(front_matter + new_body, encoding="utf-8")
 
-    action = "stripped" if args.strip else "converted to footnotes linking ./sources/#C#"
+    action = "stripped (no footnotes)" if strip else "converted to footnotes linking ./sources/#C#"
     print("  Done: %d claim tag(s) %s." % (total_tags, action))
     print("  Next: run 'npm run build', preview, then commit via Source Control.")
 

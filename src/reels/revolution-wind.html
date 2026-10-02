@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story Beat Reel — Revolution Wind · The Spatial Update</title>
+
+<!--
+  Story Beat Reel — a 9:16, screen-recordable map reel of "Revolution Wind."
+  Standalone page: token-free MapLibre GL + Carto dark-matter tiles, so it renders
+  (and records) anywhere. No build step, no Mapbox token. Open it in a browser and
+  screen-record the phone screen at 9:16 while narrating.
+
+  Controls: tap/click the right ~2/3 of the screen (or press → / Space) to advance a
+  beat, the left ~1/3 (or ←) to go back. The prev/next buttons below do the same.
+
+  Pins, the lease polygon, and turbine points mirror src/stories/revolution-wind/
+  data.geojson (itself pulled from BOEM's official ArcGIS GIS services — see
+  dossiers/revolution-wind.md, "GIS verification pass"). Keep them in sync if the
+  story data changes. Coordinates here are [lng, lat] to match MapLibre / GeoJSON.
+
+  This story's spine is a LEASE POLYGON (the law) with a TURBINE FIELD inside it
+  (the built object) — new to this reel format vs. lobito-corridor.html (rail
+  lines) and august-2026-eclipse.html (a path band). The lease polygon reuses the
+  eclipse reel's filled-band technique; the turbine field is a new small dots
+  layer (see buildDots()) since no earlier reel needed a scattered point field.
+  The turbine positions are BOEM's filed "Option 1" candidate set — see the C21
+  flag in the dossier before treating them as confirmed as-built coordinates.
+-->
+
+<link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0b09; font-family:Georgia,serif; -webkit-font-smoothing:antialiased; }
+
+  @keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
+
+  .tsu-mk   { position:relative; width:0; height:0; }
+  .tsu-dot  { position:absolute; left:50%; top:50%; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%; background:currentColor; border:1.5px solid rgba(255,255,255,.22); }
+  .tsu-ring { position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:2px solid currentColor; animation:tsuPulse 1.9s ease-out infinite; }
+
+  .maplibregl-ctrl-logo,
+  .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-bottom-right,
+  .maplibregl-ctrl-bottom-left { display:none !important; }
+
+  .tsu-screen canvas:focus { outline:none; }
+
+  .tsu-page   { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:36px 20px; }
+  .tsu-cap    { display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; }
+  .tsu-cap-h  { font:600 12px system-ui,sans-serif; color:#e4e0da; }
+  .tsu-cap-p  { font:400 11px/1.4 system-ui,sans-serif; color:#8a8681; max-width:320px; }
+
+  .tsu-phone  { width:320px; padding:11px; background:linear-gradient(#26221d,#171310); border-radius:6px; box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06); }
+  .tsu-screen { position:relative; width:298px; height:530px; overflow:hidden; background:#0a0f18; }
+
+  .tsu-tap-l  { position:absolute; left:0; top:0; bottom:0; width:38%; z-index:5; cursor:w-resize; }
+  .tsu-tap-r  { position:absolute; right:0; top:0; bottom:0; width:62%; z-index:5; cursor:e-resize; }
+
+  .tsu-top-fade { position:absolute; left:0; right:0; top:0; height:120px; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
+  .tsu-bot-fade { position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
+
+  .tsu-date  { position:absolute; left:16px; top:15px; z-index:7; font:600 10px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:6px 9px; border-radius:4px; pointer-events:none; }
+  .tsu-dots  { position:absolute; left:0; right:0; top:44px; z-index:7; display:flex; justify-content:center; align-items:center; gap:5px; pointer-events:none; }
+
+  .tsu-caption { position:absolute; left:0; right:0; bottom:0; z-index:6; padding:0 20px 26px; pointer-events:none; }
+  .tsu-kicker  { font:700 10px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:10px; }
+  .tsu-title   { font:400 25px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:9px; }
+  .tsu-sub     { font:400 14px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
+
+  .tsu-controls { display:flex; align-items:center; gap:8px; width:320px; padding:0 4px; }
+  .tsu-btn      { font:600 13px Arial,sans-serif; color:#e4e0da; background:#1e1b18; border:1px solid #363230; border-radius:6px; padding:7px 12px; cursor:pointer; }
+  .tsu-btn:hover{ background:#262220; }
+  .tsu-counter  { font:500 11px Arial,sans-serif; color:#8a8681; margin-left:auto; }
+  .tsu-full-btn { font:600 11px Arial,sans-serif; color:#c8a84e; background:none; border:1px solid #3a352b; border-radius:6px; padding:7px 10px; cursor:pointer; }
+  .tsu-full-btn:hover { background:#1e1b18; }
+
+  /* Legend — a small key so the lease polygon and turbine field read on their own. */
+  .tsu-legend { position:absolute; left:16px; bottom:150px; z-index:7; display:flex; flex-direction:column; gap:6px; pointer-events:none; }
+  .tsu-leg-row{ display:flex; align-items:center; gap:8px; font:600 10px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 1px 3px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
+  .tsu-leg-row.on { opacity:1; }
+  .tsu-leg-line { width:20px; height:0; border-top-width:3px; border-top-style:solid; flex-shrink:0; }
+  .tsu-leg-fill { width:16px; height:10px; border-radius:2px; flex-shrink:0; }
+  .tsu-leg-dot  { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+  /* Exit affordance — invisible at rest so it stays out of the recording; appears on hover. */
+  .tsu-exit { position:absolute; right:12px; top:12px; z-index:9; width:26px; height:26px; display:none;
+              align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.2);
+              background:rgba(10,12,18,.5); color:#e4e0da; font:600 14px Arial,sans-serif; cursor:pointer;
+              opacity:0; transition:opacity .2s; }
+  .tsu-exit:hover { opacity:1; }
+
+  /* Fullscreen recording mode: plain rectangle, 9:16, black letterbox — no frame, no chrome. */
+  body.tsu-full { background:#000; }
+  body.tsu-full .tsu-page { padding:0; gap:0; }
+  body.tsu-full .tsu-cap,
+  body.tsu-full .tsu-controls { display:none; }
+  body.tsu-full .tsu-phone { width:auto; padding:0; background:none; box-shadow:none; border-radius:0; }
+  body.tsu-full .tsu-screen { width:auto; height:100vh; aspect-ratio:9 / 16; max-width:100vw; }
+  body.tsu-full .tsu-exit { display:flex; }
+</style>
+</head>
+<body>
+<section class="tsu-page">
+  <div class="tsu-cap">
+    <div class="tsu-cap-h">Story Beat Reel — Revolution Wind</div>
+    <div class="tsu-cap-p">Tap the right half to advance, left half to go back, and narrate. Screen-record at 9:16.</div>
+  </div>
+
+  <div class="tsu-phone">
+    <div class="tsu-screen">
+      <div id="tsu-map" style="position:absolute;inset:0;"></div>
+
+      <div class="tsu-tap-l" id="tsu-prev-zone" title="Back"></div>
+      <div class="tsu-tap-r" id="tsu-next-zone" title="Next"></div>
+
+      <div class="tsu-top-fade"></div>
+      <div class="tsu-bot-fade"></div>
+
+      <div class="tsu-exit" id="tsu-exit" title="Exit full screen (Esc)">&#10005;</div>
+
+      <div class="tsu-date" id="tsu-date" hidden></div>
+
+      <div class="tsu-dots" id="tsu-dots"></div>
+
+      <div class="tsu-legend" id="tsu-legend">
+        <div class="tsu-leg-row" data-line="band"><span class="tsu-leg-fill" style="background:#5b9bd5"></span>Federal lease OCS-A 0486</div>
+        <div class="tsu-leg-row" data-line="turbines"><span class="tsu-leg-dot" style="background:#e8c87a"></span>Turbines (65)</div>
+      </div>
+
+      <div class="tsu-caption">
+        <div class="tsu-kicker" id="tsu-kicker"></div>
+        <div class="tsu-title"  id="tsu-title"></div>
+        <div class="tsu-sub"    id="tsu-sub"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tsu-controls">
+    <button class="tsu-btn" id="tsu-prev" aria-label="Previous beat">&#9664;</button>
+    <button class="tsu-btn" id="tsu-next" aria-label="Next beat">&#9654;</button>
+    <button class="tsu-full-btn" id="tsu-full" aria-label="Full screen recording mode">&#9974; Full screen</button>
+    <span class="tsu-counter" id="tsu-counter"></span>
+  </div>
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Story data (mirrors src/stories/revolution-wind/) --------------------
+  var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
+  var COL = { gold:"#e8c87a", red:"#e05a4e", teal:"#3ecfb2", blue:"#5b9bd5", slate:"#9a958c" };
+
+  // Pins are [lng, lat] — GeoJSON / MapLibre order.
+  // Colour codes the narrative: blue = the lease/legal object, gold = the built
+  // project once it's standing, teal = shore infrastructure, red = the four
+  // sibling projects hit by the same December 2025 order.
+  var PINS = {
+    revwind:    { lng:-71.06998, lat:41.14994, color:"gold" },   // lease centroid / the project itself
+    landfall:   { lng:-71.42619, lat:41.58497, color:"teal" },   // Quonset Point cable landfall
+    coastalva:  { lng:-75.559,   lat:36.901,   color:"red"  },   // BOEM lease bbox midpoint (approx)
+    empire:     { lng:-73.340,   lat:40.288,   color:"red"  },   // BOEM lease bbox midpoint (approx)
+    sunrise:    { lng:-71.796,   lat:40.874,   color:"red"  },   // BOEM lease bbox midpoint (approx)
+    vineyard:   { lng:-70.499,   lat:41.250,   color:"red"  }    // BOEM lease bbox midpoint (approx)
+  };
+
+  // Lease polygon — main ring only (the small detached parcel northeast of the
+  // main block is omitted here for reel simplicity; see the full MultiPolygon
+  // in src/stories/revolution-wind/data.geojson). Pulled from BOEM's official
+  // Wind Lease Boundaries GIS service, LEASE_NUMBER = OCS-A 0486.
+  var BAND = { color:COL.blue, op:0.16, coords:[[
+    [-71.120143,41.263721],[-71.061350,41.216150],[-71.045361,41.162393],
+    [-71.014906,41.070864],[-70.945614,41.174930],[-70.830021,41.133590],
+    [-70.829421,41.111982],[-70.942902,41.083101],[-70.985411,41.071567],
+    [-71.006660,41.065795],[-71.042345,41.065168],[-71.071060,41.070059],
+    [-71.072248,41.107868],[-71.108127,41.112622],[-71.150976,41.111829],
+    [-71.200963,41.110885],[-71.199701,41.073079],[-71.213974,41.072805],
+    [-71.228613,41.083331],[-71.228978,41.094133],[-71.250394,41.093717],
+    [-71.259756,41.158384],[-71.238688,41.169604],[-71.204219,41.208099],
+    [-71.190277,41.213773],[-71.176150,41.224846],[-71.162555,41.246719],
+    [-71.148775,41.263190],[-71.134987,41.279659],[-71.120493,41.274523],
+    [-71.120143,41.263721]
+  ]] };
+
+  // Turbine field — a sampled subset (17 of 65) of BOEM's official "Option 1"
+  // candidate positions, enough to read as a field of dots at reel scale
+  // without cluttering a 298px-wide frame. Full 65-point set lives in the
+  // story's data.geojson. Flag from the dossier still applies: it's not
+  // confirmed "Option 1" matches the as-built layout.
+  var DOTS = { turbines: { color:COL.gold, radius:2.5, op:0.85, coords:[
+    [-71.17278,41.22592],[-71.12864,41.22673],[-71.06272,41.22794],
+    [-71.19411,41.20881],[-71.10625,41.21048],[-71.06230,41.21127],
+    [-71.21573,41.19174],[-71.14973,41.19299],[-71.10598,41.19376],
+    [-71.19323,41.17549],[-71.12704,41.17683],[-71.19129,41.15882],
+    [-71.10531,41.16056],[-71.03829,41.16160],[-71.08066,41.12755],
+    [-71.03706,41.12753],[-70.90500,41.13057]
+  ] } };
+
+  var params = new URLSearchParams(window.location.search);
+  var SHOW_DATE = params.get("date") !== "off";
+
+  // beat.c is the map center [lng, lat]; act is the pin that pulses this beat;
+  // lines lists which of "band" / "turbines" / pin ids are drawn/faded in.
+  var BEATS = [
+    { c:[-71.25,41.30], z:7.6,
+      kicker:"The Spatial Update · Story", title:"Revolution Wind",
+      sub:"A federal lease line the government tried to erase — twice",
+      vis:["revwind"], act:"revwind", lines:[] },
+
+    { c:[-71.07,41.16], z:9.0, date:"Leased 10/1/2013",
+      kicker:"The law", title:"A line drawn on water",
+      sub:"In 2013, BOEM leased 83,789 acres of ocean off Rhode Island — federal authority, marked as a polygon",
+      vis:["revwind"], act:"revwind", lines:["band"] },
+
+    { c:[-71.07,41.16], z:9.0,
+      kicker:"The built object", title:"65 turbines, standing",
+      sub:"Inside that line, turbines rose — 704 megawatts, enough for more than 350,000 homes",
+      vis:["revwind"], act:null, lines:["band","turbines"] },
+
+    { c:[-71.07,41.16], z:9.0, date:"Aug 22, 2025",
+      kicker:"First halt", title:"Stop-work, 80% built",
+      sub:"The Department of the Interior ordered construction to stop, citing national security",
+      vis:["revwind"], act:"revwind", lines:["band","turbines"] },
+
+    { c:[-73.1,39.2], z:5.3, date:"Dec 22, 2025",
+      kicker:"A coastwide halt", title:"One of five",
+      sub:"A second, broader order hit Revolution Wind alongside four sibling projects up and down the East Coast",
+      vis:["revwind","coastalva","empire","sunrise","vineyard"], act:null, lines:[] },
+
+    { c:[-73.1,39.2], z:5.3,
+      kicker:"Jan–Feb 2026", title:"Courts said no. Twice.",
+      sub:"Federal judges called the security rationale likely pretextual and reinstated every one of the five",
+      vis:["revwind","coastalva","empire","sunrise","vineyard"], act:"revwind", lines:[] },
+
+    { c:[-71.10,41.18], z:8.6, date:"March 2026 →",
+      kicker:"Steel outlasted the order", title:"Delivering power",
+      sub:"Revolution Wind now feeds the New England grid; full commercial operation is expected later this year",
+      vis:["revwind"], act:"revwind", lines:["band","turbines"] }
+  ];
+
+  // ---- State ----------------------------------------------------------------
+  var idx = 0;
+  var map = null;
+  var markers = {};
+  var linesReady = false;
+
+  var el = {
+    date:    document.getElementById("tsu-date"),
+    dots:    document.getElementById("tsu-dots"),
+    kicker:  document.getElementById("tsu-kicker"),
+    title:   document.getElementById("tsu-title"),
+    sub:     document.getElementById("tsu-sub"),
+    counter: document.getElementById("tsu-counter"),
+    legRows: Array.prototype.slice.call(document.querySelectorAll(".tsu-leg-row"))
+  };
+
+  var dotEls = BEATS.map(function () {
+    var s = document.createElement("span");
+    el.dots.appendChild(s);
+    return s;
+  });
+
+  // ---- Map ------------------------------------------------------------------
+  function initMap() {
+    if (!window.maplibregl) { setTimeout(initMap, 120); return; }
+    var div = document.getElementById("tsu-map");
+    if (!div || map) return;
+
+    var b0 = BEATS[0];
+    map = new maplibregl.Map({
+      container: div, style: STYLE, center: b0.c, zoom: b0.z,
+      interactive: false, attributionControl: false, fadeDuration: 0
+    });
+
+    map.on("style.load", function () {
+      try { map.setProjection({ type: "globe" }); } catch (e) {}
+      try {
+        map.setSky({
+          "sky-color":"#0a1019", "horizon-color":"#1a2436", "fog-color":"#0d1420",
+          "sky-horizon-blend":0.5, "horizon-fog-blend":0.6, "fog-ground-blend":0.4
+        });
+      } catch (e) {}
+      buildBand();
+      buildDots();
+      buildMarkers();
+      applyBeat(idx, false);
+    });
+  }
+
+  // Lease polygon as a filled layer, drawn first so it sits beneath the
+  // turbine dots and the pins. Starts hidden; faded in per beat.
+  function buildBand() {
+    map.addSource("band", {
+      type: "geojson",
+      data: { type:"Feature", geometry:{ type:"Polygon", coordinates:BAND.coords } }
+    });
+    map.addLayer({ id:"band-fill", type:"fill", source:"band",
+      paint:{ "fill-color":BAND.color, "fill-opacity":0 } });
+    map.addLayer({ id:"band-outline", type:"line", source:"band",
+      paint:{ "line-color":BAND.color, "line-width":1.2, "line-opacity":0 } });
+  }
+
+  // Turbine field as a small circle layer (a scattered point field has no
+  // earlier precedent in this reel format — lobito used lines, eclipse used a
+  // path band). Starts hidden; faded in per beat alongside the lease band.
+  function buildDots() {
+    var D = DOTS.turbines;
+    var fc = { type:"FeatureCollection", features: D.coords.map(function (c) {
+      return { type:"Feature", geometry:{ type:"Point", coordinates:c }, properties:{} };
+    }) };
+    map.addSource("dots-turbines", { type:"geojson", data: fc });
+    map.addLayer({ id:"dots-turbines", type:"circle", source:"dots-turbines",
+      paint:{ "circle-radius":D.radius, "circle-color":D.color, "circle-opacity":0,
+        "circle-stroke-width":0.5, "circle-stroke-color":"rgba(255,255,255,.3)" } });
+    linesReady = true;
+  }
+
+  function buildMarkers() {
+    Object.keys(PINS).forEach(function (id) {
+      var p = PINS[id];
+      var wrap = document.createElement("div");
+      wrap.className = "tsu-mk";
+      wrap.style.color = COL[p.color] || COL.gold;
+
+      var ring = document.createElement("div");
+      ring.className = "tsu-ring";
+      ring.style.display = "none";
+
+      var dot = document.createElement("div");
+      dot.className = "tsu-dot";
+
+      wrap.appendChild(ring);
+      wrap.appendChild(dot);
+
+      var marker = new maplibregl.Marker({ element: wrap }).setLngLat([p.lng, p.lat]);
+      markers[id] = { ring: ring, marker: marker, added: false };
+    });
+  }
+
+  function applyBeat(i, fly) {
+    var b = BEATS[i];
+    if (map) {
+      if (fly) map.flyTo({ center: b.c, zoom: b.z, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: b.c, zoom: b.z });
+    }
+    // Pins.
+    Object.keys(markers).forEach(function (id) {
+      var m = markers[id];
+      var on = b.vis.indexOf(id) !== -1;
+      if (on && !m.added) { m.marker.addTo(map); m.added = true; }
+      else if (!on && m.added) { m.marker.remove(); m.added = false; }
+      m.ring.style.display = (on && b.act === id) ? "block" : "none";
+    });
+    // Lease polygon + turbine field (fade via paint-property transition).
+    if (linesReady) {
+      var bandOn = b.lines.indexOf("band") !== -1;
+      map.setPaintProperty("band-fill", "fill-opacity", bandOn ? BAND.op : 0);
+      map.setPaintProperty("band-outline", "line-opacity", bandOn ? 0.55 : 0);
+      var dotsOn = b.lines.indexOf("turbines") !== -1;
+      map.setPaintProperty("dots-turbines", "circle-opacity", dotsOn ? DOTS.turbines.op : 0);
+    }
+    // Legend rows track whichever layers are showing.
+    el.legRows.forEach(function (row) {
+      row.classList.toggle("on", b.lines.indexOf(row.getAttribute("data-line")) !== -1);
+    });
+  }
+
+  // ---- Overlay --------------------------------------------------------------
+  function dotStyle(k, i) {
+    if (k === i) return "width:16px;height:5px;border-radius:3px;background:#c8a84e;transition:all .3s;";
+    if (k <  i)  return "width:5px;height:5px;border-radius:50%;background:rgba(200,168,78,.55);transition:all .3s;";
+    return "width:5px;height:5px;border-radius:50%;background:rgba(228,224,218,.22);transition:all .3s;";
+  }
+
+  function render() {
+    var b = BEATS[idx];
+    var last = BEATS.length - 1;
+
+    el.kicker.textContent = b.kicker || "";
+    el.title.textContent  = b.title || "";
+    el.sub.textContent    = b.sub || "";
+
+    var showDate = SHOW_DATE && !!b.date;
+    el.date.hidden = !showDate;
+    el.date.textContent = showDate ? b.date : "";
+
+    el.counter.textContent = idx === 0 ? "Cold open" : ("Beat " + idx + " / " + last);
+
+    dotEls.forEach(function (s, k) { s.setAttribute("style", dotStyle(k, idx)); });
+  }
+
+  function step(dir) {
+    var i = idx + dir;
+    if (i >= BEATS.length) i = 0;
+    if (i < 0) i = 0;
+    idx = i;
+    render();
+    applyBeat(idx, true);
+  }
+
+  // ---- Fullscreen recording mode -------------------------------------------
+  function resizeMapSoon() {
+    if (!map) return;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { map.resize(); }); });
+  }
+
+  function setFull(on) {
+    document.body.classList.toggle("tsu-full", on);
+    resizeMapSoon();
+  }
+
+  function enterFull() {
+    setFull(true);
+    var r = document.documentElement.requestFullscreen;
+    if (r) { try { r.call(document.documentElement); } catch (e) {} }
+  }
+
+  function exitFull() {
+    setFull(false);
+    if (document.fullscreenElement && document.exitFullscreen) {
+      try { document.exitFullscreen(); } catch (e) {}
+    }
+  }
+
+  document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreenElement && document.body.classList.contains("tsu-full")) setFull(false);
+  });
+
+  // ---- Wiring ---------------------------------------------------------------
+  document.getElementById("tsu-prev-zone").addEventListener("click", function () { step(-1); });
+  document.getElementById("tsu-next-zone").addEventListener("click", function () { step(1); });
+  document.getElementById("tsu-prev").addEventListener("click", function () { step(-1); });
+  document.getElementById("tsu-next").addEventListener("click", function () { step(1); });
+  document.getElementById("tsu-full").addEventListener("click", enterFull);
+  document.getElementById("tsu-exit").addEventListener("click", exitFull);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { step(1); e.preventDefault(); }
+    else if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+    else if (e.key === "Escape" && document.body.classList.contains("tsu-full")) { exitFull(); }
+    else if ((e.key === "f" || e.key === "F") && !document.body.classList.contains("tsu-full")) { enterFull(); }
+  });
+
+  render();
+  initMap();
+
+  if (params.get("mode") === "full") setFull(true);
+})();
+</script>
+</body>
+</html>

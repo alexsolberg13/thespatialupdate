@@ -3,3 +3,8 @@
 # so no /stories/<slug>/sources/ page is ever built or served. Open the raw
 # src/stories/<slug>/sources.html file locally to read a ledger.
 src/stories/*/sources.html
+
+# Story Beat Reels are copied straight through by .eleventy.js (not built as
+# templates), and their narration scripts are working notes, not pages. Open
+# src/reels/<slug>-script.md locally to read one.
+src/reels/
