@@ -4,7 +4,8 @@ Short video (~45 sec). Six beats. Read the line, then tap the right side of the
 screen to advance to the next beat. Keep it calm and even — the map does the work.
 
 Everything here traces to the story's claim ledger:
-`/stories/lobito-corridor/sources/`.
+`src/stories/lobito-corridor/sources.html` (private — open the file locally;
+it isn't published to the live site).
 
 ---
 

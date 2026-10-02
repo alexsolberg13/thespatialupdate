@@ -1,6 +1,6 @@
 ---
 layout: story.njk
-title: "The August 2026 Eclipse: From the Artic to Spain"
+title: "The August 2026 Eclipse: From the Arctic to Spain"
 region: "Europe"
 type: "geography"
 byline: "Eclipse preview · Published 9 August 2026"

@@ -5,6 +5,7 @@ new_story.py -- New Story wizard for The Spatial Update.
 Creates everything a new story needs:
   - src/stories/<slug>/index.md         (front matter + story text)
   - src/stories/<slug>/data.geojson      (the dots that show on the map)
+  - src/stories/<slug>/sources.html      (empty claim ledger -- private, not published)
   - src/_includes/sidebar-<slug>.njk     (the sidebar legend/toggle box)
   - appends one entry to src/_data/stories.json (homepage map + /stories/ index)
 
@@ -26,6 +27,7 @@ Stdlib only. Works the same on Windows and on Linux/Mac.
 """
 
 import argparse
+import html
 import json
 import re
 import sys
@@ -561,6 +563,64 @@ def build_data_geojson(title, description, lat, lon):
     return json.dumps(fc, indent=2, ensure_ascii=False) + "\n"
 
 
+def build_sources_html(title, slug):
+    """An empty claim ledger, laid out like the existing ones.
+
+    One table row per claim gets added by hand during drafting. The file is
+    private: .eleventyignore keeps every sources.html off the live site.
+    """
+    safe_title = html.escape(title, quote=True)
+    today = datetime.now().strftime("%Y-%m-%d")
+    return """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claim ledger: %(title)s</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 1100px; margin: 40px auto; padding: 0 20px; color: #1a1816; background: #f5f4f0; line-height: 1.6; }
+  h1 { font-weight: normal; font-size: 24px; }
+  .meta { font-family: Arial, sans-serif; font-size: 13px; color: #666; margin-bottom: 8px; }
+  .key { font-family: Arial, sans-serif; font-size: 13px; background: #eeece8; border: 1px solid #e0ddd8; border-radius: 6px; padding: 12px 16px; margin: 18px 0; }
+  .key b { color: #1a1816; }
+  table { border-collapse: collapse; width: 100%%; font-size: 13px; font-family: Arial, sans-serif; margin-top: 16px; }
+  th, td { border: 1px solid #d8d5d0; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eeece8; }
+  td.id { font-weight: bold; white-space: nowrap; }
+  .t-R { color: #2e7d32; font-weight: bold; }
+  .t-B { color: #8a6b20; font-weight: bold; }
+  .t-I { color: #c62828; font-weight: bold; }
+  .flag { color: #c62828; font-family: Arial, sans-serif; font-size: 12px; }
+  .ok { color: #2e7d32; }
+  a { color: #8a6b20; }
+</style>
+</head>
+<body>
+  <h1>Claim ledger: %(title)s</h1>
+  <div class="meta">Story: <code>src/stories/%(slug)s/</code> · Ledger started %(today)s · private, not published</div>
+  <div class="key">
+    <b>Type:</b>
+    <span class="t-R">Reported</span> traces to a source URL ·
+    <span class="t-B">Background</span> general knowledge ·
+    <span class="t-I">Inference</span> connecting dots the sources did not.
+    &nbsp;A story that comes out heavily Inference gets more reporting or gets killed.
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Claim as written</th><th>Type</th><th>Source</th><th>Date</th><th>Support / flags</th></tr>
+    </thead>
+    <tbody>
+      <!-- One row per claim, e.g.:
+      <tr><td class="id" id="C1">C1</td><td>Claim as written.</td><td class="t-R">R</td><td>Publisher</td><td>2026-01-01</td><td class="ok">Solid, multi-source.</td></tr>
+      -->
+    </tbody>
+  </table>
+</body>
+</html>
+""" % {"title": safe_title, "slug": slug, "today": today}
+
+
 def build_sidebar_njk(color_hex):
     return (
         "<div class=\"section-block\">\n"
@@ -604,6 +664,7 @@ def print_summary(answers, slug):
     print("  Files:")
     print("    src/stories/%s/index.md" % slug)
     print("    src/stories/%s/data.geojson" % slug)
+    print("    src/stories/%s/sources.html  (empty claim ledger, private)" % slug)
     print("    src/_includes/sidebar-%s.njk" % slug)
     print("    src/_data/stories.json  (a new entry will be appended)")
     print("-" * 60)
@@ -669,6 +730,7 @@ def main():
     index_md = build_index_md(answers, slug)
     data_geojson = build_data_geojson(answers["title"], answers["description"], answers["lat"], answers["lon"])
     sidebar_njk = build_sidebar_njk(color_hex)
+    sources_html = build_sources_html(answers["title"], slug)
 
     try:
         stories = json.loads(STORIES_JSON.read_text(encoding="utf-8"))
@@ -696,6 +758,7 @@ def main():
     story_dir.mkdir(parents=True, exist_ok=True)
     (story_dir / "index.md").write_text(index_md, encoding="utf-8")
     (story_dir / "data.geojson").write_text(data_geojson, encoding="utf-8")
+    (story_dir / "sources.html").write_text(sources_html, encoding="utf-8")
 
     INCLUDES_DIR.mkdir(parents=True, exist_ok=True)
     (INCLUDES_DIR / ("sidebar-%s.njk" % slug)).write_text(sidebar_njk, encoding="utf-8")
@@ -711,6 +774,7 @@ def main():
     print("Next steps:")
     print("  1. Open src/stories/%s/index.md and write your story text." % slug)
     print("  2. Add more map points to data.geojson (see STORY-GUIDE.md).")
+    print("     Log each claim as a row in sources.html (the private ledger).")
     print("  3. Preview it: run 'npm start' then open http://localhost:8080")
     print("  4. When you're happy: run 'npm run build', then commit & push")
     print("     using the Source Control tab in VS Code.")
