@@ -22,9 +22,12 @@
   it renders (and records) anywhere.
 
   Layout: this reel uses the shared frame (reel-frame.css + reel-frame.js): one
-  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone defined
-  once in reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas
-  and outline the safe area. `npm run check-reels` fails if any text leaves it.
+  fixed 1080x1920 stage, scaled to fit the screen, with the safe zone and the
+  layout bands (header row, map window, legend, text block) defined once in
+  reel-frame.css. Add ?guides=1 (or press G) to shade the blocked areas, outline
+  the safe area and mark the bands. `npm run check-reels` fails if any beat breaks
+  the layout rules. Each beat's `fit` lists the points of its subject; the frame
+  zooms and positions the map so they sit inside the map window.
 
   Controls: tap/click the right ~2/3 of the screen (or press -> / Space) to
   advance a beat, the left ~1/3 (or <-) to go back. Hold a finger down for a second
@@ -49,58 +52,55 @@
 
 <link href="reel-frame.css" rel="stylesheet">
 <style>
-  /* Lake Powell only: the elevation gauge and the state labels that sit on the map.
-     Everything else (stage, safe zone, caption, legend, dots) comes from reel-frame.css.
-     The gauge sits inside .reel-safe, so it is positioned within the safe zone. */
-  .tsu-gauge { position:absolute; left:0; top:150px; width:544px; height:370px; z-index:7; pointer-events:none; opacity:0; transition:opacity .4s; }
+  /* Lake Powell only: the threshold ladder (3,518 / 3,510 / 3,500 / 3,490), the one
+     graphic on the beats that show it. It sits in the map window (19% to 58% down),
+     at the left; those beats reserve its width with padL so the frame puts the lake
+     and the dam to the right of it. Everything else (stage, header, legend, text
+     block, type sizes, map labels) comes from reel-frame.css. */
+  .tsu-gauge { left:calc(var(--safe-left) * 1%); top:27%; width:480px; height:360px; opacity:0; transition:opacity .4s; }
   .tsu-gauge.on { opacity:1; }
-  .tsu-g-rail { position:absolute; left:22px; top:0; bottom:0; width:7px; background:rgba(228,224,218,.28); }
-  .tsu-g-row  { position:absolute; left:0; display:flex; align-items:center; gap:25px; transform:translateY(-50%); font:600 36px/1.15 Arial,sans-serif; color:#cfcac2; text-shadow:0 4px 11px rgba(0,0,0,.85); white-space:nowrap; }
-  .tsu-g-tick { width:51px; height:0; border-top:7px solid currentColor; flex-shrink:0; }
+  .tsu-g-rail { position:absolute; left:20px; top:0; bottom:0; width:7px; background:rgba(228,224,218,.28); }
+  .tsu-g-row  { position:absolute; left:0; display:flex; align-items:center; gap:16px; transform:translateY(-50%); font:600 calc(var(--type-small) * 1px)/1.15 Arial,sans-serif; color:#cfcac2; text-shadow:0 3px 9px rgba(0,0,0,.9); white-space:nowrap; }
+  .tsu-g-tick { width:46px; height:0; border-top:7px solid currentColor; flex-shrink:0; }
   .tsu-g-row b { font-weight:700; }
   .tsu-g-row.late { opacity:0; transition:opacity .5s; }
   .tsu-gauge.full .tsu-g-row.late { opacity:1; }
-  .tsu-g-row.lake { color:#e8c87a; font-size:40px; }
+  .tsu-g-row.lake { color:#e8c87a; }
   .tsu-g-row.t510 { color:#5b9bd5; }
   .tsu-g-row.t500 { color:#e8955a; }
   .tsu-g-row.t490 { color:#e05a4e; }
 
-  /* State labels (cuts). They live inside the map, so these are map pixels. */
-  .tsu-lbl { font:700 11px/1.25 Arial,sans-serif; color:#f2efe9; text-align:center; text-shadow:0 1px 4px rgba(0,0,0,.95); white-space:nowrap; transform:translate(-50%,-50%); opacity:0; transition:opacity .4s; pointer-events:none; }
+  /* State labels (the cuts) are map labels: the frame hides any that fall under the
+     text. Only the fade is Lake Powell's own. */
+  .tsu-lbl { opacity:0; transition:opacity .4s; }
   .tsu-lbl.on { opacity:1; }
-  .tsu-lbl small { display:block; font:600 10px Arial,sans-serif; color:#e8b4ac; }
 </style>
 </head>
 <body>
 <div class="reel-stage" id="reel-stage">
   <div id="tsu-map"></div>
 
-  <div class="reel-fade-top"></div>
-  <div class="reel-fade-bottom"></div>
+  <div class="reel-scrim"></div>
 
-  <div class="reel-safe">
-    <div class="reel-header">
-      <div class="reel-date" id="tsu-date" hidden></div>
-      <div class="reel-dots" id="tsu-dots"></div>
-    </div>
+  <div class="reel-header">
+    <div class="reel-date" id="tsu-date" hidden></div>
+    <div class="reel-dots" id="tsu-dots"></div>
+  </div>
 
-    <div class="tsu-gauge" id="tsu-gauge"></div>
+  <div class="reel-graphic tsu-gauge" id="tsu-gauge"></div>
 
-    <div class="reel-bottom">
-      <div class="reel-legend" id="tsu-legend">
-          <div class="reel-leg-row" data-line="states"><span class="reel-leg-fill" style="background:#9a958c"></span>The seven basin states</div>
-          <div class="reel-leg-row" data-line="cut"><span class="reel-leg-fill" style="background:#e05a4e"></span>Lower Division states: 2027&#8211;28 reduction</div>
-          <div class="reel-leg-row" data-line="upper"><span class="reel-leg-fill" style="background:#5b7a96"></span>Upper Division states: voluntary only</div>
-          <div class="reel-leg-row" data-line="res"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Reservoirs</div>
-          <div class="reel-leg-row" data-line="dams"><span class="reel-leg-dot" style="background:#e8c87a"></span>Dams</div>
-      </div>
+  <div class="reel-legend" id="tsu-legend">
+    <div class="reel-leg-row" data-line="states"><span class="reel-leg-fill" style="background:#9a958c"></span>Basin states</div>
+    <div class="reel-leg-row" data-line="cut"><span class="reel-leg-fill" style="background:#e05a4e"></span>2027&#8211;28 cut</div>
+    <div class="reel-leg-row" data-line="upper"><span class="reel-leg-fill" style="background:#5b7a96"></span>Voluntary only</div>
+    <div class="reel-leg-row" data-line="res"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Reservoir</div>
+    <div class="reel-leg-row" data-line="dams"><span class="reel-leg-dot" style="background:#e8c87a"></span>Dam</div>
+  </div>
 
-      <div class="reel-caption">
-        <div class="reel-kicker" id="tsu-kicker"></div>
-        <div class="reel-title"  id="tsu-title"></div>
-        <div class="reel-sub"    id="tsu-sub"></div>
-      </div>
-    </div>
+  <div class="reel-caption">
+    <div class="reel-kicker" id="tsu-kicker"></div>
+    <div class="reel-title"  id="tsu-title"></div>
+    <div class="reel-sub"    id="tsu-sub"></div>
   </div>
 </div>
 
@@ -145,39 +145,47 @@
   var params = new URLSearchParams(window.location.search);
   var SHOW_DATE = params.get("date") !== "off";
 
-  // beat.c is the map center [lng, lat]; act is the pin that pulses; lines lists which
-  // layers/legend rows show; mode picks the state colouring ("none" | "all" | "cut");
-  // gauge turns the Powell elevation gauge on; lbl is "cut" | "all" | "" (all adds the Upper Division label).
+  // Each beat: c / z = the map centre [lng, lat] and the closest zoom it may use;
+  // fit = the points of the beat's subject, which the frame fits inside the map
+  // window (it zooms out below z if it has to); padL = width (stage px) kept clear
+  // on the left for the ladder; act = the pin that pulses; vis = the dam pins shown;
+  // lines = which layers show; legend = the legend rows (never more than 3);
+  // mode picks the state colouring ("none" | "all" | "cut"); gauge turns the
+  // ladder on (1 = target line only, 2 = all three lines); lbl is "cut" | "all" | "".
+  // On-screen text: a kicker, a headline (7 words), one supporting line (10 words).
+  // fit points: Lake Powell's bounding box (with Glen Canyon Dam); the seven states;
+  // the three Lower Division states; the Upper Division states plus the AZ/CA/NV
+  // label positions.
   var BEATS = [
-    { c:[-111.0,37.3], z:6.1, pad:104, date:"As of Sep 30, 2026",
-      kicker:"Lake Powell \u00b7 The Spatial Update", title:"8 feet above the target",
-      sub:"Powell stood at 3,518 ft as of Sept 30. The new rules try to hold it at 3,510 or higher",
-      vis:["glen"], act:"glen", lines:["res","dams"], mode:"none", gauge:1, lbl:"" },
+    { c:[-111.0,37.3], z:6.1, fit:[[-111.555,36.932],[-110.363,37.913]], padL:480, date:"As of Sep 30, 2026",
+      kicker:"Lake Powell", title:"8 feet above the target",
+      sub:"3,518 ft. New rules try to hold 3,510 or higher",
+      vis:["glen"], act:"glen", lines:["res","dams"], legend:["res","dams"], mode:"none", gauge:1, lbl:"" },
 
-    { c:[-111.0,37.3], z:6.1, pad:104, date:"As of Sep 30, 2026",
+    { c:[-111.0,37.3], z:6.1, fit:[[-111.555,36.932],[-110.363,37.913]], padL:480, date:"As of Sep 30, 2026",
       kicker:"Two more lines", title:"3,500 and 3,490",
-      sub:"At 3,500 ft: consultation and extra protective steps. At 3,490, the minimum power pool at Glen Canyon Dam",
-      vis:["glen"], act:"glen", lines:["res","dams"], mode:"none", gauge:2, lbl:"" },
+      sub:"3,500 calls for consultation; 3,490 is minimum power pool",
+      vis:["glen"], act:"glen", lines:["res","dams"], legend:["res","dams"], mode:"none", gauge:2, lbl:"" },
 
-    { c:[-113.2,38.0], z:3.0, date:"Aug 21, 2026",
+    { c:[-113.2,38.0], z:3.0, fit:[[-124.409,31.332],[-102.042,45.001]], date:"Aug 21, 2026",
       kicker:"The map", title:"Seven states, two lakes",
-      sub:"The river supplies 40+ million people and hydropower for seven states; two reservoirs hold it back",
-      vis:["glen","hoover"], act:null, lines:["states","res","dams"], mode:"all", gauge:0, lbl:"" },
+      sub:"Water for 40+ million people; hydropower for seven states",
+      vis:["glen","hoover"], act:null, lines:["states","res","dams"], legend:["states","res","dams"], mode:"all", gauge:0, lbl:"" },
 
-    { c:[-114.0,36.6], z:3.45, date:"2027 and 2028",
+    { c:[-114.0,36.6], z:3.45, fit:[[-124.409,31.332],[-109.045,42.01]], date:"2027 and 2028",
       kicker:"Who gets cut", title:"1.25 million acre-feet a year",
-      sub:"Under the Lower Basin states\u2019 proposed sharing agreement, the split is:",
-      vis:["glen","hoover"], act:null, lines:["cut","upper","res","dams"], mode:"cut", gauge:0, lbl:"cut" },
+      sub:"Lower Basin states\u2019 proposed agreement splits it this way",
+      vis:[], act:null, lines:["cut","upper","res"], legend:["cut","upper"], mode:"cut", gauge:0, lbl:"cut" },
 
-    { c:[-113.2,38.0], z:3.0,
-      kicker:"Upstream", title:"Voluntary only",
-      sub:"These documents require no cut from the four Upper Division states; they can contribute up to 200,000 acre-feet a year",
-      vis:["glen","hoover"], act:null, lines:["cut","upper","res","dams"], mode:"cut", gauge:0, lbl:"all" },
+    { c:[-113.2,38.0], z:3.0, fit:[[-120.3,31.332],[-102.042,45.001]],
+      kicker:"Upper Division states", title:"Voluntary only",
+      sub:"No cut required; up to 200,000 acre-feet a year, voluntarily",
+      vis:[], act:null, lines:["cut","upper","res"], legend:["cut","upper"], mode:"cut", gauge:0, lbl:"all" },
 
-    { c:[-111.0,37.3], z:6.1, pad:104, date:"As of Sep 30, 2026",
-      kicker:"The margin", title:"Eight feet above the target",
-      sub:"Reclamation says it will adjust releases through April to try to keep Powell at 3,510 or above",
-      vis:["glen"], act:"glen", lines:["res","dams"], mode:"none", gauge:2, lbl:"" }
+    { c:[-111.0,37.3], z:6.1, fit:[[-111.555,36.932],[-110.363,37.913]], padL:480, date:"As of Sep 30, 2026",
+      kicker:"Reclamation\u2019s plan", title:"Eight feet above the target",
+      sub:"Adjust releases through April, aiming to keep 3,510 or above",
+      vis:["glen"], act:"glen", lines:["res","dams"], legend:["res","dams"], mode:"none", gauge:2, lbl:"" }
   ];
 
 
@@ -201,7 +209,7 @@
   var dotsUI = TSUReel.dots(el.dots, BEATS.length);
 
   // ---- Elevation gauge ------------------------------------------------------
-  var GH = 370;                          // gauge height, stage px
+  var GH = 360;                          // gauge height, stage px (matches .tsu-gauge)
   var G_TOP = 3525, G_BOT = 3486;           // feet shown top to bottom
   function gy(ft) { return ((G_TOP - ft) / (G_TOP - G_BOT)) * GH; }
   (function buildGauge() {
@@ -238,7 +246,7 @@
     if (!div || map) return;
 
     var b0 = BEATS[0];
-    map = new maplibregl.Map(TSUReel.mapOptions(div, { style: STYLE, center: frameCenter(b0), zoom: b0.z }));
+    map = new maplibregl.Map(TSUReel.mapOptions(div, { style: STYLE, center: b0.c, zoom: b0.z }));
 
     map.on("style.load", function () {
       try { map.setProjection({ type: "globe" }); } catch (e) {}
@@ -250,6 +258,13 @@
       } catch (e) {}
       buildLayers();
       buildMarkers();
+      // The basemap's country name ("UNITED STATES") would sit under the reel's own
+      // state labels; the states are the subject here.
+      ["place_country_1", "place_country_2"].forEach(function (id) {
+        try { map.setLayoutProperty(id, "visibility", "none"); } catch (e) {}
+      });
+      TSUReel.attachMap(map);
+      TSUReel.solveAll(map, BEATS);
       applyBeat(idx, false);
     });
   }
@@ -292,7 +307,7 @@
     });
     Object.keys(LABELS).forEach(function (k) {
       var d = document.createElement("div");
-      d.className = "tsu-lbl";
+      d.className = "reel-maplabel tsu-lbl";   // the frame hides it under the text block
       var m = new maplibregl.Marker({ element: d }).setLngLat(ANCHOR[k]).addTo(map);
       labelEls[k] = d;
     });
@@ -301,30 +316,19 @@
   function setLabels(kind) {
     Object.keys(labelEls).forEach(function (k) {
       var d = labelEls[k], L = LABELS[k];
-      if (!kind || (kind === "cut" && k === "UB")) { d.className = "tsu-lbl"; return; }
-      if (kind === "all" && k !== "UB") { d.innerHTML = L.ab; d.className = "tsu-lbl on"; return; }   // names only; amounts were on the previous beat
+      if (!kind || (kind === "cut" && k === "UB")) { d.classList.remove("on"); return; }
+      if (kind === "all" && k !== "UB") { d.innerHTML = L.ab; d.classList.add("on"); return; }   // names only; amounts were on the previous beat
       d.innerHTML = (kind === "cut" ? L.a : L.ab) + "<small>" + L.cut + "</small>";
-      d.className = "tsu-lbl on";
+      d.classList.add("on");
     });
-  }
-
-  // The story's map sits in the band between the top fade and the caption, not in the
-  // middle of the screen. Instead of MapLibre camera padding (which misplaces HTML pins
-  // on the globe at low zoom), nudge the map centre by the same amount: the band centre
-  // is 70 px above the screen centre, and b.pad (px) also moves the map right of the gauge.
-  function frameCenter(b) {
-    var dpp = 360 / (512 * Math.pow(2, b.z));            // degrees of longitude per pixel
-    var lat = b.c[1];
-    return [ b.c[0] - (b.pad || 0) / 2 * dpp,
-             lat - 70 * dpp * Math.cos(lat * Math.PI / 180) ];
   }
 
   function applyBeat(i, fly) {
     var b = BEATS[i];
     if (map) {
-      var c = frameCenter(b);
-      if (fly) map.flyTo({ center: c, zoom: b.z, duration: 1600, essential: true, curve: 1.3 });
-      else     map.jumpTo({ center: c, zoom: b.z });
+      var cam = b.cam || { center: b.c, zoom: b.z };   // solved by the frame so the subject sits in the map window
+      if (fly) map.flyTo({ center: cam.center, zoom: cam.zoom, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: cam.center, zoom: cam.zoom });
     }
     Object.keys(markers).forEach(function (id) {
       var m = markers[id];
@@ -346,7 +350,7 @@
     el.gauge.classList.toggle("full", b.gauge > 1);
     el.legRows.forEach(function (row) {
       var k = row.getAttribute("data-line");
-      row.classList.toggle("on", b.lines.indexOf(k) !== -1 || (k === "states" && b.mode === "all"));
+      row.classList.toggle("on", b.legend.indexOf(k) !== -1);
     });
   }
 
@@ -384,7 +388,9 @@
     count: BEATS.length,
     step: step,
     jump: function (i) { idx = i; render(); applyBeat(idx, false); },
-    mapReady: function () { return !!map && map.loaded(); }
+    mapReady: function () { return !!map && map.loaded(); },
+    map: function () { return map; },
+    beat: function () { return BEATS[idx]; }
   });
 })();
 </script>

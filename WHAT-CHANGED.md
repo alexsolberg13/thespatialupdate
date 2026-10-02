@@ -1,3 +1,62 @@
+# What changed — reel layout rules (`claude/reel-layout`)
+
+Every reel now follows the same four bands, set once in `src/reels/reel-frame.css` and enforced by `npm run check-reels` on every beat of every reel. Percent of the 1080x1920 stage, from the top:
+
+- **Header row, 15% to 19%:** the date tag and the progress dots on one line.
+- **Map window, 19% to 58%:** only the map, map labels and at most one small graphic. Each beat's subject is framed inside it (not at the centre of the screen). The Lake Powell threshold ladder is that beat's one graphic, at the left, clear of the lake and dam.
+- **Legend, 58% to 60%:** only on beats that need it; one row, at most 3 items, directly above the text.
+- **Text block, 60% to 80%:** left-aligned, clear of the blocked corner: a kicker, a headline (2 lines, 7 words) and one supporting line (10 words). The map is darkened behind it and nowhere else (the old full-height top and bottom fades are gone).
+- **Type sizes, once:** headline 64, supporting line 36, kicker / legend / date 28; nothing under 28.
+- **Map labels** that fall under the header row, legend or text block are hidden (the basemap's place names and the reel's own state labels).
+
+## How it works
+- `reel-frame.css` holds the zone numbers, type sizes and limits. `reel-frame.js` frames each beat: a beat lists `fit` (the points of its subject) and the frame picks the largest zoom, up to the beat's old `z`, at which the subject fits inside the window, and centres it there. It also hides labels under the text.
+- `scripts/reel_audit.js` (new) holds the rules; `check_reels.js` runs it on every beat after the safe-zone measurement. Each failure is a plain sentence naming the reel, beat and rule. If the basemap does not load, the check now fails instead of passing without being able to look.
+- I tried to break the check on purpose (text pushed to 88% with a paragraph, 9-word headline, 4 legend items, 20px text, a second graphic, the ladder over the lake, a stray label, the old fades, labels left un-hidden, and more). Each one failed with the right message.
+
+## What was cut from on-screen text (numbers and dates kept exact; narration scripts untouched)
+**Lake Powell**
+1. Kicker "Lake Powell · The Spatial Update" is now "Lake Powell". Line cut from "Powell stood at 3,518 ft as of Sept 30. The new rules try to hold it at 3,510 or higher" to "3,518 ft. New rules try to hold 3,510 or higher" (cut: "Powell stood at", "as of Sept 30"; the date tag still says As of Sep 30, 2026).
+2. "At 3,500 ft: consultation and extra protective steps. At 3,490, the minimum power pool at Glen Canyon Dam" is now "3,500 calls for consultation; 3,490 is minimum power pool" (cut: "extra protective steps", "at Glen Canyon Dam").
+3. "The river supplies 40+ million people and hydropower for seven states; two reservoirs hold it back" is now "Water for 40+ million people; hydropower for seven states" (cut: "two reservoirs hold it back").
+4. "Under the Lower Basin states' proposed sharing agreement, the split is:" is now "Lower Basin states' proposed agreement splits it this way" (cut: "sharing"; it still says "proposed"). The dam pins are hidden on this beat and the next, and the legend drops the reservoir and dam rows there (3-item limit); the reservoirs are still drawn.
+5. Kicker "Upstream" is now "Upper Division states". "These documents require no cut from the four Upper Division states; they can contribute up to 200,000 acre-feet a year" is now "No cut required; up to 200,000 acre-feet a year, voluntarily" (cut: "These documents", "the four").
+6. Kicker "The margin" is now "Reclamation's plan". "Reclamation says it will adjust releases through April to try to keep Powell at 3,510 or above" is now "Adjust releases through April, aiming to keep 3,510 or above" (cut: "says it will", "Powell"; the attribution moved to the kicker).
+- Legend labels shortened: "Lower Division states: 2027–28 reduction" is "2027–28 cut"; "Upper Division states: voluntary only" is "Voluntary only"; "The seven basin states" is "Basin states"; "Reservoirs" and "Dams" are singular. Beats 1, 2 and 6 keep a 2-item legend (reservoir, dam); beat 3 has 3.
+
+**August 2026 eclipse**
+2. "Only from inside it does the Sun vanish completely: step outside and it is merely partial" is now "Only inside it does the Sun vanish completely" (cut: "step outside and it is merely partial").
+3. "The shadow lands first over the ice; Reykjavík barely makes it: about 59 seconds" is now "Reykjavík barely makes it: about 59 seconds" (cut: "The shadow lands first over the ice").
+4. "First total eclipse over mainland Spain in over a century: the Sun just 11° off the horizon" is now "Mainland Spain's first total eclipse in over a century". **The 11° figure is no longer on screen** (it did not fit in 10 words with the century claim; the narration script still has it). Say if you would rather keep it and drop something else.
+5. "99.9% of the Sun covered, and still on the wrong side of the line" is now "99.9% covered, still on the wrong side of the line" (cut: "of the Sun", "and").
+6. "From the Arctic to a Spanish sunset, the whole show comes down to where you stand" is now "The whole show comes down to where you stand" (cut: "From the Arctic to a Spanish sunset,").
+- Beat 1 is unchanged. Legend: "Path of totality" is "Totality path", "Inside totality" is "In totality", "Misses it: 99.9%" is "Misses: 99.9%".
+
+**Lobito Corridor**
+2. "Central Africa holds the world's richest copper and cobalt: the DRC alone mines about 72% of it" is now "The DRC alone mines about 72% of the world's cobalt" (cut: "Central Africa holds the world's richest copper and cobalt"; "it" is now spelled out as cobalt, which is what the story and ledger say. The 72% still needs its single citable source, as before).
+3. "For fifty years the ore has ridden China's TAZARA railway to Dar es Salaam" is now "Ore has ridden China's TAZARA railway to Dar es Salaam" (cut: "For fifty years the"; the date tag still says Since the 1970s).
+4. "A US- and EU-backed railway now pulls it the other way, to the port of Lobito" is now "A US- and EU-backed railway now pulls it to Lobito" (cut: "the other way", "the port of").
+5. "A planned greenfield extension would wire the Copperbelt straight into the corridor" is now "A planned extension would wire the Copperbelt into the corridor" (cut: "greenfield", "straight"). The Copperbelt feeder line is not drawn on this beat (3-item legend limit).
+6. "The same ore can now flow west to the Atlantic or east to the Indian Ocean" is now "West to the Atlantic or east to the Indian Ocean" (cut: "The same ore can now flow"). The planned Zambia link is not drawn on this beat (3-item legend limit; it is a plan, not a route the ore uses now).
+- Beat 1 is unchanged. Legend: "Lobito → Atlantic" is "Lobito Corridor", "TAZARA → Indian Ocean" is "TAZARA", "Copperbelt feeder → junction" is "Copperbelt feeder".
+
+**Revolution Wind**
+2. "In 2013, BOEM leased 83,789 acres of ocean off Rhode Island — federal authority, marked as a polygon" is now "2013: BOEM leased 83,789 acres off Rhode Island" (cut: "of ocean", "federal authority, marked as a polygon").
+3. "Inside that line, turbines rose — 704 megawatts, enough for more than 350,000 homes" is now "704 megawatts, enough for more than 350,000 homes" (cut: "Inside that line, turbines rose").
+4. "The Department of the Interior ordered construction to stop, citing national security" is now "Interior ordered construction stopped, citing national security" (cut: "The Department of the").
+5. "A second, broader order hit Revolution Wind alongside four sibling projects up and down the East Coast" is now "A second, broader order also hit four sibling projects" (cut: "Revolution Wind alongside", "up and down the East Coast").
+6. "Federal judges called the security rationale likely pretextual and reinstated every one of the five" is now "Judges called the security rationale likely pretextual; reinstated all five" (cut: "Federal"; "every one of the" is "all").
+7. "Revolution Wind now feeds the New England grid; full commercial operation is expected later this year" is now "Feeding New England's grid; full commercial operation expected this year" (cut: "Revolution Wind now", "later").
+- Beat 1 only loses its em dash (now a comma). Kickers, headlines and date tags are unchanged on every beat of this reel.
+
+## Also changed
+- **Lake Powell:** the ladder text is 28px (it was 36 and 40) and the lake and dam are framed to the right of it; the basemap's "UNITED STATES" label is hidden so it no longer sits under the state labels.
+- **Revolution Wind:** the faint turbine rings no longer show before the turbines appear (a leftover from the old format; the dot faded but its outline did not).
+- **Guides** (`?guides=1`) now also mark the four bands.
+- `npm run build` is unchanged: it still runs the check after Eleventy.
+
+---
+
 # What changed — Lake Powell on the shared frame (`claude/lake-powell-frame`)
 
 - **Lake Powell reel** now uses the shared reel frame (stage, safe zone, hold-to-exit, Home Screen tags), like the other three. Its content, script, numbers and map data are unchanged. The elevation gauge is drawn smaller (370px tall instead of a straight scale-up) so it fits between the date dots and the legend; the numbers on it are the same. `check-reels` flagged nothing in any beat, so no on-screen text was shortened.

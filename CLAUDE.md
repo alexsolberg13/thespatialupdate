@@ -73,7 +73,8 @@ package.json      npm scripts: `npm start` (preview), `npm run build`
 scripts/          Python automation
   new_story.py            scaffolds a new src/stories/<slug>/ folder
   finalize.py             strips a draft's [C#] claim tags out of the body (Stage 4)
-  check_reels.js          `npm run check-reels`: safe-area check for every reel
+  check_reels.js          `npm run check-reels`: safe-area and layout-rule check for every reel
+  reel_audit.js           the layout rules (header, map window, text, legend, type, labels) it runs per beat
 
 dossiers/         research packets, one per story (august-2026-eclipse,
                   lobito-corridor, revolution-wind)
@@ -115,14 +116,48 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   40% of the height (Instagram's button column). The safe area is that rectangle
   with the bottom-right corner cut out. All text, labels, legends and logos stay
   inside it. The map fills the whole stage.
+- **Four bands inside the safe area, defined once** (the `--header-*`, `--window-*`,
+  `--legend-*` and `--text-*` numbers in `reel-frame.css`). Percent of the stage,
+  from the top. Keep text off the map: the map is the picture.
+  1. **Header row, 15% to 19%.** The date tag and the progress dots on one line,
+     small.
+  2. **Map window, 19% to 58%.** Only the map, map labels and at most **one small
+     graphic** per beat. Each beat's subject is framed inside this window, not at
+     the centre of the screen: a beat lists `fit` (the lng/lat points of its
+     subject) and `z` (the closest zoom it may use), and the frame zooms out as far
+     as needed and centres the subject in the window. A graphic is a
+     `.reel-graphic` inside the window that does not cover the beat's subject (the
+     Lake Powell threshold ladder sits at the left; the beat reserves its width
+     with `padL` so the lake and dam sit to the right of it).
+  3. **Text block, 60% to 80%,** left-aligned and clear of the blocked corner: a
+     kicker, a headline of at most **2 lines and 7 words**, and one supporting line
+     of at most **10 words** (it may wrap to a second line at this size; never a
+     third). No paragraphs. The map is darkened behind this block (`.reel-scrim`)
+     and nowhere else.
+  4. **Legend, 58% to 60%,** directly above the text block, only on beats that need
+     it: one compact row of at most **3 items**.
+- **Type sizes, set once** in `reel-frame.css` (`--type-*`), in stage pixels:
+  headline 64, supporting line 36, kicker / legend / date 28. Nothing on screen is
+  smaller than 28. Reels never set their own sizes.
+- **Map labels.** Any label that falls under the header row, the legend or the text
+  block is hidden: the basemap's place names (found with `queryRenderedFeatures` and
+  filtered out once the camera has settled; they fade out while it moves) and a
+  reel's own labels (give them the class `reel-maplabel`).
+- **Cutting on-screen text.** When a beat's wording is too long, cut words, not
+  facts: keep every number and date exact, and say in the commit or PR what was
+  cut from which beat. The narration scripts (`*-script.md`) are not touched.
 - **Guides.** Add `?guides=1` to a reel's address (or press G) to shade the
-  blocked areas (margins and corner) and outline the safe area. Off by default.
+  blocked areas (margins and corner), outline the safe area and mark the four
+  bands. Off by default.
 - **Check.** `npm run check-reels` opens every reel in a headless browser at
   1080x1920, steps through every beat, and fails with a plain-English message
   naming the reel, the beat and the element if any text crosses outside the safe
-  area or into the blocked corner. It also fails if a reel does not load the shared
+  area or into the blocked corner, **or if the beat breaks any of the four bands,
+  the type sizes or the label rule** (the checks are in `scripts/reel_audit.js`;
+  every number comes from `reel-frame.css`). It also fails if a reel does not load the shared
   frame (`reel-frame.css`, `reel-frame.js` and the `reel-stage` markup; a mention in
-  a comment does not count), and if the built reels index is stale. It also checks that the stage is centred on the
+  a comment does not count), if the map did not load (rules 2 and 6 cannot be
+  checked without it, so it never passes quietly), and if the built reels index is stale. It also checks that the stage is centred on the
   physical screen when the viewport is 59pt shorter than the screen. `npm run build` runs it after the Eleventy build.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
   and ticks every 1%, the exact top and bottom "stage edge", the "crop" strips
@@ -147,7 +182,11 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
 - **Nothing on screen but the reel.** Tap right to advance, left to go back; no
   buttons or counters. Holding a finger down for a second returns to the index.
 - **New reels must use the shared frame and pass the check.** Copy an existing
-  reel, keep the `reel-stage` markup, and don't add per-reel layout CSS.
+  reel, keep the `reel-stage` markup (map, scrim, header, optional graphic,
+  legend, caption), give every beat a `fit`, call `TSUReel.attachMap(map)` and
+  `TSUReel.solveAll(map, BEATS)` once the style loads, and don't add per-reel
+  layout CSS or type sizes. Keep `var BEATS = [...]` self-contained (literal
+  numbers, no references to other variables): the reels index reads it on its own.
 
 **Story coordinate convention.** Stories store coordinates **lon-first**, both in
 the Eleventy front matter (`coordinates: [-68.0, 8.0]`) and inside

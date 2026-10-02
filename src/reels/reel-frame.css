@@ -14,6 +14,26 @@
  * margins, with the bottom-right corner cut out (Instagram's button column).
  * All text, labels, legends and logos stay inside it; the map fills the whole
  * stage.
+ *
+ * THE LAYOUT ZONES. Inside the safe area every beat uses the same four bands,
+ * top to bottom (percent of the stage, from the top). Like the safe zone, the
+ * numbers are defined once, here, and `npm run check-reels` enforces them on
+ * every beat of every reel:
+ *
+ *    15% - 19%   HEADER ROW   the date tag and the progress dots, one line, small
+ *    19% - 58%   MAP WINDOW   the map, map labels and at most ONE small graphic.
+ *                             Each beat's subject is framed inside this band.
+ *    58% - 60%   LEGEND       only on beats that need it: one row, at most 3 items
+ *    60% - 80%   TEXT BLOCK   left-aligned, clear of the blocked corner: a kicker,
+ *                             a headline (2 lines, 7 words) and one supporting
+ *                             line (10 words). No paragraphs. The map is darkened
+ *                             behind this block and nowhere else.
+ *
+ * Map labels (the basemap's place names and a reel's own state/city labels) that
+ * fall under the header row, the legend or the text block are hidden.
+ *
+ * TYPE SIZES (stage pixels, set once, here): headline 64, supporting line 36,
+ * kicker / legend / date 28. Nothing on screen is smaller than 28.
  */
 
 :root {
@@ -23,6 +43,23 @@
   --safe-right: 8;     /* % blocked at the right  */
   --corner-w: 17;      /* blocked corner: the right 17% of the width ...   */
   --corner-h: 40;      /* ... for the bottom 40% of the height             */
+
+  /* Layout zones: % of the stage, from the top. */
+  --header-top: 15;    --header-bottom: 19;
+  --window-top: 19;    --window-bottom: 58;
+  --legend-top: 58;    --legend-bottom: 60;
+  --text-top: 60;      --text-bottom: 80;
+
+  /* Type sizes: stage pixels. */
+  --type-headline: 64;
+  --type-support: 36;
+  --type-small: 28;    /* kicker, legend, date; also the minimum for anything */
+
+  /* Limits the reel check enforces. */
+  --headline-max-lines: 2;   --headline-max-words: 7;
+  --support-max-lines: 2;    --support-max-words: 10;
+  --legend-max-items: 3;
+  --graphic-max-area: 30;    /* % of the map window one graphic may cover */
 
   --reel-w: 1080px;
   --reel-h: 1920px;
@@ -68,43 +105,70 @@ body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; bac
 .reel-tap-l { position:fixed; left:0; top:0; bottom:0; width:38%; z-index:50; }
 .reel-tap-r { position:fixed; right:0; top:0; bottom:0; width:62%; z-index:50; }
 
-/* Decorative darkening, not text: it may run past the safe zone. */
-.reel-fade-top    { position:absolute; left:0; right:0; top:0;    height:24%; background:linear-gradient(rgba(10,12,18,.82),rgba(10,12,18,0)); z-index:6; pointer-events:none; }
-.reel-fade-bottom { position:absolute; left:0; right:0; bottom:0; height:55%; background:linear-gradient(rgba(10,12,18,0),rgba(8,9,13,.92)); z-index:6; pointer-events:none; }
-
-/* ---- The safe zone: everything readable lives in here --------------------- */
-.reel-safe {
-  position:absolute; z-index:7; pointer-events:none;
-  top:calc(var(--safe-top) * 1%);
-  bottom:calc(var(--safe-bottom) * 1%);
-  left:calc(var(--safe-left) * 1%);
-  right:calc(var(--safe-right) * 1%);
-  display:flex; flex-direction:column; justify-content:space-between;
+/* The ONLY darkening of the map: a band exactly behind the text block, its edges
+   feathered inside the band. Decorative, not text. */
+.reel-scrim {
+  position:absolute; left:0; right:0; z-index:6; pointer-events:none;
+  top:calc(var(--text-top) * 1%);
+  height:calc((var(--text-bottom) - var(--text-top)) * 1%);
+  background:linear-gradient(rgba(8,10,16,0), rgba(8,10,16,.84) 12%, rgba(8,10,16,.84) 88%, rgba(8,10,16,0));
 }
-.reel-header { display:flex; flex-direction:column; gap:18px; }
-.reel-bottom { display:flex; flex-direction:column; gap:51px;
-  /* Keep clear of the blocked bottom-right corner (the right --corner-w % of the
-     stage). The safe box already stops --safe-right % in, so only the difference
-     is added here. */
-  padding-right:calc(var(--reel-w) * (var(--corner-w) - var(--safe-right)) / 100); }
 
-/* ---- Text styles ---------------------------------------------------------- */
-.reel-date   { align-self:flex-start; font:600 36px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:22px 33px; border-radius:14px; }
-/* A beat without a date keeps its space, so the dots never jump. */
-.reel-date[hidden] { display:block; visibility:hidden; }
-.reel-dots   { display:flex; justify-content:center; align-items:center; gap:18px; }
+/* ---- 1. Header row: date tag and progress dots, one line ------------------- */
+.reel-header {
+  position:absolute; z-index:7; pointer-events:none;
+  left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%);
+  top:calc(var(--header-top) * 1%);
+  height:calc((var(--header-bottom) - var(--header-top)) * 1%);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap;
+}
+.reel-date   { font:600 calc(var(--type-small) * 1px)/1 Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:#141210; background:#c8a84e; padding:12px 22px; border-radius:10px; white-space:nowrap; }
+/* A beat without a date has no tag; the dots stay at the right. */
+.reel-date[hidden] { display:none; }
+.reel-dots   { display:flex; align-items:center; gap:14px; margin-left:auto; filter:drop-shadow(0 2px 6px rgba(0,0,0,.7)); }
 
-.reel-kicker { font:700 36px/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin-bottom:36px; }
-.reel-title  { font:400 90px/1.18 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:pretty; margin-bottom:33px; }
-.reel-sub    { font:400 51px/1.5 Arial,sans-serif; color:#b4b0aa; text-wrap:pretty; }
+/* ---- 3. Text block: a kicker, a headline, one supporting line -------------- */
+.reel-caption {
+  position:absolute; z-index:7; pointer-events:none;
+  left:calc(var(--safe-left) * 1%);
+  /* Stop at the blocked corner: its left edge is at (100 - --corner-w)%. */
+  right:calc(var(--corner-w) * 1%);
+  top:calc(var(--text-top) * 1%);
+  height:calc((var(--text-bottom) - var(--text-top)) * 1%);
+  display:flex; flex-direction:column; justify-content:flex-start; align-items:flex-start;
+  text-align:left;
+}
+.reel-kicker { font:700 calc(var(--type-small) * 1px)/1.3 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:10px 0 12px; white-space:nowrap; }
+.reel-title  { font:400 calc(var(--type-headline) * 1px)/1.15 Georgia,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:balance; margin-bottom:14px; }
+.reel-sub    { font:400 calc(var(--type-support) * 1px)/1.35 Arial,sans-serif; color:#c9c5be; text-wrap:pretty; }
 
-/* Legend: a small key so lines, bands and dots read on their own in a recording. */
-.reel-legend  { display:flex; flex-direction:column; gap:22px; }
-.reel-leg-row { display:flex; align-items:center; gap:29px; font:600 36px/1 Arial,sans-serif; letter-spacing:.04em; color:#cfcac2; text-shadow:0 4px 11px rgba(0,0,0,.8); opacity:0; transition:opacity .4s; }
-.reel-leg-row.on { opacity:1; }
-.reel-leg-line { width:72px; height:0; border-top-width:11px; border-top-style:solid; flex-shrink:0; }
-.reel-leg-fill { width:58px; height:36px; border-radius:7px; flex-shrink:0; }
-.reel-leg-dot  { width:29px; height:29px; border-radius:50%; flex-shrink:0; border:5px solid rgba(255,255,255,.22); }
+/* ---- 4. Legend: one compact row directly above the text block --------------- */
+.reel-legend {
+  position:absolute; z-index:7; pointer-events:none;
+  left:calc(var(--safe-left) * 1%); right:calc(var(--safe-right) * 1%);
+  top:calc(var(--legend-top) * 1%);
+  height:calc((var(--legend-bottom) - var(--legend-top)) * 1%);
+  display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:36px;
+}
+.reel-leg-row { display:none; align-items:center; gap:12px; font:600 calc(var(--type-small) * 1px)/1 Arial,sans-serif; letter-spacing:.03em; color:#e4e0da; text-shadow:0 2px 8px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); white-space:nowrap; }
+.reel-leg-row.on { display:flex; animation:reelLegIn .4s; }
+@keyframes reelLegIn { from { opacity:0 } to { opacity:1 } }
+.reel-leg-line { width:44px; height:0; border-top-width:8px; border-top-style:solid; flex-shrink:0; }
+.reel-leg-fill { width:36px; height:22px; border-radius:5px; flex-shrink:0; }
+.reel-leg-dot  { width:22px; height:22px; border-radius:50%; flex-shrink:0; border:3px solid rgba(255,255,255,.25); }
+
+/* ---- 2. Map window: the one small graphic a beat may have ------------------- */
+/* A reel positions its graphic (in percent of the stage) inside the map window
+   and sizes it; this class only carries the shared behaviour. Text in it is
+   still at least --type-small. */
+.reel-graphic { position:absolute; z-index:7; pointer-events:none; }
+
+/* ---- Map labels a reel draws itself (live inside the scaled map: map pixels) ---- */
+/* 9 map px x 3.62 map scale = 33 stage px, above the 28 minimum. reel-frame.js
+   adds .reel-label-hidden to any that fall under the header, legend or text block. */
+.reel-maplabel { font:700 9px/1.25 Arial,sans-serif; color:#f2efe9; text-align:center; text-shadow:0 1px 4px rgba(0,0,0,.95); white-space:nowrap; transform:translate(-50%,-50%); pointer-events:none; }
+.reel-maplabel small { display:block; font:600 9px Arial,sans-serif; color:#e8b4ac; }
+.reel-maplabel.reel-label-hidden { opacity:0 !important; }
 
 /* ---- Map markers (live inside the scaled map, so these are map pixels) ---- */
 @keyframes tsuPulse { 0%{transform:scale(.55);opacity:.75} 100%{transform:scale(2.7);opacity:0} }
@@ -126,6 +190,9 @@ body.reel-guides-on .reel-guides { display:block; }
 .reel-guide-crop-top    { bottom:100%; }
 .reel-guide-crop-bottom { top:100%; }
 .reel-guide-label { position:absolute; font:700 30px/1 Arial,sans-serif; color:#fff; background:rgba(0,0,0,.55); padding:8px 14px; border-radius:8px; }
+/* The layout bands: a hairline at each band edge, labelled at the left. */
+.reel-guide-zone { position:absolute; left:0; right:0; height:0; border-top:3px dashed rgba(200,168,78,.85); }
+.reel-guide-zone span { position:absolute; right:14px; top:6px; font:700 26px/1 Arial,sans-serif; color:#e8c87a; background:rgba(0,0,0,.55); padding:6px 12px; border-radius:8px; white-space:nowrap; }
 
 /* The automatic check (npm run check-reels) opens reels with ?check=1: freeze
    every transition and animation so measurements are of the settled layout. */
