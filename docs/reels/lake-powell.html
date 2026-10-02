@@ -70,9 +70,11 @@
   .tsu-g-row.t490 { color:#e05a4e; }
 
   /* State labels (the cuts) are map labels: the frame hides any that fall under the
-     text. Only the fade is Lake Powell's own. */
-  .tsu-lbl { opacity:0; transition:opacity .4s; }
-  .tsu-lbl.on { opacity:1; }
+     text. A label is shown only on the beat it belongs to. It is hidden with
+     visibility, not opacity: MapLibre writes an inline opacity on every marker, which
+     overrides a stylesheet opacity and left all four labels showing on every beat. */
+  .tsu-lbl { visibility:hidden; }
+  .tsu-lbl.on { visibility:visible; }
 </style>
 </head>
 <body>
@@ -152,7 +154,7 @@
   // mode picks the state colouring ("none" | "all" | "cut"); gauge turns the
   // ladder on (1 = target line only, 2 = all three lines); lbl is "cut" | "all" | "".
   // On-screen text: a kicker, a headline (7 words), one supporting line (10 words).
-  // fit points: Lake Powell's bounding box (with Glen Canyon Dam); the seven states;
+  // fit points: Lake Powell's bounding box (with Glen Canyon Dam); the seven states (the box corners plus Colorado's and New Mexico's east edges, because the map is curved and a corner box alone lets them run past the right margin);
   // the three Lower Division states; the four Upper Division states. Map labels are
   // not listed: the frame fits every label showing on a beat (the state labels, and
   // "Upper Division states" on beat 5) inside the map window and the side margins.
@@ -167,7 +169,7 @@
       sub:"3,500 calls for consultation; 3,490 is minimum power pool",
       vis:["glen"], act:"glen", lines:["res","dams"], legend:["res","dams"], mode:"none", gauge:2, lbl:"" },
 
-    { c:[-113.2,38.0], z:3.0, fit:[[-124.409,31.332],[-102.042,45.001]], date:"Aug 21, 2026",
+    { c:[-113.2,38.0], z:3.0, fit:[[-124.409,31.332],[-102.042,45.001],[-102.052,41.002],[-102.042,36.993],[-103.002,36.5],[-103.065,32.0]], date:"Aug 21, 2026",
       kicker:"The map", title:"Seven states, two lakes",
       sub:"Water for 40+ million people; hydropower for seven states",
       vis:["glen","hoover"], act:null, lines:["states","res","dams"], legend:["states","res","dams"], mode:"all", gauge:0, lbl:"" },
@@ -177,7 +179,7 @@
       sub:"Lower Basin states\u2019 proposed agreement splits it this way",
       vis:[], act:null, lines:["cut","upper","res"], legend:["cut","upper"], mode:"cut", gauge:0, lbl:"cut" },
 
-    { c:[-113.2,38.0], z:3.0, fit:[[-114.053,31.332],[-102.042,45.001]],
+    { c:[-113.2,38.0], z:3.0, fit:[[-114.053,31.332],[-102.042,45.001],[-102.052,41.002],[-102.042,36.993],[-103.002,36.5],[-103.065,32.0]],
       kicker:"Upper Division states", title:"Voluntary only",
       sub:"No cut required; up to 200,000 acre-feet a year, voluntarily",
       vis:[], act:null, lines:["cut","upper","res"], legend:["cut","upper"], mode:"cut", gauge:0, lbl:"all" },

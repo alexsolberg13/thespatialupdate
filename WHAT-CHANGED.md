@@ -1,3 +1,16 @@
+# What changed — viewer zones (`claude/reel-viewer-zones`)
+
+Measured from a viewer's screen on Instagram.
+
+- **Text block** still ends at 83% (their username and caption stack starts at 84%). No change to the number; `check-reels` now fails if the bottom margin is not 17%.
+- **Blocked corner** is now the right 17% of the width from **45%** of the stage down (it was from 60%). `--corner-h` is 55 in `reel-frame.css`. No text, legend or map label may sit there; `check-reels` fails if the corner is not 17% x 55%.
+- **`?check=1` Instagram mock** now matches the viewer's layout: a three-row stack (username, caption, audio) starting at 84%, and a button column with counts starting at 47% (`--ig-stack-top`, `--ig-col-top`).
+- **Lake Powell, "Seven states, two lakes":** Colorado and New Mexico ran past the right margin because the camera only fitted two corner points of a box on a curved map. The beat (and "Voluntary only") now also fits Colorado's and New Mexico's east edges, so the camera zooms out until all seven states sit inside the 8% margins.
+- **Lake Powell, "Upper Division" label:** it, and the AZ / CA / NV labels, showed on every beat. MapLibre writes an inline opacity on markers, which overrode the stylesheet's `opacity:0`. Labels are now hidden with `visibility`, so "Upper Division" shows only on "Voluntary only" and the state cut labels only on "Who gets cut". (The fade-in is gone with it.)
+- `check-reels` on all four reels: 0 problems. Nothing was flagged by the new corner on the other three reels.
+
+---
+
 # What changed — iPhone offset fix and on-device check (`claude/reel-device-check`)
 
 **The bug.** In Home Screen mode on an iPhone 15 the whole stage sat about 59 points too low (date tag at ~24% instead of 15%, map subject at ~47% instead of 38.5%). `reel-frame.js` centred the stage on the physical screen (852pt) but assumed the page's viewport starts at the top of the screen. When the page is not in `viewport-fit=cover` mode, iOS lays it out *below* the status bar: the viewport is 793pt tall and starts 59pt down, so everything drawn "from the top" lands 59pt low. `lake-powell.html` had a second `<meta name="viewport">` without `viewport-fit=cover` (the other three reels had one correct tag).

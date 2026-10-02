@@ -59,7 +59,9 @@
   --safe-left: 8;      /* % blocked at the left   */
   --safe-right: 8;     /* % blocked at the right  */
   --corner-w: 17;      /* blocked corner: the right 17% of the width ...   */
-  --corner-h: 40;      /* ... for the bottom 40% of the height             */
+  --corner-h: 55;      /* ... from 45% of the height down to the bottom    */
+  --ig-col-top: 47;    /* check-mode mock: the viewer's button column starts at 47% */
+  --ig-stack-top: 84;  /* check-mode mock: username/caption stack starts at 84%     */
 
   /* Layout: % of the stage, from the top. The window bottom, the legend and the
      text block's top are not numbers here: they follow from the text (see above). */
@@ -182,7 +184,7 @@ body { position:fixed; left:0; right:0; top:0; height:100%; overflow:hidden; bac
 /* ---- 4. Legend: one compact row directly above the kicker ------------------ */
 .reel-legend {
   position:absolute; z-index:7; pointer-events:none;
-  /* Like the text block, it stops at the blocked corner: it sits below 60% of the
+  /* Like the text block, it stops at the blocked corner: it can sit below 45% of the
      stage, where the corner (Instagram's button column) is. */
   left:calc(var(--safe-left) * 1%); right:calc(var(--corner-w) * 1%);
   /* Directly above the kicker: the legend's bottom edge is the top of the text block. */
@@ -256,13 +258,13 @@ body.reel-solving *, body.reel-solving *::before, body.reel-solving *::after { t
 .reel-ig .ig-top { position:absolute; left:0; right:0; top:0; height:calc(var(--safe-top) * 1%); background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.2));
   display:flex; align-items:flex-end; justify-content:space-between; padding:0 6% 28px; font:700 44px/1 Arial,sans-serif; }
 .reel-ig .ig-col { position:absolute; right:calc(var(--safe-right) * 1%); width:calc((var(--corner-w) - var(--safe-right)) * 1% + 60px);
-  top:calc((100 - var(--corner-h)) * 1%); bottom:calc(var(--safe-bottom) * 1%); display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px; }
+  top:calc(var(--ig-col-top) * 1%); bottom:calc(var(--safe-bottom) * 1%); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:10px; }
 .reel-ig .ig-btn { text-align:center; text-shadow:0 2px 6px rgba(0,0,0,.8); }
 .reel-ig .ig-btn i { display:block; font:normal 52px/1 Arial,sans-serif; }
 .reel-ig .ig-btn small { font:600 24px/1.2 Arial,sans-serif; }
 .reel-ig .ig-audio { width:56px; height:56px; border-radius:10px; border:4px solid #fff; background:#444; margin-top:6px; }
-.reel-ig .ig-cap { position:absolute; left:calc(var(--safe-left) * 1%); right:calc(var(--corner-w) * 1%); bottom:calc((var(--safe-bottom) - 12) * 1%);
-  padding:20px 0; text-shadow:0 2px 6px rgba(0,0,0,.85); }
+.reel-ig .ig-cap { position:absolute; left:calc(var(--safe-left) * 1%); right:calc(var(--corner-w) * 1%); top:calc(var(--ig-stack-top) * 1%);
+  padding:0; text-shadow:0 2px 6px rgba(0,0,0,.85); }
 .reel-ig .ig-cap b { display:block; font:700 34px/1.3 Arial,sans-serif; }
 .reel-ig .ig-cap span { display:block; font:400 32px/1.3 Arial,sans-serif; margin:6px 0; }
 .reel-ig .ig-cap small { display:block; font:400 28px/1.3 Arial,sans-serif; opacity:.85; }

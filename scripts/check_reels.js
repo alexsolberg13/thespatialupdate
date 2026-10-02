@@ -185,6 +185,13 @@ async function checkReel(browser, file) {
     problems.push(`Reel "${name}": the map did not load (the basemap tiles come from the internet), so the map window (rule 2) and map labels (rule 6) could not be checked. Check the connection and run again.`);
   }
 
+  // The viewer's zones: the blocked corner is the right 17% of the width from 45% of the
+  // stage down, and the text block's last line is at 83% (their caption stack starts at 84%).
+  const zone = await page.evaluate("(function(){var s=window.TSUReel.safe();return {w:s.corner.w,h:s.corner.h,bottom:s.bottom};})()");
+  if (zone.w !== 17 || zone.h !== 55 || zone.bottom !== 17) {
+    problems.push(`Reel "${name}": reel-frame.css has the blocked corner at ${zone.w}% wide by ${zone.h}% tall and the bottom margin at ${zone.bottom}%; it must be 17% wide, 55% tall (from 45% down) and 17% (text ends at 83%).`);
+  }
+
   let hiddenLabels = 0;
   for (let i = 0; i < beats; i++) {
     const label = i === 0 ? "beat 1 of " + beats + " (the cold open)" : "beat " + (i + 1) + " of " + beats;
@@ -194,7 +201,7 @@ async function checkReel(browser, file) {
     const found = await page.evaluate("window.TSUReel.measure()");
     for (const f of found) {
       problems.push(f.side === "corner"
-        ? `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px into the blocked bottom-right corner (where Instagram puts its buttons).`
+        ? `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px into the blocked bottom-right corner (the right 17% of the width, from 45% of the stage down: where Instagram puts its buttons).`
         : `Reel "${name}", ${label}: the ${f.what} runs ${f.by}px past the ${f.side} edge of the safe area.`);
     }
     const audit = await page.evaluate(auditBeat);
