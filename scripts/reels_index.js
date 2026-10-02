@@ -54,7 +54,9 @@ function render() {
   const reels = files.map(readReel).sort((a, b) => b.date - a.date || a.name.localeCompare(b.name));
   const rows = reels.map((r) => {
     const when = `${r.date.getUTCDate()} ${MONTHS[r.date.getUTCMonth()]} ${r.date.getUTCFullYear()}`;
-    return `  <a class="row" href="${esc(r.file)}"><b>${esc(r.title)}</b><span>Published ${when} · ${r.beats} beats</span></a>`;
+    return `  <div class="row"><b>${esc(r.title)}</b><span>Published ${when} · ${r.beats} beats</span>
+` +
+           `    <div class="links"><a class="play" href="${esc(r.file)}">play</a><a class="check" href="${esc(r.file)}?check=1">check</a></div></div>`;
   }).join("\n");
   return { html: fs.readFileSync(TEMPLATE, "utf-8").replace("  <!--REEL_ROWS-->", rows), reels };
 }

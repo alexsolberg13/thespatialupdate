@@ -66,7 +66,25 @@
     var pw = Math.min(sw, sh), ph = Math.max(sw, sh);   // portrait order, whatever the rotation
     if (forced) { pw = +forced[1]; ph = +forced[2]; }
     if ((forced || standalone) && Math.abs(pw - w) <= 2 && ph >= h) { h = ph; source = forced ? "forced" : "screen"; }
-    return { w: w, h: h, source: source, standalone: !!standalone, viewportH: window.innerHeight, screenH: ph };
+    return { w: w, h: h, source: source, standalone: !!standalone, viewportH: window.innerHeight, screenH: ph,
+             top: h > window.innerHeight ? viewportTop(standalone, ph) : 0 };
+  }
+
+  // Where the top of the page's viewport sits on the physical screen, in points.
+  // With viewport-fit=cover the viewport starts at the very top of the screen (0),
+  // and the frame reports a non-zero top inset. If a Home Screen app is NOT in
+  // cover mode (for instance a second viewport meta tag dropped viewport-fit), iOS
+  // lays the page out below the status bar: the viewport is shorter than the screen
+  // and starts that far down, so a page that assumes it starts at the top lands that
+  // far too low. The probe sits outside the stage; nothing in the stage uses it.
+  function viewportTop(standalone, screenH) {
+    if (!standalone) return 0;
+    var probe = document.createElement("div");
+    probe.style.cssText = "position:fixed;left:0;top:0;width:0;visibility:hidden;padding-top:env(safe-area-inset-top)";
+    document.body.appendChild(probe);
+    var inset = probe.offsetHeight;
+    document.body.removeChild(probe);
+    return inset > 0 ? 0 : Math.max(0, screenH - window.innerHeight);
   }
 
   // ---- Fit the stage to the screen, centred on the whole screen -----------------
@@ -77,6 +95,9 @@
     var s = Math.min(sc.w / STAGE_W, sc.h / STAGE_H);
     root.style.setProperty("--reel-scale", String(s));
     root.style.setProperty("--reel-cy", (sc.h / 2) + "px");   // centre of the physical screen
+    // The body is the whole physical screen: it starts sc.top points above the
+    // viewport's top edge (0 unless the page is laid out below the status bar).
+    document.body.style.top = (-sc.top) + "px";
     document.body.style.height = sc.h + "px";                 // draw all the way to the bottom
     layoutMap(s, sc);
     if (window.TSUReel && TSUReel.onFit) TSUReel.onFit();
@@ -103,7 +124,7 @@
     var sc = lastScreen || screenSize();
     var r = stage.getBoundingClientRect();
     return { screenH: sc.screenH, viewportH: sc.viewportH, usedH: sc.h, source: sc.source, standalone: sc.standalone,
-             above: r.top, below: sc.h - r.bottom };
+             above: r.top + sc.top, below: sc.h - r.bottom - sc.top, viewportTop: sc.top };
   }
 
   // ---- Chrome injected into the stage ------------------------------------------
@@ -555,6 +576,92 @@
     return found;
   }
 
+  // ---- On-device check: ?check=1 ---------------------------------------------------
+  // For the phone. Measures the header row, the map subject, the legend and the text
+  // block as a percent of the stage, compares them with the rules in reel-frame.css,
+  // and shows PASS or FAIL with expected and actual numbers in a panel inside the
+  // safe area. Also reports where the stage sits on the physical screen (the strip
+  // above and below should be equal) and draws a mock of Instagram's interface
+  // (header, right-hand button column, username and caption) over the reel at the
+  // blocked zones, so you can see by eye what Instagram will cover. ?ig=0 hides the
+  // mock. (The automatic check-reels run uses ?audit=1, which only freezes motion.)
+  var CHECK_TOL = 1.0, CHECK_CENTRE_TOL = 2.5;
+
+  function stageBox(nodes, sr) {
+    var t = Infinity, b = -Infinity, any = false;
+    for (var i = 0; i < nodes.length; i++) {
+      var cs = getComputedStyle(nodes[i]);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      var r = nodes[i].getBoundingClientRect();
+      if (!r.width && !r.height) continue;
+      any = true; t = Math.min(t, r.top); b = Math.max(b, r.bottom);
+    }
+    return any ? { top: (t - sr.top) / sr.height * 100, bottom: (b - sr.top) / sr.height * 100 } : null;
+  }
+
+  // Returns [{ name, want, got, pass }], percent of the stage from the top.
+  function deviceReport() {
+    var sr = stage.getBoundingClientRect(), Z = zones(), rows = [];
+    var P = function (n) { return Math.round(n / STAGE_H * 1000) / 10; };
+    var f = function (n) { return n.toFixed(1); };
+    function q(sel) { return Array.prototype.slice.call(stage.querySelectorAll(sel)); }
+    function band(name, nodes, z) {
+      var lo = P(z.top), hi = P(z.bottom), b = stageBox(nodes, sr);
+      if (!b) { rows.push({ name: name, want: lo + "-" + hi + "%", got: "not shown", pass: true }); return; }
+      rows.push({ name: name, want: lo + "-" + hi + "%", got: f(b.top) + "-" + f(b.bottom) + "%",
+                  pass: b.top >= lo - CHECK_TOL && b.bottom <= hi + CHECK_TOL });
+    }
+    band("Header row", q(".reel-date, .reel-dots"), Z.header);
+    var sb = subjectBox();
+    if (sb) {
+      var lo = P(Z.win.top), hi = P(Z.win.bottom), mid = (lo + hi) / 2;
+      var t = sb.y0 / STAGE_H * 100, bt = sb.y1 / STAGE_H * 100, c = (t + bt) / 2;
+      rows.push({ name: "Map subject", want: "centre " + f(mid) + "%, in " + lo + "-" + hi + "%",
+                  got: "centre " + f(c) + "%, " + f(t) + "-" + f(bt) + "%",
+                  pass: Math.abs(c - mid) <= CHECK_CENTRE_TOL && t >= lo - CHECK_TOL && bt <= hi + CHECK_TOL });
+    }
+    band("Legend", q(".reel-leg-row.on"), Z.legend);
+    band("Text block", q(".reel-kicker, .reel-title, .reel-sub"), Z.text);
+    var m = metrics();
+    rows.push({ name: "Stage on screen", want: "equal strips", got: f(m.above) + " / " + f(m.below) + " pt",
+                pass: Math.abs(m.above - m.below) <= 1 });
+    return rows;
+  }
+
+  function buildCheck() {
+    var panel = el("div", "reel-checkpanel cal-ignore", stage);
+    function tick() {
+      var rows = deviceReport(), ok = rows.every(function (r) { return r.pass; });
+      var html = '<div class="rcp-head ' + (ok ? "ok" : "bad") + '">' + (ok ? "PASS" : "FAIL") + "</div>";
+      rows.forEach(function (r) {
+        html += '<div class="rcp-row ' + (r.pass ? "ok" : "bad") + '"><b>' + (r.pass ? "PASS" : "FAIL") + "</b> " + r.name +
+                "<span>want " + r.want + " &middot; got " + r.got + "</span></div>";
+      });
+      var m = metrics();
+      html += '<div class="rcp-dev">screen ' + m.screenH + " &middot; viewport " + m.viewportH + " &middot; top " + m.viewportTop + " pt</div>";
+      panel.innerHTML = html;
+    }
+    tick();
+    setInterval(tick, 500);
+    if (params.get("ig") === "0") return;
+
+    // Mock of Instagram's interface at the blocked zones (positions are stage
+    // percentages from reel-frame.css; nothing here depends on the screen).
+    var ig = el("div", "reel-ig cal-ignore", stage);
+    var top = el("div", "ig-top", ig);
+    el("span", "", top, "‹  Reels"); el("span", "", top, "▣");
+    var col = el("div", "ig-col", ig);
+    [["♥", "12.4K"], ["✉", "318"], ["➤", "Share"], ["⋯", ""]].forEach(function (b) {
+      var d = el("div", "ig-btn", col); el("i", "", d, b[0]); if (b[1]) el("small", "", d, b[1]);
+    });
+    el("div", "ig-audio", col);
+    var cap = el("div", "ig-cap", ig);
+    el("b", "", cap, "@thespatialupdate  ·  Follow");
+    el("span", "", cap, "The caption goes here and runs two lines before it cuts off… more");
+    el("small", "", cap, "♪ Original audio");
+    el("div", "ig-nav", ig);
+  }
+
   // ---- Public API ---------------------------------------------------------------
   window.TSUReel = {
     STAGE_W: STAGE_W, STAGE_H: STAGE_H, MAP_SCALE: MAP_SCALE,
@@ -578,7 +685,8 @@
     setCounter: function () {}   // nothing is shown during playback
   };
 
-  if (params.get("check") === "1") document.body.classList.add("reel-check");
+  if (params.get("audit") === "1") document.body.classList.add("reel-check");
   buildChrome();
+  if (params.get("check") === "1") buildCheck();
   setGuides(params.get("guides") === "1");
 })();
