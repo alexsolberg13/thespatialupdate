@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
-},
+    "check-reels": "node scripts/check_reels.js",
+    "build": "eleventy && npm run check-reels"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.5",
-    "@11ty/eleventy-plugin-bundle": "^3.0.7"
+    "@11ty/eleventy-plugin-bundle": "^3.0.7",
+    "playwright-core": "^1.63.0"
   }
 }

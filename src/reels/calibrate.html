@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<!-- Home Screen web app: opened from the icon it runs full screen, with no browser bars. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Reels">
+<meta name="theme-color" content="#0a0f18">
+<title>Reel calibration · The Spatial Update</title>
+
+<!--
+  Calibration page (not a reel; the reel check skips it). Shows the shared
+  1080x1920 stage with ruler lines every 5% measured from each edge, each
+  labelled with its percentage, and a small tick every 1%. Use it to line up a
+  screen recording or an Instagram screenshot against the stage, and to see where
+  the safe zone (teal dashed box, from reel-frame.css) sits against the rulers.
+
+  The cyan lines are the exact top and bottom edges of the 9:16 stage ("stage edge").
+  On a screen taller than 9:16 (an iPhone 15 is 1179x2556) the hatched strips
+  above and below are marked "crop": the map runs on into them, but no text or
+  controls ever go there, and they are cropped off the recording.
+
+  Top and left labels read "% from the top / left edge"; bottom and right labels
+  read "% from the bottom / right edge".
+-->
+
+<link href="reel-frame.css" rel="stylesheet">
+<style>
+  .cal-line  { position:absolute; background:#ffee00; box-shadow:0 0 0 2px #000; z-index:3; }
+  .cal-line.h { left:0; right:0; height:3px; }
+  .cal-line.v { top:0; bottom:0; width:3px; }
+  .cal-line.ten { background:#ff2bd6; }                 /* every 10%, so they stand out */
+  .cal-lab   { position:absolute; z-index:4; font:700 34px/1 Arial,sans-serif; color:#fff; background:#000; border:3px solid #ffee00; padding:6px 10px; border-radius:6px; white-space:nowrap; }
+  .cal-lab.vl { font-size:22px; padding:4px 4px; width:54px; text-align:center; }
+  .cal-lab.ten { border-color:#ff2bd6; }
+  .cal-tick  { position:absolute; background:#fff; z-index:3; }
+  .cal-tick.h { height:3px; width:22px; }
+  .cal-tick.v { width:3px; height:22px; }
+  .cal-tick.big.h { width:44px; }
+  .cal-tick.big.v { height:44px; }
+  .cal-note  { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:4; text-align:center; font:700 44px/1.4 Arial,sans-serif; color:#fff; text-shadow:0 2px 8px #000; }
+  .cal-note small { display:block; font-weight:400; font-size:34px; color:#cfcac2; }
+  .cal-edge  { position:absolute; left:-3000px; right:-3000px; height:8px; background:#00e5ff; z-index:30; box-shadow:0 0 0 3px #000; }
+  .cal-edge-lab { position:absolute; left:50%; transform:translateX(-50%); z-index:31; font:800 48px/1 Arial,sans-serif; color:#000; background:#00e5ff; padding:10px 22px; border-radius:8px; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+  .cal-crop-lab { position:absolute; left:50%; transform:translateX(-50%); z-index:31; font:800 64px/1 Arial,sans-serif; color:#fff; letter-spacing:.2em; text-transform:uppercase; text-shadow:0 3px 10px #000; }
+</style>
+</head>
+<body>
+<div class="reel-stage" id="reel-stage" style="background:#10151f">
+  <div class="reel-guides" style="display:block"></div>
+  <div class="cal-note">1080 &times; 1920 stage<small>Teal box = safe area. Red = blocked.<br>Lines every 5%, ticks every 1%.<br>Top/left labels count from the top/left edge;<br>bottom/right labels from the bottom/right.</small></div>
+</div>
+
+<script src="reel-frame.js"></script>
+<script>
+(function () {
+  var stage = document.getElementById("reel-stage");
+  var W = TSUReel.STAGE_W, H = TSUReel.STAGE_H;
+  var S = TSUReel.safe();
+
+  // Fill the guide layer (reel-frame.js builds it) so the safe area shows here too.
+  document.body.classList.add("reel-guides-on");
+
+  function add(cls, css, text) {
+    var e = document.createElement("div");
+    e.className = cls;
+    for (var k in css) e.style[k] = css[k];
+    if (text) e.textContent = text;
+    stage.appendChild(e);
+    return e;
+  }
+
+  // Ruler lines every 5% (95%, 90% ... 5%), measured from each edge.
+  for (var p = 5; p <= 95; p += 5) {
+    var ten = p % 10 === 0 ? " ten" : "";
+    // Horizontal lines: p% from the top; the same line is (100-p)% from the bottom.
+    add("cal-line h" + ten, { top: "calc(" + p + "% - 1px)" });
+    add("cal-lab" + ten, { top: "calc(" + p + "% - 22px)", left: "14px" }, p + "% from top");
+    add("cal-lab" + ten, { top: "calc(" + p + "% - 22px)", right: "14px" }, (100 - p) + "% from bottom");
+    // Vertical lines: p% from the left; (100-p)% from the right.
+    add("cal-line v" + ten, { left: "calc(" + p + "% - 1px)" });
+    add("cal-lab vl" + ten, { left: "calc(" + p + "% - 27px)", top: "14px" }, p + "%");
+    add("cal-lab vl" + ten, { left: "calc(" + p + "% - 27px)", bottom: "14px" }, (100 - p) + "%");
+  }
+
+  // Ticks every 1% along every edge (bigger every 5%).
+  for (var t = 0; t <= 100; t++) {
+    var big = t % 5 === 0 ? " big" : "";
+    add("cal-tick h" + big, { top: "calc(" + t + "% - 1px)", left: "0" });
+    add("cal-tick h" + big, { top: "calc(" + t + "% - 1px)", right: "0" });
+    add("cal-tick v" + big, { left: "calc(" + t + "% - 1px)", top: "0" });
+    add("cal-tick v" + big, { left: "calc(" + t + "% - 1px)", bottom: "0" });
+  }
+
+  // The exact top and bottom edges of the 9:16 stage, and the strips outside it.
+  add("cal-edge", { top: "-4px" });
+  add("cal-edge", { top: (H - 4) + "px" });
+  add("cal-edge-lab", { top: "26px", marginTop: "0" }, "stage edge");
+  add("cal-edge-lab", { top: (H - 90) + "px" }, "stage edge");
+  add("cal-crop-lab", { top: "-110px" }, "crop");
+  add("cal-crop-lab", { top: (H + 46) + "px" }, "crop");
+
+  TSUReel.bind({ count: 1, step: function () {}, jump: function () {} });
+})();
+</script>
+</body>
+</html>

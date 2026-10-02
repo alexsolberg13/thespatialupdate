@@ -1,3 +1,11 @@
+# What changed — reel layout fix (`claude/reel-frame`)
+
+All three reels now render inside one fixed 1080x1920 stage that is scaled to fit any screen. The safe zone (top 14%, bottom 35%, left 6%, right 6%) is defined once in `src/reels/reel-frame.css`. Add `?guides=1` to a reel to see it. `npm run check-reels` (run by `npm run build`) fails if any text leaves the safe area. `src/reels/calibrate.html` is the ruler page. Reel content is unchanged.
+
+Phone additions: the reels run full screen from a Home Screen icon (manifest + Apple tags), the stage is centred on the whole iPhone screen with the map running into the strips, `src/reels/index.html` is the start page, the calibration page marks the stage edges and crop strips, and nothing but the reel is drawn during playback (hold a finger down for a second to return to the index). Details are in the "Reel layout" section of CLAUDE.md.
+
+---
+
 # What changed — October 2, 2026 (repo cleanup)
 
 Tidied the repo so the live site can always be rebuilt from `src/`, and brought the docs up to date. Done on the branch `claude/repo-cleanup`, not `main`. Review it, then merge when you're happy.

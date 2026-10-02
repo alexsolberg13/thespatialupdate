@@ -64,7 +64,7 @@ get found" step is deliberately open.
 CLAUDE.md         this file
 STORY-GUIDE.md    how to write a story folder by hand
 WHAT-CHANGED.md   running changelog
-.eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html into docs/)
+.eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html, *.css, *.js, *.png and *.webmanifest into docs/)
 .eleventyignore   keeps claim ledgers and reel narration scripts off the live site
 .gitignore        node_modules/ and _site/
 package.json      npm scripts: `npm start` (preview), `npm run build`
@@ -73,6 +73,7 @@ package.json      npm scripts: `npm start` (preview), `npm run build`
 scripts/          Python automation
   new_story.py            scaffolds a new src/stories/<slug>/ folder
   finalize.py             strips a draft's [C#] claim tags out of the body (Stage 4)
+  check_reels.js          `npm run check-reels`: safe-area check for every reel
 
 dossiers/         research packets, one per story (august-2026-eclipse,
                   lobito-corridor, revolution-wind)
@@ -100,6 +101,38 @@ story: `august-2026-eclipse`, `lobito-corridor`, `revolution-wind`. The build
 copies them unchanged to `docs/reels/<slug>.html`, so they're public at
 `thespatialupdate.com/reels/<slug>.html`. Each has a narration script,
 `src/reels/<slug>-script.md`, which is **not** published.
+
+**Reel layout.** Every reel uses the shared frame: `src/reels/reel-frame.css` and
+`src/reels/reel-frame.js`. The rules:
+
+- **One fixed stage.** Each reel renders inside a 1080x1920 stage that is scaled
+  as a whole to fit the screen and centred. Text, labels, legends and map framing
+  are positioned relative to the stage, never the screen, so a reel (and its map
+  centre and zoom) looks identical on any screen.
+- **One safe zone, defined once** (the four `--safe-*` numbers at the top of
+  `reel-frame.css`): top 14%, bottom 35%, left 6%, right 6%. All text, labels,
+  legends and logos stay inside it. The map fills the whole stage.
+- **Guides.** Add `?guides=1` to a reel's address (or press G) to shade the
+  blocked areas and outline the safe area. Off by default.
+- **Check.** `npm run check-reels` opens every reel in a headless browser at
+  1080x1920, steps through every beat, and fails with a plain-English message
+  naming the reel, the beat and the element if any text crosses outside the safe
+  area. `npm run build` runs it after the Eleventy build.
+- **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
+  and ticks every 1%, the exact top and bottom "stage edge", and the "crop" strips
+  outside it.
+- **iPhone full screen.** I record on an iPhone 15 (1179x2556, taller than 9:16).
+  The stage is centred vertically on the whole screen; the map continues into the
+  strips above and below, which hold no text or controls and are cropped off.
+  `manifest.webmanifest` plus the Apple meta tags make the reels run full screen
+  (no browser bars, under the status bar and home indicator) when opened from a
+  Home Screen icon. The web app starts at `src/reels/index.html`, which lists every
+  reel newest first plus the calibration page. A new reel needs a row there (the
+  check enforces it) and the same head tags.
+- **Nothing on screen but the reel.** Tap right to advance, left to go back; no
+  buttons or counters. Holding a finger down for a second returns to the index.
+- **New reels must use the shared frame and pass the check.** Copy an existing
+  reel, keep the `reel-stage` markup, and don't add per-reel layout CSS.
 
 **Story coordinate convention.** Stories store coordinates **lon-first**, both in
 the Eleventy front matter (`coordinates: [-68.0, 8.0]`) and inside
