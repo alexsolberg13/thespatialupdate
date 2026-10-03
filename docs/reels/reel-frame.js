@@ -49,15 +49,19 @@
   // the text block on a beat with no legend.
   function layout() {
     var H = STAGE_H / 100, sr = stage.getBoundingClientRect(), k = sr.width / STAGE_W || 1;
-    var textBottom = cssNum("--text-bottom") * H, capTop = textBottom;
+    // The block ends at --text-bottom; with no supporting line the headline is the last
+    // line and it ends at --headline-bottom instead (the CSS moves the block to match).
     var cap = stage.querySelector(".reel-caption");
+    var sub = cap && cap.querySelector(".reel-sub");
+    var hasSub = !!(sub && (sub.textContent || "").trim());
+    var textBottom = cssNum(hasSub ? "--text-bottom" : "--headline-bottom") * H, capTop = textBottom;
     if (cap) {
       var r = cap.getBoundingClientRect();
       if (r.width || r.height) capTop = (r.top - sr.top) / k;
     }
     var legendH = cssNum("--legend-h") * H;
     var legendOn = !!stage.querySelector(".reel-legend .reel-leg-row.on");
-    return { capTop: capTop, textBottom: textBottom, legendH: legendH, legendOn: legendOn,
+    return { capTop: capTop, textBottom: textBottom, hasSub: hasSub, legendH: legendH, legendOn: legendOn,
              winTop: cssNum("--window-top") * H,
              winBottom: legendOn ? capTop - legendH : capTop };
   }
@@ -70,7 +74,7 @@
       header: { top: cssNum("--header-top") * H, bottom: cssNum("--header-bottom") * H },
       win:    { top: L.winTop, bottom: L.winBottom },
       legend: { top: L.capTop - L.legendH, bottom: L.capTop, on: L.legendOn },
-      text:   { top: L.capTop, bottom: L.textBottom }
+      text:   { top: L.capTop, bottom: L.textBottom, hasSub: L.hasSub }
     };
   }
 
@@ -718,8 +722,8 @@
   // with the rules in reel-frame.css, and shows PASS or FAIL with expected and actual
   // numbers in a panel inside the safe area. Also reports where the stage sits on the
   // physical screen (the strip above and below should be equal) and draws a mock of
-  // Instagram's interface (header, right-hand button column, username and caption) over
-  // the reel at the blocked zones, so you can see by eye what Instagram will cover.
+  // Instagram's interface (header, right-hand button column, and both versions of the
+  // bottom stack: three rows from 84%, two rows from 89%) over the reel at the blocked zones, so you can see by eye what Instagram will cover.
   // ?ig=0 hides the mock. (The automatic check-reels run uses ?audit=1, which only
   // freezes motion; it runs this same report in its iPhone simulation.)
   var CHECK_TOL = 1.0, CHECK_CENTRE_TOL = 2.5, CHECK_FRAME_PX = 2, CHECK_TEXT_TOL = 0.5;
@@ -772,10 +776,14 @@
 
     // The legend sits directly above the kicker.
     band("Legend", q(".reel-leg-row.on"), P(Z.legend.top), P(Z.legend.bottom), 0.3);
-    // The text block is anchored: its last line ends at 83% and it grows upward.
+    // The text block is anchored: its last line ends at 87% (84% when there is no supporting
+    // line) and it grows upward. The headline's last line ends at or above 84%.
     var tb = stageBox(q(".reel-kicker, .reel-title, .reel-sub"), sr), end = P(Z.text.bottom);
     if (tb) rows.push({ name: "Text block", want: "last line ends at " + f(end) + "%", got: f(tb.top) + "-" + f(tb.bottom) + "%",
                         pass: Math.abs(tb.bottom - end) <= CHECK_TEXT_TOL });
+    var hb = stageBox(q(".reel-title"), sr), hLim = cssNum("--headline-bottom");
+    if (hb) rows.push({ name: "Headline", want: "last line ends at or above " + f(hLim) + "%", got: "ends at " + f(hb.bottom) + "%",
+                        pass: hb.bottom <= hLim + CHECK_TEXT_TOL });
     // The gradient follows the text: transparent a little above the legend, dark by the
     // kicker, dark to the bottom of the stage.
     var sc = scrimInfo();
@@ -819,10 +827,16 @@
       var d = el("div", "ig-btn", col); el("i", "", d, b[0]); if (b[1]) el("small", "", d, b[1]);
     });
     el("div", "ig-audio", col);
-    var cap = el("div", "ig-cap", ig);
-    el("b", "", cap, "@thespatialupdate  ·  Follow");
-    el("span", "", cap, "The caption goes here and runs two lines before it cuts off… more");
-    el("small", "", cap, "♪ Original audio");
+    // Both versions of the bottom stack: three rows from 84%, two rows from 89%.
+    var cap3 = el("div", "ig-cap three", ig);
+    el("em", "", cap3, "3 rows: from " + cssNum("--ig-stack-top") + "%");
+    el("b", "", cap3, "@thespatialupdate  ·  Follow");
+    el("span", "", cap3, "The caption goes here and runs two lines… more");
+    el("small", "", cap3, "♪ Original audio");
+    var cap2 = el("div", "ig-cap two", ig);
+    el("em", "", cap2, "2 rows: from " + cssNum("--ig-stack2-top") + "%");
+    el("b", "", cap2, "@thespatialupdate  ·  Follow");
+    el("span", "", cap2, "The caption goes here… more");
     el("div", "ig-nav", ig);
   }
 

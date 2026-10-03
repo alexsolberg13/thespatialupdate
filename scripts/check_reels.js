@@ -7,7 +7,7 @@
 //   - the beat breaks one of the layout rules 1 to 6 (header row, map window, text
 //     block, legend, type sizes, map labels). Those rules are listed in
 //     scripts/reel_audit.js; their numbers (zones, sizes, word limits) are defined
-//     once in src/reels/reel-frame.css. In short: the text block ends at 83% and
+//     once in src/reels/reel-frame.css. In short: the text block ends at 87% and
 //     grows upward, the legend sits directly above it, the darkening is a gradient
 //     that follows the text, and the beat's subject and every map label showing sit
 //     fully inside the map window (19% down to just above the legend) and the side
@@ -186,10 +186,11 @@ async function checkReel(browser, file) {
   }
 
   // The viewer's zones: the blocked corner is the right 17% of the width from 45% of the
-  // stage down, and the text block's last line is at 83% (their caption stack starts at 84%).
-  const zone = await page.evaluate("(function(){var s=window.TSUReel.safe();return {w:s.corner.w,h:s.corner.h,bottom:s.bottom};})()");
-  if (zone.w !== 17 || zone.h !== 55 || zone.bottom !== 17) {
-    problems.push(`Reel "${name}": reel-frame.css has the blocked corner at ${zone.w}% wide by ${zone.h}% tall and the bottom margin at ${zone.bottom}%; it must be 17% wide, 55% tall (from 45% down) and 17% (text ends at 83%).`);
+  // stage down; the text block's last line is at 87% and the headline ends at or above 84%
+  // (Instagram's three-row caption stack starts at 84%, the two-row one at 89%).
+  const zone = await page.evaluate("(function(){var s=window.TSUReel.safe(),r=getComputedStyle(document.documentElement);return {w:s.corner.w,h:s.corner.h,bottom:s.bottom,text:parseFloat(r.getPropertyValue('--text-bottom')),head:parseFloat(r.getPropertyValue('--headline-bottom'))};})()");
+  if (zone.w !== 17 || zone.h !== 55 || zone.bottom !== 13 || zone.text !== 87 || zone.head !== 84) {
+    problems.push(`Reel "${name}": reel-frame.css has the blocked corner at ${zone.w}% wide by ${zone.h}% tall, the bottom margin at ${zone.bottom}%, the text block ending at ${zone.text}% and the headline limit at ${zone.head}%; they must be 17% wide, 55% tall (from 45% down), 13%, 87% and 84%.`);
   }
 
   let hiddenLabels = 0;

@@ -112,14 +112,14 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   centre and zoom) looks identical on any screen.
 - **One safe area, defined once** (the `--safe-*` and `--corner-*` numbers at the
   top of `reel-frame.css`), as a percent of the stage: top 15%, left 8%, right 8%,
-  bottom 17%, **plus a blocked corner** — the right 17% of the width for the bottom
-  40% of the height (Instagram's button column). The safe area is that rectangle
+  bottom 13%, **plus a blocked corner** — the right 17% of the width from 45% of the
+  height down (Instagram's button column). The safe area is that rectangle
   with the bottom-right corner cut out. All text, labels, legends and logos stay
   inside it. The map fills the whole stage.
 - **Four bands inside the safe area, defined once** (the `--header-*`, `--window-top`,
   `--text-bottom`, `--legend-h` and `--scrim-*` numbers in `reel-frame.css`). Percent
   of the stage, from the top. Keep text off the map: the map is the picture. **The text
-  block is anchored to the bottom and grows upward**, so the lower bands move from
+  block is anchored to the bottom (its last line ends at 87%) and grows upward**, so the lower bands move from
   beat to beat with the amount of text (`reel-frame.js` measures the text block and
   publishes its top as `--cap-top`; the legend, the gradient and the camera follow).
   1. **Header row, 15% to 19%.** The date tag and the progress dots on one line,
@@ -138,11 +138,13 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
      width with `padL` so the lake and dam sit to the right of it).
   3. **Legend,** directly above the kicker, only on beats that need it: one compact
      row of at most **3 items**, clear of the blocked corner (so it ends at 83% across).
-  4. **Text block, ending at 83%** (100 minus the bottom margin), left-aligned and
+  4. **Text block, ending at 87%** (100 minus the bottom margin), left-aligned and
      clear of the blocked corner. Top to bottom: a kicker, a headline of at most
      **2 lines and 7 words**, and one supporting line of at most **10 words** (it may
      wrap to a second line at this size; never a third). No paragraphs. The last line
-     always ends on the 83% line.
+     always ends on the 87% line, **and the headline's last line always ends at or
+     above 84%** (`--headline-bottom`). On a beat with no supporting line the headline
+     is the last line and ends at 84% instead of 87%.
   - **The gradient (`.reel-scrim`)** is the only darkening: fully transparent
     `--scrim-lead` (3%) above the legend, fully dark (.88) by the top of the text
     block, and dark all the way to the bottom of the stage. No visible lower edge. It
