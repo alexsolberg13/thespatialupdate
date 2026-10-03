@@ -61,4 +61,4 @@ function render() {
   return { html: fs.readFileSync(TEMPLATE, "utf-8").replace("  <!--REEL_ROWS-->", rows), reels };
 }
 
-module.exports = { render, reelFiles };
+module.exports = { render, reelFiles, readReel };

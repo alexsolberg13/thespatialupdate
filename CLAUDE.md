@@ -77,6 +77,7 @@ scripts/          Python automation
   reel_audit.js           the layout rules (header, map window, text, legend, type, labels) it runs per beat
   render_slides.js        `npm run render-slides`: audits every slide of every post and saves the PNGs
   posts_lib.js            checks that need no browser (claim IDs, caption, PNG sizes); used by the render and the build
+  studio_index.js         builds docs/studio/index.html, the web app's home page (reels, posts, tools)
   posts_index.js          builds docs/posts/ (posts index, post pages, PNGs) after every Eleventy build
 
 dossiers/         research packets, one per story (august-2026-eclipse,
@@ -208,6 +209,7 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   `<meta name="tsu-published" content="YYYY-MM-DD">` (the index orders by it, and the
   build stops with a plain message if it is missing). The page layout lives in
   `scripts/reels-index-template.html`.
+- **Studio home page.** `src/studio/index.html` is the template of the Home Screen web app's start page (`/studio/`), built by `scripts/studio_index.js` after every build from the reels, posts and tools that exist, newest first (Reels with play/check, Posts, Tools), so nothing can be left off. `manifest.webmanifest` has `scope: "/"` and `start_url: "/studio/index.html"`, so reels, posts and studio stay full screen. Every post page has a "Studio" link (the build stops without it); reels go back by holding a finger down for a second, and show a visible "Studio" link only with `?check=1` or `?guides=1`.
 - **Nothing on screen but the reel.** Tap right to advance, left to go back; no
   buttons or counters. Holding a finger down for a second returns to the index.
 - **New reels must use the shared frame and pass the check.** Copy an existing

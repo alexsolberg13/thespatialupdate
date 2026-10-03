@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="../../reels/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Studio">
+<link rel="apple-touch-icon" href="../../reels/icon-180.png">
 <meta name="theme-color" content="#0a0f18">
 <!-- Shown on the posts index, which lists posts newest first. -->
 <meta name="tsu-published" content="2026-10-03">
@@ -28,7 +34,8 @@
   body { min-height:100vh; background:#0a0f18; color:#f2efe9; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
          padding:calc(env(safe-area-inset-top) + 24px) 16px calc(env(safe-area-inset-bottom) + 40px); }
   main { max-width:640px; margin:0 auto; }
-  .back { display:inline-block; font:700 12px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; text-decoration:none; margin-bottom:18px; padding:6px 0; }
+  nav { display:flex; gap:22px; margin-bottom:10px; }
+  .back { display:inline-flex; align-items:center; min-height:44px; font:700 12px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; text-decoration:none; }
   h1 { font:400 28px/1.2 Georgia,serif; margin-bottom:6px; }
   .lede { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; margin-bottom:22px; }
   .hint { font:400 14px/1.5 Arial,sans-serif; color:#c9c5be; background:#141a26; border:1px solid #232b3a; border-radius:12px; padding:12px 16px; margin-bottom:22px; }
@@ -47,7 +54,7 @@
 </head>
 <body>
 <main>
-  <a class="back" href="../index.html">&larr; All posts</a>
+  <nav><a class="back" href="../../studio/index.html">&larr; Studio</a><a class="back" href="../index.html">All posts</a></nav>
   <h1>Lake Powell</h1>
   <p class="lede">Instagram post, 8 slides. Published 3 Oct 2026. Levels as of September 30, 2026.</p>
 

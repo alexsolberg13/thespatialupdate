@@ -12,3 +12,7 @@ src/reels/
 # Instagram slide posts (src/posts/<slug>/): built by scripts/posts_index.js after the
 # Eleventy build, not by Eleventy. Slide data and slide text are working files.
 src/posts/
+
+# Studio home page template (src/studio/index.html): built by scripts/studio_index.js after the
+# Eleventy build, from the reels and posts that exist.
+src/studio/

@@ -38,6 +38,14 @@ module.exports = function(eleventyConfig) {
     console.log(`[posts index] published ${posts.length} post(s), newest first: ` + posts.map((p) => `${p.slug} (${p.slides} slides)`).join(", "));
   });
 
+  // The studio home page (the Home Screen web app's start page): every reel, post and tool,
+  // newest first, built from what exists (scripts/studio_index.js). Runs after the reels
+  // and posts indexes so it only lists posts that passed their checks.
+  eleventyConfig.on("eleventy.after", () => {
+    const o = require("./scripts/studio_index.js").build();
+    console.log(`[studio] listed ${o.reels.length} reel(s), ${o.posts.length} post(s), ${o.tools.length} tool(s)`);
+  });
+
   return {
     dir: {
       input: "src",       // Eleventy reads from this folder

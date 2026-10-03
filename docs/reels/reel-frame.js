@@ -251,6 +251,10 @@
     drawBands();
   }
 
+  // The way back to the studio home page. Playback never shows it (hold a finger down for
+  // a second instead); the visible link below appears only in ?check=1 and ?guides=1.
+  var HOME_URL = "../studio/index.html";
+
   function buildChrome() {
     buildGuides();
     // Invisible tap zones over the whole screen. Nothing else is ever drawn.
@@ -259,10 +263,14 @@
     left.addEventListener("click", function () { go(-1); });
     right.addEventListener("click", function () { go(1); });
 
-    // Hold a finger down for a second (anywhere) to go back to the reels index.
+    // Hold a finger down for a second (anywhere) to go back to the studio home page.
     var timer = null;
-    function arm() { disarm(); timer = setTimeout(function () { window.location.href = "index.html"; }, 1000); }
+    function arm() { disarm(); timer = setTimeout(function () { window.location.href = HOME_URL; }, 1000); }
     function disarm() { if (timer) { clearTimeout(timer); timer = null; } }
+    if (params.get("check") === "1" || params.get("guides") === "1") {
+      var home = el("a", "reel-home", document.body, "\u2190 Studio");
+      home.href = HOME_URL;
+    }
     [left, right].forEach(function (z) {
       z.addEventListener("touchstart", arm, { passive: true });
       ["touchend", "touchmove", "touchcancel"].forEach(function (ev) { z.addEventListener(ev, disarm, { passive: true }); });
@@ -281,7 +289,7 @@
     if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { go(1); e.preventDefault(); }
     else if (e.key === "ArrowLeft") { go(-1); e.preventDefault(); }
     else if (e.key === "f" || e.key === "F") { enterFull(); }
-    else if (e.key === "Escape" || e.key === "Backspace") { window.location.href = "index.html"; }
+    else if (e.key === "Escape" || e.key === "Backspace") { window.location.href = HOME_URL; }
     else if (e.key === "g" || e.key === "G") { setGuides(!document.body.classList.contains("reel-guides-on")); }
   });
 
