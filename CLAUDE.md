@@ -38,6 +38,14 @@ get found" step is deliberately open.
 
 ## 1a. The daily production process
 
+**Voice.** `VOICE.md` at the repo root is the voice guide: who is talking, what to do,
+the machine and stiff-reporter tells to avoid, the "Never list" and "Harvey's edits".
+Read it before writing any text (on-screen reel text, narration, slide text, captions,
+website prose). `npm run check-voice` (run first by `npm run build`) fails if any reel
+on-screen text, script, slide text or caption contains a Never list phrase; the list is
+read from `VOICE.md`, so extend it there. The independent check also reads every line
+against it. Harvey's wording changes are recorded in its "Harvey's edits" section.
+
 Added 2026-10-03. Two instruction files at the repo root drive it; improve them
 here instead of pasting prompts into the scheduled routine.
 
@@ -60,8 +68,9 @@ by pull request, because merging it puts it on the public homepage; nothing merg
 website story but Harvey.
 
 **What a routine run may touch.** Only files that belong to the story it is building,
-plus the generated `docs/`. It must not edit the shared frames, the checks and build
-scripts, `CLAUDE.md`, `SCOUT.md`, `PRODUCTION.md`, or any other story; if that seems
+plus the generated `docs/`, plus the "Harvey's edits" section of `VOICE.md` when Harvey
+asks for a wording change (the one shared file it may change). It must not edit the shared frames, the checks and build
+scripts, `CLAUDE.md`, `SCOUT.md`, `PRODUCTION.md`, the rest of `VOICE.md`, or any other story; if that seems
 needed it says so in the report and leaves it alone.
 
 **Studio pages are not for search engines.** The studio home, every reel, the
@@ -100,6 +109,7 @@ GitHub Pages is still readable by anyone with the address.
 
 ```
 CLAUDE.md         this file
+VOICE.md          the voice guide (read before writing any text; the Never list is enforced by the build)
 STORY-GUIDE.md    how to write a story folder by hand
 WHAT-CHANGED.md   running changelog
 .eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html, *.css, *.js, *.png and *.webmanifest into docs/)
@@ -111,6 +121,7 @@ package.json      npm scripts: `npm start` (preview), `npm run build`
 scripts/          Python automation
   new_story.py            scaffolds a new src/stories/<slug>/ folder
   finalize.py             strips a draft's [C#] claim tags out of the body (Stage 4)
+  check_voice.js          `npm run check-voice`: fails if published text uses a phrase from VOICE.md's Never list
   check_reels.js          `npm run check-reels`: safe-area and layout-rule check for every reel
   reel_audit.js           the layout rules (header, map window, text, legend, type, labels) it runs per beat
   render_slides.js        `npm run render-slides`: audits every slide of every post and saves the PNGs

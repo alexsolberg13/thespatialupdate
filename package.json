@@ -6,7 +6,8 @@
   "scripts": {
     "start": "eleventy --serve",
     "check-reels": "node scripts/check_reels.js",
-    "build": "eleventy && npm run check-reels",
+    "check-voice": "node scripts/check_voice.js",
+    "build": "npm run check-voice && eleventy && npm run check-reels",
     "render-slides": "node scripts/render_slides.js"
   },
   "keywords": [],

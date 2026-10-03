@@ -1,3 +1,12 @@
+# What changed — voice guide (`claude/voice-guide`)
+
+- **`VOICE.md`** (repo root): the voice guide, with a Never list and a "Harvey's edits" section. The Never list is one phrase per line (the pasted text had them run together on one line).
+- **`npm run check-voice`** (`scripts/check_voice.js`), run first by `npm run build`: fails in plain English, naming the file and line, if any reel on-screen text, narration script, slide text or caption contains a Never list phrase. It reads the list from `VOICE.md`. Website story prose is not scanned.
+- **PRODUCTION.md:** read `VOICE.md` before writing any text; a voice pass in the independent check (every line, with a suggested rewrite) that the builder fixes before publishing; Harvey's wording changes are recorded in "Harvey's edits", the one shared file a run may change (section 5A).
+- **Lake Powell** reel script, slides and caption rewritten where they broke the guide; no number, date or claim changed.
+
+---
+
 # What changed — reels and slides publish without a pull request (`claude/auto-publish`)
 
 - **PRODUCTION.md:** a reel or slides pick that passes every mechanical check, the independent check and the full build is committed (story + `docs/`) straight to `main` after pulling the latest `main` and rebuilding. No pull request. Harvey is told it is live, with the studio address.
