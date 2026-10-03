@@ -1,3 +1,14 @@
+# What changed — narration scripts on the studio page (`claude/studio-scripts`)
+
+- **Third link "script"** beside play and check for every reel on `/studio/`. It opens `/studio/scripts/<slug>.html`: per beat the number, the reel's on-screen headline, and the narration in large type (30 px on iPhone up to 56 px on a laptop).
+- **Counts:** words and read time (150 words a minute) per beat and for the whole script; a "Copy full script" button copies every beat.
+- **Built from `src/reels/<slug>-script.md`** by `scripts/reel_scripts.js` on every build, so editing a script file updates the page. Claim IDs, the intro, timing guide, tighter cut, fact-check notes and on-screen notes stay in the file and are not on the page.
+- **Reverses the old rule** that narration scripts are not published; `CLAUDE.md` updated.
+- **Build fails in plain English** if a reel has no script, if the script has a different number of beats from the reel, if beats are not numbered in order, or if a beat has no narration. `check-reels` also fails if a built script page is stale.
+- The script's "(on screen: ...)" notes are not compared with the reel: several already differ from the reel's shortened on-screen text, so the page shows the reel's own headline.
+
+---
+
 # What changed — studio home page (`claude/studio-home`)
 
 - **New home page** `/studio/` (`src/studio/index.html`, built by `scripts/studio_index.js`): Reels (play and check), Posts, Tools (calibration), newest first, read from the folders on every build. Large tap targets, reel fonts and colours.

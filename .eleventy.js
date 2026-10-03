@@ -11,8 +11,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
 
   // Story Beat Reels: standalone pages, copied as-is to /reels/<slug>.html.
-  // Their narration scripts (*-script.md) stay in src/reels/ unpublished;
-  // .eleventyignore keeps Eleventy from turning them into pages.
+  // Their narration scripts (*-script.md) are not copied as files; scripts/reel_scripts.js
+  // publishes each as a page on the studio, without claim IDs or notes.
   // reel-frame.css / reel-frame.js are the shared frame every reel loads.
   eleventyConfig.addPassthroughCopy({ "src/reels/*.html": "reels" });
   eleventyConfig.addPassthroughCopy({ "src/reels/*.css": "reels" });
