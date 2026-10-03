@@ -15,6 +15,17 @@
 //
 // Uses the Chromium that Playwright installed if there is one, otherwise the
 // Microsoft Edge or Google Chrome already on the machine.
+//
+// Basemap: by default the reels load their real basemap (map library and tiles from the
+// internet), so the check also proves that the basemap place names that would cross out of
+// the map window are hidden. On a machine with no internet (or a blocked one, like the
+// cloud sandbox) run it with REEL_BASEMAP=stub (PowerShell:  $env:REEL_BASEMAP="stub"; npm run check-reels)
+// or `node scripts/check_reels.js --stub`. The map library then comes from node_modules
+// and the basemap is an empty dark background with no network at all. Everything about the
+// layout is still checked (the map projects, the camera frames each beat, the subject and the
+// reel's own labels must sit inside the map window); the ONE thing that is not checked is the
+// basemap's own place names, because a stub has none. The run says so, in the per-reel lines
+// and in the summary, so a stubbed pass can never be mistaken for a full one.
 
 const fs = require("fs");
 const os = require("os");
@@ -25,6 +36,28 @@ const { chromium } = require("playwright-core");
 const auditBeat = require("./reel_audit.js");
 
 const REELS_DIR = path.join(__dirname, "..", "src", "reels");
+const STUB = process.env.REEL_BASEMAP === "stub" || process.argv.includes("--stub");
+const MAPLIBRE_DIST = path.join(__dirname, "..", "node_modules", "maplibre-gl", "dist");
+const STUB_STYLE = JSON.stringify({ version: 8, name: "check-stub", sources: {},
+  layers: [{ id: "stub-background", type: "background", paint: { "background-color": "#0b1320" } }] });
+
+// Stub mode: serve the map library from node_modules and the basemap style as an empty
+// dark background, and refuse every other request that would leave the machine, so the
+// run needs no network and cannot hang on one.
+async function stubNetwork(ctx) {
+  await ctx.route(/^https?:/, (route) => {
+    const u = route.request().url();
+    const lib = /\/maplibre-gl@[^/]+\/dist\/(maplibre-gl\.(?:js|css))(?:\?|$)/.exec(u);
+    if (lib) return route.fulfill({ path: path.join(MAPLIBRE_DIST, lib[1]), contentType: lib[1].endsWith(".js") ? "text/javascript" : "text/css" });
+    if (/\/style\.json(?:\?|$)/.test(u)) return route.fulfill({ status: 200, contentType: "application/json", body: STUB_STYLE });
+    return route.abort();
+  });
+}
+async function newPage(browser, opts) {
+  const ctx = await browser.newContext(opts);
+  if (STUB) await stubNetwork(ctx);
+  return ctx.newPage();
+}
 const RULES = { 1: "header row", 2: "map window", 3: "text block", 4: "legend", 5: "type sizes", 6: "map labels" };
 // calibrate.html (rulers) is not a reel. index.html is built, not stored here.
 const NOT_REELS = ["calibrate.html", "index.html"];
@@ -85,6 +118,7 @@ function inPhoneFrame() {
 async function deviceProblems(browser, file, name) {
   const out = [];
   const ctx = await browser.newContext({ viewport: { width: PHONE.screenW, height: PHONE.screenH }, deviceScaleFactor: 1 });
+  if (STUB) await stubNetwork(ctx);
   await ctx.addInitScript((p) => {
     if (window === window.top) return;
     Object.defineProperty(navigator, "standalone", { get: () => true });
@@ -163,7 +197,7 @@ async function checkReel(browser, file) {
     return { name, beats: 0, problems: problems.concat([`Reel "${name}" does not use the shared reel frame. It is missing ${frameProblems.join("; ")}. Every reel must load the frame (copy the markup from revolution-wind.html) so its text stays inside the safe area.`]) };
   }
 
-  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
+  const page = await newPage(browser, { viewport: { width: 1080, height: 1920 } });
   const pageErrors = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
   await page.goto(pathToFileURL(path.join(REELS_DIR, file)).href + "?audit=1", { waitUntil: "domcontentloaded" });
@@ -181,8 +215,9 @@ async function checkReel(browser, file) {
   let mapLoaded = true;
   await page.waitForFunction("window.TSUReel.mapReady()", null, { timeout: 30000 }).catch(() => { mapLoaded = false; });
   const stats0 = mapLoaded ? await page.evaluate("window.TSUReel.labelStats()") : null;
-  if (!mapLoaded || !stats0 || !stats0.layers) {
-    problems.push(`Reel "${name}": the map did not load (the basemap tiles come from the internet), so the map window (rule 2) and map labels (rule 6) could not be checked. Check the connection and run again.`);
+  // (The stub basemap has no place names, so zero basemap label layers is expected there.)
+  if (!mapLoaded || !stats0 || (!stats0.layers && !STUB)) {
+    problems.push(`Reel "${name}": the map did not load (${STUB ? "the stub basemap and the map library from node_modules" : "the basemap tiles come from the internet"}), so the map window (rule 2) and map labels (rule 6) could not be checked. ${STUB ? "Run npm install, then run again." : "Check the connection and run again, or run with REEL_BASEMAP=stub to check the layout without the internet (the basemap place names are then not checked)."}`);
   }
 
   // The viewer's zones: the blocked corner is the right 17% of the width from 45% of the
@@ -254,12 +289,13 @@ async function checkReel(browser, file) {
   for (const f of files) {
     const r = await checkReel(browser, f);
     console.log(`  ${r.problems.length ? "FAIL" : "ok  "}  ${r.name}: ${r.beats} beats checked against rules 1-6` +
-      (r.beats ? `; ${r.hiddenLabels} basemap labels hidden under the header, legend or text` : ""));
+      (r.beats ? (STUB ? "; basemap STUBBED, basemap place names NOT checked" : `; ${r.hiddenLabels} basemap labels hidden under the header, legend or text`) : ""));
     all.push(...r.problems);
   }
   await browser.close();
 
-  console.log(`check-reels: ${files.length} reels, ${all.length} problem${all.length === 1 ? "" : "s"}.`);
+  console.log(`check-reels: ${files.length} reels, ${all.length} problem${all.length === 1 ? "" : "s"}.` +
+    (STUB ? "\n  NOTE: basemap was STUBBED (no network). Layout rules 1-5 and the framing of the subject and the reel's own labels (rules 2 and 6) were checked; the basemap's own place names (rule 6, basemap part) were NOT. Run without REEL_BASEMAP=stub on a machine with internet for the full check." : ""));
   if (all.length) {
     console.error("\nProblems found:\n");
     all.forEach((p) => console.error("  - " + p));
