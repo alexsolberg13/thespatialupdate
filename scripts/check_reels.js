@@ -285,6 +285,15 @@ async function checkReel(browser, file) {
       all.push("docs/reels/index.html is out of date with the reels in src/reels/. Run npm run build.");
     console.log(`  ok    reels index: lists all ${built.reels.length} reels, newest first`);
   } catch (e) { all.push(e.message); }
+  // The studio home page (the web app's start page) is built from the reels and posts that
+  // exist (scripts/studio_index.js). Make sure it builds and the built copy is not stale.
+  try {
+    const built = require("./studio_index.js").render();
+    const out = path.join(__dirname, "..", "docs", "studio", "index.html");
+    if (!fs.existsSync(out) || fs.readFileSync(out, "utf-8") !== built.html)
+      all.push("docs/studio/index.html is missing or out of date with the reels and posts. Run npm run build.");
+    console.log(`  ok    studio page: lists ${built.reels.length} reels, ${built.posts.length} posts, ${built.tools.length} tool(s), newest first`);
+  } catch (e) { all.push(e.message); }
   const browser = await launch();
   for (const f of files) {
     const r = await checkReel(browser, f);

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studio · The Spatial Update</title>
+
+<!--
+  Studio home page: the start page of the Home Screen web app (see
+  ../reels/manifest.webmanifest, whose scope covers /reels/, /posts/ and /studio/).
+  Lists every reel (play and check), every slide post and the tools, newest first.
+  THIS IS A TEMPLATE. The real page (docs/studio/index.html) is built from it by
+  scripts/studio_index.js every time Eleventy builds, from the reels in src/reels/ and
+  the posts in src/posts/. Nothing to edit when you add a reel or a post.
+-->
+
+<link rel="manifest" href="../reels/manifest.webmanifest">
+<link rel="apple-touch-icon" href="../reels/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Studio">
+<meta name="theme-color" content="#0a0f18">
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#0a0f18; }
+  body { min-height:100vh; background:#0a0f18; color:#f2efe9; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
+         -webkit-tap-highlight-color:transparent;
+         padding:calc(env(safe-area-inset-top) + 28px) 20px calc(env(safe-area-inset-bottom) + 36px); }
+  main { max-width:520px; margin:0 auto; }
+  h1 { font:400 32px/1.15 Georgia,serif; margin-bottom:8px; }
+  .lede { font:400 16px/1.5 Arial,sans-serif; color:#a8a39d; margin-bottom:8px; }
+  h2 { font:700 14px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:32px 0 14px; }
+  .card { display:block; text-decoration:none; color:inherit; background:#141a26; border:1px solid #232b3a; border-radius:14px; padding:18px; margin-bottom:12px; }
+  a.card:active { background:#1c2535; }
+  .card b { display:block; font:400 22px/1.25 Georgia,serif; margin-bottom:6px; }
+  .card span { font:400 15px/1.4 Arial,sans-serif; color:#a8a39d; }
+  .links { display:flex; gap:12px; margin-top:16px; }
+  .links a { flex:1; display:flex; align-items:center; justify-content:center; min-height:56px; text-align:center; text-decoration:none;
+             font:700 17px/1 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; border-radius:12px; }
+  .links .play { background:#c8a84e; color:#141210; }
+  .links .play:active { background:#e8c87a; }
+  .links .check { border:2px solid #3ecfb2; color:#3ecfb2; }
+  .post { display:flex; gap:16px; align-items:center; min-height:133px; }
+  .post img { width:84px; height:105px; object-fit:cover; border-radius:6px; flex-shrink:0; background:#0a0f18; }
+  .hint { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; margin-top:30px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>The Spatial Update</h1>
+  <p class="lede">Studio. Everything we make, newest first.</p>
+
+  <h2>Reels</h2>
+  <div class="card"><b>Lake Powell</b><span>Published 2 Oct 2026 · 6 beats</span>
+    <div class="links"><a class="play" href="../reels/lake-powell.html">play</a><a class="check" href="../reels/lake-powell.html?check=1">check</a></div></div>
+  <div class="card"><b>Revolution Wind</b><span>Published 11 Aug 2026 · 7 beats</span>
+    <div class="links"><a class="play" href="../reels/revolution-wind.html">play</a><a class="check" href="../reels/revolution-wind.html?check=1">check</a></div></div>
+  <div class="card"><b>The August 2026 Eclipse</b><span>Published 10 Aug 2026 · 6 beats</span>
+    <div class="links"><a class="play" href="../reels/august-2026-eclipse.html">play</a><a class="check" href="../reels/august-2026-eclipse.html?check=1">check</a></div></div>
+  <div class="card"><b>The Lobito Corridor</b><span>Published 9 Aug 2026 · 6 beats</span>
+    <div class="links"><a class="play" href="../reels/lobito-corridor.html">play</a><a class="check" href="../reels/lobito-corridor.html?check=1">check</a></div></div>
+
+  <h2>Posts</h2>
+  <a class="card post" href="../posts/lake-powell/index.html"><img src="../posts/lake-powell/slides/01.png" alt="" width="84" height="105"><div><b>Lake Powell</b><span>Published 3 Oct 2026 · 8 slides</span></div></a>
+
+  <h2>Tools</h2>
+  <a class="card" href="../reels/calibrate.html"><b>Calibration</b><span>Rulers, safe area, stage edges and crop strips</span></a>
+
+  <p class="hint">While a reel plays, nothing is drawn but the reel. Hold a finger down for a second to come back here.</p>
+</main>
+</body>
+</html>

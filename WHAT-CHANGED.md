@@ -1,3 +1,12 @@
+# What changed — studio home page (`claude/studio-home`)
+
+- **New home page** `/studio/` (`src/studio/index.html`, built by `scripts/studio_index.js`): Reels (play and check), Posts, Tools (calibration), newest first, read from the folders on every build. Large tap targets, reel fonts and colours.
+- **Web app** now starts at the studio page; manifest scope is `/` so reels, posts and studio stay full screen. Home Screen name is now "TSU Studio" (re-add the icon on the phone to pick up the new name and start page).
+- **Way back:** post pages and the posts index link to the studio; reels return on a one-second hold (and Escape) to the studio, and show a visible "Studio" link only with `?check=1` / `?guides=1`; the calibration page has one too. Nothing is drawn in playback.
+- `check-reels` also fails if `docs/studio/index.html` is stale. Reel layout checks: 0 problems (basemap stubbed here).
+
+---
+
 # What changed — Instagram slides format (`claude/slides-format`)
 
 - **New format: slides.** 1080x1350 PNG carousels with a caption. Shared frame in `src/posts/slide-frame.css` / `.js` (8% margin, type sizes 72 / 40 / 30, same fonts and colours as the reels); slide types cover, map, number, closing. See `CLAUDE.md` section 3a.
