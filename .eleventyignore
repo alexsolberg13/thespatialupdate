@@ -8,3 +8,7 @@ src/stories/*/sources.html
 # templates), and their narration scripts are working notes, not pages. Open
 # src/reels/<slug>-script.md locally to read one.
 src/reels/
+
+# Instagram slide posts (src/posts/<slug>/): built by scripts/posts_index.js after the
+# Eleventy build, not by Eleventy. Slide data and slide text are working files.
+src/posts/

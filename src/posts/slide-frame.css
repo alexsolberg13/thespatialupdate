@@ -1,0 +1,123 @@
+/* The Spatial Update: shared slide frame (Instagram static posts).
+ *
+ * Every post's slides.html loads this file and slide-frame.js. Do not copy these
+ * rules into a post; change them here so every post moves together.
+ *
+ * THE SLIDE. 1080 x 1350 px (4:5), rendered 1:1: no scaling, so every number below
+ * is a real pixel in the saved PNG. Same fonts and colours as the reels (Georgia
+ * for headlines, Arial for everything else, gold #c8a84e on the dark #0a0f18).
+ *
+ * THE MARGIN. Everything that is text (and every map label) stays inside the safe
+ * area: 8% in from every edge, as a percent of that edge's own length like the
+ * reels (--safe-x of the width = 86.4 px left and right, --safe-y of the height =
+ * 108 px top and bottom). The map may run to the edges; text may not.
+ *
+ * TYPE SIZES, set once, here (px). Nothing on a slide is smaller than --type-small.
+ *   headline 72 | body 40 | small 30 (kicker, chip, legend, map labels, sources)
+ *   number 240  (the one big number on a number slide; it is a figure, not text
+ *                to read, so it is the one size above the headline)
+ *
+ * SLIDE TYPES (slide-frame.js builds them from data; see CLAUDE.md "Slides"):
+ *   cover    hook headline over the map
+ *   map      map, short headline, one line
+ *   number   one big number, one line
+ *   closing  sources, "The Spatial Update", a follow prompt
+ *
+ * `npm run render-slides` opens each post, audits every slide against the numbers
+ * here, and saves the PNGs only if every slide passes.
+ */
+@font-face { font-family:"Gelasio"; src:url("fonts/gelasio-400.woff2") format("woff2"); font-weight:400; font-style:normal; }
+
+:root {
+  --slide-w: 1080;
+  --slide-h: 1350;
+  --safe-x: 8;          /* % of the width kept clear at left and right  (86.4 px) */
+  --safe-y: 8;          /* % of the height kept clear at top and bottom (108 px)  */
+  /* Type sizes: px. */
+  --type-headline: 72;
+  --type-body: 40;
+  --type-small: 30;     /* kicker, chip, legend, map labels, sources; also the minimum for anything */
+  --type-number: 240;
+  /* Limits the render check enforces. */
+  --cover-headline-max-lines: 3;   --cover-headline-max-words: 10;
+  --map-headline-max-lines: 2;     --map-headline-max-words: 7;
+  --line-max-lines: 3;             --line-max-words: 18;   /* the one supporting line */
+  --legend-max-items: 3;
+  --window-min: 380;    /* px: the map window (between the top margin and the text block) is never shorter than this */
+  --cap-top: 900;       /* px: top of the text block; slide-frame.js sets it per slide */
+  --scrim-lead: 220;    /* px: the gradient starts this far above the text block */
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:#0a0f18; }
+body { font-family:Georgia,Gelasio,serif; -webkit-font-smoothing:antialiased; }
+#deck { width:1080px; }
+
+.slide { position:relative; width:1080px; height:1350px; overflow:hidden; background:#0a0f18; color:#f2efe9; }
+body.deck-all .slide { margin-bottom:24px; }
+
+/* ---- Map (cover and map slides): an SVG that fills the slide --------------- */
+.s-map { position:absolute; left:0; top:0; width:1080px; height:1350px; }
+/* The only darkening: a gradient that follows the text block (--cap-top). */
+.s-scrim {
+  position:absolute; left:0; right:0; z-index:6; pointer-events:none;
+  top:calc(var(--cap-top) * 1px - var(--scrim-lead) * 1px); bottom:0;
+  background:linear-gradient(to bottom,
+    rgba(8,10,16,0) 0,
+    rgba(8,10,16,.06) 20%,
+    rgba(8,10,16,.24) 45%,
+    rgba(8,10,16,.58) 72%,
+    rgba(8,10,16,.9) 100%);
+}
+
+/* ---- Chip: the "as of" date tag, top left of the safe area ------------------ */
+.s-chip { position:absolute; z-index:7; left:calc(var(--safe-x) * 1% ); top:calc(var(--safe-y) * 1%);
+  font:700 calc(var(--type-small) * 1px)/1 Arial,Helvetica,sans-serif; letter-spacing:.1em; text-transform:uppercase;
+  color:#141210; background:#c8a84e; padding:14px 24px; border-radius:10px; white-space:nowrap; }
+
+/* ---- Text block: anchored to the bottom of the safe area, grows upward ------ */
+.s-text { position:absolute; z-index:7; left:calc(var(--safe-x) * 1%); right:calc(var(--safe-x) * 1%); bottom:calc(var(--safe-y) * 1%);
+  display:flex; flex-direction:column; align-items:flex-start; text-align:left;
+  /* A text line's measured box is its font's full height, a few px taller than its line
+     height; this keeps that box, not just the glyphs, inside the bottom margin. */
+  padding-bottom:6px; }
+.s-kicker { font:700 calc(var(--type-small) * 1px)/1.3 Arial,Helvetica,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; margin:0 0 14px; white-space:nowrap; }
+.s-text { text-shadow:0 2px 10px rgba(0,0,0,.55); }
+.s-headline { font:400 calc(var(--type-headline) * 1px)/1.15 Georgia,Gelasio,serif; color:#f2efe9; letter-spacing:-.01em; text-wrap:balance; }
+.s-line { font:400 calc(var(--type-body) * 1px)/1.35 Arial,Helvetica,sans-serif; color:#c9c5be; text-wrap:pretty; margin-top:16px; }
+
+/* ---- Legend: one compact row directly above the kicker ----------------------- */
+.s-legend { display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:36px; margin-bottom:26px; }
+.s-leg { display:flex; align-items:center; gap:12px; font:600 calc(var(--type-small) * 1px)/1 Arial,Helvetica,sans-serif; letter-spacing:.03em; color:#e4e0da; white-space:nowrap; text-shadow:0 2px 8px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); }
+.s-leg-fill { width:40px; height:24px; border-radius:5px; flex-shrink:0; }
+.s-leg-dot  { width:24px; height:24px; border-radius:50%; flex-shrink:0; border:3px solid rgba(255,255,255,.25); }
+
+/* ---- Map labels: HTML, so the render check can measure them ------------------ */
+.s-maplabel { position:absolute; z-index:5; font:700 calc(var(--type-small) * 1px)/1.2 Arial,Helvetica,sans-serif; color:#f2efe9; white-space:nowrap;
+  text-shadow:0 2px 8px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); }
+.s-maplabel span { display:block; }
+.s-maplabel span + span { font-weight:600; color:#f0c4bc; }
+.s-maplabel.center { text-align:center; }
+.s-maplabel.left   { text-align:left; }
+.s-maplabel.right  { text-align:right; }
+
+/* ---- Number slide ------------------------------------------------------------ */
+.slide.number .s-body { position:absolute; left:calc(var(--safe-x) * 1%); right:calc(var(--safe-x) * 1%); top:calc(var(--safe-y) * 1%); bottom:calc(var(--safe-y) * 1%);
+  display:flex; flex-direction:column; justify-content:center; align-items:flex-start; }
+.slide.number .s-rule { width:160px; height:10px; border-radius:5px; background:var(--tone,#c8a84e); margin-bottom:34px; }
+.slide.number .s-kicker { margin-bottom:10px; }
+.slide.number .s-figure { margin-top:34px; display:flex; align-items:baseline; gap:22px; white-space:nowrap; }
+.slide.number .s-number { font:400 calc(var(--type-number) * 1px)/1.05 Georgia,Gelasio,serif; letter-spacing:-.02em; color:var(--tone,#e8c87a); }
+.slide.number .s-unit { font:400 calc(var(--type-headline) * 1px)/1 Georgia,Gelasio,serif; color:#f2efe9; }
+.slide.number .s-line { margin-top:30px; color:#e4e0da; text-wrap:balance; }
+
+/* ---- Closing slide ------------------------------------------------------------ */
+.slide.closing .s-body { position:absolute; left:calc(var(--safe-x) * 1%); right:calc(var(--safe-x) * 1%); top:calc(var(--safe-y) * 1%); bottom:calc(var(--safe-y) * 1%);
+  display:flex; flex-direction:column; align-items:flex-start; }
+.slide.closing .s-kicker { margin-bottom:26px; }
+.slide.closing .s-sources { list-style:none; display:flex; flex-direction:column; gap:20px; }
+.slide.closing .s-source { position:relative; padding-left:36px; font:400 calc(var(--type-small) * 1px)/1.35 Arial,Helvetica,sans-serif; color:#c9c5be; text-wrap:pretty; }
+.slide.closing .s-source::before { content:""; position:absolute; left:0; top:.5em; width:14px; height:14px; border-radius:50%; background:#c8a84e; }
+.slide.closing .s-foot { margin-top:auto; width:100%; border-top:3px solid #c8a84e; padding-top:34px; }
+.slide.closing .s-brand { font:400 calc(var(--type-headline) * 1px)/1.15 Georgia,Gelasio,serif; color:#f2efe9; }
+.slide.closing .s-follow { font:400 calc(var(--type-body) * 1px)/1.35 Arial,Helvetica,sans-serif; color:#e4e0da; margin-top:14px; }

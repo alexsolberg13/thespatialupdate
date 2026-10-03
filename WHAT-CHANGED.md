@@ -1,3 +1,14 @@
+# What changed — Instagram slides format (`claude/slides-format`)
+
+- **New format: slides.** 1080x1350 PNG carousels with a caption. Shared frame in `src/posts/slide-frame.css` / `.js` (8% margin, type sizes 72 / 40 / 30, same fonts and colours as the reels); slide types cover, map, number, closing. See `CLAUDE.md` section 3a.
+- **`npm run render-slides`** audits every slide (margins, minimum 30 px type, overlaps, limits, map window, claim IDs against `slides.md` and the dossier, caption 150 words) and saves exact 1080x1350 PNGs only if all pass.
+- **Posts page** `docs/posts/` (newest first, linked from the reels index). Each post page lists its slides as plain images to press and hold on iPhone, and the caption with a copy button. Built by `scripts/posts_index.js` on every build, which also stops if a post's caption or PNGs are wrong.
+- **First post: Lake Powell**, 8 slides, text in `src/posts/lake-powell/slides.md` with a claim ID on every line, caption 102 words. No new facts: every ID is a row in `dossiers/lake-powell.md`. Lake levels are as of Sep 30, 2026; refresh before posting.
+- **Independent check** of the slide text against the source record (see the end of `dossiers/lake-powell.md`). No wrong number. Applied: "was" and a dated first caption sentence; "aim to keep" instead of "try to hold"; "No required cut" instead of "Voluntary only"; "acre-feet" on the slide 7 legend.
+- Maps on slides are SVG from the existing GeoJSON, no basemap tiles.
+
+---
+
 # What changed — check-reels without the internet (`claude/magical-curie-h3bobb`)
 
 - `REEL_BASEMAP=stub npm run check-reels` (or `node scripts/check_reels.js --stub`) runs the whole check with no network: the map library is served from `node_modules` and the basemap is an empty dark background; every other request is refused. `npm run build` passes the variable through, so the full build runs to completion in the cloud sandbox.
