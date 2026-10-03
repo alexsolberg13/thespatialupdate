@@ -9,6 +9,15 @@
 
 ---
 
+# What changed — check-reels without the internet (`claude/magical-curie-h3bobb`)
+
+- `REEL_BASEMAP=stub npm run check-reels` (or `node scripts/check_reels.js --stub`) runs the whole check with no network: the map library is served from `node_modules` and the basemap is an empty dark background; every other request is refused. `npm run build` passes the variable through, so the full build runs to completion in the cloud sandbox.
+- What it does **not** check in stub mode: the basemap's own place names (the part of rule 6 that hides them). The run says so in each reel line and the summary. The default run (no variable) is unchanged and still needs the internet.
+- Added `maplibre-gl` 5.6.0 (the version the reels load) as a dev dependency for this. Run `npm install` once after pulling.
+- Checked it still fails when the layout is broken (headline word limit and camera margin deliberately broken: 27 and 6 problems), then restored.
+
+---
+
 # What changed — text block moved down (`claude/reel-text-87`)
 
 - **Text block** now ends at **87%** of the stage (it was 83%), and still grows upward with the legend directly above the kicker. The bottom margin is 13% (`--safe-bottom`), `--text-bottom` is 87.
