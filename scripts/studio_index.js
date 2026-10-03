@@ -42,6 +42,8 @@ function render() {
     const html = fs.readFileSync(path.join(postsLib.POSTS_DIR, slug, "index.html"), "utf-8");
     if (!/href="\.\.\/\.\.\/studio\/index\.html"/.test(html))
       throw new Error(`Post "${slug}" has no way back to the studio. Add <a class="back" href="../../studio/index.html">&larr; Studio</a> (copy it from another post page).`);
+    if (!/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html))
+      throw new Error(`Post "${slug}" must have <meta name="robots" content="noindex, nofollow"> in its <head> (copy it from another post page); studio pages are not for search engines.`);
     return postsLib.checkPost(slug).post;
   }).sort((a, b) => b.date - a.date || a.slug.localeCompare(b.slug));
 

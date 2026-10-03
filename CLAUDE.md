@@ -44,12 +44,33 @@ here instead of pasting prompts into the scheduled routine.
 - **`SCOUT.md`**: the morning scout. A scheduled session reads it and ends with a
   pitch sheet (no files written). Harvey replies in the same session with picks,
   for example "2 reel, 5 slides".
-- **`PRODUCTION.md`**: how a pick becomes a branch (`claude/story-<slug>`) and a
-  pull request: source record in `dossiers/`, map data, the reel / slides /
-  website story rules, the mechanical and independent checks, and the final report.
-  Harvey reviews in the evening, rewrites the words, merges and posts.
+- **`PRODUCTION.md`**: how a pick becomes a branch (`claude/story-<slug>`): source
+  record in `dossiers/`, map data, the reel / slides / website story rules, the
+  mechanical and independent checks, and the final report.
 
-Nothing pushes to `main`; every pick is its own pull request.
+**Publishing (changed 2026-10-03).** A **reel or slides** pick that passes every
+mechanical check, the independent check and the full build is committed (story plus
+`docs/`) straight to `main` by the routine, with **no pull request**: it pulls the
+latest `main`, rebuilds, pushes, and tells Harvey it is live at
+`https://thespatialupdate.com/studio/`. If a check fails and cannot be fixed, or the
+push to `main` is rejected, it does not publish: it pushes `claude/story-<slug>` and
+says what is blocking. When Harvey asks for changes in the same session, it makes
+them, re-runs the checks and pushes to `main` again. A **website story** still goes
+by pull request, because merging it puts it on the public homepage; nothing merges a
+website story but Harvey.
+
+**What a routine run may touch.** Only files that belong to the story it is building,
+plus the generated `docs/`. It must not edit the shared frames, the checks and build
+scripts, `CLAUDE.md`, `SCOUT.md`, `PRODUCTION.md`, or any other story; if that seems
+needed it says so in the report and leaves it alone.
+
+**Studio pages are not for search engines.** The studio home, every reel, the
+calibration page, the reels index, every script page, the posts index and every post
+page carry `<meta name="robots" content="noindex, nofollow">`. Copy it into any new
+reel or post page (`check-reels` fails a reel without it and the studio build fails a post page without it; the studio, script, posts
+index and reels index templates already have it). Note that `noindex` asks well-behaved
+search engines to leave the pages out; it is not access control, and anything on
+GitHub Pages is still readable by anyone with the address.
 
 ---
 
@@ -73,7 +94,7 @@ Nothing pushes to `main`; every pick is its own pull request.
 - **Hosting**: GitHub Pages, served from the `/docs` folder.
 - **Automation**: none of our own — no workflow file in the repo. The only thing
   that runs on GitHub is its built-in **pages-build-deployment**, which
-  publishes `docs/` every time `main` is pushed. Two local Python scripts
+  publishes `docs/` every time `main` is pushed (including the routine's direct pushes of reels and slides; see section 1a). Two local Python scripts
   remain, both for the by-hand story workflow. (See the note in section 1 — the
   scraper/paper automation was removed 2026-08-09.)
 

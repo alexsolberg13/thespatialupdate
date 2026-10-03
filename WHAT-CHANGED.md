@@ -1,3 +1,15 @@
+# What changed — reels and slides publish without a pull request (`claude/auto-publish`)
+
+- **PRODUCTION.md:** a reel or slides pick that passes every mechanical check, the independent check and the full build is committed (story + `docs/`) straight to `main` after pulling the latest `main` and rebuilding. No pull request. Harvey is told it is live, with the studio address.
+- **Fallback:** a check that cannot be fixed, or a rejected push to `main`, means nothing is published; the work goes to `claude/story-<slug>` and the report says what is blocking.
+- **Website stories keep the pull request** (merging puts them on the public homepage).
+- **Scope rule (new section 5A):** a routine run may change only its own story's files plus `docs/`. Not the frames, checks, scripts, CLAUDE.md, SCOUT.md, PRODUCTION.md or another story; if one seems needed, it says so in the report.
+- **Changes after publishing:** asking for changes in the same session re-runs the checks and pushes to `main` again.
+- **`noindex`:** `<meta name="robots" content="noindex, nofollow">` on the studio home, all reels, the calibration page, the reels index, script pages, the posts index and post pages. `check-reels` fails a reel without it; the studio build fails a post page without it.
+- **CLAUDE.md** updated to match.
+
+---
+
 # What changed — narration scripts on the studio page (`claude/studio-scripts`)
 
 - **Third link "script"** beside play and check for every reel on `/studio/`. It opens `/studio/scripts/<slug>.html`: per beat the number, the reel's on-screen headline, and the narration in large type (30 px on iPhone up to 56 px on a laptop).
