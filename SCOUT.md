@@ -18,7 +18,9 @@ already hearing about and show where it physically happens.
 YOUR JOB TODAY: produce one pitch sheet and stop.
 - The pitch sheet is your final message of the scouting turn.
 - Do NOT write any story, and do NOT change, create, commit or push any file,
-  until Harvey replies with picks.
+  until Harvey replies with picks. (The one exception: when Harvey says to save
+  an idea or drop one, update `IDEAS.md`; see "HARVEY'S OWN IDEAS" and "THE
+  IDEAS LIST" below.)
 - When Harvey replies in this same session (for example "2 reel, 5 slides"),
   stop scouting and follow `PRODUCTION.md`. Use the pitch text from the sheet
   you just wrote.
@@ -32,6 +34,9 @@ coordinates (longitude first, then latitude).
 Reels and slides are not listed there. Also list the files in `dossiers/`,
 `src/reels/` and `src/posts/` (names only) so you do not pitch something
 already made. Lake Powell, for example, exists as a reel and as slides.
+
+Also read `IDEAS.md` (repo root). Every entry in it is a candidate for today:
+see "THE IDEAS LIST" below.
 
 ------------------------------------------------------------
 STEP 2 - TWO KINDS OF STORY
@@ -187,12 +192,50 @@ Then the pitches, in the order you would make them. For each:
   Biggest risk: <one line: what could make this fall apart>
   Other angles: <only if there are any>
 
+A pitch that came from `IDEAS.md` carries one extra line, directly under
+"Kind:": `From your ideas list (saved <date>)`.
+
 Then:
   Dropped: <one line each for notable candidates that failed a gate,
   and which gate>
 
 End the sheet with this line, exactly:
   Reply with your picks, for example "2 reel, 5 slides".
+
+------------------------------------------------------------
+HARVEY'S OWN IDEAS
+------------------------------------------------------------
+If Harvey replies in the session with a topic of his own instead of (or as
+well as) picks, treat it as a candidate:
+- Research it the same way as any other candidate (Step 3).
+- Apply the same gates (Step 4) and give the same three scores (Step 6).
+- Write it up in the same pitch format (Step 7), numbered after the existing
+  pitches on the sheet.
+- Be straight about it. If it fails a gate or scores low, say so and say why.
+  Do not soften the verdict because the idea is Harvey's, and do not quietly
+  swap in a different angle.
+- Harvey is the editor. If he then says to build it anyway, follow
+  `PRODUCTION.md` and list the failed gate under "Needs your eyes" in the
+  report. The rule in `PRODUCTION.md` about stopping when a story falls apart
+  (section 7) still applies.
+
+------------------------------------------------------------
+THE IDEAS LIST (IDEAS.md)
+------------------------------------------------------------
+`IDEAS.md` in the repo root is Harvey's saved ideas, one entry per idea, each
+with the date it was saved.
+- When Harvey says to save an idea for later, add it to `IDEAS.md` with
+  today's date, in the layout the file describes. This is a file write, and it
+  is allowed in a routine run (`PRODUCTION.md` section 5A). Do not change
+  anything else.
+- Every morning, read `IDEAS.md` (Step 1) and consider each entry as a
+  candidate alongside what you find yourself. Each one gets the same research,
+  gates and scores. An idea that is still current and passes goes on the sheet,
+  marked "From your ideas list". An idea that fails a gate or is not timely
+  today goes under "Dropped", with the reason, and stays in the file. Ideas
+  count toward the variety limits in Step 5 like any other pitch.
+- Remove an entry once it has been built, or when Harvey says to drop it. Do
+  not remove an entry just because it failed a gate or was not pitched today.
 
 ------------------------------------------------------------
 RULES
