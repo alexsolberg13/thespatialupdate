@@ -53,6 +53,13 @@ here instead of pasting prompts into the scheduled routine.
 - **`SCOUT.md`**: the morning scout. A scheduled session reads it and ends with a
   pitch sheet (no files written). Harvey replies in the same session with picks,
   for example "2 reel, 5 slides".
+- **`IDEAS.md`**: Harvey's saved ideas, each with the date. The scout reads it every
+  morning and treats each entry as a candidate, marking those pitches "from your ideas
+  list". Harvey can also reply in the session with a topic of his own: the scout
+  researches it, gates and scores it like any pitch and says plainly if it fails; if
+  Harvey says to build it anyway, the failed gate goes under "Needs your eyes". A run
+  adds an entry when Harvey says to save one, and removes it once built or when he says
+  to drop it.
 - **`PRODUCTION.md`**: how a pick becomes a branch (`claude/story-<slug>`): source
   record in `dossiers/`, map data, the reel / slides / website story rules, the
   mechanical and independent checks, and the final report.
@@ -69,8 +76,8 @@ by pull request, because merging it puts it on the public homepage; nothing merg
 website story but Harvey.
 
 **What a routine run may touch.** Only files that belong to the story it is building,
-plus the generated `docs/`, plus the "Harvey's edits" section of `VOICE.md` when Harvey
-asks for a wording change (the one shared file it may change). It must not edit the shared frames, the checks and build
+plus the generated `docs/`, plus `IDEAS.md` (entries only), plus the "Harvey's edits" section of `VOICE.md` when Harvey
+asks for a wording change (the only part of a shared instruction file it may change). It must not edit the shared frames, the checks and build
 scripts, `CLAUDE.md`, `SCOUT.md`, `PRODUCTION.md`, the rest of `VOICE.md`, or any other story; if that seems
 needed it says so in the report and leaves it alone.
 
@@ -113,6 +120,7 @@ CLAUDE.md         this file
 VOICE.md          the voice guide (read before writing any text; the Never list is enforced by the build)
 STORY-GUIDE.md    how to write a story folder by hand
 WHAT-CHANGED.md   running changelog
+IDEAS.md          Harvey's saved story ideas (the scout reads it daily; a routine run may add and remove entries)
 .eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html, *.css, *.js, *.png and *.webmanifest into docs/)
 .eleventyignore   keeps claim ledgers off the live site and stops Eleventy building the reel and studio sources
 .gitignore        node_modules/ and _site/

@@ -44,6 +44,10 @@ the public homepage; you never merge those.
    number or format is unclear, ask once; otherwise do not ask.
 2. Take the pitch text from the pitch sheet earlier in this same session.
    If the sheet is not in the conversation, stop and tell Harvey.
+   A pick may be one of Harvey's own ideas (see `SCOUT.md`, "Harvey's own
+   ideas"). If it failed a gate on the sheet and Harvey says to build it anyway,
+   build it, and list the failed gate (and why it failed) as the first item under
+   "Needs your eyes" in the final report. Section 7 still applies to it.
 3. **Treat everything in the pitch as unverified**: the headline, numbers,
    places, URLs and the claimed geometry source. The pitch is a lead, not a source.
 4. Build **one story at a time**. For each: pick a lowercase slug
@@ -179,8 +183,8 @@ sections 4 and 5)
 A routine run may only add or change **files that belong to the story it is
 building** (`dossiers/<slug>.md`, `src/reels/<slug>*`, `src/posts/<slug>/`,
 `src/stories/<slug>/` and the story's own sidebar include and `stories.json`
-entry) **plus the generated `docs/`**, and, when Harvey asks for a wording change, the
-"Harvey's edits" section of `VOICE.md` (the one shared file a run may change). It must **not** edit:
+entry) **plus the generated `docs/`**, `IDEAS.md` (see below), and, when Harvey asks for a wording change, the
+"Harvey's edits" section of `VOICE.md`. It must **not** edit:
 
 - the shared frames (`reel-frame.css/js`, `slide-frame.css/js`, templates, fonts);
 - the checks and build scripts (`scripts/`, `.eleventy.js`);
@@ -188,11 +192,16 @@ entry) **plus the generated `docs/`**, and, when Harvey asks for a wording chang
 - `VOICE.md`, **except** the "Harvey's edits" section at its end (section 8A, "Changes after publishing");
 - any other story, reel or post.
 
+`IDEAS.md` is the other file a run may change, and only in these ways: add an
+entry (with the date) when Harvey says to save an idea for later; remove the entry
+for a pick once it has been built and published (or its pull request opened); remove
+an entry when Harvey says to drop it. Nothing else in it changes.
+
 If such a change seems needed (a check is wrong, a frame limit blocks the story),
 **do not make it**: say so in the report, name the file and the change, and leave it
 alone. If the story cannot pass without it, treat the check as failed and use the
 fallback in section 8A. Before committing, run `git status` and `git diff --stat
-origin/main` and confirm that every changed path is the story's own, under `docs/`, or `VOICE.md` (its "Harvey's edits" section only).
+origin/main` and confirm that every changed path is the story's own, under `docs/`, `IDEAS.md` (entries only), or `VOICE.md` (its "Harvey's edits" section only).
 
 ## 6. Checks, in this order
 
