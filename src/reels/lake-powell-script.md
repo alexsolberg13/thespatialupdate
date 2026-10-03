@@ -20,7 +20,7 @@ argue for or against the policy.
 
 **Beat 2 — two more lines**
 *(on screen: "3,500 and 3,490"; the 3,500 and 3,490 lines appear under the target)*
-> Two more lines sit below. At 3,500 feet, the rules call for consultation and extra protective steps. [C6] At 3,490, the minimum power pool at Glen Canyon Dam, water can only pass through the river outlet works. [C4]
+> Below that, at 3,500 feet, the rules call for consultation and extra protective steps. [C6] At 3,490, the minimum power pool at Glen Canyon Dam, water can only pass through the river outlet works. [C4]
 
 **Beat 3 — the map**
 *(on screen: "Seven states, two lakes")*
@@ -32,7 +32,7 @@ argue for or against the policy.
 
 **Beat 5 — upstream**
 *(on screen: "Voluntary only"; Upper Division states in slate)*
-> These documents require no cut from the four Upper Division states. They can contribute voluntarily, up to 200,000 acre-feet a year. [C14, C21]
+> Reclamation's documents require no cut from the four Upper Division states. They can contribute voluntarily, up to 200,000 acre-feet a year. [C14, C21]
 
 **Beat 6 — closer**
 *(on screen: "Eight feet above the target"; chip "As of Sep 30, 2026")*

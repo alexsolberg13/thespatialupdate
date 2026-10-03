@@ -8,6 +8,12 @@ and for slides is **Lake Powell**: `dossiers/lake-powell.md`,
 `src/reels/lake-powell-data.geojson`, `src/posts/lake-powell/`. The worked
 example for a website story is `revolution-wind` (`dossiers/`, `src/stories/`).
 
+**Voice.** `VOICE.md` (repo root) is how everything you write must sound. **Read it
+before you write any text**, and follow it in every piece of text: on-screen reel
+text, narration scripts, slide text, captions and website story prose. The "Harvey's
+edits" section at its end outranks the rest of it. Section 6 enforces it (the build
+checks the Never list; the independent check reads every line against the whole guide).
+
 The editorial line (CLAUDE.md section 1): **a human writes and publishes.**
 You produce an accurate, sourced draft. Harvey rewrites it in his own voice and
 posts. Since 2026-10-03 **reels and slides go live on the studio page without a
@@ -162,8 +168,10 @@ sections 4 and 5)
    (chip, caption, or sentence) and in the ledger.
 2. On policy and politics, **show where and what from the data. Do not argue for
    or against.** No adjectives that take a side; attribute positions to who holds them.
-3. Write **clearly and accurately, not polished.** Harvey rewrites it in his own
-   voice. Plain words; explain a term the first time (acre-foot, power pool).
+3. Write **clearly and accurately**, in the voice of `VOICE.md` (read it first, as
+   above). Harvey still rewrites narration in his own voice. Plain words; explain a
+   term the first time (acre-foot, power pool), but only with a fact already in the
+   dossier; a new fact goes into the dossier first (rule 4).
 4. No generated prose without a source row. A new fact goes into the dossier first.
 
 ## 5A. Scope of a routine run
@@ -171,18 +179,20 @@ sections 4 and 5)
 A routine run may only add or change **files that belong to the story it is
 building** (`dossiers/<slug>.md`, `src/reels/<slug>*`, `src/posts/<slug>/`,
 `src/stories/<slug>/` and the story's own sidebar include and `stories.json`
-entry) **plus the generated `docs/`**. It must **not** edit:
+entry) **plus the generated `docs/`**, and, when Harvey asks for a wording change, the
+"Harvey's edits" section of `VOICE.md` (the one shared file a run may change). It must **not** edit:
 
 - the shared frames (`reel-frame.css/js`, `slide-frame.css/js`, templates, fonts);
 - the checks and build scripts (`scripts/`, `.eleventy.js`);
 - `CLAUDE.md`, `SCOUT.md`, `PRODUCTION.md`, `STORY-GUIDE.md`, `WHAT-CHANGED.md`;
+- `VOICE.md`, **except** the "Harvey's edits" section at its end (section 8A, "Changes after publishing");
 - any other story, reel or post.
 
 If such a change seems needed (a check is wrong, a frame limit blocks the story),
 **do not make it**: say so in the report, name the file and the change, and leave it
 alone. If the story cannot pass without it, treat the check as failed and use the
 fallback in section 8A. Before committing, run `git status` and `git diff --stat
-origin/main` and confirm that every changed path is the story's own or under `docs/`.
+origin/main` and confirm that every changed path is the story's own, under `docs/`, or `VOICE.md` (its "Harvey's edits" section only).
 
 ## 6. Checks, in this order
 
@@ -196,19 +206,34 @@ origin/main` and confirm that every changed path is the story's own or under `do
 4. The full `npm run build` finishes with no errors.
 5. Reel: the script's beat count matches the reel, and `docs/studio/` shows the
    three links. Slides: PNGs are 1080x1350 and the caption is under 150 words.
+6. Voice: `npm run check-voice` (the build runs it first). It reads the "Never list"
+   in `VOICE.md` and fails, naming the file and line, if any on-screen reel text,
+   narration script, slide text or caption contains a phrase from it. To ban another
+   phrase, add it to that list, one phrase per line; nothing else needs to change.
+   It does not read website story prose (the voice pass in 6B covers it).
 
 **B. Independent** (a separate subagent; use the Agent tool, `general-purpose`)
 1. Give it **only** the finished text (the script, or `slides.md`, or `index.md`),
-   the GeoJSON, and the dossier. Do not give it your drafting notes, the pitch
+   the GeoJSON, the dossier and `VOICE.md`. Do not give it your drafting notes, the pitch
    or this conversation, so it has not seen the drafting.
 2. Ask it, in this order: re-open each source URL; check **every number, date and
    unit** against the source (it must say which it read directly and which only
    through a summary); check each map feature sits where the named place is;
    report what the story says that a source does not support; say whether the piece
    makes sense to a newcomer who knows nothing about the topic.
-3. It reports; it does not edit.
+3. **Voice pass.** Also ask it to read **every line of text** against `VOICE.md`: the
+   on-screen reel text (the `BEATS` in the reel page), the narration, every slide
+   line, the caption, or the story prose. It lists each line that breaks the guide,
+   with the rule it breaks and a suggested rewrite. It lists lines only; it does not
+   edit, and it may not suggest a change to any number, date or claim.
+4. It reports; it does not edit.
 
-**C. Fix.** Fix what A and B find, then re-run A. Add a short "Independent check"
+**C. Fix.** Fix what A and B find, then re-run A. Fix **every line the voice pass
+lists** before publishing, using its rewrite or a better one. A rewrite never changes
+a number, date or claim, and every claim ID stays on its sentence (in `slides.md` and
+the scripts). If a rewrite would need a new fact, leave the line and report it instead.
+If a voice fix touched a sentence that carries a number, date or claim, ask the
+independent agent to re-check those sentences. Add a short "Independent check"
 section to the dossier (what it found, what changed). **Anything that cannot be
 fixed is reported, never hidden.**
 
@@ -254,6 +279,20 @@ report, what is blocking it (the check and its message, or the push error). Do n
 open a pull request unless Harvey asks. One retry after pulling `main` and
 rebuilding is fine for a rejected push; a second rejection means stop.
 
+**Harvey's wording changes go into `VOICE.md`.** When Harvey asks for a change to
+wording, make it, then add the before and after to the "Harvey's edits" section of
+`VOICE.md`, newest first, replacing the line "(none yet)" the first time:
+
+```
+- 2026-10-03, lake-powell, slide 8 follow prompt
+  Before: "..."
+  After: "..."
+```
+
+This is the one shared file a run may change, and only that section. Those pairs
+outrank the rest of the guide, so read them before writing text. Do not put the
+before text in a Never list line; the list is only for banned phrases.
+
 **Changes after publishing.** When Harvey replies in the same session asking for
 changes to a story built there, make them (the scope rule still applies), re-run
 the mechanical checks (6A) and the full build, redo the independent check if a fact,
@@ -288,7 +327,8 @@ End your final message (and the PR body, for a website story) with this report,
 4. **Harvey to verify:** numbers to check by hand, with the page and the row.
 5. **Sources that could not be opened.**
 6. **Every inference row** (ID and the sentence).
-7. **What the independent check found and what was done about it.**
+7. **What the independent check found and what was done about it**, including
+   the voice pass (each line it listed and the rewrite used).
 8. **Changes you wanted but did not make** (shared frames, checks, instructions,
    other stories), if any (section 5A).
 

@@ -79,7 +79,7 @@ never a minimum (see the dossier's C5 note).
 - **source:** Colorado River Compact, 1922 [S10]
 - **source:** Map data: U.S. Census Bureau, Natural Earth (lakes at full pool, not today’s shoreline), © OpenStreetMap contributors [S7, S8, S9]
 - **brand:** The Spatial Update [site]
-- **follow:** Follow for the next story on the map. [site]
+- **follow:** More maps at thespatialupdate.com. [site]
 
 ---
 
@@ -92,14 +92,14 @@ At most 150 words.
 - The lake stood at 3,518 feet. [C3]
 - Reclamation’s 2027–2028 rules aim to keep it at 3,510 feet or higher. [C5]
 
-- Two lines sit below. [C4, C6]
-- At 3,500 feet, the rules call for consultation on further actions. [C6]
+- Below that, at 3,500 feet, the rules call for consultation on further actions. [C6]
 - At 3,490, the minimum power pool at Glen Canyon Dam, water can only leave through the river outlet works. [C4]
 
 - Deliveries to Arizona, California and Nevada drop by 1.25 million acre-feet a year in 2027 and 2028. [C9]
 - Reclamation’s documents require no cut from the four Upper Division states. [C14, C21]
 
-- Sources are on the last slide. [site]
+- Sources: Reclamation’s news release, Record of Decision and daily reservoir levels, and the 1922 Colorado River Compact. [S1, S2, S3, S4, S10]
+- Map data from the Census Bureau, Natural Earth and OpenStreetMap. [S7, S8, S9]
 - #LakePowell #ColoradoRiver [site]
 
 ---
