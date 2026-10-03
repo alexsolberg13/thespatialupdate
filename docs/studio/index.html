@@ -8,7 +8,7 @@
 <!--
   Studio home page: the start page of the Home Screen web app (see
   ../reels/manifest.webmanifest, whose scope covers /reels/, /posts/ and /studio/).
-  Lists every reel (play and check), every slide post and the tools, newest first.
+  Lists every reel (play, check and script), every slide post and the tools, newest first.
   THIS IS A TEMPLATE. The real page (docs/studio/index.html) is built from it by
   scripts/studio_index.js every time Eleventy builds, from the reels in src/reels/ and
   the posts in src/posts/. Nothing to edit when you add a reel or a post.
@@ -36,12 +36,13 @@
   a.card:active { background:#1c2535; }
   .card b { display:block; font:400 22px/1.25 Georgia,serif; margin-bottom:6px; }
   .card span { font:400 15px/1.4 Arial,sans-serif; color:#a8a39d; }
-  .links { display:flex; gap:12px; margin-top:16px; }
+  .links { display:flex; gap:10px; margin-top:16px; }
   .links a { flex:1; display:flex; align-items:center; justify-content:center; min-height:56px; text-align:center; text-decoration:none;
-             font:700 17px/1 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; border-radius:12px; }
+             font:700 16px/1 Arial,sans-serif; letter-spacing:.05em; text-transform:uppercase; border-radius:12px; }
   .links .play { background:#c8a84e; color:#141210; }
   .links .play:active { background:#e8c87a; }
   .links .check { border:2px solid #3ecfb2; color:#3ecfb2; }
+  .links .script { border:2px solid #c8a84e; color:#c8a84e; }
   .post { display:flex; gap:16px; align-items:center; min-height:133px; }
   .post img { width:84px; height:105px; object-fit:cover; border-radius:6px; flex-shrink:0; background:#0a0f18; }
   .hint { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; margin-top:30px; }
@@ -54,13 +55,13 @@
 
   <h2>Reels</h2>
   <div class="card"><b>Lake Powell</b><span>Published 2 Oct 2026 · 6 beats</span>
-    <div class="links"><a class="play" href="../reels/lake-powell.html">play</a><a class="check" href="../reels/lake-powell.html?check=1">check</a></div></div>
+    <div class="links"><a class="play" href="../reels/lake-powell.html">play</a><a class="check" href="../reels/lake-powell.html?check=1">check</a><a class="script" href="scripts/lake-powell.html">script</a></div></div>
   <div class="card"><b>Revolution Wind</b><span>Published 11 Aug 2026 · 7 beats</span>
-    <div class="links"><a class="play" href="../reels/revolution-wind.html">play</a><a class="check" href="../reels/revolution-wind.html?check=1">check</a></div></div>
+    <div class="links"><a class="play" href="../reels/revolution-wind.html">play</a><a class="check" href="../reels/revolution-wind.html?check=1">check</a><a class="script" href="scripts/revolution-wind.html">script</a></div></div>
   <div class="card"><b>The August 2026 Eclipse</b><span>Published 10 Aug 2026 · 6 beats</span>
-    <div class="links"><a class="play" href="../reels/august-2026-eclipse.html">play</a><a class="check" href="../reels/august-2026-eclipse.html?check=1">check</a></div></div>
+    <div class="links"><a class="play" href="../reels/august-2026-eclipse.html">play</a><a class="check" href="../reels/august-2026-eclipse.html?check=1">check</a><a class="script" href="scripts/august-2026-eclipse.html">script</a></div></div>
   <div class="card"><b>The Lobito Corridor</b><span>Published 9 Aug 2026 · 6 beats</span>
-    <div class="links"><a class="play" href="../reels/lobito-corridor.html">play</a><a class="check" href="../reels/lobito-corridor.html?check=1">check</a></div></div>
+    <div class="links"><a class="play" href="../reels/lobito-corridor.html">play</a><a class="check" href="../reels/lobito-corridor.html?check=1">check</a><a class="script" href="scripts/lobito-corridor.html">script</a></div></div>
 
   <h2>Posts</h2>
   <a class="card post" href="../posts/lake-powell/index.html"><img src="../posts/lake-powell/slides/01.png" alt="" width="84" height="105"><div><b>Lake Powell</b><span>Published 3 Oct 2026 · 8 slides</span></div></a>

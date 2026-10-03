@@ -292,6 +292,11 @@ async function checkReel(browser, file) {
     const out = path.join(__dirname, "..", "docs", "studio", "index.html");
     if (!fs.existsSync(out) || fs.readFileSync(out, "utf-8") !== built.html)
       all.push("docs/studio/index.html is missing or out of date with the reels and posts. Run npm run build.");
+    Object.keys(built.scripts).forEach((n) => {
+      const sp = path.join(__dirname, "..", "docs", "studio", "scripts", n + ".html");
+      if (!fs.existsSync(sp) || fs.readFileSync(sp, "utf-8") !== built.scripts[n])
+        all.push(`docs/studio/scripts/${n}.html is missing or out of date with src/reels/${n}-script.md. Run npm run build.`);
+    });
     console.log(`  ok    studio page: lists ${built.reels.length} reels, ${built.posts.length} posts, ${built.tools.length} tool(s), newest first`);
   } catch (e) { all.push(e.message); }
   const browser = await launch();

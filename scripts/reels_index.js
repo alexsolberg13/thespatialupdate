@@ -5,7 +5,7 @@
 // A reel is any src/reels/*.html except calibrate.html. For each one it reads:
 //   - the name, from <title> ("Story Beat Reel: X . The Spatial Update")
 //   - the published date, from <meta name="tsu-published" content="YYYY-MM-DD">
-//   - the number of beats, by reading the BEATS list in the reel's script
+//   - the beats (count and on-screen titles), by reading the BEATS list in the reel's script
 // and throws a plain-English error if any of that is missing, so a reel can
 // never be left off the index or listed wrongly.
 
@@ -41,11 +41,12 @@ function readReel(file) {
   if (isNaN(date) || date.getUTCMonth() !== +d[2] - 1) throw new Error(`Reel "${name}" has an impossible published date (${d[0]}).`);
 
   const m = /var BEATS = (\[[\s\S]*?\n {2}\]);/.exec(html);
-  let beats = 0;
-  try { beats = vm.runInNewContext(m[1]).length; } catch (e) { /* reported below */ }
+  let beatList = [];
+  try { if (m) beatList = vm.runInNewContext(m[1]); } catch (e) { /* reported below */ }
+  const beats = beatList.length;
   if (!beats) throw new Error(`Could not read the list of beats (var BEATS = [...]) from reel "${name}", so the reels index cannot count them.`);
 
-  return { file, name, title, date, beats };
+  return { file, name, title, date, beats, beatList };
 }
 
 function render() {
