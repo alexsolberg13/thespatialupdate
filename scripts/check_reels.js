@@ -184,6 +184,8 @@ async function checkReel(browser, file) {
   const vps = html.replace(/<!--[\s\S]*?-->/g, "").match(/<meta\b[^>]*name=["']viewport["'][^>]*>/gi) || [];
   if (vps.length !== 1 || !/viewport-fit=cover/.test(vps[0]))
     problems.push(`Reel "${name}" must have exactly one <meta name="viewport"> and it must include viewport-fit=cover (found ${vps.length}); otherwise an iPhone in Home Screen mode can lay the page out below the status bar.`);
+  if (!/<meta\b[^>]*name=["']robots["'][^>]*noindex/i.test(html.replace(/<!--[\s\S]*?-->/g, "")))
+    problems.push(`Reel "${name}" must have <meta name="robots" content="noindex, nofollow"> in its <head> (copy it from another reel); studio pages are not for search engines.`);
   if (missing.length) problems.push(`Reel "${name}" is missing ${missing.join(" and ")} (copy them from another reel), so it won't run full screen from the Home Screen.`);
   // The shared frame: reel-frame.css and reel-frame.js must really be loaded by
   // the page (a mention in a comment does not count), and the reel must use the
