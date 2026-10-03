@@ -36,6 +36,23 @@ get found" step is deliberately open.
 
 ---
 
+## 1a. The daily production process
+
+Added 2026-10-03. Two instruction files at the repo root drive it; improve them
+here instead of pasting prompts into the scheduled routine.
+
+- **`SCOUT.md`**: the morning scout. A scheduled session reads it and ends with a
+  pitch sheet (no files written). Harvey replies in the same session with picks,
+  for example "2 reel, 5 slides".
+- **`PRODUCTION.md`**: how a pick becomes a branch (`claude/story-<slug>`) and a
+  pull request: source record in `dossiers/`, map data, the reel / slides /
+  website story rules, the mechanical and independent checks, and the final report.
+  Harvey reviews in the evening, rewrites the words, merges and posts.
+
+Nothing pushes to `main`; every pick is its own pull request.
+
+---
+
 ## 2. Working with Harvey
 
 - **Not a developer.** Give exact commands, exact file paths, exact menu clicks.
