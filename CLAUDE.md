@@ -174,6 +174,15 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   a comment does not count), if the map did not load (rules 2 and 6 cannot be
   checked without it, so it never passes quietly), and if the built reels index is stale. It also checks that the stage is centred on the
   physical screen when the viewport is 59pt shorter than the screen. `npm run build` runs it after the Eleventy build.
+  **No internet? Stub the basemap.** By default the check loads the real basemap (map
+  library and tiles from the internet). With `REEL_BASEMAP=stub` (PowerShell:
+  `$env:REEL_BASEMAP="stub"; npm run build`) or `node scripts/check_reels.js --stub`, the
+  map library comes from `node_modules` (`maplibre-gl`, pinned to the reels' version) and
+  the basemap is an empty dark background, with no network at all. All layout rules and the
+  framing of each subject and of the reels' own labels are still checked; **the basemap's
+  own place names are not** (a stub has none), and the run prints that in every reel line
+  and the summary. A stubbed pass is not a full pass: do the full run (no variable) on a
+  machine with internet before relying on label hiding.
 - **On-device check and iPhone simulation.** Open a reel with `?check=1` (the reels index has a "check" button beside "play") to get a PASS/FAIL panel of the band measurements and an Instagram interface mock. `npm run check-reels` also runs every beat of every reel in an iPhone 15 Home Screen simulation (393x852 screen, 793pt viewport starting at the 59pt top inset, 34pt bottom inset), runs the same report there, and fails if the stage, a band, the framing or the gradient is off. The panel also shows the map window, whether the subject and every label are inside it, and the gradient. Each reel must have exactly one viewport meta tag, with `viewport-fit=cover`. The automatic check opens reels with `?audit=1`.
 - **Calibration.** `src/reels/calibrate.html` shows the stage with rulers every 5%
   and ticks every 1%, the exact top and bottom "stage edge", the "crop" strips
