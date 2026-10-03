@@ -7,8 +7,12 @@
 //           visible text of the reel page, plus the narration in src/reels/<slug>-script.md
 //   posts   every line of slide text and the caption in src/posts/<slug>/slides.md, and the
 //           caption on the post page
+//   stories the website stories: title and byline, the body of src/stories/<slug>/index.md
+//           (claim tags and template code left out), the story's sidebar text, and its
+//           title, description and tag on the homepage (src/_data/stories.json)
 // The list is read from VOICE.md every time, so extending it there is all it takes.
-// Website story prose is not scanned here; the independent voice pass covers it.
+// Text built only inside map scripts (marker popups in `mapLayers` / `mapEvents`) is not read here;
+// the independent voice pass covers it.
 
 "use strict";
 const fs = require("fs");
@@ -18,6 +22,9 @@ const vm = require("vm");
 const ROOT = path.join(__dirname, "..");
 const VOICE = path.join(ROOT, "VOICE.md");
 const REELS_DIR = path.join(ROOT, "src", "reels");
+const STORIES_DIR = path.join(ROOT, "src", "stories");
+const INCLUDES_DIR = path.join(ROOT, "src", "_includes");
+const CLAIM_TAG = /\[\s*(?:C\d+|NEW)(?:\s*[,;]\s*(?:C\d+|NEW))*\s*\]/g;
 
 // A phrase also matches with a plain ending, so "delve" catches "delves" and "delved".
 const ENDINGS = "(?:s|es|d|ed|ing)?";
@@ -62,7 +69,7 @@ function visibleText(html) {
 // Every piece of text to check: { where, text }.
 function collect() {
   const items = [];
-  const counts = { reels: 0, scripts: 0, posts: 0 };
+  const counts = { reels: 0, scripts: 0, posts: 0, stories: 0 };
 
   const { parseScript } = require("./reel_scripts.js");
   const reelFiles = fs.readdirSync(REELS_DIR).filter((f) => f.endsWith(".html") && f !== "index.html" && f !== "calibrate.html").sort();
@@ -92,6 +99,39 @@ function collect() {
     md.caption.forEach((p) => p.forEach((e) => items.push({ where: `post ${slug}, caption (src/posts/${slug}/slides.md line ${e.line})`, text: e.text })));
     items.push({ where: `post ${slug}, caption on the post page (src/posts/${slug}/index.html)`, text: posts.readPost(slug).caption });
   }
+
+  // Website stories.
+  let homepage = [];
+  const sj = path.join(ROOT, "src", "_data", "stories.json");
+  if (fs.existsSync(sj)) {
+    try { homepage = JSON.parse(fs.readFileSync(sj, "utf-8")); } catch (e) { throw new Error("src/_data/stories.json could not be read, so the voice check cannot read the homepage story text: " + e.message); }
+  }
+  const storySlugs = fs.readdirSync(STORIES_DIR, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && fs.existsSync(path.join(STORIES_DIR, d.name, "index.md"))).map((d) => d.name).sort();
+  for (const slug of storySlugs) {
+    counts.stories++;
+    const file = `src/stories/${slug}/index.md`;
+    const md = fs.readFileSync(path.join(ROOT, file), "utf-8").replace(/\r\n/g, "\n");
+    const fm = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/.exec(md);
+    if (!fm) throw new Error(`Story "${slug}" (${file}) has no front matter between --- lines, so the voice check cannot tell its text from its settings.`);
+    ["title", "byline"].forEach((k) => {
+      const m = new RegExp("^" + k + ':\\s*"?(.*?)"?\\s*$', "m").exec(fm[1]);
+      if (m && m[1]) items.push({ where: `story ${slug}, ${k} (${file})`, text: m[1] });
+    });
+    const body = visibleText(fm[2].replace(/\{%[\s\S]*?%\}|\{\{[\s\S]*?\}\}/g, " ").replace(CLAIM_TAG, " "));
+    body.split(/\n\s*\n/).map(norm).filter(Boolean).forEach((p, i) => items.push({ where: `story ${slug}, body paragraph ${i + 1} (${file})`, text: p }));
+    const inc = /^sidebarInclude:\s*"?([^"\n]+?)"?\s*$/m.exec(fm[1]);
+    if (inc) {
+      const sf = path.join(INCLUDES_DIR, inc[1]);
+      if (!fs.existsSync(sf)) throw new Error(`Story "${slug}" names the sidebar ${inc[1]}, but src/_includes/${inc[1]} does not exist, so the voice check cannot read it.`);
+      visibleText(fs.readFileSync(sf, "utf-8").replace(/\{%[\s\S]*?%\}|\{\{[\s\S]*?\}\}/g, " ")).split(/\n/).map(norm).filter(Boolean)
+        .forEach((t) => items.push({ where: `story ${slug}, sidebar text (src/_includes/${inc[1]})`, text: t }));
+    }
+    homepage.filter((h) => h.url === `/stories/${slug}/`).forEach((h) => ["title", "description", "tag"].forEach((k) => {
+      if (h[k]) items.push({ where: `story ${slug}, homepage ${k} (src/_data/stories.json)`, text: String(h[k]) });
+    }));
+  }
+  if (!storySlugs.length) throw new Error("The voice check found no website stories in src/stories/, so it would pass story prose unread. Is it running from the repo?");
   return { items, counts };
 }
 
@@ -103,9 +143,14 @@ function run() {
   const hits = [];
   for (const it of items) {
     const t = norm(it.text);
-    for (const m of matchers) if (m.re.test(t)) hits.push({ ...it, phrase: m.phrase, text: t });
+    for (const m of matchers) {
+      const f = m.re.exec(t);
+      if (!f) continue;
+      const a = Math.max(0, f.index - 70), b = Math.min(t.length, f.index + f[0].length + 70);
+      hits.push({ ...it, phrase: m.phrase, text: (a > 0 ? "..." : "") + t.slice(a, b) + (b < t.length ? "..." : "") });
+    }
   }
-  console.log(`[voice] read ${phrases.length} phrases from the Never list in VOICE.md; checked ${items.length} pieces of text in ${counts.reels} reel(s), ${counts.scripts} script(s) and ${counts.posts} post(s).`);
+  console.log(`[voice] read ${phrases.length} phrases from the Never list in VOICE.md; checked ${items.length} pieces of text in ${counts.reels} reel(s), ${counts.scripts} script(s), ${counts.posts} post(s) and ${counts.stories} website stor${counts.stories === 1 ? "y" : "ies"}.`);
   if (hits.length) {
     console.error(`\n[voice] FAILED: ${hits.length} place(s) use a phrase from the Never list in VOICE.md.\n`);
     hits.forEach((h) => console.error(`  - ${h.where}\n    uses "${h.phrase}": ${h.text}\n`));

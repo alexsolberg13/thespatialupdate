@@ -210,7 +210,11 @@ origin/main` and confirm that every changed path is the story's own, under `docs
    in `VOICE.md` and fails, naming the file and line, if any on-screen reel text,
    narration script, slide text or caption contains a phrase from it. To ban another
    phrase, add it to that list, one phrase per line; nothing else needs to change.
-   It does not read website story prose (the voice pass in 6B covers it).
+   It also reads website story prose: the title, byline, body and sidebar text of
+   each story in `src/stories/`, and its title and description on the homepage
+   (`src/_data/stories.json`). Claim tags and template code are ignored. It does not
+   read marker popup text written inside the story's map scripts (`mapLayers`,
+   `mapEvents`); the voice pass in 6B covers that.
 
 **B. Independent** (a separate subagent; use the Agent tool, `general-purpose`)
 1. Give it **only** the finished text (the script, or `slides.md`, or `index.md`),
