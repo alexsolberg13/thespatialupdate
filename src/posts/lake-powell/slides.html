@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>Slides — Lake Powell · The Spatial Update</title>
+<!--
+  The slides of the Lake Powell post, as data. This page is NOT published: it is what
+  `npm run render-slides` opens to make the PNGs in slides/ (and the PNGs are what the
+  post page shows). The frame (slide-frame.css / slide-frame.js) builds each slide from
+  the data below; nothing here sets a size, a margin or a colour of its own.
+
+  Every line of text here is also in slides.md with the claim ID it rests on, and
+  render-slides fails if the two differ. Claims are in dossiers/lake-powell.md. The map
+  is drawn from src/reels/lake-powell-data.geojson (the reel's own data), as SVG.
+
+  Lake levels (3,518 ft and "8 feet") are Reclamation's September 30, 2026 daily row
+  (claim C3), shown with "As of Sep 30, 2026". REFRESH THEM before the post goes up
+  (see slides.md, "Before posting").
+-->
+<link href="../slide-frame.css" rel="stylesheet">
+</head>
+<body>
+<div id="deck"></div>
+<script src="../slide-frame.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var ASOF = "As of Sep 30, 2026";
+  var GOLD = "#e8c87a", BLUE = "#5b9bd5", ORANGE = "#e8955a", RED = "#e05a4e", UPPER = "#5b7a96";
+
+  var SLIDES = [
+    { type: "cover", chip: ASOF, kicker: "Colorado River",
+      headline: "Lake Powell was 8 feet above its operating target",
+      map: { fit: ["reservoir-powell", "dam-glen-canyon"], grow: 0.9, states: "outline", reservoirs: true, dams: ["dam-glen-canyon"],
+             labels: [{ at: "dam-glen-canyon", lines: ["Glen Canyon Dam"], align: "l", dx: 44 }] } },
+
+    { type: "number", chip: ASOF, kicker: "Lake Powell’s elevation", number: "3,518", unit: "feet", tone: GOLD,
+      line: "Reclamation’s daily reading for September 30, 2026." },
+
+    { type: "number", kicker: "Operating target", number: "3,510", unit: "feet", tone: BLUE,
+      line: "Reclamation’s 2027–2028 rules aim to keep the lake at or above it." },
+
+    { type: "number", kicker: "Consultation level", number: "3,500", unit: "feet", tone: ORANGE,
+      line: "If the lake is projected below this, the rules call for consultation on further actions." },
+
+    { type: "number", kicker: "Minimum power pool", number: "3,490", unit: "feet", tone: RED,
+      line: "At this level, water can only leave Glen Canyon Dam through the river outlet works." },
+
+    { type: "map", kicker: "Where it sits", headline: "Two lakes behind two dams",
+      line: "Powell sits behind Glen Canyon Dam; Mead sits behind Hoover Dam.",
+      map: { fit: ["reservoir-powell", "reservoir-mead", "dam-glen-canyon", "dam-hoover"], grow: 0.95, states: "outline", reservoirs: true, dams: ["dam-glen-canyon", "dam-hoover"],
+             labels: [{ at: [-110.45, 37.35], lines: ["Lake Powell"], align: "l" },
+                      { at: [-114.25, 35.6], lines: ["Lake Mead"], align: "c" }] },
+      legend: [{ kind: "fill", color: BLUE, text: "Reservoir" }, { kind: "dot", color: GOLD, text: "Dam" }] },
+
+    { type: "map", kicker: "2027 and 2028", headline: "1.25 million acre-feet a year",
+      line: "Deliveries to Arizona, California and Nevada drop; the split shown is their proposed sharing agreement.",
+      map: { fit: ["kind:state"], states: "cut",
+             labels: [{ at: "label-AZ", lines: ["Arizona", "−760,000"] },
+                      { at: [-119.2, 36.4], lines: ["California", "−440,000"] },
+                      { at: "label-NV", lines: ["Nevada", "−50,000"] },
+                      { at: "label-UB", lines: ["Upper Division"] }] },
+      legend: [{ kind: "fill", color: RED, text: "2027–28 cut (acre-feet)" }, { kind: "fill", color: UPPER, text: "No required cut" }] },
+
+    { type: "closing", kicker: "Sources",
+      sources: [
+        "Bureau of Reclamation, news release 5392, Aug 21, 2026",
+        "Record of Decision and 2027–2028 Operating Guidelines, Aug 2026",
+        "Reclamation daily reservoir levels, Sep 30, 2026",
+        "Colorado River Compact, 1922",
+        "Map data: U.S. Census Bureau, Natural Earth (lakes at full pool, not today’s shoreline), © OpenStreetMap contributors"
+      ],
+      brand: "The Spatial Update",
+      follow: "Follow for the next story on the map." }
+  ];
+
+  var only = window.TSUSlide.only;   // ?slide=N shows just slide N (render-slides); no ?slide shows all
+  fetch("../../reels/lake-powell-data.geojson").then(function (r) { return r.json(); }).then(function (geo) {
+    window.TSUSlide.init({ slides: SLIDES, geojson: geo, only: only });
+  }).catch(function (e) { window.TSUSlide.error = "Could not load the map data: " + e; window.TSUSlide.ready = true; });
+})();
+</script>
+</body>
+</html>

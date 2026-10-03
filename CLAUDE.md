@@ -75,10 +75,14 @@ scripts/          Python automation
   finalize.py             strips a draft's [C#] claim tags out of the body (Stage 4)
   check_reels.js          `npm run check-reels`: safe-area and layout-rule check for every reel
   reel_audit.js           the layout rules (header, map window, text, legend, type, labels) it runs per beat
+  render_slides.js        `npm run render-slides`: audits every slide of every post and saves the PNGs
+  posts_lib.js            checks that need no browser (claim IDs, caption, PNG sizes); used by the render and the build
+  posts_index.js          builds docs/posts/ (posts index, post pages, PNGs) after every Eleventy build
 
 dossiers/         research packets, one per story (august-2026-eclipse,
                   lobito-corridor, revolution-wind)
 src/              Eleventy source — everything the site is built from
+  posts/                  Instagram slide posts (see "3a. Slides"): slide-frame.css/js, index.html, <slug>/
   CNAME                   thespatialupdate.com (copied to docs/CNAME on build)
   stories/<slug>/         index.md · data.geojson · sources.html (private ledger)
   reels/                  Story Beat Reels (see below)
@@ -212,6 +216,94 @@ boundary has to swap, and it's the likeliest source of a marker landing in the
 wrong ocean.
 
 ---
+
+## 3a. Slides (Instagram static posts)
+
+Added 2026-10-03. A **post** is a carousel of 1080x1350 PNG slides plus a caption,
+made from the same source record as a reel. The first is `lake-powell` (8 slides).
+
+```
+src/posts/
+  slide-frame.css / .js   the shared frame: every size, margin and limit lives here
+  fonts/                  Gelasio (open-licence Georgia lookalike), see "Fonts" below
+  index.html              template of the posts index (built into docs/posts/index.html)
+  <slug>/
+    slides.html           the slides as data (not published); render-slides opens it
+    slides.md             every line of slide text with its claim ID, plus the caption
+    index.html            the post page: the PNGs in order, the caption, a copy button
+    slides/01.png ...     the saved slides (written by render-slides, committed)
+```
+
+**The frame (`slide-frame.css`, defined once, never per post).**
+- **1080 x 1350**, rendered 1:1. Same fonts and colours as the reels (Georgia headlines,
+  Arial everything else, gold `#c8a84e` on `#0a0f18`).
+- **Margin: 8% in from every edge**, as a percent of that edge's own length (like the
+  reel frame): `--safe-x` = 86.4 px left and right, `--safe-y` = 108 px top and bottom.
+  All text and map labels stay inside; the map itself may run to the edges.
+- **Type sizes:** headline **72**, body **40**, small **30** (kicker, date chip, legend,
+  map labels, sources). Nothing smaller than 30. One extra size, `--type-number` 240,
+  for the big figure on a number slide.
+- **Text block** is anchored to the bottom of the safe area and grows upward; the
+  legend (at most 3 items) sits directly above its kicker; the map window is the space
+  between the top margin (or the date chip) and the text block.
+
+**Slide types** (`slide-frame.js` builds them from data in the post's `slides.html`):
+- **cover**: hook headline (at most 3 lines, 10 words) over the map; optional date chip.
+- **map**: map, short headline (2 lines, 7 words), one line (at most 3 lines, 18 words),
+  optional legend.
+- **number**: one big number, a unit, one line; `tone` colours it (the Lake Powell
+  ladder uses the reel gauge colours).
+- **closing**: "Sources", the source lines, "The Spatial Update", a follow prompt.
+
+**Maps** are drawn as SVG from the story's own GeoJSON (Lake Powell reuses
+`src/reels/lake-powell-data.geojson`, so there is one copy of the data): Web Mercator,
+states, reservoirs, dams, a faint graticule. There is **no basemap and no network**,
+so the render is the same anywhere. `fit` lists what the map must show (points, feature
+ids, or `"kind:state"`); the frame zooms to fit it, and every label, inside the map
+window. Reservoir outlines are the generalized full-pool shapes, as in the reel.
+
+**`npm run render-slides`** (or `npm run render-slides -- <slug>`) opens each post in a
+headless browser, audits every slide, and saves `slides/NN.png`, exactly 1080x1350. It
+**fails with a plain-English message** (post, slide, element) if:
+- any text or label runs past the 8% margin or off the slide, is under 30 px, or
+  overlaps other text; a headline or line is over its limit; the map's subject or a label
+  is outside the map window; the legend has more than 3 items;
+- a line of slide text is not in `slides.md` with a claim ID, a line in `slides.md` is
+  not on a slide, or an ID is not a row in `dossiers/<slug>.md` (`[site]` is allowed only
+  for the wordmark, the follow prompt and the "Sources" label);
+- the caption is over **150 words** or is not the one in `slides.md` (without the IDs);
+- a saved image is not 1080x1350.
+Nothing is written to `slides/` unless every slide of the post passes. For looking at a
+failing slide: `npm run render-slides -- --preview-dir=<folder>`.
+
+**Writing a post** (same rules as the story protocol: a human writes; no claim without
+a ledger row):
+1. Start from the dossier: `dossiers/<slug>.md`. Use only claims already in it. A new
+   fact goes into the dossier first.
+2. Write `slides.md`: one `- **kind:** text [C#]` line per piece of text, kinds
+   `chip kicker headline number unit line label legend source brand follow`; the caption
+   as sentences with their IDs, blank lines between paragraphs.
+3. Copy `lake-powell/slides.html` and `index.html`, change the data and the caption
+   (the post page needs `tsu-published`, `tsu-slides` and `<div id="caption">`), then
+   `npm run render-slides`.
+4. Any slide that shows a lake level, or any figure that goes stale, carries its "As of"
+   date (see Lake Powell's date chip). Refresh the numbers before posting.
+5. Have the slide text checked independently against the source record, as for a reel.
+6. `npm run build`, which publishes the post page, its PNGs and the posts index.
+
+**Posts page.** `docs/posts/index.html` lists posts newest first (built from each post
+page's `tsu-published`; linked from the reels index). A post page shows its PNGs as
+plain full-width `<img>` tags (no link, overlay or `touch-callout` rule around them) so
+each can be **pressed and held on an iPhone and saved to Photos**, then the caption and a
+**Copy caption** button. The build stops, with a plain message, if a post's PNGs are
+missing, the wrong size, or its caption differs from `slides.md`. The slide data, slide
+text and frame are not published; only the post page, its PNGs and the index are.
+
+**Fonts.** Georgia and Arial are not on every machine. `slide-frame.css` lists Georgia
+first, then Gelasio (bundled, same metrics, OFL), so wrapping is identical either way;
+Arial falls back to Liberation Sans (same metrics). The Lake Powell PNGs were rendered on
+a Linux machine, so their serif text is Gelasio; running `npm run render-slides` on
+Harvey's PC uses real Georgia and rewrites the PNGs.
 
 ## 4. Existing scripts
 

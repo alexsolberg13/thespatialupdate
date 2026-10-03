@@ -1,3 +1,14 @@
+# What changed — Instagram slides format (`claude/slides-format`)
+
+- **New format: slides.** 1080x1350 PNG carousels with a caption. Shared frame in `src/posts/slide-frame.css` / `.js` (8% margin, type sizes 72 / 40 / 30, same fonts and colours as the reels); slide types cover, map, number, closing. See `CLAUDE.md` section 3a.
+- **`npm run render-slides`** audits every slide (margins, minimum 30 px type, overlaps, limits, map window, claim IDs against `slides.md` and the dossier, caption 150 words) and saves exact 1080x1350 PNGs only if all pass.
+- **Posts page** `docs/posts/` (newest first, linked from the reels index). Each post page lists its slides as plain images to press and hold on iPhone, and the caption with a copy button. Built by `scripts/posts_index.js` on every build, which also stops if a post's caption or PNGs are wrong.
+- **First post: Lake Powell**, 8 slides, text in `src/posts/lake-powell/slides.md` with a claim ID on every line, caption 102 words. No new facts: every ID is a row in `dossiers/lake-powell.md`. Lake levels are as of Sep 30, 2026; refresh before posting.
+- **Independent check** of the slide text against the source record (see the end of `dossiers/lake-powell.md`). No wrong number. Applied: "was" and a dated first caption sentence; "aim to keep" instead of "try to hold"; "No required cut" instead of "Voluntary only"; "acre-feet" on the slide 7 legend.
+- Maps on slides are SVG from the existing GeoJSON, no basemap tiles.
+
+---
+
 # What changed — text block moved down (`claude/reel-text-87`)
 
 - **Text block** now ends at **87%** of the stage (it was 83%), and still grows upward with the legend directly above the kicker. The bottom margin is 13% (`--safe-bottom`), `--text-bottom` is 87.

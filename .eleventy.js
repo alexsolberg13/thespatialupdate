@@ -30,6 +30,14 @@ module.exports = function(eleventyConfig) {
     console.log(`[reels index] listed ${reels.length} of ${reelFiles().length} reels, newest first: ` + reels.map((r) => r.name).join(", "));
   });
 
+  // Instagram slide posts: src/posts/<slug>/ holds each post's page, slide data, slide text
+  // and the saved PNGs. The build publishes the post pages and PNGs plus the posts index,
+  // newest first (scripts/posts_index.js); the slide sources stay unpublished.
+  eleventyConfig.on("eleventy.after", () => {
+    const posts = require("./scripts/posts_index.js").build();
+    console.log(`[posts index] published ${posts.length} post(s), newest first: ` + posts.map((p) => `${p.slug} (${p.slides} slides)`).join(", "));
+  });
+
   return {
     dir: {
       input: "src",       // Eleventy reads from this folder

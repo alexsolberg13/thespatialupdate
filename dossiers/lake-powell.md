@@ -160,3 +160,17 @@ Code checks (valid GeoJSON, closed rings, bounding boxes, lon/lat signs, state e
   in the ledger for reference.
 - Dam coordinates switched to OpenStreetMap (S9). The code checks (valid GeoJSON,
   bounding boxes, point-in-polygon, extents) were re-run on the final file and pass.
+
+
+---
+
+## Independent check — slides (2026-10-03)
+
+A separate agent with no access to the drafting re-read `src/posts/lake-powell/slides.md` against this record and re-opened S1 (summary only), S2, S3 and S10; it could not read the Sep 30 row of S4 (the fetch returned October rows), so C3's 3,518.08 ft still rests on this ledger. No wrong number. It raised, and the slides were changed:
+
+1. "Try to hold" was softer than S3 ("initially seeking", a minimum maintained through March). Now "aim to keep" (slide 3, caption).
+2. Present-tense "is 8 feet above" on an undated first caption sentence. Slide 1 now says "was"; the caption opens "As of September 30, 2026, ...".
+3. The legend "Voluntary only" could read as stronger than C14 ("no mandatory cut in these documents", 2027-2028). Now "No required cut"; the caption keeps "Reclamation's documents require no cut".
+4. The slide 7 amounts had no unit. The legend now reads "2027-28 cut (acre-feet)".
+
+Noted, not changed: "Consultation level" is the site's label for the 3,500 ft line (C6); slide 5 says "at this level" per S2 fn 3 (S3 says "below"); the full-pool caveat is only on the closing slide (also in the closing source line); the cover kicker "Colorado River" cites C1 but makes no claim. Refresh C3 from S4 before posting.
