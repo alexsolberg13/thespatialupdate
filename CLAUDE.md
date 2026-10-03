@@ -42,7 +42,8 @@ get found" step is deliberately open.
 the machine and stiff-reporter tells to avoid, the "Never list" and "Harvey's edits".
 Read it before writing any text (on-screen reel text, narration, slide text, captions,
 website prose). `npm run check-voice` (run first by `npm run build`) fails if any reel
-on-screen text, script, slide text or caption contains a Never list phrase; the list is
+on-screen text, script, slide text, caption or website story text (title, byline, body,
+sidebar, homepage entry) contains a Never list phrase; the list is
 read from `VOICE.md`, so extend it there. The independent check also reads every line
 against it. Harvey's wording changes are recorded in its "Harvey's edits" section.
 
@@ -121,7 +122,7 @@ package.json      npm scripts: `npm start` (preview), `npm run build`
 scripts/          Python automation
   new_story.py            scaffolds a new src/stories/<slug>/ folder
   finalize.py             strips a draft's [C#] claim tags out of the body (Stage 4)
-  check_voice.js          `npm run check-voice`: fails if published text uses a phrase from VOICE.md's Never list
+  check_voice.js          `npm run check-voice`: fails if reel, slide or website story text uses a phrase from VOICE.md's Never list
   check_reels.js          `npm run check-reels`: safe-area and layout-rule check for every reel
   reel_audit.js           the layout rules (header, map window, text, legend, type, labels) it runs per beat
   render_slides.js        `npm run render-slides`: audits every slide of every post and saves the PNGs

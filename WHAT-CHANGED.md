@@ -1,3 +1,11 @@
+# What changed — voice check covers website stories (`claude/voice-stories`)
+
+- **`npm run check-voice`** now also reads website story prose: each story's title, byline, body (claim tags and template code left out) and sidebar text, plus its title, description and tag in `src/_data/stories.json`. The build fails, naming the story and paragraph, if any of it contains a Never list phrase from `VOICE.md`.
+- Not read: marker popup text written inside a story's map scripts (`mapLayers`, `mapEvents`).
+- The four published stories pass as they are. PRODUCTION.md and CLAUDE.md updated to match.
+
+---
+
 # What changed — voice guide (`claude/voice-guide`)
 
 - **`VOICE.md`** (repo root): the voice guide, with a Never list and a "Harvey's edits" section. The Never list is one phrase per line (the pasted text had them run together on one line).
