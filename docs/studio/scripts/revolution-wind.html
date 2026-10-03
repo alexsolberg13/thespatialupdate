@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Script: Revolution Wind · The Spatial Update</title>
+
+<!--
+  Narration script page (teleprompter style). THIS IS A TEMPLATE. The real pages
+  (docs/studio/scripts/<slug>.html) are built from it by scripts/reel_scripts.js on every
+  build, from src/reels/<slug>-script.md. Edit the script file, not the page.
+-->
+
+<link rel="manifest" href="../../reels/manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../reels/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Studio">
+<meta name="theme-color" content="#0a0f18">
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#0a0f18; }
+  body { min-height:100vh; background:#0a0f18; color:#f2efe9; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
+         -webkit-tap-highlight-color:transparent;
+         padding:calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 60px); }
+  main { max-width:980px; margin:0 auto; }
+  .back { display:inline-flex; align-items:center; min-height:48px; font:700 14px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; text-decoration:none; }
+  h1 { font:400 clamp(30px,5vw,48px)/1.15 Georgia,serif; margin:6px 0 10px; }
+  .totals { font:400 clamp(16px,2.2vw,20px)/1.4 Arial,sans-serif; color:#a8a39d; }
+  .copy { display:block; width:100%; max-width:420px; margin:18px 0 8px; min-height:60px; font:700 17px/1 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; border:0; border-radius:12px; background:#c8a84e; color:#141210; cursor:pointer; }
+  .copy:active { background:#e8c87a; }
+  .copy.done { background:#3ecfb2; }
+  .note { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; }
+  .beat { margin-top:44px; padding-top:26px; border-top:1px solid #232b3a; }
+  .head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .num { font:700 clamp(15px,2vw,18px)/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; }
+  .meta { font:400 clamp(14px,1.8vw,17px)/1.3 Arial,sans-serif; color:#8a8681; }
+  h2 { font:400 clamp(22px,3vw,32px)/1.25 Georgia,serif; color:#e8c87a; margin:10px 0 16px; }
+  /* The narration is the page: 30px on a phone, up to 56px on a laptop, read from a few feet away. */
+  .say { font:400 clamp(30px,4.4vw,56px)/1.5 Georgia,serif; color:#f2efe9; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../index.html">&larr; Studio</a>
+  <h1>Revolution Wind</h1>
+  <p class="totals">7 beats · 163 words · about 1 min 05 sec read aloud</p>
+  <button class="copy" id="copy" type="button" data-text="Revolution Wind&#10;&#10;Beat 1: Revolution Wind&#10;Off the coast of Rhode Island, the federal government drew a line on a nautical chart. What happened next is a story about who gets to erase that line.&#10;&#10;Beat 2: A line drawn on water&#10;This is federal lease OCS-A 0486 — 83,789 acres of ocean, leased by the U.S. government in 2013. It's not a place. It's a legal boundary.&#10;&#10;Beat 3: 65 turbines, standing&#10;Inside that line, 65 wind turbines went up — 704 megawatts, enough power for more than 350,000 homes in Rhode Island and Connecticut.&#10;&#10;Beat 4: Stop-work, 80% built&#10;Last August, with the project 80 percent finished, the Department of the Interior ordered it to stop — citing national security.&#10;&#10;Beat 5: One of five&#10;Four months later, a second order hit — this time as part of a coastwide halt on every large offshore wind project under construction, from Virginia to Massachusetts.&#10;&#10;Beat 6: Courts said no. Twice.&#10;Federal judges called the security rationale likely pretextual. Every one of the five projects was reinstated.&#10;&#10;Beat 7: Delivering power&#10;By March, Revolution Wind was feeding power into the grid. The turbines outlasted the order that tried to stop them.&#10;">Copy full script</button>
+  <p class="note">Read time is an estimate at 150 words a minute.</p>
+
+  <section class="beat">
+    <div class="head"><span class="num">Beat 1</span><span class="meta">29 words · 12 sec</span></div>
+    <h2>Revolution Wind</h2>
+    <p class="say">Off the coast of Rhode Island, the federal government drew a line on a nautical chart. What happened next is a story about who gets to erase that line.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 2</span><span class="meta">26 words · 10 sec</span></div>
+    <h2>A line drawn on water</h2>
+    <p class="say">This is federal lease OCS-A 0486 — 83,789 acres of ocean, leased by the U.S. government in 2013. It's not a place. It's a legal boundary.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 3</span><span class="meta">23 words · 9 sec</span></div>
+    <h2>65 turbines, standing</h2>
+    <p class="say">Inside that line, 65 wind turbines went up — 704 megawatts, enough power for more than 350,000 homes in Rhode Island and Connecticut.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 4</span><span class="meta">21 words · 8 sec</span></div>
+    <h2>Stop-work, 80% built</h2>
+    <p class="say">Last August, with the project 80 percent finished, the Department of the Interior ordered it to stop — citing national security.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 5</span><span class="meta">28 words · 11 sec</span></div>
+    <h2>One of five</h2>
+    <p class="say">Four months later, a second order hit — this time as part of a coastwide halt on every large offshore wind project under construction, from Virginia to Massachusetts.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 6</span><span class="meta">16 words · 6 sec</span></div>
+    <h2>Courts said no. Twice.</h2>
+    <p class="say">Federal judges called the security rationale likely pretextual. Every one of the five projects was reinstated.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 7</span><span class="meta">20 words · 8 sec</span></div>
+    <h2>Delivering power</h2>
+    <p class="say">By March, Revolution Wind was feeding power into the grid. The turbines outlasted the order that tried to stop them.</p>
+  </section>
+</main>
+<script>
+(function () {
+  var btn = document.getElementById("copy"), text = btn.getAttribute("data-text");
+  function flash(msg, ok) {
+    btn.textContent = msg; btn.classList.toggle("done", !!ok);
+    setTimeout(function () { btn.textContent = "Copy full script"; btn.classList.remove("done"); }, 2200);
+  }
+  function legacy() {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  btn.addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { flash("Copied", true); }, function () { var ok = legacy(); flash(ok ? "Copied" : "Copy failed", ok); });
+    } else { var ok = legacy(); flash(ok ? "Copied" : "Copy failed", ok); }
+  });
+})();
+</script>
+</body>
+</html>

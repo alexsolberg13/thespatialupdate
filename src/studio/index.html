@@ -8,7 +8,7 @@
 <!--
   Studio home page: the start page of the Home Screen web app (see
   ../reels/manifest.webmanifest, whose scope covers /reels/, /posts/ and /studio/).
-  Lists every reel (play and check), every slide post and the tools, newest first.
+  Lists every reel (play, check and script), every slide post and the tools, newest first.
   THIS IS A TEMPLATE. The real page (docs/studio/index.html) is built from it by
   scripts/studio_index.js every time Eleventy builds, from the reels in src/reels/ and
   the posts in src/posts/. Nothing to edit when you add a reel or a post.
@@ -36,12 +36,13 @@
   a.card:active { background:#1c2535; }
   .card b { display:block; font:400 22px/1.25 Georgia,serif; margin-bottom:6px; }
   .card span { font:400 15px/1.4 Arial,sans-serif; color:#a8a39d; }
-  .links { display:flex; gap:12px; margin-top:16px; }
+  .links { display:flex; gap:10px; margin-top:16px; }
   .links a { flex:1; display:flex; align-items:center; justify-content:center; min-height:56px; text-align:center; text-decoration:none;
-             font:700 17px/1 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; border-radius:12px; }
+             font:700 16px/1 Arial,sans-serif; letter-spacing:.05em; text-transform:uppercase; border-radius:12px; }
   .links .play { background:#c8a84e; color:#141210; }
   .links .play:active { background:#e8c87a; }
   .links .check { border:2px solid #3ecfb2; color:#3ecfb2; }
+  .links .script { border:2px solid #c8a84e; color:#c8a84e; }
   .post { display:flex; gap:16px; align-items:center; min-height:133px; }
   .post img { width:84px; height:105px; object-fit:cover; border-radius:6px; flex-shrink:0; background:#0a0f18; }
   .hint { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; margin-top:30px; }

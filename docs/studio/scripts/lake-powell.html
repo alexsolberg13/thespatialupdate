@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Script: Lake Powell · The Spatial Update</title>
+
+<!--
+  Narration script page (teleprompter style). THIS IS A TEMPLATE. The real pages
+  (docs/studio/scripts/<slug>.html) are built from it by scripts/reel_scripts.js on every
+  build, from src/reels/<slug>-script.md. Edit the script file, not the page.
+-->
+
+<link rel="manifest" href="../../reels/manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../reels/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Studio">
+<meta name="theme-color" content="#0a0f18">
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#0a0f18; }
+  body { min-height:100vh; background:#0a0f18; color:#f2efe9; font-family:Georgia,serif; -webkit-font-smoothing:antialiased;
+         -webkit-tap-highlight-color:transparent;
+         padding:calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 60px); }
+  main { max-width:980px; margin:0 auto; }
+  .back { display:inline-flex; align-items:center; min-height:48px; font:700 14px/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; text-decoration:none; }
+  h1 { font:400 clamp(30px,5vw,48px)/1.15 Georgia,serif; margin:6px 0 10px; }
+  .totals { font:400 clamp(16px,2.2vw,20px)/1.4 Arial,sans-serif; color:#a8a39d; }
+  .copy { display:block; width:100%; max-width:420px; margin:18px 0 8px; min-height:60px; font:700 17px/1 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; border:0; border-radius:12px; background:#c8a84e; color:#141210; cursor:pointer; }
+  .copy:active { background:#e8c87a; }
+  .copy.done { background:#3ecfb2; }
+  .note { font:400 14px/1.5 Arial,sans-serif; color:#8a8681; }
+  .beat { margin-top:44px; padding-top:26px; border-top:1px solid #232b3a; }
+  .head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .num { font:700 clamp(15px,2vw,18px)/1 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; color:#c8a84e; }
+  .meta { font:400 clamp(14px,1.8vw,17px)/1.3 Arial,sans-serif; color:#8a8681; }
+  h2 { font:400 clamp(22px,3vw,32px)/1.25 Georgia,serif; color:#e8c87a; margin:10px 0 16px; }
+  /* The narration is the page: 30px on a phone, up to 56px on a laptop, read from a few feet away. */
+  .say { font:400 clamp(30px,4.4vw,56px)/1.5 Georgia,serif; color:#f2efe9; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../index.html">&larr; Studio</a>
+  <h1>Lake Powell</h1>
+  <p class="totals">6 beats · 190 words · about 1 min 16 sec read aloud</p>
+  <button class="copy" id="copy" type="button" data-text="Lake Powell&#10;&#10;Beat 1: 8 feet above the target&#10;Lake Powell is eight feet above its operating target. As of September 30, it stood at 3,518 feet, and Reclamation's new rules try to hold it at 3,510 or higher.&#10;&#10;Beat 2: 3,500 and 3,490&#10;Two more lines sit below. At 3,500 feet, the rules call for consultation and extra protective steps. At 3,490, the minimum power pool at Glen Canyon Dam, water can only pass through the river outlet works.&#10;&#10;Beat 3: Seven states, two lakes&#10;The Colorado River provides water for more than 40 million people, and hydropower for seven states. Powell, behind Glen Canyon Dam, and Lake Mead, behind Hoover Dam, hold it back.&#10;&#10;Beat 4: 1.25 million acre-feet a year&#10;In 2027 and 2028, deliveries to Arizona, California and Nevada drop by 1.25 million acre-feet a year. Under the Lower Basin states' proposed sharing agreement, Arizona gives up 760,000 acre-feet, California 440,000, and Nevada 50,000.&#10;&#10;Beat 5: Voluntary only&#10;These documents require no cut from the four Upper Division states. They can contribute voluntarily, up to 200,000 acre-feet a year.&#10;&#10;Beat 6: Eight feet above the target&#10;The seven states didn't reach a deal, so Interior set the rules. Reclamation says it will adjust releases through April to try to keep Powell at 3,510 or above. As of September 30, it was eight feet above.&#10;">Copy full script</button>
+  <p class="note">Read time is an estimate at 150 words a minute.</p>
+
+  <section class="beat">
+    <div class="head"><span class="num">Beat 1</span><span class="meta">30 words · 12 sec</span></div>
+    <h2>8 feet above the target</h2>
+    <p class="say">Lake Powell is eight feet above its operating target. As of September 30, it stood at 3,518 feet, and Reclamation's new rules try to hold it at 3,510 or higher.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 2</span><span class="meta">36 words · 14 sec</span></div>
+    <h2>3,500 and 3,490</h2>
+    <p class="say">Two more lines sit below. At 3,500 feet, the rules call for consultation and extra protective steps. At 3,490, the minimum power pool at Glen Canyon Dam, water can only pass through the river outlet works.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 3</span><span class="meta">30 words · 12 sec</span></div>
+    <h2>Seven states, two lakes</h2>
+    <p class="say">The Colorado River provides water for more than 40 million people, and hydropower for seven states. Powell, behind Glen Canyon Dam, and Lake Mead, behind Hoover Dam, hold it back.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 4</span><span class="meta">35 words · 14 sec</span></div>
+    <h2>1.25 million acre-feet a year</h2>
+    <p class="say">In 2027 and 2028, deliveries to Arizona, California and Nevada drop by 1.25 million acre-feet a year. Under the Lower Basin states' proposed sharing agreement, Arizona gives up 760,000 acre-feet, California 440,000, and Nevada 50,000.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 5</span><span class="meta">21 words · 8 sec</span></div>
+    <h2>Voluntary only</h2>
+    <p class="say">These documents require no cut from the four Upper Division states. They can contribute voluntarily, up to 200,000 acre-feet a year.</p>
+  </section>
+  <section class="beat">
+    <div class="head"><span class="num">Beat 6</span><span class="meta">38 words · 15 sec</span></div>
+    <h2>Eight feet above the target</h2>
+    <p class="say">The seven states didn't reach a deal, so Interior set the rules. Reclamation says it will adjust releases through April to try to keep Powell at 3,510 or above. As of September 30, it was eight feet above.</p>
+  </section>
+</main>
+<script>
+(function () {
+  var btn = document.getElementById("copy"), text = btn.getAttribute("data-text");
+  function flash(msg, ok) {
+    btn.textContent = msg; btn.classList.toggle("done", !!ok);
+    setTimeout(function () { btn.textContent = "Copy full script"; btn.classList.remove("done"); }, 2200);
+  }
+  function legacy() {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  btn.addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { flash("Copied", true); }, function () { var ok = legacy(); flash(ok ? "Copied" : "Copy failed", ok); });
+    } else { var ok = legacy(); flash(ok ? "Copied" : "Copy failed", ok); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -65,7 +65,7 @@ CLAUDE.md         this file
 STORY-GUIDE.md    how to write a story folder by hand
 WHAT-CHANGED.md   running changelog
 .eleventy.js      Eleventy config (also copies src/CNAME and src/reels/*.html, *.css, *.js, *.png and *.webmanifest into docs/)
-.eleventyignore   keeps claim ledgers and reel narration scripts off the live site
+.eleventyignore   keeps claim ledgers off the live site and stops Eleventy building the reel and studio sources
 .gitignore        node_modules/ and _site/
 package.json      npm scripts: `npm start` (preview), `npm run build`
 .claude/          launch.json, lets Claude start the local preview
@@ -78,6 +78,7 @@ scripts/          Python automation
   render_slides.js        `npm run render-slides`: audits every slide of every post and saves the PNGs
   posts_lib.js            checks that need no browser (claim IDs, caption, PNG sizes); used by the render and the build
   studio_index.js         builds docs/studio/index.html, the web app's home page (reels, posts, tools)
+  reel_scripts.js         builds each reel's narration page (docs/studio/scripts/<slug>.html) from its *-script.md
   posts_index.js          builds docs/posts/ (posts index, post pages, PNGs) after every Eleventy build
 
 dossiers/         research packets, one per story (august-2026-eclipse,
@@ -106,7 +107,7 @@ screen-recordable map reels (MapLibre, no Mapbox token) for Instagram, one per
 story: `august-2026-eclipse`, `lobito-corridor`, `revolution-wind`. The build
 copies them unchanged to `docs/reels/<slug>.html`, so they're public at
 `thespatialupdate.com/reels/<slug>.html`. Each has a narration script,
-`src/reels/<slug>-script.md`, which is **not** published.
+`src/reels/<slug>-script.md`. The `.md` file itself is not copied to the site, but since 2026-10-03 the narration **is published**, as a page on the studio (`/studio/scripts/<slug>.html`), **without claim IDs**, internal notes or fact-check sections (see "Studio home page" below).
 
 **Reel layout.** Every reel uses the shared frame: `src/reels/reel-frame.css` and
 `src/reels/reel-frame.js`. The rules:
@@ -209,7 +210,7 @@ copies them unchanged to `docs/reels/<slug>.html`, so they're public at
   `<meta name="tsu-published" content="YYYY-MM-DD">` (the index orders by it, and the
   build stops with a plain message if it is missing). The page layout lives in
   `scripts/reels-index-template.html`.
-- **Studio home page.** `src/studio/index.html` is the template of the Home Screen web app's start page (`/studio/`), built by `scripts/studio_index.js` after every build from the reels, posts and tools that exist, newest first (Reels with play/check, Posts, Tools), so nothing can be left off. `manifest.webmanifest` has `scope: "/"` and `start_url: "/studio/index.html"`, so reels, posts and studio stay full screen. Every post page has a "Studio" link (the build stops without it); reels go back by holding a finger down for a second, and show a visible "Studio" link only with `?check=1` or `?guides=1`.
+- **Studio home page.** `src/studio/index.html` is the template of the Home Screen web app's start page (`/studio/`), built by `scripts/studio_index.js` after every build from the reels, posts and tools that exist, newest first (Reels with play/check, Posts, Tools), so nothing can be left off. `manifest.webmanifest` has `scope: "/"` and `start_url: "/studio/index.html"`, so reels, posts and studio stay full screen. Each reel has a third link, "script", to its narration page, built by `scripts/reel_scripts.js` from `src/reels/<slug>-script.md` (template `src/studio/script.html`): beat number, the reel's own on-screen headline for that beat, then the narration in large type (30 to 56 px), with a word count and read time (150 words a minute) per beat and for the whole script, and a "Copy full script" button. **Narration scripts are published this way and are no longer private**: only the narration in the `**Beat N**` blocks reaches the page; claim IDs (`[C7]`, `[NEW]`), the intro, timing guide, tighter cut, fact-check notes and the on-screen notes stay in the file only, so keep anything private out of the beat blocks (the `>` lines). The build stops with a plain message if a reel has no script, if its script has a different number of beats from the reel, if the beats are not numbered 1, 2, 3 ... in order, or if a beat has no narration. Editing a script file and rebuilding updates the page. Every post page has a "Studio" link (the build stops without it); reels go back by holding a finger down for a second, and show a visible "Studio" link only with `?check=1` or `?guides=1`.
 - **Nothing on screen but the reel.** Tap right to advance, left to go back; no
   buttons or counters. Holding a finger down for a second returns to the index.
 - **New reels must use the shared frame and pass the check.** Copy an existing

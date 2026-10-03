@@ -5,8 +5,8 @@
 src/stories/*/sources.html
 
 # Story Beat Reels are copied straight through by .eleventy.js (not built as
-# templates), and their narration scripts are working notes, not pages. Open
-# src/reels/<slug>-script.md locally to read one.
+# templates). Their narration scripts (src/reels/<slug>-script.md) are not copied either;
+# scripts/reel_scripts.js turns each into a page on the studio (claim IDs and notes hidden).
 src/reels/
 
 # Instagram slide posts (src/posts/<slug>/): built by scripts/posts_index.js after the
