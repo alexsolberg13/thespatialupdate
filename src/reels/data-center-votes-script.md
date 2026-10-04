@@ -46,8 +46,8 @@ governments voted on data centers between September 28 and 30"), with the number
 screen. Let the map settle after each tap before starting the next line.
 
 ### Fact-check before this goes public
-- **Pins mark the town (or the plant), not the project site.** Four pins are Census place or
-  township centres; the Mercer pin is the E.W. Brown plant (OpenStreetMap). Cox Ranch is west of
+- **Pins mark the place that voted, not the project site.** All five pins are Census city,
+  township or county centres (Mercer's is the county, about 15 km west of the E.W. Brown plant). Cox Ranch is west of
   Roundtop Road, outside the old Cheyenne city limits; Kline's site is near Route 309 and I-81.
 - **This is five votes, not every vote that week.** Edgewater, Florida's ban was passed on
   September 14 (so it is not in the set), a newsletter's mention of a Posey County, Indiana

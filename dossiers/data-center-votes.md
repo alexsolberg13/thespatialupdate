@@ -17,7 +17,7 @@ Type key: **R** Reported (traces to a URL that was opened) · **B** Background �
    - **Posey County, Indiana:** my first search listed an Amazon data center "approved" there on October 1. Later local reporting says that report was **wrong**: the Area Plan Commission only sent proposed rules to the county commissioners, and no data center has been approved. Not used.
    - **Warren County, Ohio:** seen only in the roundup and search summaries (the Tribune Chronicle story I opened is about the city of Warren, a different place and a one-year moratorium). Not used.
 3. **Added:** Palm Springs, California (pause extended September 30) and Mercer County, Kentucky (zoning rejected September 28), each with two local reports. The set is **five votes**: two approvals, a ban, a pause and a rejected zoning change.
-4. **The map is five pins, not geometry.** There is no project boundary data. Pins mark the town (four) or the power plant (Mercer), not the exact project site.
+4. **The map is five pins, not geometry.** There is no project boundary data. Pins mark the place whose body voted (city, township or county centre), not the exact project site. Site-level coordinates exist only in trackers I did not open, and the sources give streets, not parcels, so none were used.
 5. **"Rejected" in Mercer County is a zoning rule, not a project:** no specific data center had been proposed at the site (C12).
 
 ---
@@ -39,7 +39,7 @@ Type key: **R** Reported (traces to a URL that was opened) · **B** Background �
 | S11 | NBC Palm Springs, "Palm Springs Extends Data Center Ban Nearly Two Years" | https://www.nbcpalmsprings.com/local-and-community/2026/10/01/palm-springs-extends-data-center-ban-nearly-two-years | 2026-10-01 | Raw HTML read |
 | S12 | Fox 35 Orlando, "Edgewater approves ban on AI data centers as Orange County weighs moratorium" (used only to date the Edgewater vote) | https://www.fox35orlando.com/news/edgewater-approves-ban-ai-data-centers-orange-county-weighs-moratorium | 2026-09-14 | Raw HTML read |
 | S13 | Census Bureau Gazetteer files 2023: places, county subdivisions, counties | https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/2023_Gaz_place_national.zip (and `..._cousubs_national.zip`, `..._counties_national.zip`) | 2023 | Downloaded, read. Place centroids: Cheyenne city 41.12727, -104.79022; Lovejoy city 33.441519, -84.317444; Palm Springs city 33.803361, -116.53828; Kline township 40.878534, -76.050441. |
-| S14 | OpenStreetMap way 449254194 "E.W. Brown Generating Station" via Nominatim. © OpenStreetMap contributors, ODbL. | https://nominatim.openstreetmap.org/search?q=E.W.+Brown+Generating+Station+Kentucky&format=json | 2026-10-04 | API response read: 37.7906366, -84.7123496 |
+| S14 | (No longer on the map; looked up 2026-10-04 and replaced by the county centre) OpenStreetMap way 449254194 "E.W. Brown Generating Station" via Nominatim. © OpenStreetMap contributors, ODbL. | https://nominatim.openstreetmap.org/search?q=E.W.+Brown+Generating+Station+Kentucky&format=json | 2026-10-04 | API response read: 37.7906366, -84.7123496 |
 | S15 | Census state boundaries (the 51-polygon file already in this repo, `src/reels/snap-cost-share-data.geojson`, from `cb_2023_us_state_500k`) | https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_state_500k.zip | 2023 | Used only to check each pin falls in the right state |
 
 ## Could not open - Harvey to check
@@ -97,7 +97,7 @@ All coordinates are `[longitude, latitude]`. File: `src/reels/data-center-votes-
 | Cheyenne pin [-104.7902, 41.1273] | S13 Census Gazetteer 2023 place centroid | **Approximate for the project:** Cox Ranch is west of Roundtop Road, outside the old city limits. |
 | Kline Township pin [-76.0504, 40.8785] | S13 Census Gazetteer 2023 county subdivision centroid | **Approximate for the project:** the site is near Route 309 and Interstate 81 in the township. |
 | Lovejoy pin [-84.3174, 33.4415] | S13 Census Gazetteer 2023 place centroid | **Approximate for the project:** the site is on Panhandle Road (S6). |
-| Mercer County pin [-84.7123, 37.7906] | S14 OpenStreetMap way 449254194 (E.W. Brown Generating Station) | The point is the plant, not the rejected "industrial technology" zone, whose edges the sources do not give. |
+| Mercer County pin [-84.8797, 37.8121] | S13 Census Gazetteer 2023 county centroid (Mercer County) | Changed 2026-10-04 from the E.W. Brown plant (S14) so all five pins are the place whose body voted. The plant is about 15 km east of the county centre; the rejected zoning zone is next to it (S8) and its edges are not given. |
 | Palm Springs pin [-116.5383, 33.8034] | S13 Census Gazetteer 2023 place centroid | The moratorium covers the whole city. |
 
 Nothing in the geometry was traced by eye from an image.
@@ -122,3 +122,7 @@ A separate agent with no access to the drafting re-opened S2 to S12 as raw text 
 6. Pins can read as project sites. Not changed on screen; stated in the script's fact-check notes and the Geometry table.
 
 Not changed: "Five votes in three days" (accurate, though no vote fell on the 29th); the beat 1 on-screen sub (a list, but it is a count).
+
+### Map changes after Harvey's review (2026-10-04)
+
+Harvey asked for the basemap labels and points to be dialed in and made consistent. Changes: the map is flat (Mercator) instead of a globe so the five places sit at one scale; every basemap name (states, cities, towns, water, countries) is hidden so no beat shows a name another does not and none sits under a pin; each beat shows only the reel's own label for its pin, as place name plus state, in the same position on every beat (above the pin; Lovejoy below; Mercer County to the left); all five pins are now the centre of the city, township or county that voted (Mercer moved from the E.W. Brown plant to the county centre); the label colours match on every beat. Code check re-run: Mercer's new point is inside Kentucky. Checked against the real basemap in a browser; `check-reels` itself still only runs with the basemap stubbed in this sandbox.

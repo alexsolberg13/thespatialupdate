@@ -31,8 +31,8 @@
   record); the narration script is src/reels/data-center-votes-script.md.
 
   The GeoJSON below is a copy of src/reels/data-center-votes-data.geojson (five points:
-  Census Gazetteer place centroids, and the E.W. Brown plant from OpenStreetMap). The pins
-  mark the town or plant, not the exact project site. Keep the two in sync. Coordinates
+  Census Gazetteer place, township and county centres). The pins mark the place that voted,
+  not the exact project site. Keep the two in sync. Coordinates
   are [lng, lat].
 -->
 
@@ -45,6 +45,7 @@
      visibility, not opacity: MapLibre writes an inline opacity on every marker. */
   .tsu-lbl { visibility:hidden; }
   .tsu-lbl.on { visibility:visible; }
+  .tsu-lbl small { color:#cfcac2; }
 </style>
 </head>
 <body>
@@ -79,12 +80,12 @@
   var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
   var COL = { ok:"#5b9bd5", no:"#e8955a" };
 
-  var DATA = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"cheyenne","name":"Cheyenne, Wyoming","label":"Cheyenne","status":"approved","position_source":"Census Gazetteer 2023 place centroid (Cheyenne city)"},"geometry":{"type":"Point","coordinates":[-104.7902,41.1273]}},{"type":"Feature","properties":{"id":"kline","name":"Kline Township, Pennsylvania","label":"Kline Twp.","status":"approved","position_source":"Census Gazetteer 2023 county subdivision centroid (Kline township, Schuylkill County)"},"geometry":{"type":"Point","coordinates":[-76.0504,40.8785]}},{"type":"Feature","properties":{"id":"lovejoy","name":"Lovejoy, Georgia","label":"Lovejoy","status":"blocked","position_source":"Census Gazetteer 2023 place centroid (Lovejoy city)"},"geometry":{"type":"Point","coordinates":[-84.3174,33.4415]}},{"type":"Feature","properties":{"id":"mercer","name":"E.W. Brown Generating Station, Mercer County, Kentucky","label":"E.W. Brown plant","status":"blocked","position_source":"OpenStreetMap way 449254194 (via Nominatim), centre of the plant's industrial area"},"geometry":{"type":"Point","coordinates":[-84.7123,37.7906]}},{"type":"Feature","properties":{"id":"palmsprings","name":"Palm Springs, California","label":"Palm Springs","status":"blocked","position_source":"Census Gazetteer 2023 place centroid (Palm Springs city)"},"geometry":{"type":"Point","coordinates":[-116.5383,33.8034]}}]};
+  var DATA = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"cheyenne","name":"Cheyenne, Wyoming","label":"Cheyenne","status":"approved","position_source":"Census Gazetteer 2023 place centroid (Cheyenne city)","state":"Wyoming"},"geometry":{"type":"Point","coordinates":[-104.7902,41.1273]}},{"type":"Feature","properties":{"id":"kline","name":"Kline Township, Pennsylvania","label":"Kline Twp.","status":"approved","position_source":"Census Gazetteer 2023 county subdivision centroid (Kline township, Schuylkill County)","state":"Pennsylvania"},"geometry":{"type":"Point","coordinates":[-76.0504,40.8785]}},{"type":"Feature","properties":{"id":"lovejoy","name":"Lovejoy, Georgia","label":"Lovejoy","status":"blocked","position_source":"Census Gazetteer 2023 place centroid (Lovejoy city)","state":"Georgia"},"geometry":{"type":"Point","coordinates":[-84.3174,33.4415]}},{"type":"Feature","properties":{"id":"mercer","name":"Mercer County, Kentucky","label":"Mercer County","status":"blocked","position_source":"Census Gazetteer 2023 county centroid (Mercer County, Kentucky)","state":"Kentucky"},"geometry":{"type":"Point","coordinates":[-84.8797,37.8121]}},{"type":"Feature","properties":{"id":"palmsprings","name":"Palm Springs, California","label":"Palm Springs","status":"blocked","position_source":"Census Gazetteer 2023 place centroid (Palm Springs city)","state":"California"},"geometry":{"type":"Point","coordinates":[-116.5383,33.8034]}}]};
 
   var PINS = {};
   DATA.features.forEach(function (f) {
     PINS[f.properties.id] = { lng:f.geometry.coordinates[0], lat:f.geometry.coordinates[1],
-                              color: f.properties.status === "approved" ? "ok" : "no", label:f.properties.label };
+                              color: f.properties.status === "approved" ? "ok" : "no", label:f.properties.label, state:f.properties.state };
   });
 
   var params = new URLSearchParams(window.location.search);
@@ -94,7 +95,7 @@
   // fit = the points of the beat's subject; vis = the pins shown; act = the pin that
   // pulses; lbl = the pins whose name is shown; legend = the legend rows (never more than 3).
   var BEATS = [
-    { c:[-96,38], z:4, fit:[[-116.54,33.80],[-76.05,40.88],[-104.79,41.13],[-84.32,33.44],[-84.71,37.79]], date:"Sep 28 to 30, 2026",
+    { c:[-96,38], z:4, fit:[[-116.54,33.80],[-76.05,40.88],[-104.79,41.13],[-84.32,33.44],[-84.88,37.81]], date:"Sep 28 to 30, 2026",
       kicker:"Data center votes", title:"Five votes in three days",
       sub:"Two approvals, a ban, a pause and a rejection",
       vis:["cheyenne","kline","lovejoy","mercer","palmsprings"], act:null, lbl:["cheyenne","kline","lovejoy","mercer","palmsprings"], legend:["ok","no"] },
@@ -102,19 +103,19 @@
     { c:[-104.79,41.13], z:6, fit:[[-104.79,41.13]], date:"Sep 28, 2026",
       kicker:"Cheyenne, Wyoming", title:"1,260 acres added for a data center",
       sub:"The council voted 8 to 2 on September 28",
-      vis:["cheyenne"], act:"cheyenne", lbl:[], legend:["ok"] },
+      vis:["cheyenne"], act:"cheyenne", lbl:["cheyenne"], legend:["ok"] },
 
     { c:[-76.05,40.88], z:6, fit:[[-76.05,40.88]], date:"Sep 30, 2026",
       kicker:"Kline Township, Pennsylvania", title:"Amazon's 350-acre campus is approved",
       sub:"Supervisors voted unanimously, with blasting and noise conditions",
-      vis:["kline"], act:"kline", lbl:[], legend:["ok"] },
+      vis:["kline"], act:"kline", lbl:["kline"], legend:["ok"] },
 
     { c:[-84.32,33.44], z:6, fit:[[-84.32,33.44]], date:"Sep 28, 2026",
       kicker:"Lovejoy, Georgia", title:"A $1 billion plan, then a ban",
       sub:"The developer withdrew in August; the city banned data centers",
-      vis:["lovejoy"], act:"lovejoy", lbl:[], legend:["no"] },
+      vis:["lovejoy"], act:"lovejoy", lbl:["lovejoy"], legend:["no"] },
 
-    { c:[-84.71,37.79], z:6, fit:[[-84.71,37.79]], date:"Sep 28, 2026",
+    { c:[-84.88,37.81], z:6, fit:[[-84.88,37.81]], date:"Sep 28, 2026",
       kicker:"Mercer County, Kentucky", title:"Zoning next to a coal plant rejected",
       sub:"The vote was unanimous; no project had been proposed",
       vis:["mercer"], act:"mercer", lbl:["mercer"], legend:["no"] },
@@ -122,7 +123,7 @@
     { c:[-116.54,33.80], z:6, fit:[[-116.54,33.80]], date:"Sep 30, 2026",
       kicker:"Palm Springs, California", title:"A pause through August 2028",
       sub:"The city has no data center rules yet",
-      vis:["palmsprings"], act:"palmsprings", lbl:[], legend:["no"] }
+      vis:["palmsprings"], act:"palmsprings", lbl:["palmsprings"], legend:["no"] }
   ];
 
   // ---- State ----------------------------------------------------------------
@@ -151,13 +152,16 @@
     map = new maplibregl.Map(TSUReel.mapOptions(div, { style: STYLE, center: b0.c, zoom: b0.z }));
 
     map.on("style.load", function () {
-      try { map.setProjection({ type: "globe" }); } catch (e) {}
-      try {
-        map.setSky({
-          "sky-color":"#0a1019", "horizon-color":"#1a2436", "fog-color":"#0d1420",
-          "sky-horizon-blend":0.5, "horizon-fog-blend":0.6, "fog-ground-blend":0.4
-        });
-      } catch (e) {}
+      // Flat map (no globe) so the five places sit at the same scale on every beat.
+      try { map.setProjection({ type: "mercator" }); } catch (e) {}
+      // One consistent label set: only the reel's own place names (each with its state).
+      // Every basemap name (states, cities, towns, water, countries) is hidden, so one beat
+      // never shows a basemap name that another does not and none can sit under a pin.
+      map.getStyle().layers.forEach(function (l) {
+        if (l.type === "symbol") {
+          try { map.setLayoutProperty(l.id, "visibility", "none"); } catch (e) {}
+        }
+      });
       buildMarkers();
       TSUReel.attachMap(map);
       TSUReel.solveAll(map, BEATS);
@@ -184,8 +188,12 @@
 
       var d = document.createElement("div");
       d.className = "reel-maplabel tsu-lbl";   // the frame hides it under the text block
-      d.textContent = p.label;
-      new maplibregl.Marker({ element: d, offset:[0, -20] }).setLngLat([p.lng, p.lat]).addTo(map);
+      d.innerHTML = p.label + "<small>" + p.state + "</small>";
+      // Same placement on every beat. Above the pin by default; Lovejoy below and Mercer
+      // County to the left, so the five labels never sit on another pin or label on the
+      // opening map. Offsets are map pixels, clear of the pulsing ring.
+      var OFFSET = { lovejoy:[0, 38], mercer:[-42, 0] };
+      new maplibregl.Marker({ element: d, offset: OFFSET[id] || [0, -38] }).setLngLat([p.lng, p.lat]).addTo(map);
       labelEls[id] = d;
     });
   }
