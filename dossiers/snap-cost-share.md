@@ -16,7 +16,7 @@ Type key: **R** Reported (traces to a URL that was opened) · **B** Background
 2. **Two beats added at Harvey's request (2026-10-04): what the rate measures (C2, C21) and what it leaves out (C22, C23).** The list of things the rate does not capture is the Food Research and Action Center's (via Grocery Dive); it is attributed on screen.
 3. **"41 states and D.C." is a count I made on that table** (C11). Grocery Dive says "all but 10 states" are over 6%. The table has 10 jurisdictions under 6% only if the Virgin Islands is counted with the nine states, so the two agree once territories are counted. That reconciliation is my inference.
 4. **The delay for the highest rates is vaguer than the pitch.** The pitch did not mention it. Sources disagree on its length (C13), so the reel says only "extra time".
-5. **Alaska and Hawaii are on the map in their real positions.** At Harvey's request (2026-10-04) beats 1, 2, 3, 4, 7 and 8 are centred on the continental US, so Alaska is cut off at the top left and Hawaii is off screen on those beats (both are still counted and coloured). Beats 5 and 6 zoom out to show Alaska.
+5. **Alaska and Hawaii are on the map in their real positions.** At Harvey's request (2026-10-04) beats 1, 2, 3, 4 and 6 are centred on the continental US, so Alaska is cut off at the top left and Hawaii is off screen on those beats (both are still counted and coloured). Beat 5 zooms out to show Alaska.
 6. **The pitch's "6% line" is a threshold, not a bill.** No dollar amount is claimed. The third-party dataset also carries a modelled "penalty liability" in dollars; **not used** (no primary source).
 
 ---
@@ -57,6 +57,8 @@ Also seen, not relied on: SavorSNAP FY2024 table (https://www.savorsnap.org/snap
 ---
 
 ## Claim ledger
+
+**Cut from the reel 2026-10-04 to shorten it (rows kept for reference, not on screen or in the script):** C10 (nine states under 6%), C12 (seven places at 13.33% or higher), C13 (extra time for the highest rates), C24 and the 1.33 underpayment figure in C21 (no longer said), plus the delayed-start and under-6% beats. They can come back.
 
 | ID | Claim as written | Type | Source | Date | Support / flags |
 |----|------------------|------|--------|------|-----------------|
