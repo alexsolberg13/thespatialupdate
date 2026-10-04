@@ -15,7 +15,7 @@ Type key: **R** Reported (traces to a URL that was opened) · **B** Background
 1. **USDA's own pages would not open** (403 on usda.gov and fna.usda.gov; the FY2025 PDF guessed from the FY24 pattern returned 404). The pitch said the rates came from "USDA FNS QC". The state-by-state table in this reel comes from a **third-party dataset** (S4, which says "Data: USDA FNS"), cross-checked against 16 values in other outlets (see C7). **Harvey must compare every state to USDA's own FY2025 table before posting.**
 2. **"41 states and D.C." is a count I made on that table** (C11). Grocery Dive says "all but 10 states" are over 6%. The table has 10 jurisdictions under 6% only if the Virgin Islands is counted with the nine states, so the two agree once territories are counted. That reconciliation is my inference.
 3. **The delay for the highest rates is vaguer than the pitch.** The pitch did not mention it. Sources disagree on its length (C13), so the reel says only "extra time".
-4. **Alaska and Hawaii are on the map in their real positions** so every state is shown. That makes the lower 48 small.
+4. **Alaska and Hawaii are on the map in their real positions.** At Harvey's request (2026-10-04) beats 1, 2, 5 and 6 are centred on the continental US, so Alaska is cut off at the top left and Hawaii is off screen on those beats (both are still counted and coloured). Beats 3 and 4 zoom out to show Alaska.
 5. **The pitch's "6% line" is a threshold, not a bill.** No dollar amount is claimed. The third-party dataset also carries a modelled "penalty liability" in dollars; **not used** (no primary source).
 
 ---

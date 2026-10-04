@@ -65,5 +65,6 @@ already on screen. Let the map settle after each tap before starting the next li
   costs from fiscal 2028; no dollar amount is on screen.
 - **Terms to explain in your own words:** payment error rate (it counts overpayments and
   underpayments, not fraud), fiscal year (the federal fiscal 2028 begins Oct 1, 2027).
-- **Hawaii and Alaska** are on the map in their real positions, so the lower 48 is small.
-  The map's state outlines are simplified.
+- **Camera.** Beats 1, 2, 5 and 6 are centred on the continental US, so Alaska is cut off
+  at the top left and Hawaii is off screen on those beats (both are counted and coloured).
+  Beats 3 and 4 zoom out to show Alaska. The map's state outlines are simplified.
