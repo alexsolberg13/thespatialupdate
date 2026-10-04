@@ -68,7 +68,7 @@ Type key: **R** Reported (traces to a URL that was opened) Â· **B** Background Â
 | C8 | OpenAI and Anthropic have about 2.2 million square feet of offices in San Francisco between them. | I | C7: 1.2 million + 0.995 million = 2.195 million | 2026-04-07 | Arithmetic. |
 | C9 | Epoch AI tracks 93 of the world's biggest AI data centers. | R | S1; S2 (93 rows) | 2026-10-02 | The hub says "93 sites"; the CSV has 93 rows. |
 | C10 | The ten largest US sites on Epoch's list, by current power (MW), are: Colossus 2 (946, Tennessee), Anthropic-Amazon New Carlisle (910, Indiana), Microsoft Fairwater Atlanta (636, Georgia), Meta Prometheus (471, Ohio), OpenAI Stargate Abilene (421, Texas), Microsoft Fairwater Wisconsin (369), Google Pryor North (368, Oklahoma), Colossus 1 (340, Tennessee), Google New Albany (333, Ohio), Google Columbus (303, Ohio). Seven states. | I | S2, column "Current power (MW)"; states from the "Address" column | 2026-10-02 | Ranking is mine, from the CSV. The map shows these ten. |
-| C11 | None of Epoch's 93 sites has a California address. | I | S2 | 2026-10-04 | Search of every cell in all 93 rows for California, "CA", Bay Area city names: no hit. **13 rows have a blank address** (Google Mesa, Google Kansas City East, Google Storey County, DayOne Nusajaya, Oracle Batam, Nebius Mantsala, Southgate Melbourne, Anthropic Barber Lake, Microsoft Narvik Norway and four OpenAI Stargate sites); none of their names is Californian, but this was not checked against another source. |
+| C11 | None of Epoch's 93 sites has a California address listed. | I | S2 | 2026-10-04 | Search of every cell in all 93 rows for California, "CA", Bay Area city names: no hit. **13 rows have a blank address** (Google Mesa, Google Kansas City East, Google Storey County, DayOne Nusajaya, Oracle Batam, Nebius Mantsala, Southgate Melbourne, Anthropic Barber Lake, Microsoft Narvik Norway and four OpenAI Stargate sites); none of their names is Californian, but this was not checked against another source. |
 | C12 | Epoch counts two Colossus sites in Memphis: Colossus 2 at 946 megawatts and Colossus 1 at 340, about 1.3 gigawatts together (1,286 MW). | R + I | S2 (both rows, addresses in Memphis, TN 38109); sum is mine | 2026-10-02 | 946 + 340 = 1,286. |
 | C13 | Colossus 2 is the biggest site on Epoch's list. | I | S2 | 2026-10-02 | Largest "Current power (MW)" (946 vs 910 next) and largest "Current H100 equivalents" (1,111,673 vs 768,769 next). |
 | C14 | In New Carlisle, Indiana, an Amazon campus draws 910 megawatts, and Epoch lists Anthropic as its user. | R | S2 (row "Anthropic-Amazon New Carlisle": Owner Amazon, Users Anthropic #confident, 910 MW) | 2026-10-02 | "Draws" is the reel's word for Epoch's "current power". |
@@ -79,9 +79,10 @@ Type key: **R** Reported (traces to a URL that was opened) Â· **B** Background Â
 | C19 | From OpenAI's headquarters to Colossus 2 is about 2,900 kilometers. | I | pins from S10 | 2026-10-04 | Great-circle 2,898 km. Straight line, not a driving distance. |
 | C20 | Epoch says its list covers about 43% of the world's AI computing, as of October 4. | R | S1 (raw HTML: "coverage of global deployed AI computing capacity to be 43% as of October 4, 2026 (90% CI: 23% to 81%)") | 2026-10-04 | Estimate with a wide range; the reel says "about". |
 | C21 | Epoch also lists two big sites in Malaysia, which aren't on this map. | R | S2 (DayOne Nusajaya 473 MW; DayOne Kempas 421.7 MW; Country Malaysia) | 2026-10-02 | Both rank above Abilene and below Fairwater Atlanta / Meta Prometheus. |
+| C23 | Epoch AI is a research group. | B | general knowledge | 2026-10-04 | Background; only used to say who Epoch is. Epoch's own pages (S1, S3) describe a database of AI data centers. |
 | C22 | (Not used on screen.) Google's pin is the Googleplex address; Nominatim matched it to "Google Building 41". | B | S10 | 2026-10-04 | Context only. |
 
-Counts: 22 rows (C22 not used), 9 Inference or mixed (C6, C8, C10, C11, C12, C13, C15, C16, C19), 0 Background used on screen, the rest Reported.
+Counts: 23 rows (C22 not used), 9 Inference or mixed (C6, C8, C10, C11, C12, C13, C15, C16, C19), 1 Background used on screen (C23), the rest Reported.
 
 Stale-able items ("as of"): C7 (April 2026), C9 to C21 (Epoch, Oct 2 to 4, 2026). Refresh from S1 / S2 before posting.
 
@@ -118,3 +119,21 @@ Nothing in the geometry was traced by eye from an image. Display-only label posi
 - Point-in-polygon against S12: 14 of 15 pins fall in the right state (five in California; New Carlisle in Indiana; Atlanta in Georgia; three in Ohio; Abilene in Texas; Mount Pleasant in Wisconsin; Pryor in Oklahoma; Colossus 1 in Tennessee). **Colossus 2 falls just outside Tennessee** on the generalized (500k) boundary, about 0.2 km south of the line; Nominatim places it in Shelby County, Tennessee, so it is kept (see "Harvey to verify" 5).
 - Arithmetic recomputed from S2: 946 + 340 = 1,286; 471 + 333 + 303 = 1,107; 1.2 + 0.995 = 2.195; four of the ten in Indiana and Ohio; farthest HQ pair 60.4 km (Anthropic to Nvidia); OpenAI to Colossus 2 = 2,898 km; no California hit in any of the 93 rows.
 - Reel: `check-reels` (see the report for whether the basemap was stubbed).
+
+---
+
+## Independent check (2026-10-04)
+
+A separate agent with no access to the drafting re-opened S1 and S2 as raw text (Epoch hub page and the CSV, parsed) and S3 to S9 only through summaries; it did not re-open the Nominatim or Gazetteer lookups. **No wrong number found**: it recomputed the 60.4 km (Anthropic to Nvidia), 2,898 km (OpenAI to Colossus 2), 946 + 340 = 1,286, 471 + 333 + 303 = 1,107, 1.2 + 0.995 = 2.195, the ranking and states of the ten, four of ten in Indiana and Ohio, the 43% (range 23% to 81%) and the two Malaysian sites. It flagged, and what was done:
+
+1. "None has a California address" does not cover the 13 rows with no address. Now "none has a California address listed" (narration) and "None of the ten is in California" (screen); C11 keeps the caveat.
+2. "The biggest AI data centers are elsewhere" was scoped to the ten US sites on Epoch's list only by implication, and read as a tease. Headline is now "Epoch's ten largest US data centers".
+3. "draws 910 megawatts": Epoch's column is "Current power (MW)", an estimate, and its documentation page did not define it. Now "is at 910 megawatts" and, in beat 4, "Epoch estimates their current power at 946 megawatts and 340".
+4. Ownership at Abilene is Epoch's tag. Narration now says "Epoch lists Oracle as the owner ... and OpenAI as its user"; the screen line says "Oracle's Abilene, used by OpenAI".
+5. Office figures: SF Standard calls them estimated square footage over several buildings, and the pin shows one address. Now "an estimated 2.2 million square feet ... spread over several buildings", "The San Francisco Standard puts OpenAI at 1.2 million, around Mission Bay", and the headline says "about".
+6. The 43% had no stated range. Beat 7 now says "with a wide range, 23% to 81%" and the screen carries it.
+7. "Four of ten" did not say what the ten are, and "1,107" had no unit. Beat 5 now says "four of the ten largest" and "1,107 megawatts".
+8. Unexplained terms: Epoch AI is now introduced as "a research group" (C23). Megawatt and gigawatt are not glossed on screen or in the narration (a gloss would be a new sourced fact); the script's notes tell Harvey to explain them in his own words.
+9. Voice lines: beat 3 headline (tease), beat 4 colon, beat 6 semicolon sub, the seven-state sentence (split in two), and the beat 6 "at 421" fragment. All rewritten as above.
+
+Left as is: "near Atlanta" (the site is in Fayetteville, Georgia, in the Atlanta area, about 30 km south of the city; the on-screen label says Fayetteville); Prometheus and Google New Albany pins overlap on wide maps (they are about 0.5 km apart; the labels name the place, not each site); pins that are city centres or roads are stated in the Geometry table; the "world's biggest" gloss was removed from beat 3.

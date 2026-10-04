@@ -19,28 +19,28 @@ for or against AI or data centers.
 > OpenAI, Anthropic, Google, Meta and Nvidia all have their headquarters around San Francisco Bay. [C1, C2, C3, C4, C5] The two farthest apart are about 60 kilometers from each other. [C6]
 
 **Beat 2 — San Francisco**
-*(on screen: "Two labs, 2.2 million sq ft"; chip "Office space as of April 2026")*
-> In San Francisco, OpenAI and Anthropic have about 2.2 million square feet of offices between them. [C8] OpenAI has 1.2 million, in Mission Bay. Anthropic has about 995,000, in SoMa. [C7] Those are April figures.
+*(on screen: "Two labs, about 2.2 million sq ft"; chip "Office space as of April 2026")*
+> In San Francisco, OpenAI and Anthropic have an estimated 2.2 million square feet of offices between them, spread over several buildings. [C8] The San Francisco Standard puts OpenAI at 1.2 million, around Mission Bay, and Anthropic at about 995,000, in SoMa. [C7] Those are April estimates.
 
 **Beat 3 — the biggest data centers**
-*(on screen: "The biggest AI data centers are elsewhere"; the ten blue pins appear across the country)*
-> Epoch AI tracks 93 of the world's biggest AI data centers, and none of them has a California address. [C9, C11] Its ten largest US sites, by power, are in Tennessee, Indiana, Georgia, Ohio, Texas, Wisconsin and Oklahoma. [C10] Epoch also lists two big sites in Malaysia, which aren't on this map. [C21]
+*(on screen: "Epoch's ten largest US data centers"; the ten blue pins appear across the country)*
+> Epoch AI, a research group, tracks 93 large AI data center sites, and none has a California address listed. [C9, C11, C23] Its ten largest US sites, by power, are in seven states. They're in Tennessee, Indiana, Georgia, Ohio, Texas, Wisconsin and Oklahoma. [C10] Epoch also lists two big sites in Malaysia, which aren't on this map. [C21]
 
 **Beat 4 — Memphis**
-*(on screen: "Memphis: two sites, 1.29 gigawatts")*
-> In Memphis, Epoch counts two Colossus sites, at 946 megawatts and 340. [C12] Together that's about 1.3 gigawatts, and Colossus 2 is the biggest site on the list. [C12, C13]
+*(on screen: "Memphis has two sites, 1.29 gigawatts")*
+> In Memphis, Epoch counts two Colossus sites. It estimates their current power at 946 megawatts and 340. [C12] Together that's about 1.3 gigawatts, and Colossus 2 is the biggest site on the list. [C12, C13]
 
 **Beat 5 — Indiana and Ohio**
-*(on screen: "Indiana and Ohio have four of ten")*
-> In New Carlisle, Indiana, an Amazon campus draws 910 megawatts, and Epoch lists Anthropic as its user. [C14] Three Ohio sites, Meta's Prometheus and two of Google's, add up to 1,107. [C15] Indiana and Ohio together have four of the ten. [C16]
+*(on screen: "Two states hold four of the ten")*
+> In New Carlisle, Indiana, an Amazon campus is at 910 megawatts, and Epoch lists Anthropic as its user. [C14] Three Ohio sites, Meta's Prometheus and two of Google's, add up to 1,107 megawatts. [C15] Indiana and Ohio together have four of the ten largest. [C16]
 
 **Beat 6 — Georgia and Texas**
 *(on screen: "Georgia and Texas, 636 and 421 MW")*
-> Microsoft's Fairwater campus near Atlanta is at 636 megawatts, and Epoch says OpenAI likely uses it. [C17] Oracle owns the Abilene, Texas, site, which OpenAI uses, at 421. [C18]
+> Microsoft's Fairwater campus near Atlanta is at 636 megawatts, and Epoch says OpenAI likely uses it. [C17] Epoch lists Oracle as the owner of the Abilene, Texas, site and OpenAI as its user, at 421 megawatts. [C18]
 
 **Beat 7 — the distance**
 *(on screen: "2,900 km from San Francisco to Memphis")*
-> From OpenAI's headquarters to Colossus 2 is about 2,900 kilometers. [C19] Epoch says its list covers about 43% of the world's AI computing, as of October 4. [C20]
+> From OpenAI's headquarters to Colossus 2 is about 2,900 kilometers. [C19] Epoch estimates its list covers about 43% of the world's AI computing, with a wide range, 23% to 81%, as of October 4. [C20]
 
 ---
 
@@ -57,4 +57,5 @@ starting the next line.
 - **"Within 60 km"** is the great-circle distance between the farthest two headquarters pins; Meta's and Nvidia's are city centres, so it is approximate.
 - **The ten are the ten largest US sites on Epoch's list**, not the ten largest in the world (two Malaysian sites rank higher than some of them).
 - **Epoch's list is not every AI data center.** It estimates 43% of global AI computing (90% range 23% to 81%).
-- **Terms to explain in your own words:** megawatt, gigawatt, H100.
+- **Terms to explain in your own words:** megawatt, gigawatt (one gigawatt is 1,000 megawatts), SoMa, Colossus, Fairwater.
+- **Wording from the independent check:** "estimated" on the office figures (the SF Standard calls them estimated square footage, spread over several buildings, and the pin marks only the headquarters address); "none has a California address listed" (13 Epoch rows have no address); "Epoch lists Oracle as the owner" (ownership is Epoch's tag).
