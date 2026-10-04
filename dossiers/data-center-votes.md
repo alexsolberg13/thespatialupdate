@@ -126,3 +126,7 @@ Not changed: "Five votes in three days" (accurate, though no vote fell on the 29
 ### Map changes after Harvey's review (2026-10-04)
 
 Harvey asked for the basemap labels and points to be dialed in and made consistent. Changes: the map is flat (Mercator) instead of a globe so the five places sit at one scale; every basemap name (states, cities, towns, water, countries) is hidden so no beat shows a name another does not and none sits under a pin; each beat shows only the reel's own label for its pin, as place name plus state, in the same position on every beat (above the pin; Lovejoy below; Mercer County to the left); all five pins are now the centre of the city, township or county that voted (Mercer moved from the E.W. Brown plant to the county centre); the label colours match on every beat. Code check re-run: Mercer's new point is inside Kentucky. Checked against the real basemap in a browser; `check-reels` itself still only runs with the basemap stubbed in this sandbox.
+
+### Label placement (2026-10-04, second round)
+
+Labels are now one line, "City, State" (for example "Cheyenne, Wyoming"), and sit beside the pin they name. Each pin has its own side, the same on every beat, chosen so no label touches another pin or label on the opening map: Cheyenne and Kline above (right-aligned), Mercer County to the left, Palm Springs and Lovejoy below. Checked in a browser against the real basemap; `check-reels` (stubbed basemap) confirms every label is inside the map window and the side margins.

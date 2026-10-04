@@ -45,7 +45,6 @@
      visibility, not opacity: MapLibre writes an inline opacity on every marker. */
   .tsu-lbl { visibility:hidden; }
   .tsu-lbl.on { visibility:visible; }
-  .tsu-lbl small { color:#cfcac2; }
 </style>
 </head>
 <body>
@@ -154,7 +153,7 @@
     map.on("style.load", function () {
       // Flat map (no globe) so the five places sit at the same scale on every beat.
       try { map.setProjection({ type: "mercator" }); } catch (e) {}
-      // One consistent label set: only the reel's own place names (each with its state).
+      // One consistent label set: only the reel's own place names (city, state).
       // Every basemap name (states, cities, towns, water, countries) is hidden, so one beat
       // never shows a basemap name that another does not and none can sit under a pin.
       map.getStyle().layers.forEach(function (l) {
@@ -188,12 +187,20 @@
 
       var d = document.createElement("div");
       d.className = "reel-maplabel tsu-lbl";   // the frame hides it under the text block
-      d.innerHTML = p.label + "<small>" + p.state + "</small>";
-      // Same placement on every beat. Above the pin by default; Lovejoy below and Mercer
-      // County to the left, so the five labels never sit on another pin or label on the
-      // opening map. Offsets are map pixels, clear of the pulsing ring.
-      var OFFSET = { lovejoy:[0, 38], mercer:[-42, 0] };
-      new maplibregl.Marker({ element: d, offset: OFFSET[id] || [0, -38] }).setLngLat([p.lng, p.lat]).addTo(map);
+      d.textContent = p.label + ", " + p.state;
+      // Same placement on every beat, and close to the pin it names. On the opening map
+      // the five labels sit on different sides so none touches another pin or label:
+      // Cheyenne and Kline above (right-aligned), Mercer County to the left, Palm Springs
+      // and Lovejoy below (Palm Springs starts at the pin's left so it stays inside the margin).
+      // Offsets are map pixels, clear of the pulsing ring.
+      var PLACE = {
+        cheyenne:    { anchor:"bottom-right", offset:[8, -14] },
+        kline:       { anchor:"bottom-right", offset:[14, -14] },
+        mercer:      { anchor:"right",        offset:[-14, 0] },
+        lovejoy:     { anchor:"top",          offset:[0, 14] },
+        palmsprings: { anchor:"top-left",     offset:[-40, 14] }
+      }[id];
+      new maplibregl.Marker({ element: d, anchor: PLACE.anchor, offset: PLACE.offset }).setLngLat([p.lng, p.lat]).addTo(map);
       labelEls[id] = d;
     });
   }
