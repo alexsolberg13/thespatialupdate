@@ -1,0 +1,60 @@
+# Narration script — Where AI actually is reel
+
+DRAFT for Harvey to rewrite in his own voice. Short video (about 70 sec, about 200
+spoken words). Seven beats (cold open + 6). Read the line, then tap the right side
+of the screen to advance to the next beat. Keep it calm and even. The map does
+the work.
+
+Every sentence is followed by the ID of the claim it rests on, in
+`dossiers/where-ai-is.md` (the source record). Delete the `[C#]` tags when you
+record. **Rows C6, C8, C10, C11, C13, C16 and C19 are counts or arithmetic on sourced numbers.**
+
+Policy note: this script says where and what, from the sources. It does not argue
+for or against AI or data centers.
+
+---
+
+**Beat 1 — cold open**
+*(on screen: "Five AI headquarters within 60 km"; five gold pins around San Francisco Bay, each named; chip "As of Oct 2026")*
+> OpenAI, Anthropic, Google, Meta and Nvidia all have their headquarters around San Francisco Bay. [C1, C2, C3, C4, C5] The two farthest apart are about 60 kilometers from each other. [C6]
+
+**Beat 2 — San Francisco**
+*(on screen: "Two labs, 2.2 million sq ft"; chip "Office space as of April 2026")*
+> In San Francisco, OpenAI and Anthropic have about 2.2 million square feet of offices between them. [C8] OpenAI has 1.2 million, in Mission Bay. Anthropic has about 995,000, in SoMa. [C7] Those are April figures.
+
+**Beat 3 — the biggest data centers**
+*(on screen: "The biggest AI data centers are elsewhere"; the ten blue pins appear across the country)*
+> Epoch AI tracks 93 of the world's biggest AI data centers, and none of them has a California address. [C9, C11] Its ten largest US sites, by power, are in Tennessee, Indiana, Georgia, Ohio, Texas, Wisconsin and Oklahoma. [C10] Epoch also lists two big sites in Malaysia, which aren't on this map. [C21]
+
+**Beat 4 — Memphis**
+*(on screen: "Memphis: two sites, 1.29 gigawatts")*
+> In Memphis, Epoch counts two Colossus sites, at 946 megawatts and 340. [C12] Together that's about 1.3 gigawatts, and Colossus 2 is the biggest site on the list. [C12, C13]
+
+**Beat 5 — Indiana and Ohio**
+*(on screen: "Indiana and Ohio have four of ten")*
+> In New Carlisle, Indiana, an Amazon campus draws 910 megawatts, and Epoch lists Anthropic as its user. [C14] Three Ohio sites, Meta's Prometheus and two of Google's, add up to 1,107. [C15] Indiana and Ohio together have four of the ten. [C16]
+
+**Beat 6 — Georgia and Texas**
+*(on screen: "Georgia and Texas, 636 and 421 MW")*
+> Microsoft's Fairwater campus near Atlanta is at 636 megawatts, and Epoch says OpenAI likely uses it. [C17] Oracle owns the Abilene, Texas, site, which OpenAI uses, at 421. [C18]
+
+**Beat 7 — the distance**
+*(on screen: "2,900 km from San Francisco to Memphis")*
+> From OpenAI's headquarters to Colossus 2 is about 2,900 kilometers. [C19] Epoch says its list covers about 43% of the world's AI computing, as of October 4. [C20]
+
+---
+
+### Timing guide
+Roughly 10-12 seconds per beat. Beat 1 has the hook in its first sentence (the five names), with
+the headline and the five labelled pins already on screen. Let the map settle after each tap before
+starting the next line.
+
+### Fact-check before this goes public
+- **Power figures are Epoch AI's estimates of current power ("Current power (MW)"), as of its Oct 2, 2026 update.** They move; refresh before posting.
+- **Epoch tags ownership and users as confident, likely or speculative.** Beat 5 (Anthropic at New Carlisle) is "confident". Beat 6 (OpenAI at Fairwater Atlanta) is "likely".
+- **Owner names.** Epoch lists Colossus's owner as "SpaceXAI"; this script just says "Colossus".
+- **Pins are geocoded street addresses, not site outlines.** Meta's and Nvidia's headquarters, and New Carlisle, are city or town centres; Prometheus is a nearby Meta building. See the dossier.
+- **"Within 60 km"** is the great-circle distance between the farthest two headquarters pins; Meta's and Nvidia's are city centres, so it is approximate.
+- **The ten are the ten largest US sites on Epoch's list**, not the ten largest in the world (two Malaysian sites rank higher than some of them).
+- **Epoch's list is not every AI data center.** It estimates 43% of global AI computing (90% range 23% to 81%).
+- **Terms to explain in your own words:** megawatt, gigawatt, H100.

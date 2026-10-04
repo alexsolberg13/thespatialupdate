@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<!-- Home Screen web app: opened from the icon it runs full screen, with no browser bars. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TSU Studio">
+<meta name="theme-color" content="#0a0f18">
+<!-- Shown on the reels index, which lists reels newest first. -->
+<meta name="tsu-published" content="2026-10-04">
+<title>Story Beat Reel — Where AI Actually Is · The Spatial Update</title>
+
+<!--
+  Story Beat Reel: where the big AI companies have their headquarters, and where the biggest
+  AI data centers are. Standalone page: token-free MapLibre GL + Carto dark-matter tiles, so it
+  renders (and records) anywhere.
+
+  Layout: this reel uses the shared frame (reel-frame.css + reel-frame.js). Add ?guides=1
+  (or press G) to show the bands. `npm run check-reels` fails if any beat breaks the layout
+  rules. Each beat's `fit` lists the points of its subject.
+
+  Controls: tap the right ~2/3 of the screen to advance, the left ~1/3 to go back. Hold a
+  finger down for a second to go back to the reels index.
+
+  DRAFT. Every number and place here traces to dossiers/where-ai-is.md (the source record);
+  the narration script is src/reels/where-ai-is-script.md.
+
+  The GeoJSON below is a copy of src/reels/where-ai-is-data.geojson (five headquarters and the
+  ten largest US sites in Epoch AI's data center list). Pins are geocoded street addresses
+  (data centers, HQs for OpenAI, Anthropic, Google) or city centres (Meta, Nvidia, New Carlisle).
+  Keep the two in sync. Coordinates are [lng, lat].
+-->
+
+<link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+
+<link href="reel-frame.css" rel="stylesheet">
+<style>
+  /* Where AI is only: a label is shown on the beat it belongs to. It is hidden with
+     visibility, not opacity: MapLibre writes an inline opacity on every marker. */
+  .tsu-lbl { visibility:hidden; }
+  .tsu-lbl.on { visibility:visible; }
+</style>
+</head>
+<body>
+<div class="reel-stage" id="reel-stage">
+  <div id="tsu-map"></div>
+
+  <div class="reel-scrim"></div>
+
+  <div class="reel-header">
+    <div class="reel-date" id="tsu-date" hidden></div>
+    <div class="reel-dots" id="tsu-dots"></div>
+  </div>
+
+  <div class="reel-legend" id="tsu-legend">
+    <div class="reel-leg-row" data-line="hq"><span class="reel-leg-dot" style="background:#c8a84e"></span>Company headquarters</div>
+    <div class="reel-leg-row" data-line="dc"><span class="reel-leg-dot" style="background:#5b9bd5"></span>Large AI data center</div>
+  </div>
+
+  <div class="reel-caption">
+    <div class="reel-kicker" id="tsu-kicker"></div>
+    <div class="reel-title"  id="tsu-title"></div>
+    <div class="reel-sub"    id="tsu-sub"></div>
+  </div>
+</div>
+
+<script src="reel-frame.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // ---- Story data (mirrors src/reels/where-ai-is-data.geojson) --------------
+  var STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
+  var COL = { hq:"#c8a84e", dc:"#5b9bd5" };
+
+  var DATA = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"openai","name":"OpenAI","kind":"hq","position_source":"OSM Nominatim geocode of 1455 3rd St, San Francisco (one of the two HQ addresses on Wikipedia: 1455 and 1515 Third Street)","hq_address":"1455 and 1515 Third Street, San Francisco"},"geometry":{"type":"Point","coordinates":[-122.3888,37.77]}},{"type":"Feature","properties":{"id":"anthropic","name":"Anthropic","kind":"hq","position_source":"OSM Nominatim geocode of 500 Howard Street, San Francisco (Wikipedia HQ address)","hq_address":"500 Howard Street, San Francisco"},"geometry":{"type":"Point","coordinates":[-122.3967,37.7885]}},{"type":"Feature","properties":{"id":"google","name":"Google","kind":"hq","position_source":"OSM Nominatim geocode of 1600 Amphitheatre Parkway, Mountain View (Wikipedia: 37.422N 122.084W)","hq_address":"1600 Amphitheatre Parkway, Mountain View"},"geometry":{"type":"Point","coordinates":[-122.0856,37.4225]}},{"type":"Feature","properties":{"id":"meta","name":"Meta","kind":"hq","position_source":"Census Gazetteer 2023 place centroid, Menlo Park city (city level: Wikipedia gives only the city)","hq_address":"Menlo Park, California (city only)"},"geometry":{"type":"Point","coordinates":[-122.1481,37.4797]}},{"type":"Feature","properties":{"id":"nvidia","name":"Nvidia","kind":"hq","position_source":"Census Gazetteer 2023 place centroid, Santa Clara city (city level: Wikipedia gives only the city)","hq_address":"Santa Clara, California (city only)"},"geometry":{"type":"Point","coordinates":[-121.968,37.3646]}},{"type":"Feature","properties":{"id":"colossus2","name":"Colossus 2","kind":"datacenter","position_source":"OSM Nominatim geocode of 5420 Tulane Rd, Memphis (Epoch address)","place":"Memphis, Tennessee","current_power_mw":946,"owner":"SpaceXAI","users":"Anthropic, Cursor, SpaceXAI"},"geometry":{"type":"Point","coordinates":[-90.0349,34.998]}},{"type":"Feature","properties":{"id":"newcarlisle","name":"Anthropic-Amazon New Carlisle","kind":"datacenter","position_source":"Census Gazetteer 2023 place centroid, New Carlisle town (Nominatim did not find the Epoch address, 55001 Larrison Blvd). Approximate.","place":"New Carlisle, Indiana","current_power_mw":910,"owner":"Amazon","users":"Anthropic"},"geometry":{"type":"Point","coordinates":[-86.5072,41.7066]}},{"type":"Feature","properties":{"id":"fairwater_atl","name":"Microsoft Fairwater Atlanta","kind":"datacenter","position_source":"OSM Nominatim geocode of 1435 Hwy 54 W, Fayetteville (Epoch address)","place":"Fayetteville, Georgia","current_power_mw":636,"owner":"Microsoft","users":"OpenAI (likely), Microsoft (likely)"},"geometry":{"type":"Point","coordinates":[-84.5248,33.4452]}},{"type":"Feature","properties":{"id":"prometheus","name":"Meta Prometheus","kind":"datacenter","position_source":"OSM Nominatim: 'Meta Data Center', Beech Road SW, New Albany (Nominatim did not find Epoch's address, 1 Community Cir). May be a neighbouring Meta building. Approximate.","place":"New Albany, Ohio","current_power_mw":471,"owner":"Meta","users":"Meta"},"geometry":{"type":"Point","coordinates":[-82.7533,40.0657]}},{"type":"Feature","properties":{"id":"abilene","name":"OpenAI Stargate Abilene","kind":"datacenter","position_source":"OSM Nominatim geocode of 5502 Spinks Rd, Abilene (Epoch address); matched the road, not a building","place":"Abilene, Texas","current_power_mw":421,"owner":"Oracle","users":"OpenAI"},"geometry":{"type":"Point","coordinates":[-99.8009,32.4942]}},{"type":"Feature","properties":{"id":"fairwater_wi","name":"Microsoft Fairwater Wisconsin","kind":"datacenter","position_source":"OSM Nominatim geocode of 4800 90th St, Mount Pleasant (Epoch address)","place":"Mount Pleasant, Wisconsin","current_power_mw":369,"owner":"Microsoft","users":"OpenAI (likely), Microsoft (likely)"},"geometry":{"type":"Point","coordinates":[-87.8949,42.6749]}},{"type":"Feature","properties":{"id":"pryor","name":"Google Pryor (North)","kind":"datacenter","position_source":"OSM Nominatim geocode of 4581 Webb St, Pryor (Epoch address)","place":"Pryor, Oklahoma","current_power_mw":368,"owner":"Google","users":"Google DeepMind (speculative)"},"geometry":{"type":"Point","coordinates":[-95.3301,36.2412]}},{"type":"Feature","properties":{"id":"colossus1","name":"Colossus 1","kind":"datacenter","position_source":"OSM Nominatim geocode of 3231 Riverport Rd, Memphis (matched the road)","place":"Memphis, Tennessee","current_power_mw":340,"owner":"SpaceXAI","users":"Anthropic"},"geometry":{"type":"Point","coordinates":[-90.0873,35.0736]}},{"type":"Feature","properties":{"id":"google_na","name":"Google New Albany","kind":"datacenter","position_source":"OSM Nominatim geocode of 1101 Beech Rd SW, New Albany (Epoch address)","place":"New Albany, Ohio","current_power_mw":333,"owner":"Google","users":"Google DeepMind (speculative)"},"geometry":{"type":"Point","coordinates":[-82.754,40.07]}},{"type":"Feature","properties":{"id":"google_col","name":"Google Columbus","kind":"datacenter","position_source":"OSM Nominatim geocode of 5076 S High St, Columbus (Epoch address)","place":"Columbus, Ohio","current_power_mw":303,"owner":"Google","users":"Google DeepMind (speculative)"},"geometry":{"type":"Point","coordinates":[-83.004,39.8615]}}]};
+
+  var PINS = {};
+  DATA.features.forEach(function (f) {
+    PINS[f.properties.id] = { lng:f.geometry.coordinates[0], lat:f.geometry.coordinates[1],
+                              color: f.properties.kind === "hq" ? "hq" : "dc" };
+  });
+
+  // The reel's own labels. Each sits beside the pin it names, on the same side on every beat.
+  // at = [lng, lat] of the spot the label points to (a pin, or a place for a group label).
+  // Offsets are map pixels, clear of the pulsing ring.
+  var LABELS = {
+    openai:    { at:[-122.3888,37.7700], text:"OpenAI",           anchor:"left",         offset:[14, 8] },
+    anthropic: { at:[-122.3967,37.7885], text:"Anthropic",        anchor:"right",        offset:[-14, -6] },
+    google:    { at:[-122.0856,37.4225], text:"Google",           anchor:"left",         offset:[14, 0] },
+    meta:      { at:[-122.1481,37.4797], text:"Meta",             anchor:"right",        offset:[-14, 0] },
+    nvidia:    { at:[-121.9680,37.3646], text:"Nvidia",           anchor:"left",         offset:[14, 8] },
+    bay:       { at:[-122.2,37.5],       text:"Bay Area",         anchor:"right",        offset:[-16, 0] },
+    colossus2: { at:[-90.0349,34.9980],  text:"Colossus 2",       anchor:"top-left",     offset:[12, 14] },
+    colossus1: { at:[-90.0873,35.0736],  text:"Colossus 1",       anchor:"bottom-right", offset:[-12, -14] },
+    newcarlisle:{ at:[-86.5072,41.7066], text:"New Carlisle, Indiana", anchor:"bottom-right", offset:[10, -14] },
+    newalbany: { at:[-82.7540,40.0700],  text:"New Albany, Ohio", anchor:"left",         offset:[16, -6] },
+    columbus:  { at:[-83.0040,39.8615],  text:"Columbus",         anchor:"right",        offset:[-14, 10] },
+    atlanta:   { at:[-84.5248,33.4452],  text:"Fayetteville, Georgia", anchor:"left",    offset:[14, 14] },
+    abilene:   { at:[-99.8009,32.4942],  text:"Abilene, Texas",   anchor:"top-left",     offset:[-6, 14] }
+  };
+
+  var params = new URLSearchParams(window.location.search);
+  var SHOW_DATE = params.get("date") !== "off";
+
+  // Each beat: c / z = the map centre [lng, lat] and the closest zoom it may use;
+  // fit = the points of the beat's subject; vis = the pins shown; act = pins that
+  // pulse; lbl = the labels shown; legend = the legend rows (never more than 3).
+  var BEATS = [
+    { c:[-122.15,37.58], z:8, fit:[[-122.3967,37.7885],[-122.3888,37.7700],[-122.0856,37.4225],[-122.1481,37.4797],[-121.9680,37.3646]], date:"As of Oct 2026",
+      kicker:"AI headquarters", title:"Five AI headquarters within 60 km",
+      sub:"OpenAI, Anthropic, Google, Meta and Nvidia, around San Francisco Bay",
+      vis:["openai","anthropic","google","meta","nvidia"], act:null, lbl:["openai","anthropic","google","meta","nvidia"], legend:["hq"] },
+
+    { c:[-122.39,37.78], z:11, fit:[[-122.3967,37.7885],[-122.3888,37.7700]], date:"Office space as of April 2026",
+      kicker:"San Francisco offices", title:"Two labs, 2.2 million sq ft",
+      sub:"OpenAI in Mission Bay, Anthropic in SoMa",
+      vis:["openai","anthropic"], act:null, lbl:["openai","anthropic"], legend:["hq"] },
+
+    { c:[-98,38], z:3, fit:[[-122.15,37.4],[-90.03,34.99],[-86.51,41.71],[-84.52,33.45],[-82.75,40.07],[-99.80,32.49],[-87.89,42.67],[-95.33,36.24]], date:"As of Oct 2026",
+      kicker:"Epoch AI's ten largest US sites", title:"The biggest AI data centers are elsewhere",
+      sub:"Ranked by power. None is in California",
+      vis:["openai","anthropic","google","meta","nvidia","colossus2","newcarlisle","fairwater_atl","prometheus","abilene","fairwater_wi","pryor","colossus1","google_na","google_col"], act:null, lbl:["bay"], legend:["hq","dc"] },
+
+    { c:[-90.06,35.04], z:10, fit:[[-90.0349,34.9980],[-90.0873,35.0736]], date:"As of Oct 2026",
+      kicker:"Memphis, Tennessee", title:"Memphis: two sites, 1.29 gigawatts",
+      sub:"Colossus 2 is the biggest on Epoch's list",
+      vis:["colossus2","colossus1"], act:["colossus2","colossus1"], lbl:["colossus2","colossus1"], legend:["dc"] },
+
+    { c:[-84.6,40.9], z:6, fit:[[-86.5072,41.7066],[-82.7540,40.0700],[-83.0040,39.8615]], date:"As of Oct 2026",
+      kicker:"Indiana and Ohio", title:"Indiana and Ohio have four of ten",
+      sub:"910 MW in Indiana, 1,107 MW across three Ohio sites",
+      vis:["newcarlisle","prometheus","google_na","google_col"], act:["newcarlisle","prometheus","google_na","google_col"], lbl:["newcarlisle","newalbany","columbus"], legend:["dc"] },
+
+    { c:[-92,33], z:5, fit:[[-99.8009,32.4942],[-84.5248,33.4452]], date:"As of Oct 2026",
+      kicker:"Georgia and Texas", title:"Georgia and Texas, 636 and 421 MW",
+      sub:"Microsoft's Fairwater near Atlanta; Oracle-owned Abilene, used by OpenAI",
+      vis:["fairwater_atl","abilene"], act:["fairwater_atl","abilene"], lbl:["atlanta","abilene"], legend:["dc"] },
+
+    { c:[-106,36], z:3, fit:[[-122.3888,37.7700],[-90.0349,34.9980]], date:"As of Oct 2026",
+      kicker:"The distance", title:"2,900 km from San Francisco to Memphis",
+      sub:"Epoch estimates its list covers about 43% of AI computing",
+      vis:["openai","colossus2","newcarlisle","fairwater_atl","prometheus","abilene","fairwater_wi","pryor","colossus1","google_na","google_col"], act:["openai","colossus2"], lbl:["openai","colossus2"], legend:["hq","dc"] }
+  ];
+
+  // ---- State ----------------------------------------------------------------
+  var idx = 0;
+  var map = null;
+  var markers = {};
+  var labelEls = {};
+
+  var el = {
+    date:    document.getElementById("tsu-date"),
+    dots:    document.getElementById("tsu-dots"),
+    kicker:  document.getElementById("tsu-kicker"),
+    title:   document.getElementById("tsu-title"),
+    sub:     document.getElementById("tsu-sub"),
+    legRows: Array.prototype.slice.call(document.querySelectorAll(".reel-leg-row"))
+  };
+  var dotsUI = TSUReel.dots(el.dots, BEATS.length);
+
+  // ---- Map ------------------------------------------------------------------
+  function initMap() {
+    if (!window.maplibregl) { setTimeout(initMap, 120); return; }
+    var div = document.getElementById("tsu-map");
+    if (!div || map) return;
+
+    var b0 = BEATS[0];
+    map = new maplibregl.Map(TSUReel.mapOptions(div, { style: STYLE, center: b0.c, zoom: b0.z }));
+
+    map.on("style.load", function () {
+      // Flat map (no globe) so the places sit at the same scale on every beat.
+      try { map.setProjection({ type: "mercator" }); } catch (e) {}
+      // One consistent label set: only the reel's own names. Every basemap name is hidden,
+      // so one beat never shows a basemap name that another does not and none can sit under a pin.
+      map.getStyle().layers.forEach(function (l) {
+        if (l.type === "symbol") {
+          try { map.setLayoutProperty(l.id, "visibility", "none"); } catch (e) {}
+        }
+      });
+      buildMarkers();
+      TSUReel.attachMap(map);
+      TSUReel.solveAll(map, BEATS);
+      applyBeat(idx, false);
+    });
+  }
+
+  function buildMarkers() {
+    Object.keys(PINS).forEach(function (id) {
+      var p = PINS[id];
+      var wrap = document.createElement("div");
+      wrap.className = "tsu-mk";
+      wrap.style.color = COL[p.color];
+      var ring = document.createElement("div");
+      ring.className = "tsu-ring";
+      ring.style.display = "none";
+      var dot = document.createElement("div");
+      dot.className = "tsu-dot";
+      wrap.appendChild(ring);
+      wrap.appendChild(dot);
+      var marker = new maplibregl.Marker({ element: wrap }).setLngLat([p.lng, p.lat]).addTo(map);
+      wrap.style.display = "none";
+      markers[id] = { ring: ring, wrap: wrap, marker: marker };
+    });
+    Object.keys(LABELS).forEach(function (id) {
+      var L = LABELS[id];
+      var d = document.createElement("div");
+      d.className = "reel-maplabel tsu-lbl";   // the frame hides it under the text block
+      d.textContent = L.text;
+      new maplibregl.Marker({ element: d, anchor: L.anchor, offset: L.offset }).setLngLat(L.at).addTo(map);
+      labelEls[id] = d;
+    });
+  }
+
+  function applyBeat(i, fly) {
+    var b = BEATS[i];
+    if (map) {
+      var cam = b.cam || { center: b.c, zoom: b.z };   // solved by the frame so the subject sits in the map window
+      if (fly) map.flyTo({ center: cam.center, zoom: cam.zoom, duration: 1600, essential: true, curve: 1.3 });
+      else     map.jumpTo({ center: cam.center, zoom: cam.zoom });
+    }
+    Object.keys(markers).forEach(function (id) {
+      var m = markers[id];
+      var on = b.vis.indexOf(id) !== -1;
+      m.wrap.style.display = on ? "block" : "none";
+      m.ring.style.display = (on && b.act && b.act.indexOf(id) !== -1) ? "block" : "none";
+    });
+    Object.keys(labelEls).forEach(function (id) {
+      labelEls[id].classList.toggle("on", b.lbl.indexOf(id) !== -1);
+    });
+    el.legRows.forEach(function (row) {
+      var k = row.getAttribute("data-line");
+      row.classList.toggle("on", b.legend.indexOf(k) !== -1);
+    });
+  }
+
+  // ---- Overlay --------------------------------------------------------------
+  function render() {
+    var b = BEATS[idx];
+    var last = BEATS.length - 1;
+
+    el.kicker.textContent = b.kicker || "";
+    el.title.textContent  = b.title || "";
+    el.sub.textContent    = b.sub || "";
+
+    var showDate = SHOW_DATE && !!b.date;
+    el.date.hidden = !showDate;
+    el.date.textContent = showDate ? b.date : "";
+
+    TSUReel.setCounter(idx === 0 ? "Cold open" : ("Beat " + idx + " / " + last));
+
+    dotsUI.set(idx);
+  }
+
+  function step(dir) {
+    var i = idx + dir;
+    if (i >= BEATS.length) i = 0;
+    if (i < 0) i = 0;
+    idx = i;
+    render();
+    applyBeat(idx, true);
+  }
+
+  render();
+  initMap();
+
+  TSUReel.bind({
+    count: BEATS.length,
+    step: step,
+    jump: function (i) { idx = i; render(); applyBeat(idx, false); },
+    mapReady: function () { return !!map && map.loaded(); },
+    map: function () { return map; },
+    beat: function () { return BEATS[idx]; }
+  });
+})();
+</script>
+</body>
+</html>
