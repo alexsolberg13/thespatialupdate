@@ -20,7 +20,7 @@ or against the policy.
 > Forty-one states and Washington, D.C. had SNAP error rates above 6 percent in fiscal 2025. [C11] SNAP is the food stamp program, and the error rate is the share of benefit dollars paid out too high or too low. [C18, C2]
 
 **Beat 2 — the tiers**
-*(on screen: "States pay more at higher error rates"; states coloured by tier)*
+*(on screen: "States pay more at higher error rates"; states coloured by tier; legend "Under 6%: nothing" and "Pays 5% 10% 15%")*
 > Starting as soon as October 2027, that rate sets what a state pays. [C5] States under 6 percent pay nothing. At 6 to 8 percent a state covers 5 percent of its benefit costs, at 8 to 10 it covers 10, and at 10 or higher it covers 15. [C4]
 
 **Beat 3 — highest rates**

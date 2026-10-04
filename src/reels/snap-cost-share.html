@@ -60,9 +60,8 @@
   <div class="reel-legend" id="tsu-legend">
     <div class="reel-leg-row" data-line="under"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Under 6%</div>
     <div class="reel-leg-row" data-line="over"><span class="reel-leg-fill" style="background:#e8955a"></span>6% or higher</div>
-    <div class="reel-leg-row" data-line="t5"><span class="reel-leg-fill" style="background:#e8c87a"></span>6&#8211;8%: 5%</div>
-    <div class="reel-leg-row" data-line="t10"><span class="reel-leg-fill" style="background:#e8955a"></span>8&#8211;10%: 10%</div>
-    <div class="reel-leg-row" data-line="t15"><span class="reel-leg-fill" style="background:#e05a4e"></span>10%+: 15%</div>
+    <div class="reel-leg-row" data-line="u0"><span class="reel-leg-fill" style="background:#5b9bd5"></span>Under 6%: nothing</div>
+    <div class="reel-leg-row" data-line="share">Pays<span class="reel-leg-fill" style="background:#e8c87a"></span>5%<span class="reel-leg-fill" style="background:#e8955a"></span>10%<span class="reel-leg-fill" style="background:#e05a4e"></span>15%</div>
     <div class="reel-leg-row" data-line="late"><span class="reel-leg-fill" style="background:#e05a4e"></span>13.33% or higher</div>
   </div>
 
@@ -117,8 +116,8 @@
 
     { c:[-96,38], z:3.2, fit:[[-124.8,24.5],[-66.9,49.4],[-124.8,49.4],[-80.0,24.5],[-69.0,47.4]], date:"FY2025 rates",
       kicker:"Fiscal 2028 onward", title:"States pay more at higher error rates",
-      sub:"States pay 5%, 10% or 15% of benefit costs",
-      mode:"tiers", legend:["t5","t10","t15"], lbl:[] },
+      sub:"The share rises at 6%, 8% and 10% error rates",
+      mode:"tiers", legend:["u0","share"], lbl:[] },
 
     { c:[-110,48], z:2.2, fit:[[-168.1,54.6],[-141.0,71.4],[-160.4,18.8],[-154.7,22.3],[-66.9,49.4],[-80.0,24.5],[-124.8,24.5]], date:"FY2025 rates",
       kicker:"Highest rates", title:"Alaska leads at 23.15%",
@@ -138,7 +137,7 @@
     { c:[-96,38], z:3.2, fit:[[-124.8,24.5],[-66.9,49.4],[-124.8,49.4],[-80.0,24.5],[-69.0,47.4]], date:"FY2025 rates",
       kicker:"Not final", title:"Payments start in fiscal 2028",
       sub:"A state can use its 2025 or 2026 rate",
-      mode:"tiers", legend:["t5","t10","t15"], lbl:[] }
+      mode:"tiers", legend:["u0","share"], lbl:[] }
   ];
 
   // ---- State ----------------------------------------------------------------
@@ -165,7 +164,7 @@
   }
   function opacityExpr(b) {
     if (b.mode === "split") return 0.6;
-    if (b.mode === "tiers") return ["case", ["==", ["get","tier"], 0], 0.22, 0.62];
+    if (b.mode === "tiers") return ["case", ["==", ["get","tier"], 0], 0.5, 0.62];
     return ["case", ["in", ["get","usps"], ["literal", b.hl]], 0.7, 0.1];
   }
 
