@@ -137,3 +137,7 @@ A separate agent with no access to the drafting re-opened S1 and S2 as raw text 
 9. Voice lines: beat 3 headline (tease), beat 4 colon, beat 6 semicolon sub, the seven-state sentence (split in two), and the beat 6 "at 421" fragment. All rewritten as above.
 
 Left as is: "near Atlanta" (the site is in Fayetteville, Georgia, in the Atlanta area, about 30 km south of the city; the on-screen label says Fayetteville); Prometheus and Google New Albany pins overlap on wide maps (they are about 0.5 km apart; the labels name the place, not each site); pins that are city centres or roads are stated in the Geometry table; the "world's biggest" gloss was removed from beat 3.
+
+### Narration cut (2026-10-05)
+
+Harvey recorded the script at 1:20 and asked for a shorter back half. Beats 4 to 7 of the narration were cut (about 147 words to about 85; whole script about 215 to about 170). Only wording was removed; no new fact was added and no number changed. Removed from the spoken text: the 946 / 340 split (the screen still says 1.29 gigawatts), the Ohio site names, the Epoch ownership and "OpenAI likely uses it" attributions at Fairwater and Abilene, the seven-state list and the 23% to 81% range (the screen still carries the range). The on-screen sub of beat 6 became "Microsoft's Fairwater near Atlanta, and Abilene in Texas" so it no longer states ownership without Epoch's attribution. Rows C7, C12, C17 and C18 are used in less detail than before; C7's square-foot figures for each company are no longer spoken.

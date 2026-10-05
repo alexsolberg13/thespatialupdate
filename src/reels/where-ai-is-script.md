@@ -1,6 +1,6 @@
 # Narration script — Where AI actually is reel
 
-DRAFT for Harvey to rewrite in his own voice. Short video (about 70 sec, about 200
+DRAFT for Harvey to rewrite in his own voice. Short video (about 65 sec, about 170
 spoken words). Seven beats (cold open + 6). Read the line, then tap the right side
 of the screen to advance to the next beat. Keep it calm and even. The map does
 the work.
@@ -20,27 +20,27 @@ for or against AI or data centers.
 
 **Beat 2 — San Francisco**
 *(on screen: "Two labs, about 2.2 million sq ft"; chip "Office space as of April 2026")*
-> In San Francisco, OpenAI and Anthropic have an estimated 2.2 million square feet of offices between them, spread over several buildings. [C8] The San Francisco Standard puts OpenAI at 1.2 million, around Mission Bay, and Anthropic at about 995,000, in SoMa. [C7] Those are April estimates.
+> OpenAI and Anthropic have an estimated 2.2 million square feet of offices in San Francisco. [C8] OpenAI is around Mission Bay, Anthropic in SoMa. [C7]
 
 **Beat 3 — the biggest data centers**
 *(on screen: "Epoch's ten largest US data centers"; the ten blue pins appear across the country)*
-> Epoch AI, a research group, tracks 93 large AI data center sites, and none has a California address listed. [C9, C11, C23] Its ten largest US sites, by power, are in seven states. They're in Tennessee, Indiana, Georgia, Ohio, Texas, Wisconsin and Oklahoma. [C10] Epoch also lists two big sites in Malaysia, which aren't on this map. [C21]
+> Epoch AI, a research group, tracks 93 large AI data center sites. None has a California address listed. [C9, C11, C23] Its ten largest US sites, by power, are in seven states. [C10] Two bigger ones in Malaysia aren't shown. [C21]
 
 **Beat 4 — Memphis**
 *(on screen: "Memphis has two sites, 1.29 gigawatts")*
-> In Memphis, Epoch counts two Colossus sites. It estimates their current power at 946 megawatts and 340. [C12] Together that's about 1.3 gigawatts, and Colossus 2 is the biggest site on the list. [C12, C13]
+> In Memphis, Epoch counts two Colossus sites, about 1.3 gigawatts together. [C12] Colossus 2 is the biggest on the list. [C13]
 
 **Beat 5 — Indiana and Ohio**
 *(on screen: "Two states hold four of the ten")*
-> In New Carlisle, Indiana, an Amazon campus is at 910 megawatts, and Epoch lists Anthropic as its user. [C14] Three Ohio sites, Meta's Prometheus and two of Google's, add up to 1,107 megawatts. [C15] Indiana and Ohio together have four of the ten largest. [C16]
+> An Amazon campus in Indiana is at 910 megawatts, and Epoch lists Anthropic as its user. [C14] Three Ohio sites add up to 1,107, so four of the ten. [C15, C16]
 
 **Beat 6 — Georgia and Texas**
 *(on screen: "Georgia and Texas, 636 and 421 MW")*
-> Microsoft's Fairwater campus near Atlanta is at 636 megawatts, and Epoch says OpenAI likely uses it. [C17] Epoch lists Oracle as the owner of the Abilene, Texas, site and OpenAI as its user, at 421 megawatts. [C18]
+> Microsoft's Fairwater campus near Atlanta is at 636 megawatts, and Abilene, Texas, is at 421. [C17, C18]
 
 **Beat 7 — the distance**
 *(on screen: "2,900 km from San Francisco to Memphis")*
-> From OpenAI's headquarters to Colossus 2 is about 2,900 kilometers. [C19] Epoch estimates its list covers about 43% of the world's AI computing, with a wide range, 23% to 81%, as of October 4. [C20]
+> From OpenAI's headquarters to Colossus 2 is about 2,900 kilometers. [C19] Epoch estimates its list covers about 43% of the world's AI computing, within a wide range. [C20]
 
 ---
 
