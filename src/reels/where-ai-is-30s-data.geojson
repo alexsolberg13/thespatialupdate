@@ -1,0 +1,290 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "openai",
+    "name": "OpenAI",
+    "kind": "hq",
+    "position_source": "OSM Nominatim geocode of 1455 3rd St, San Francisco (one of the two HQ addresses on Wikipedia: 1455 and 1515 Third Street)",
+    "hq_address": "1455 and 1515 Third Street, San Francisco"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.3888,
+     37.77
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "kind": "hq",
+    "position_source": "OSM Nominatim geocode of 500 Howard Street, San Francisco (Wikipedia HQ address)",
+    "hq_address": "500 Howard Street, San Francisco"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.3967,
+     37.7885
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "google",
+    "name": "Google",
+    "kind": "hq",
+    "position_source": "OSM Nominatim geocode of 1600 Amphitheatre Parkway, Mountain View (Wikipedia: 37.422N 122.084W)",
+    "hq_address": "1600 Amphitheatre Parkway, Mountain View"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.0856,
+     37.4225
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "meta",
+    "name": "Meta",
+    "kind": "hq",
+    "position_source": "Census Gazetteer 2023 place centroid, Menlo Park city (city level: Wikipedia gives only the city)",
+    "hq_address": "Menlo Park, California (city only)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.1481,
+     37.4797
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "nvidia",
+    "name": "Nvidia",
+    "kind": "hq",
+    "position_source": "Census Gazetteer 2023 place centroid, Santa Clara city (city level: Wikipedia gives only the city)",
+    "hq_address": "Santa Clara, California (city only)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -121.968,
+     37.3646
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "colossus2",
+    "name": "Colossus 2",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 5420 Tulane Rd, Memphis (Epoch address)",
+    "place": "Memphis, Tennessee",
+    "current_power_mw": 946,
+    "owner": "SpaceXAI",
+    "users": "Anthropic, Cursor, SpaceXAI"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -90.0349,
+     34.998
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "newcarlisle",
+    "name": "Anthropic-Amazon New Carlisle",
+    "kind": "datacenter",
+    "position_source": "Census Gazetteer 2023 place centroid, New Carlisle town (Nominatim did not find the Epoch address, 55001 Larrison Blvd). Approximate.",
+    "place": "New Carlisle, Indiana",
+    "current_power_mw": 910,
+    "owner": "Amazon",
+    "users": "Anthropic"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -86.5072,
+     41.7066
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "fairwater_atl",
+    "name": "Microsoft Fairwater Atlanta",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 1435 Hwy 54 W, Fayetteville (Epoch address)",
+    "place": "Fayetteville, Georgia",
+    "current_power_mw": 636,
+    "owner": "Microsoft",
+    "users": "OpenAI (likely), Microsoft (likely)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -84.5248,
+     33.4452
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "prometheus",
+    "name": "Meta Prometheus",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim: 'Meta Data Center', Beech Road SW, New Albany (Nominatim did not find Epoch's address, 1 Community Cir). May be a neighbouring Meta building. Approximate.",
+    "place": "New Albany, Ohio",
+    "current_power_mw": 471,
+    "owner": "Meta",
+    "users": "Meta"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -82.7533,
+     40.0657
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "abilene",
+    "name": "OpenAI Stargate Abilene",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 5502 Spinks Rd, Abilene (Epoch address); matched the road, not a building",
+    "place": "Abilene, Texas",
+    "current_power_mw": 421,
+    "owner": "Oracle",
+    "users": "OpenAI"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.8009,
+     32.4942
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "fairwater_wi",
+    "name": "Microsoft Fairwater Wisconsin",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 4800 90th St, Mount Pleasant (Epoch address)",
+    "place": "Mount Pleasant, Wisconsin",
+    "current_power_mw": 369,
+    "owner": "Microsoft",
+    "users": "OpenAI (likely), Microsoft (likely)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -87.8949,
+     42.6749
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "pryor",
+    "name": "Google Pryor (North)",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 4581 Webb St, Pryor (Epoch address)",
+    "place": "Pryor, Oklahoma",
+    "current_power_mw": 368,
+    "owner": "Google",
+    "users": "Google DeepMind (speculative)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -95.3301,
+     36.2412
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "colossus1",
+    "name": "Colossus 1",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 3231 Riverport Rd, Memphis (matched the road)",
+    "place": "Memphis, Tennessee",
+    "current_power_mw": 340,
+    "owner": "SpaceXAI",
+    "users": "Anthropic"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -90.0873,
+     35.0736
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "google_na",
+    "name": "Google New Albany",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 1101 Beech Rd SW, New Albany (Epoch address)",
+    "place": "New Albany, Ohio",
+    "current_power_mw": 333,
+    "owner": "Google",
+    "users": "Google DeepMind (speculative)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -82.754,
+     40.07
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "google_col",
+    "name": "Google Columbus",
+    "kind": "datacenter",
+    "position_source": "OSM Nominatim geocode of 5076 S High St, Columbus (Epoch address)",
+    "place": "Columbus, Ohio",
+    "current_power_mw": 303,
+    "owner": "Google",
+    "users": "Google DeepMind (speculative)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -83.004,
+     39.8615
+    ]
+   }
+  }
+ ]
+}
