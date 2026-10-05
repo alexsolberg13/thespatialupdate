@@ -1,7 +1,7 @@
 # Narration script — Where AI actually is, 30-second cut
 
 DRAFT for Harvey to rewrite in his own voice. A 30-second cut of the `where-ai-is` reel
-(about 70 spoken words, five beats). Read the line, then tap the right side of the screen
+(about 75 spoken words, five beats). Read the line, then tap the right side of the screen
 to advance to the next beat. Keep it quick and even; the headline on screen is the hook.
 
 Every sentence is followed by the ID of the claim it rests on, in `dossiers/where-ai-is.md`
@@ -14,16 +14,16 @@ against AI or data centers.
 ---
 
 **Beat 1 — cold open**
-*(on screen: "Five AI headquarters within 60 km"; five gold pins around San Francisco Bay, each named; chip "As of Oct 2026")*
+*(on screen: "Five AI headquarters within about 60 km"; five gold pins around San Francisco Bay, each named; chip "As of Oct 2026")*
 > OpenAI, Anthropic, Google, Meta and Nvidia all have their headquarters within about 60 kilometers of each other. [C1, C2, C3, C4, C5, C6]
 
 **Beat 2 — the data centers**
-*(on screen: "93 sites, none with a California address"; the ten blue pins appear across the country)*
-> Epoch AI, a research group, tracks 93 big AI data centers. None has a California address listed. [C9, C11, C23]
+*(on screen: "93 sites, none listed in California"; the ten blue pins appear across the country)*
+> Epoch AI, a research group, tracks 93 big AI data centers, and none has a California address listed. [C9, C11, C23] The ten largest in the US are on this map. [C10]
 
 **Beat 3 — the biggest**
-*(on screen: "Colossus 2 is 2,900 km away")*
-> The biggest, Colossus 2, is in Memphis, Tennessee. That's about 2,900 kilometers from OpenAI's headquarters. [C13, C19]
+*(on screen: "Colossus 2 sits 2,900 km from OpenAI"; sub "Memphis, Tennessee, in a straight line")*
+> The biggest of them, Colossus 2, is in Memphis, Tennessee. That's about 2,900 kilometers from OpenAI's headquarters. [C13, C19]
 
 **Beat 4 — Indiana and Ohio**
 *(on screen: "Two states hold four of the ten")*
